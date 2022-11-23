@@ -8,7 +8,7 @@ class NotificationApi {
   initialize() async {
     initializeTimeZones(); // for showSchedualedNotification function
     const AndroidInitializationSettings androidInitializationSettings =
-        AndroidInitializationSettings('@drawable/launch_background');
+        AndroidInitializationSettings('mipmap/ic_launcher');
     DarwinInitializationSettings iosinitializationSetting =
         DarwinInitializationSettings(
             requestAlertPermission: true,
@@ -26,7 +26,7 @@ class NotificationApi {
             onDidReceiveBackgroundNotificationResponse);
   }
 
-  NotificationDetails _notificationDetails() {
+  static NotificationDetails _notificationDetails() {
     return const NotificationDetails(
       android: AndroidNotificationDetails(
         'channel_id',
@@ -40,42 +40,33 @@ class NotificationApi {
     );
   }
 
-  // notifications
+
+  static void cancel(int id) => _notifications.cancel(id);
+  static void cancelAll() => _notifications.cancelAll();
+  
+  // instant notifications
   Future<void> showNotification({
     int id = 0,
     String? title,
     String? body,
     String? payload,
   }) async {
-    print(_nextTimeWeekday(DateTime.friday));
     return _notifications.show(id, title, body, _notificationDetails(),
         payload: payload);
   }
 
-  DateTime _nextTimeWeekday(int wantedDayweek) {
-    var y = DateTime.now();
-    var x = y.weekday;
-
-    if (x < 5) {
-      return y.add(Duration(days: (wantedDayweek - x)));
-    } else if (x > 5) {
-      return y.add(Duration(days: -(x - 7) + wantedDayweek));
-    }
-
-    return y; // if today is weekday
-  }
-
-  Future<void> showSchedualedNotification({
+  static Future<void> showSchedualedNotification({
     int id = 0,
     String? title,
     String? body,
     String? payload,
+    required DateTime date,
   }) async {
     return _notifications.zonedSchedule(
       id,
       title,
       body,
-      TZDateTime.from(DateTime.now().add(const Duration(seconds: 5)), local),
+      TZDateTime.from(date, local),
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
       androidAllowWhileIdle: true,
@@ -84,7 +75,7 @@ class NotificationApi {
     );
   }
 
-  Future<void> showSchedualedWeeklyNotification(
+  static Future<void> showSchedualedWeeklyNotification(
       {int id = 0,
       String? title,
       String? body,
@@ -115,7 +106,8 @@ class NotificationApi {
       id,
       title,
       body,
-      _schedualeDailyWithoutSaturday(const Time(8)), // every day at 08:00 not including saturday
+      _schedualeDailyWithoutSaturday(
+          const Time(8)), // every day at 08:00 not including saturday
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time,
@@ -123,6 +115,19 @@ class NotificationApi {
       _notificationDetails(),
       payload: payload,
     );
+  }
+
+  static DateTime _nextTimeWeekday(int wantedDayweek) {
+    var y = DateTime.now();
+    var x = y.weekday;
+
+    if (x < 5) {
+      return y.add(Duration(days: (wantedDayweek - x)));
+    } else if (x > 5) {
+      return y.add(Duration(days: -(x - 7) + wantedDayweek));
+    }
+
+    return y; // if today is weekday
   }
 
   static TZDateTime _schedualeDaily(Time time) {

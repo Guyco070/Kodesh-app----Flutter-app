@@ -18,12 +18,14 @@ class _SchedualNotficationsScreenState
   bool tefilin = false;
   bool preys = false;
   bool roshHodesh = false;
+  String tefilinTime = '';
 
   // TextEditingController? tefilinController;
 
   @override
   void initState() {
     Provider.of<Reminders>(context, listen: false).getData();
+
     super.initState();
   }
 
@@ -139,7 +141,7 @@ class _SchedualNotficationsScreenState
           ],
         ),
         Text(
-            'עדכן אותי ${reminders.beforeShabatHours} שעות ו- ${reminders.beforeShabatMinutes} דקות לפני שבת'),
+            'הזכר לי ${reminders.beforeShabatHours} שעות ו- ${reminders.beforeShabatMinutes} דקות לפני שבת'),
         const SizedBox(
           height: 7,
         ),
@@ -163,35 +165,67 @@ class _SchedualNotficationsScreenState
                 children: [
                   Checkbox(
                       value: reminders.shabatAndHolidays,
-                      onChanged: (newShabatAndHolidays) async {
+                      onChanged: (newShabatAndHolidays) {
                         reminders.setShabatAndHolidays(newShabatAndHolidays!);
-                        // tefilinController = TextEditingController(
-                        //     text: getTime(
-                        //         Provider.of<Events>(context, listen: false)
-                        //             .items[0]
-                        //             .entryDate as DateTime));
                       }),
                   const Text('לפני שבתות וחגים')
                 ],
               ),
             ),
             if (reminders.shabatAndHolidays) ...shabatAndHolidaysElements(),
-            // if (tefilin)
-            //   Column(
-            //     children: [
-            //       TextField(
-            //         controller: shabatAlarmController,
-            //         onTap: () async {
-            //           await showTimePicker(
-            //               context: context,
-            //               initialTime: const TimeOfDay(hour: 6, minute: 00));
-            //         },
-            //         keyboardType: TextInputType.none,
-            //         showCursor: false,
-            //       ),
-            //     ],
-            //   )
-
+            Card(
+              child: Row(
+                textDirection: TextDirection.rtl,
+                children: [
+                  Checkbox(
+                      value: reminders.tefilin,
+                      onChanged: (newTefilin) async {
+                        reminders.setTefilin(newTefilin!);
+                        // tefilinController = TextEditingController(
+                        //     text: getTime(
+                        //         Provider.of<Events>(context, listen: false)
+                        //             .items[0]
+                        //             .entryDate as DateTime));
+                      }),
+                  const Text('תפילין')
+                ],
+              ),
+            ),
+            if (reminders.tefilin)
+              Column(
+                children: [
+                  TextButton(
+                    onPressed: () async {
+                      TimeOfDay? time = await showTimePicker(
+                          context: context,
+                          initialTime: const TimeOfDay(hour: 6, minute: 00),
+                          initialEntryMode: TimePickerEntryMode.dialOnly,
+                          builder: (context, childWidget) {
+                            return MediaQuery(
+                                data: MediaQuery.of(context).copyWith(
+                                    // Using 24-Hour format
+                                    alwaysUse24HourFormat: true),
+                                // If you want 12-Hour format, just change alwaysUse24HourFormat to false or remove all the builder argument
+                                child: childWidget!);
+                          });
+                      if (time != null) {
+                        print(time);
+                        reminders.setTefilinTime('${time.hour}:${time.minute}');
+                      }
+                    },
+                    child: Text(reminders.tefilinTime),
+                  ),
+                  Text(
+                      'הזכר לי להניח תפילין כל יום בשעה ${reminders.tefilinTime}'),
+                  const SizedBox(
+                    height: 7,
+                  ),
+                  const Divider(height: 15, thickness: 1.5),
+                  const SizedBox(
+                    height: 7,
+                  ),
+                ],
+              ),
             ElevatedButton(
                 onPressed: () {
                   reminders.setReminders(context);

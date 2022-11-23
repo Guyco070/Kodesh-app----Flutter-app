@@ -17,7 +17,6 @@ class Holiday extends Event {
     } else {
       date = DateTime.tryParse(Events.getDateWithoutTime(parashat['date']));
     }
-    print(parashat);
     return Holiday(
         title: parashat['title'],
         entryDate: date,

@@ -116,8 +116,9 @@ class _EventScreenState extends State<EventScreen> {
                   child: const Text('Instant notification')),
               ElevatedButton(
                   onPressed: () async {
-                    await service.showSchedualedNotification(
+                    await NotificationApi.showSchedualedNotification(
                           title: 'Guy', body: 'Schedualed notfication',
+                          date: DateTime.now().add(const Duration(seconds: 5))
                         );
                   },
                   child: const Text('Schedualed notification'))
