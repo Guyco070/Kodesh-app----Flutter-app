@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kodesh_app/screens/schedual_notifications.dart';
 import 'package:provider/provider.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -16,8 +17,8 @@ class AppDrawer extends StatelessWidget {
           const Divider(),
           ListTile(
             leading: const Icon(Icons.shop),
-            title: const Text('Shop'),
-            onTap: () => Navigator.pushNamed(context, '/'),
+            title: const Text('קביעת תזכורות'),
+            onTap: () => Navigator.pushNamed(context, SchedualNotficationsScreen.routeName),
           ),
           // const Divider(),
           // ListTile(

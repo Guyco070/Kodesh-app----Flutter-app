@@ -1,9 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kodesh_app/data/cities.dart';
+import 'package:kodesh_app/models/event.dart';
+import 'package:kodesh_app/models/shabat.dart';
 import 'package:kodesh_app/providers/events.dart';
-import 'package:kodesh_app/widgets/app_drawer.dart';
+import 'package:kodesh_app/widgets/default_scaffold.dart';
+import 'package:kodesh_app/widgets/events_widgets/event_factory_widget.dart';
+import 'package:kodesh_app/widgets/loading_scaffold.dart';
+import 'package:kodesh_app/widgets/settings_bar.dart';
 import 'package:provider/provider.dart';
+import '../api/notification_api.dart';
 
 class EventScreen extends StatefulWidget {
   const EventScreen({super.key});
@@ -15,113 +22,107 @@ class EventScreen extends StatefulWidget {
 class _EventScreenState extends State<EventScreen> {
   bool _isInit = true;
   bool _isLoading = false;
+  bool _isOnlyShabat = false;
 
-  // @override
-  // void didChangeDependencies() {
-  //   if (_isInit) {
-  //     _isLoading = true;
-  //     Provider.of<Events>(context, listen: false)
-  //         .fetchAndSetProducts()
-  //         .then((_) => setState(() {
-  //               _isLoading = false;
-  //             }));
-  //   }
-  //   setState(() {
-  //     _isInit = false;
-  //   });
-  //   super.didChangeDependencies();
-  // }
+  String? title;
+
+  late final NotificationApi service;
+  @override
+  void initState() {
+    super.initState();
+
+    var events = Provider.of<Events>(context, listen: false);
+    events.getData();
+    service = NotificationApi();
+    service.initialize();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      _isLoading = true;
+      Provider.of<Events>(context, listen: false)
+          .fetchAndSetProducts()
+          .then((_) => setIsLoading());
+    }
+
+    setState(() {
+      _isInit = false;
+    });
+
+    super.didChangeDependencies();
+  }
+
+  setIsLoading() {
+    setState(() {
+      _isLoading = !_isLoading;
+    });
+  }
+
+  List<Widget> _getEventwidgets(List<Event> events, bool isOnlyShabat) {
+    List<Widget> widgets = [];
+    events.sort((a, b) {
+      if (a.entryDate != null && b.entryDate != null) {
+        return a.entryDate!.compareTo(b.entryDate!);
+      }
+      return 0;
+    });
+    for (var e in events) {
+      if (isOnlyShabat && e is Shabat) {
+        widgets.add(EventFactoryWidget(data: e));
+      } else if (!isOnlyShabat) {
+        widgets.add(EventFactoryWidget(data: e));
+      }
+    }
+    widgets.add(const SizedBox(
+      height: 10,
+    ));
+    return widgets;
+  }
+
+  setIsOnlyShabat() {
+    Provider.of<Events>(context, listen: false).updateIsOnlyShabat();
+    setState(() {
+      _isOnlyShabat = !_isOnlyShabat;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const AppDrawer(),
-      appBar: AppBar(
-        title: const Text(
-          'שבת',
-        ),
-        centerTitle: true,
-        // actions: [
-        //   IconButton(onPressed: (){
+    Events events = Provider.of<Events>(context);
+    return DefaultScaffold(
+        title: 'ראשי',
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              SettingsBar(
+                isOnlyShabat: events.isOnlyShabat,
+                updateIsOnlyShabat: setIsOnlyShabat,
+                setIsLoading: setIsLoading,
+              ),
+              if (_isLoading)
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 2,
+                  child: const Center(child: CircularProgressIndicator()),
+                )
+              else
+                ..._getEventwidgets(events.items, events.isOnlyShabat),
 
-        //   }, icon: const Icon(Icons.menu))
-        // ]
-      ),
-      body: FutureBuilder(
-          future: Provider.of<Events>(context).fetchAndSetProducts(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            }
-              var events = Provider.of<Events>(context, listen: false);
-                
-              return Container(
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        PopupMenuButton(
-                          icon: const Icon(Icons.arrow_drop_down),
-                          itemBuilder: (context) {
-                            return cities.split('\n').map((element) {
-                              return PopupMenuItem(
-                                value: element,
-                                child: Text(element.split('|')[0]),
-                              );
-                            }).toList();
-                          },
-                          onSelected: (value) {
-                            events.setCity(value);
-                          },
-                        ),
-                        Text(events.city.split('|')[0]),
-                      ],
-                    ),
-                    ListTile(
-                      title: Text(
-                        DateFormat('HH:mm')
-                            .format(snapshot.data!.entryDate!),
-                        textAlign: TextAlign.right,
-                      ),
-                      subtitle: const Text(
-                        'כניסה והדלקת נרות',
-                        textAlign: TextAlign.right,
-                      ),
-                      leading: Text(DateFormat('dd/MM/yyyy')
-                          .format(snapshot.data!.entryDate!)),
-                      trailing: const Icon(Icons.fireplace_outlined),
-                    ),
-                    ListTile(
-                      title: Text(
-                        DateFormat('HH:mm')
-                            .format(snapshot.data!.releaseDate!),
-                        textAlign: TextAlign.right,
-                      ),
-                      subtitle: const Text(
-                        'יציאה והבדלה',
-                        textAlign: TextAlign.right,
-                      ),
-                      leading: Text(DateFormat('dd/MM/yyyy')
-                          .format(snapshot.data!.releaseDate!)),
-                      trailing: const Icon(Icons.wine_bar),
-                    ),
-                    ListTile(
-                      title: Text(
-                        snapshot.data!.parasha!,
-                        textAlign: TextAlign.right,
-                      ),
-                      subtitle: const Text(
-                        'פרשת שבוע',
-                        textAlign: TextAlign.right,
-                      ),
-                      trailing: const Icon(Icons.book_outlined),
-                    )
-                  ],
-                ),
-              );
-      }),
-      persistentFooterAlignment: AlignmentDirectional.topCenter,
-    );
+              ElevatedButton(
+                  onPressed: () async {
+                    await service.showNotification(
+                        title: 'Guy', body: 'Instant notfication');
+                  },
+                  child: const Text('Instant notification')),
+              ElevatedButton(
+                  onPressed: () async {
+                    await service.showSchedualedNotification(
+                          title: 'Guy', body: 'Schedualed notfication',
+                        );
+                  },
+                  child: const Text('Schedualed notification'))
+            ],
+          ),
+        ));
   }
 }

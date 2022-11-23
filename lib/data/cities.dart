@@ -1,409 +1,805 @@
-const cities = 'AD-Andorra La Vella|3041563\n'+
-'AE-Abu Dhabi|292968\n'+
-'AE-Dubai|292223\n'+
-'AF-Kabul|1138958\n'+
-'AI-The Valley|3573374\n'+
-'AL-Tirana|3183875\n'+
-'AM-Yerevan|616052\n'+
-'AO-Luanda|2240449\n'+
-'AR-Buenos Aires|3435910\n'+
-'AR-Cordoba|3860259\n'+
-'AR-Rosario|3838583\n'+
-'AS-Pago Pago|5881576\n'+
-'AT-Vienna|2761369\n'+
-'AU-Adelaide|2078025\n'+
-'AU-Brisbane|2174003\n'+
-'AU-Canberra|2172517\n'+
-'AU-Gold Coast|2165087\n'+
-'AU-Hobart|2163355\n'+
-'AU-Melbourne|2158177\n'+
-'AU-Perth|2063523\n'+
-'AU-Sydney|2147714\n'+
-'AW-Oranjestad|3577154\n'+
-'AZ-Baku|587084\n'+
-'BA-Sarajevo|3191281\n'+
-'BB-Bridgetown|3374036\n'+
-'BD-Chittagong|1205733\n'+
-'BD-Dhaka|1185241\n'+
-'BD-Khulna|1336135\n'+
-'BE-Brussels|2800866\n'+
-'BF-Ouagadougou|2357048\n'+
-'BG-Sofia|727011\n'+
-'BH-Manama|290340\n'+
-'BI-Bujumbura|425378\n'+
-'BJ-Porto-novo|2392087\n'+
-'BM-Hamilton|3573197\n'+
-'BN-Bandar Seri Begawan|1820906\n'+
-'BO-La Paz|3911925\n'+
-'BO-Santa Cruz de la Sierra|3904906\n'+
-'BR-Belo Horizonte|3470127\n'+
-'BR-Brasilia|3469058\n'+
-'BR-Fortaleza|3399415\n'+
-'BR-Rio de Janeiro|3451190\n'+
-'BR-Salvador|3450554\n'+
-'BR-Sao Paulo|3448439\n'+
-'BS-Nassau|3571824\n'+
-'BT-Thimphu|1252416\n'+
-'BW-Gaborone|933773\n'+
-'BY-Minsk|625144\n'+
-'BZ-Belmopan|3582672\n'+
-'CA-Calgary|5913490\n'+
-'CA-Edmonton|5946768\n'+
-'CA-Halifax|6324729\n'+
-'CA-Mississauga|6075357\n'+
-'CA-Montreal|6077243\n'+
-'CA-Ottawa|6094817\n'+
-'CA-Quebec City|6325494\n'+
-'CA-Regina|6119109\n'+
-'CA-Saskatoon|6141256\n'+
-'CA-St. John\'s-05|6324733\n'+
-'CA-Toronto|6167865\n'+
-'CA-Vancouver|6173331\n'+
-'CA-Victoria|6174041\n'+
-'CA-Winnipeg|6183235\n'+
-'CD-Kinshasa|2314302\n'+
-'CD-Lubumbashi|922704\n'+
-'CF-Bangui|2389853\n'+
-'CG-Brazzaville|2260535\n'+
-'CH-Bern|2661552\n'+
-'CH-Geneva|2660646\n'+
-'CH-Zurich|2657896\n'+
-'CI-Abidjan|2293538\n'+
-'CI-Yamoussoukro|2279755\n'+
-'CK-Avarua|4035715\n'+
-'CL-Santiago|3871336\n'+
-'CM-Douala|2232593\n'+
-'CM-Yaounde|2220957\n'+
-'CN-Beijing|1816670\n'+
-'CN-Chengdu|1815286\n'+
-'CN-Chongqing|1814906\n'+
-'CN-Guangzhou|1809858\n'+
-'CN-Harbin|2037013\n'+
-'CN-Kaifeng|1804879\n'+
-'CN-Lanzhou|1804430\n'+
-'CN-Nanchong|1800146\n'+
-'CN-Nanjing|1799962\n'+
-'CN-Puyang|1798422\n'+
-'CN-Shanghai|1796236\n'+
-'CN-Shenyang|2034937\n'+
-'CN-Shenzhen|1795565\n'+
-'CN-Shiyan|1794903\n'+
-'CN-Tai\'an|1793724\n'+
-'CN-Tianjin|1792947\n'+
-'CN-Wuhan|1791247\n'+
-'CN-Xi\'an|1790630\n'+
-'CN-Yueyang|1927639\n'+
-'CN-Zhumadian|1783873\n'+
-'CO-Barranquilla|3689147\n'+
-'CO-Bogota|3688689\n'+
-'CO-Cali|3687925\n'+
-'CO-Medellin|3674962\n'+
-'CR-San José|3621849\n'+
-'CU-Havana|3553478\n'+
-'CV-Praia|3374333\n'+
-'CW-Willemstad|3513090\n'+
-'CY-Nicosia|146268\n'+
-'CZ-Prague|3067696\n'+
-'DE-Berlin|2950159\n'+
-'DE-Hamburg|2911298\n'+
-'DE-Munich|2867714\n'+
-'DK-Copenhagen|2618425\n'+
-'DM-Roseau|3575635\n'+
-'DO-Santiago de los Caballeros|3492914\n'+
-'DO-Santo Domingo|3492908\n'+
-'DZ-Algiers|2507480\n'+
-'EC-Guayaquil|3657509\n'+
-'EC-Quito|3652462\n'+
-'EE-Tallinn|588409\n'+
-'EG-Al Jizah|360995\n'+
-'EG-Alexandria|361058\n'+
-'EG-Cairo|360630\n'+
-'ER-Asmara|343300\n'+
-'ES-Barcelona|3128760\n'+
-'ES-Madrid|3117735\n'+
-'ET-Addis Ababa|344979\n'+
-'FI-Helsinki|658225\n'+
-'FJ-Suva|2198148\n'+
-'FK-Stanley|3426691\n'+
-'FO-Tórshavn|2611396\n'+
-'FR-Marseilles|2995469\n'+
-'FR-Paris|2988507\n'+
-'GA-Libreville|2399697\n'+
-'GB-Belfast|2655984\n'+
-'GB-Birmingham|2655603\n'+
-'GB-Bristol|2654675\n'+
-'GB-Cardiff|2653822\n'+
-'GB-Edinburgh|2650225\n'+
-'GB-Glasgow|2648579\n'+
-'GB-Leeds|2644688\n'+
-'GB-Liverpool|2644210\n'+
-'GB-London|2643743\n'+
-'GB-Manchester|2643123\n'+
-'GB-Sheffield|2638077\n'+
-'GE-Tbilisi|611717\n'+
-'GH-Accra|2306104\n'+
-'GH-Kumasi|2298890\n'+
-'GI-Gibraltar|2411585\n'+
-'GL-Nuuk|3421319\n'+
-'GM-Banjul|2413876\n'+
-'GN-Camayenne|2422488\n'+
-'GN-Conakry|2422465\n'+
-'GQ-Malabo|2309527\n'+
-'GR-Athens|264371\n'+
-'GT-Guatemala City|3598132\n'+
-'GW-Bissau|2374775\n'+
-'GY-Georgetown|3378644\n'+
-'HK-Hong Kong|1819729\n'+
-'HN-Tegucigalpa|3600949\n'+
-'HR-Zagreb|3186886\n'+
-'HT-Port-au-Prince|3718426\n'+
-'HU-Budapest|3054643\n'+
-'ID-Bandung|1650357\n'+
-'ID-Bekasi|1649378\n'+
-'ID-Depok|1645518\n'+
-'ID-Jakarta|1642911\n'+
-'ID-Makassar|1622786\n'+
-'ID-Medan|1214520\n'+
-'ID-Palembang|1633070\n'+
-'ID-Semarang|1627896\n'+
-'ID-South Tangerang|8581443\n'+
-'ID-Surabaya|1625822\n'+
-'ID-Tangerang|1625084\n'+
-'IE-Dublin|2964574\n'+
-'IL-Ashdod|295629\n'+
-'IL-Ashkelon|295620\n'+
-'IL-Bat Yam|295548\n'+
-'IL-Be\'er Sheva|295530\n'+
-'IL-Beit Shemesh|295432\n'+
-'IL-Bnei Brak|295514\n'+
-'IL-Eilat|295277\n'+
-'IL-Hadera|294946\n'+
-'IL-Haifa|294801\n'+
-'IL-Herzliya|294778\n'+
-'IL-Holon|294751\n'+
-'IL-Jerusalem|281184\n'+
-'IL-Kfar Saba|294514\n'+
-'IL-Lod|294421\n'+
-'IL-Modiin|282926\n'+
-'IL-Nazareth|294098\n'+
-'IL-Netanya|294071\n'+
-'IL-Petach Tikvah|293918\n'+
-'IL-Ra\'anana|293807\n'+
-'IL-Ramat Gan|293788\n'+
-'IL-Ramla|293768\n'+
-'IL-Rishon LeZion|293703\n'+
-'IL-Tel Aviv|293397\n'+
-'IL-Tiberias|293322\n'+
-'IM-Douglas|3042237\n'+
-'IN-Ahmadabad|1279233\n'+
-'IN-Bangalore|1277333\n'+
-'IN-Bombay|1275339\n'+
-'IN-Calcutta|1275004\n'+
-'IN-Chennai|1264527\n'+
-'IN-Cochin|1273874\n'+
-'IN-Hyderabad|1269843\n'+
-'IN-Jaipur|1269515\n'+
-'IN-Kanpur|1267995\n'+
-'IN-New Delhi|1261481\n'+
-'IN-Pune|1259229\n'+
-'IN-Surat|1255364\n'+
-'IQ-Baghdad|98182\n'+
-'IR-Tehran|112931\n'+
-'IS-Reykjavík|3413829\n'+
-'IT-Milano|3173435\n'+
-'IT-Rome|3169070\n'+
-'JM-Kingston|3489854\n'+
-'JO-Amman|250441\n'+
-'JP-Kobe-shi|1859171\n'+
-'JP-Kyoto|1857910\n'+
-'JP-Nagoya-shi|1856057\n'+
-'JP-Osaka-shi|1853909\n'+
-'JP-Sapporo|2128295\n'+
-'JP-Tokyo|1850147\n'+
-'KE-Nairobi|184745\n'+
-'KG-Bishkek|1528675\n'+
-'KH-Phnom Penh|1821306\n'+
-'KM-Moroni|921772\n'+
-'KN-Basseterre|3575551\n'+
-'KP-Pyongyang|1871859\n'+
-'KR-Busan|1838524\n'+
-'KR-Seoul|1835848\n'+
-'KW-Kuwait|285787\n'+
-'KY-George Town|3580661\n'+
-'KZ-Almaty|1526384\n'+
-'KZ-Astana|1526273\n'+
-'LA-Vientiane|1651944\n'+
-'LB-Beirut|276781\n'+
-'LC-Castries|3576812\n'+
-'LI-Vaduz|3042030\n'+
-'LR-Monrovia|2274895\n'+
-'LS-Maseru|932505\n'+
-'LT-Vilnius|593116\n'+
-'LU-Luxemburg|2960316\n'+
-'LV-Riga|456172\n'+
-'LY-Tripoli|2210247\n'+
-'MA-Casablanca|2553604\n'+
-'MA-Rabat|2538475\n'+
-'MD-Chisinau|618426\n'+
-'ME-Podgorica|3193044\n'+
-'MG-Antananarivo|1070940\n'+
-'MK-Skopje|785842\n'+
-'ML-Bamako|2460596\n'+
-'MM-Mandalay|1311874\n'+
-'MM-Rangoon|1298824\n'+
-'MN-Ulaanbaatar|2028462\n'+
-'MP-Saipan|7828758\n'+
-'MR-Nouakchott|2377450\n'+
-'MS-Plymouth|3578069\n'+
-'MT-Valletta|2562305\n'+
-'MU-Port Louis|934154\n'+
-'MW-Lilongwe|927967\n'+
-'MX-Cancun|3531673\n'+
-'MX-Guadalajara|4005539\n'+
-'MX-Iztapalapa|3526683\n'+
-'MX-Mazatlan|3996322\n'+
-'MX-Mexico City|3530597\n'+
-'MX-Monterrey|3995465\n'+
-'MX-Puerto Vallarta|3991328\n'+
-'MX-Tijuana|3981609\n'+
-'MY-Kota Bharu|1736376\n'+
-'MY-Kuala Lumpur|1735161\n'+
-'MZ-Maputo|1040652\n'+
-'NA-Windhoek|3352136\n'+
-'NC-Nouméa|2139521\n'+
-'NE-Niamey|2440485\n'+
-'NG-Abuja|2352778\n'+
-'NG-Lagos|2332459\n'+
-'NI-Managua|3617763\n'+
-'NL-Amsterdam|2759794\n'+
-'NO-Oslo|3143244\n'+
-'NP-Kathmandu|1283240\n'+
-'NU-Alofi|4036284\n'+
-'NZ-Auckland|2193733\n'+
-'NZ-Christchurch|2192362\n'+
-'NZ-Wellington|2179537\n'+
-'OM-Muscat|287286\n'+
-'PA-Panama City|3703443\n'+
-'PE-Lima|3936456\n'+
-'PF-Papeete|4033936\n'+
-'PG-Port Moresby|2088122\n'+
-'PH-Manila|1701668\n'+
-'PK-Islamabad|1176615\n'+
-'PK-Karachi|1174872\n'+
-'PL-Warsaw|756135\n'+
-'PR-San Juan|4568127\n'+
-'PT-Lisbon|2267057\n'+
-'PY-Asuncion|3439389\n'+
-'QA-Doha|290030\n'+
-'RO-Bucharest|683506\n'+
-'RS-Belgrade|792680\n'+
-'RU-Moscow|524901\n'+
-'RU-Novosibirsk|1496747\n'+
-'RU-Saint Petersburg|498817\n'+
-'RU-Yekaterinburg|1486209\n'+
-'RW-Kigali|202061\n'+
-'SA-Jeddah|105343\n'+
-'SA-Mecca|104515\n'+
-'SA-Medina|109223\n'+
-'SA-Riyadh|108410\n'+
-'SB-Honiara|2108502\n'+
-'SC-Victoria|241131\n'+
-'SD-Khartoum|379252\n'+
-'SD-Omdurman|365137\n'+
-'SE-Stockholm|2673730\n'+
-'SG-Singapore|1880252\n'+
-'SH-Jamestown|3370903\n'+
-'SI-Ljubljana|3196359\n'+
-'SK-Bratislava|3060972\n'+
-'SL-Freetown|2408770\n'+
-'SN-Dakar|2253354\n'+
-'SO-Mogadishu|53654\n'+
-'SR-Paramaribo|3383330\n'+
-'ST-São Tomé|2410763\n'+
-'SV-San Salvador|3583361\n'+
-'SY-Aleppo|170063\n'+
-'SY-Damascus|170654\n'+
-'SZ-Mbabane|934985\n'+
-'TC-Cockburn Town|3576994\n'+
-'TD-Ndjamena|2427123\n'+
-'TG-Lomé|2365267\n'+
-'TH-Bangkok|1609350\n'+
-'TJ-Dushanbe|1221874\n'+
-'TM-Ashgabat|162183\n'+
-'TN-Tunis|2464470\n'+
-'TR-Adana|325363\n'+
-'TR-Ankara|323786\n'+
-'TR-Bursa|750269\n'+
-'TR-Istanbul|745044\n'+
-'TR-Izmir|311046\n'+
-'TV-Funafuti|2110394\n'+
-'TW-Kaohsiung|1673820\n'+
-'TW-Taipei|1668341\n'+
-'TZ-Dar es Salaam|160263\n'+
-'TZ-Dodoma|160196\n'+
-'UA-Kharkiv|706483\n'+
-'UA-Kiev|703448\n'+
-'UG-Kampala|232422\n'+
-'US-Atlanta-GA|4180439\n'+
-'US-Austin-TX|4671654\n'+
-'US-Baltimore-MD|4347778\n'+
-'US-Boston-MA|4930956\n'+
-'US-Buffalo-NY|5110629\n'+
-'US-Chicago-IL|4887398\n'+
-'US-Cincinnati-OH|4508722\n'+
-'US-Cleveland-OH|5150529\n'+
-'US-Columbus-OH|4509177\n'+
-'US-Dallas-TX|4684888\n'+
-'US-Denver-CO|5419384\n'+
-'US-Detroit-MI|4990729\n'+
-'US-Hartford-CT|4835797\n'+
-'US-Honolulu-HI|5856195\n'+
-'US-Houston-TX|4699066\n'+
-'US-Lakewood-NJ|5100280\n'+
-'US-Las Vegas-NV|5506956\n'+
-'US-Livingston-NY|5100572\n'+
-'US-Los Angeles-CA|5368361\n'+
-'US-Memphis-TN|4641239\n'+
-'US-Miami-FL|4164138\n'+
-'US-Milwaukee-WI|5263045\n'+
-'US-Monsey-NY|5127315\n'+
-'US-New Haven-CT|4839366\n'+
-'US-New York-NY|5128581\n'+
-'US-Omaha-NE|5074472\n'+
-'US-Orlando-FL|4167147\n'+
-'US-Passaic-NJ|5102443\n'+
-'US-Philadelphia-PA|4560349\n'+
-'US-Phoenix-AZ|5308655\n'+
-'US-Pittsburgh-PA|5206379\n'+
-'US-Portland-OR|5746545\n'+
-'US-Providence-RI|5224151\n'+
-'US-Richmond-VA|4781708\n'+
-'US-Rochester-NY|5134086\n'+
-'US-Saint Louis-MO|4407066\n'+
-'US-Saint Paul-MN|5045360\n'+
-'US-San Diego-CA|5391811\n'+
-'US-San Francisco-CA|5391959\n'+
-'US-Seattle-WA|5809844\n'+
-'US-Silver Spring-MD|4369596\n'+
-'US-Teaneck-NJ|5105262\n'+
-'US-Washington-DC|4140963\n'+
-'US-White Plains-NY|5144336\n'+
-'UY-Montevideo|3441575\n'+
-'UZ-Tashkent|1512569\n'+
-'VC-Kingstown|3577887\n'+
-'VE-Caracas|3646738\n'+
-'VE-Maracaibo|3633009\n'+
-'VE-Maracay|3632998\n'+
-'VE-Valencia|3625549\n'+
-'VG-Road Town|3577430\n'+
-'VN-Hanoi|1581130\n'+
-'VN-Ho Chi Minh City|1566083\n'+
-'WS-Apia|4035413\n'+
-'YE-Sanaa|71137\n'+
-'YT-Mamoudzou|921815\n'+
-'ZA-Cape Town|3369157\n'+
-'ZA-Durban|1007311\n'+
-'ZA-Johannesburg|993800\n'+
-'ZA-Pretoria|964137\n'+
-'ZM-Lusaka|909137\n'+
-'ZW-Harare|890299';
+const cities = ['AD-Andorra La Vella|3041563',
+    'AE-Abu Dhabi|292968',
+    'AE-Dubai|292223',
+    'AF-Kabul|1138958',
+    'AI-The Valley|3573374',
+    'AL-Tirana|3183875',
+    'AM-Yerevan|616052',
+    'AO-Luanda|2240449',
+    'AR-Buenos Aires|3435910',
+    'AR-Cordoba|3860259',
+    'AR-Rosario|3838583',
+    'AS-Pago Pago|5881576',
+    'AT-Vienna|2761369',
+    'AU-Adelaide|2078025',
+    'AU-Brisbane|2174003',
+    'AU-Canberra|2172517',
+    'AU-Gold Coast|2165087',
+    'AU-Hobart|2163355',
+    'AU-Melbourne|2158177',
+    'AU-Perth|2063523',
+    'AU-Sydney|2147714',
+    'AW-Oranjestad|3577154',
+    'AZ-Baku|587084',
+    'BA-Sarajevo|3191281',
+    'BB-Bridgetown|3374036',
+    'BD-Chittagong|1205733',
+    'BD-Dhaka|1185241',
+    'BD-Khulna|1336135',
+    'BE-Brussels|2800866',
+    'BF-Ouagadougou|2357048',
+    'BG-Sofia|727011',
+    'BH-Manama|290340',
+    'BI-Bujumbura|425378',
+    'BJ-Porto-novo|2392087',
+    'BM-Hamilton|3573197',
+    'BN-Bandar Seri Begawan|1820906',
+    'BO-La Paz|3911925',
+    'BO-Santa Cruz de la Sierra|3904906',
+    'BR-Belo Horizonte|3470127',
+    'BR-Brasilia|3469058',
+    'BR-Fortaleza|3399415',
+    'BR-Rio de Janeiro|3451190',
+    'BR-Salvador|3450554',
+    'BR-Sao Paulo|3448439',
+    'BS-Nassau|3571824',
+    'BT-Thimphu|1252416',
+    'BW-Gaborone|933773',
+    'BY-Minsk|625144',
+    'BZ-Belmopan|3582672',
+    'CA-Calgary|5913490',
+    'CA-Edmonton|5946768',
+    'CA-Halifax|6324729',
+    'CA-Mississauga|6075357',
+    'CA-Montreal|6077243',
+    'CA-Ottawa|6094817',
+    'CA-Quebec City|6325494',
+    'CA-Regina|6119109',
+    'CA-Saskatoon|6141256',
+    'CA-St. John\'s-05|6324733',
+    'CA-Toronto|6167865',
+    'CA-Vancouver|6173331',
+    'CA-Victoria|6174041',
+    'CA-Winnipeg|6183235',
+    'CD-Kinshasa|2314302',
+    'CD-Lubumbashi|922704',
+    'CF-Bangui|2389853',
+    'CG-Brazzaville|2260535',
+    'CH-Bern|2661552',
+    'CH-Geneva|2660646',
+    'CH-Zurich|2657896',
+    'CI-Abidjan|2293538',
+    'CI-Yamoussoukro|2279755',
+    'CK-Avarua|4035715',
+    'CL-Santiago|3871336',
+    'CM-Douala|2232593',
+    'CM-Yaounde|2220957',
+    'CN-Beijing|1816670',
+    'CN-Chengdu|1815286',
+    'CN-Chongqing|1814906',
+    'CN-Guangzhou|1809858',
+    'CN-Harbin|2037013',
+    'CN-Kaifeng|1804879',
+    'CN-Lanzhou|1804430',
+    'CN-Nanchong|1800146',
+    'CN-Nanjing|1799962',
+    'CN-Puyang|1798422',
+    'CN-Shanghai|1796236',
+    'CN-Shenyang|2034937',
+    'CN-Shenzhen|1795565',
+    'CN-Shiyan|1794903',
+    'CN-Tai\'an|1793724',
+    'CN-Tianjin|1792947',
+    'CN-Wuhan|1791247',
+    'CN-Xi\'an|1790630',
+    'CN-Yueyang|1927639',
+    'CN-Zhumadian|1783873',
+    'CO-Barranquilla|3689147',
+    'CO-Bogota|3688689',
+    'CO-Cali|3687925',
+    'CO-Medellin|3674962',
+    'CR-San José|3621849',
+    'CU-Havana|3553478',
+    'CV-Praia|3374333',
+    'CW-Willemstad|3513090',
+    'CY-Nicosia|146268',
+    'CZ-Prague|3067696',
+    'DE-Berlin|2950159',
+    'DE-Hamburg|2911298',
+    'DE-Munich|2867714',
+    'DK-Copenhagen|2618425',
+    'DM-Roseau|3575635',
+    'DO-Santiago de los Caballeros|3492914',
+    'DO-Santo Domingo|3492908',
+    'DZ-Algiers|2507480',
+    'EC-Guayaquil|3657509',
+    'EC-Quito|3652462',
+    'EE-Tallinn|588409',
+    'EG-Al Jizah|360995',
+    'EG-Alexandria|361058',
+    'EG-Cairo|360630',
+    'ER-Asmara|343300',
+    'ES-Barcelona|3128760',
+    'ES-Madrid|3117735',
+    'ET-Addis Ababa|344979',
+    'FI-Helsinki|658225',
+    'FJ-Suva|2198148',
+    'FK-Stanley|3426691',
+    'FO-Tórshavn|2611396',
+    'FR-Marseilles|2995469',
+    'FR-Paris|2988507',
+    'GA-Libreville|2399697',
+    'GB-Belfast|2655984',
+    'GB-Birmingham|2655603',
+    'GB-Bristol|2654675',
+    'GB-Cardiff|2653822',
+    'GB-Edinburgh|2650225',
+    'GB-Glasgow|2648579',
+    'GB-Leeds|2644688',
+    'GB-Liverpool|2644210',
+    'GB-London|2643743',
+    'GB-Manchester|2643123',
+    'GB-Sheffield|2638077',
+    'GE-Tbilisi|611717',
+    'GH-Accra|2306104',
+    'GH-Kumasi|2298890',
+    'GI-Gibraltar|2411585',
+    'GL-Nuuk|3421319',
+    'GM-Banjul|2413876',
+    'GN-Camayenne|2422488',
+    'GN-Conakry|2422465',
+    'GQ-Malabo|2309527',
+    'GR-Athens|264371',
+    'GT-Guatemala City|3598132',
+    'GW-Bissau|2374775',
+    'GY-Georgetown|3378644',
+    'HK-Hong Kong|1819729',
+    'HN-Tegucigalpa|3600949',
+    'HR-Zagreb|3186886',
+    'HT-Port-au-Prince|3718426',
+    'HU-Budapest|3054643',
+    'ID-Bandung|1650357',
+    'ID-Bekasi|1649378',
+    'ID-Depok|1645518',
+    'ID-Jakarta|1642911',
+    'ID-Makassar|1622786',
+    'ID-Medan|1214520',
+    'ID-Palembang|1633070',
+    'ID-Semarang|1627896',
+    'ID-South Tangerang|8581443',
+    'ID-Surabaya|1625822',
+    'ID-Tangerang|1625084',
+    'IE-Dublin|2964574',
+    'IL-Ashdod|295629',
+    'IL-Ashkelon|295620',
+    'IL-Bat Yam|295548',
+    'IL-Be\'er Sheva|295530',
+    'IL-Beit Shemesh|295432',
+    'IL-Bnei Brak|295514',
+    'IL-Eilat|295277',
+    'IL-Hadera|294946',
+    'IL-Haifa|294801',
+    'IL-Herzliya|294778',
+    'IL-Holon|294751',
+    'IL-Jerusalem|281184',
+    'IL-Kfar Saba|294514',
+    'IL-Lod|294421',
+    'IL-Modiin|282926',
+    'IL-Nazareth|294098',
+    'IL-Netanya|294071',
+    'IL-Petach Tikvah|293918',
+    'IL-Ra\'anana|293807',
+    'IL-Ramat Gan|293788',
+    'IL-Ramla|293768',
+    'IL-Rishon LeZion|293703',
+    'IL-Tel Aviv|293397',
+    'IL-Tiberias|293322',
+    'IM-Douglas|3042237',
+    'IN-Ahmadabad|1279233',
+    'IN-Bangalore|1277333',
+    'IN-Bombay|1275339',
+    'IN-Calcutta|1275004',
+    'IN-Chennai|1264527',
+    'IN-Cochin|1273874',
+    'IN-Hyderabad|1269843',
+    'IN-Jaipur|1269515',
+    'IN-Kanpur|1267995',
+    'IN-New Delhi|1261481',
+    'IN-Pune|1259229',
+    'IN-Surat|1255364',
+    'IQ-Baghdad|98182',
+    'IR-Tehran|112931',
+    'IS-Reykjavík|3413829',
+    'IT-Milano|3173435',
+    'IT-Rome|3169070',
+    'JM-Kingston|3489854',
+    'JO-Amman|250441',
+    'JP-Kobe-shi|1859171',
+    'JP-Kyoto|1857910',
+    'JP-Nagoya-shi|1856057',
+    'JP-Osaka-shi|1853909',
+    'JP-Sapporo|2128295',
+    'JP-Tokyo|1850147',
+    'KE-Nairobi|184745',
+    'KG-Bishkek|1528675',
+    'KH-Phnom Penh|1821306',
+    'KM-Moroni|921772',
+    'KN-Basseterre|3575551',
+    'KP-Pyongyang|1871859',
+    'KR-Busan|1838524',
+    'KR-Seoul|1835848',
+    'KW-Kuwait|285787',
+    'KY-George Town|3580661',
+    'KZ-Almaty|1526384',
+    'KZ-Astana|1526273',
+    'LA-Vientiane|1651944',
+    'LB-Beirut|276781',
+    'LC-Castries|3576812',
+    'LI-Vaduz|3042030',
+    'LR-Monrovia|2274895',
+    'LS-Maseru|932505',
+    'LT-Vilnius|593116',
+    'LU-Luxemburg|2960316',
+    'LV-Riga|456172',
+    'LY-Tripoli|2210247',
+    'MA-Casablanca|2553604',
+    'MA-Rabat|2538475',
+    'MD-Chisinau|618426',
+    'ME-Podgorica|3193044',
+    'MG-Antananarivo|1070940',
+    'MK-Skopje|785842',
+    'ML-Bamako|2460596',
+    'MM-Mandalay|1311874',
+    'MM-Rangoon|1298824',
+    'MN-Ulaanbaatar|2028462',
+    'MP-Saipan|7828758',
+    'MR-Nouakchott|2377450',
+    'MS-Plymouth|3578069',
+    'MT-Valletta|2562305',
+    'MU-Port Louis|934154',
+    'MW-Lilongwe|927967',
+    'MX-Cancun|3531673',
+    'MX-Guadalajara|4005539',
+    'MX-Iztapalapa|3526683',
+    'MX-Mazatlan|3996322',
+    'MX-Mexico City|3530597',
+    'MX-Monterrey|3995465',
+    'MX-Puerto Vallarta|3991328',
+    'MX-Tijuana|3981609',
+    'MY-Kota Bharu|1736376',
+    'MY-Kuala Lumpur|1735161',
+    'MZ-Maputo|1040652',
+    'NA-Windhoek|3352136',
+    'NC-Nouméa|2139521',
+    'NE-Niamey|2440485',
+    'NG-Abuja|2352778',
+    'NG-Lagos|2332459',
+    'NI-Managua|3617763',
+    'NL-Amsterdam|2759794',
+    'NO-Oslo|3143244',
+    'NP-Kathmandu|1283240',
+    'NU-Alofi|4036284',
+    'NZ-Auckland|2193733',
+    'NZ-Christchurch|2192362',
+    'NZ-Wellington|2179537',
+    'OM-Muscat|287286',
+    'PA-Panama City|3703443',
+    'PE-Lima|3936456',
+    'PF-Papeete|4033936',
+    'PG-Port Moresby|2088122',
+    'PH-Manila|1701668',
+    'PK-Islamabad|1176615',
+    'PK-Karachi|1174872',
+    'PL-Warsaw|756135',
+    'PR-San Juan|4568127',
+    'PT-Lisbon|2267057',
+    'PY-Asuncion|3439389',
+    'QA-Doha|290030',
+    'RO-Bucharest|683506',
+    'RS-Belgrade|792680',
+    'RU-Moscow|524901',
+    'RU-Novosibirsk|1496747',
+    'RU-Saint Petersburg|498817',
+    'RU-Yekaterinburg|1486209',
+    'RW-Kigali|202061',
+    'SA-Jeddah|105343',
+    'SA-Mecca|104515',
+    'SA-Medina|109223',
+    'SA-Riyadh|108410',
+    'SB-Honiara|2108502',
+    'SC-Victoria|241131',
+    'SD-Khartoum|379252',
+    'SD-Omdurman|365137',
+    'SE-Stockholm|2673730',
+    'SG-Singapore|1880252',
+    'SH-Jamestown|3370903',
+    'SI-Ljubljana|3196359',
+    'SK-Bratislava|3060972',
+    'SL-Freetown|2408770',
+    'SN-Dakar|2253354',
+    'SO-Mogadishu|53654',
+    'SR-Paramaribo|3383330',
+    'ST-São Tomé|2410763',
+    'SV-San Salvador|3583361',
+    'SY-Aleppo|170063',
+    'SY-Damascus|170654',
+    'SZ-Mbabane|934985',
+    'TC-Cockburn Town|3576994',
+    'TD-Ndjamena|2427123',
+    'TG-Lomé|2365267',
+    'TH-Bangkok|1609350',
+    'TJ-Dushanbe|1221874',
+    'TM-Ashgabat|162183',
+    'TN-Tunis|2464470',
+    'TR-Adana|325363',
+    'TR-Ankara|323786',
+    'TR-Bursa|750269',
+    'TR-Istanbul|745044',
+    'TR-Izmir|311046',
+    'TV-Funafuti|2110394',
+    'TW-Kaohsiung|1673820',
+    'TW-Taipei|1668341',
+    'TZ-Dar es Salaam|160263',
+    'TZ-Dodoma|160196',
+    'UA-Kharkiv|706483',
+    'UA-Kiev|703448',
+    'UG-Kampala|232422',
+    'US-Atlanta-GA|4180439',
+    'US-Austin-TX|4671654',
+    'US-Baltimore-MD|4347778',
+    'US-Boston-MA|4930956',
+    'US-Buffalo-NY|5110629',
+    'US-Chicago-IL|4887398',
+    'US-Cincinnati-OH|4508722',
+    'US-Cleveland-OH|5150529',
+    'US-Columbus-OH|4509177',
+    'US-Dallas-TX|4684888',
+    'US-Denver-CO|5419384',
+    'US-Detroit-MI|4990729',
+    'US-Hartford-CT|4835797',
+    'US-Honolulu-HI|5856195',
+    'US-Houston-TX|4699066',
+    'US-Lakewood-NJ|5100280',
+    'US-Las Vegas-NV|5506956',
+    'US-Livingston-NY|5100572',
+    'US-Los Angeles-CA|5368361',
+    'US-Memphis-TN|4641239',
+    'US-Miami-FL|4164138',
+    'US-Milwaukee-WI|5263045',
+    'US-Monsey-NY|5127315',
+    'US-New Haven-CT|4839366',
+    'US-New York-NY|5128581',
+    'US-Omaha-NE|5074472',
+    'US-Orlando-FL|4167147',
+    'US-Passaic-NJ|5102443',
+    'US-Philadelphia-PA|4560349',
+    'US-Phoenix-AZ|5308655',
+    'US-Pittsburgh-PA|5206379',
+    'US-Portland-OR|5746545',
+    'US-Providence-RI|5224151',
+    'US-Richmond-VA|4781708',
+    'US-Rochester-NY|5134086',
+    'US-Saint Louis-MO|4407066',
+    'US-Saint Paul-MN|5045360',
+    'US-San Diego-CA|5391811',
+    'US-San Francisco-CA|5391959',
+    'US-Seattle-WA|5809844',
+    'US-Silver Spring-MD|4369596',
+    'US-Teaneck-NJ|5105262',
+    'US-Washington-DC|4140963',
+    'US-White Plains-NY|5144336',
+    'UY-Montevideo|3441575',
+    'UZ-Tashkent|1512569',
+    'VC-Kingstown|3577887',
+    'VE-Caracas|3646738',
+    'VE-Maracaibo|3633009',
+    'VE-Maracay|3632998',
+    'VE-Valencia|3625549',
+    'VG-Road Town|3577430',
+    'VN-Hanoi|1581130',
+    'VN-Ho Chi Minh City|1566083',
+    'WS-Apia|4035413',
+    'YE-Sanaa|71137',
+    'YT-Mamoudzou|921815',
+    'ZA-Cape Town|3369157',
+    'ZA-Durban|1007311',
+    'ZA-Johannesburg|993800',
+    'ZA-Pretoria|964137',
+    'ZM-Lusaka|909137',
+    'ZW-Harare|890299'];
+
+var x = {
+  "title": "Hebcal Abu Dhabi November 2022",
+  "date": "2022-11-20T08:06:20.682Z",
+  "location": {
+    "title": "Abu Dhabi",
+    "city": "Abu Dhabi",
+    "tzid": "Asia/Dubai",
+    "latitude": 24.46667,
+    "longitude": 54.36667,
+    "cc": "AE",
+    "country": "United Arab Emirates"
+  }, // location
+  "range": {"start": "2022-11-25", "end": "2022-11-26"}, // range
+  "items": [
+    {
+      "title": "רֹאשׁ חוֹדֶשׁ כִּסְלֵו",
+      "date": "2022-11-25",
+      "hdate": "1 Kislev 5783",
+      "category": "roshchodesh",
+      "title_orig": "Rosh Chodesh Kislev",
+      "hebrew": "ראש חודש כסלו",
+      "leyning": {
+        "1": "Numbers 28:1-28:3",
+        "2": "Numbers 28:3-28:5",
+        "3": "Numbers 28:6-28:10",
+        "4": "Numbers 28:11-28:15",
+        "torah": "Numbers 28:1-15"
+      }, //leyning
+      "link": "https://hebcal.com/h/rosh-chodesh-kislev-2022?us=js&um=api",
+      "memo":
+          "Start of month of Kislev on the Hebrew calendar. Kislev (כִּסְלֵו) is the 9th month of the Hebrew year, has 30 or 29 days, and corresponds to November or December on the Gregorian calendar.  רֹאשׁ חוֹדֶשׁ, transliterated Rosh Chodesh or Rosh Hodesh, is a minor holiday that occurs at the beginning of every month in the Hebrew calendar. It is marked by the birth of a new moon"
+    },
+    {
+      "title": "הַדלָקָת נֵרוֹת: 17:15",
+      "date": "2022-11-25T17:15:00+04:00",
+      "category": "candles",
+      "title_orig": "Candle lighting",
+      "hebrew": "הדלקת נרות",
+      "memo": "פָּרָשַׁת תּוֹלְדוֹת"
+    },
+    {
+      "title": "פָּרָשַׁת תּוֹלְדוֹת",
+      "date": "2022-11-26",
+      "hdate": "2 Kislev 5783",
+      "category": "parashat",
+      "title_orig": "Parashat Toldot",
+      "hebrew": "פרשת תולדות",
+      "leyning": {
+        "1": "Genesis 25:19-26:5",
+        "2": "Genesis 26:6-26:12",
+        "3": "Genesis 26:13-26:22",
+        "4": "Genesis 26:23-26:29",
+        "5": "Genesis 26:30-27:27",
+        "6": "Genesis 27:28-28:4",
+        "7": "Genesis 28:5-28:9",
+        "torah": "Genesis 25:19-28:9",
+        "haftarah": "Malachi 1:1-2:7",
+        "maftir": "Genesis 28:7-28:9",
+        "triennial": {
+          "1": "Genesis 25:19-25:22",
+          "2": "Genesis 25:23-25:26",
+          "3": "Genesis 25:27-25:34",
+          "4": "Genesis 26:1-26:5",
+          "5": "Genesis 26:6-26:12",
+          "6": "Genesis 26:13-26:16",
+          "7": "Genesis 26:17-26:22",
+          "maftir": "Genesis 26:19-26:22"
+        } // triennial
+      }, // leyning
+      "link": "https://hebcal.com/s/toldot-20221126?us=js&um=api"
+    },
+    {
+      "title": "הַבדָלָה: 18:10",
+      "date": "2022-11-26T18:10:00+04:00",
+      "category": "havdalah",
+      "title_orig": "Havdalah",
+      "hebrew": "הבדלה"
+    }
+  ]
+};
+
+var y = {
+  "title": "Hebcal Abu Dhabi November 2022",
+  "date": "2022-11-20T10:40:20.030Z",
+  "location": {
+    "title": "Abu Dhabi",
+    "city": "Abu Dhabi",
+    "tzid": "Asia/Dubai",
+    "latitude": 24.46667,
+    "longitude": 54.36667,
+    "cc": "AE",
+    "country": "United Arab Emirates"
+  },
+  "range": {"start": "2022-11-23", "end": "2022-11-26"},
+  "items": [
+    {
+      "title": "סיגד",
+      "date": "2022-11-23",
+      "hdate": "29 Cheshvan 5783",
+      "category": "holiday",
+      "subcat": "modern",
+      "title_orig": "Sigd",
+      "hebrew": "סיגד",
+      "link": "https://hebcal.com/h/sigd-2022?us=js&um=api",
+      "memo": "Ethiopian Jewish holiday occurring 50 days after Yom Kippur"
+    },
+    {
+      "title": "רֹאשׁ חוֹדֶשׁ כִּסְלֵו",
+      "date": "2022-11-24",
+      "hdate": "30 Cheshvan 5783",
+      "category": "roshchodesh",
+      "title_orig": "Rosh Chodesh Kislev",
+      "hebrew": "ראש חודש כסלו",
+      "leyning": {
+        "1": "Numbers 28:1-28:3",
+        "2": "Numbers 28:3-28:5",
+        "3": "Numbers 28:6-28:10",
+        "4": "Numbers 28:11-28:15",
+        "torah": "Numbers 28:1-15"
+      },
+      "link": "https://hebcal.com/h/rosh-chodesh-kislev-2022?us=js&um=api",
+      "memo":
+          "Start of month of Kislev on the Hebrew calendar. Kislev (כִּסְלֵו) is the 9th month of the Hebrew year, has 30 or 29 days, and corresponds to November or December on the Gregorian calendar.  רֹאשׁ חוֹדֶשׁ, transliterated Rosh Chodesh or Rosh Hodesh, is a minor holiday that occurs at the beginning of every month in the Hebrew calendar. It is marked by the birth of a new moon"
+    },
+    {
+      "title": "רֹאשׁ חוֹדֶשׁ כִּסְלֵו",
+      "date": "2022-11-25",
+      "hdate": "1 Kislev 5783",
+      "category": "roshchodesh",
+      "title_orig": "Rosh Chodesh Kislev",
+      "hebrew": "ראש חודש כסלו",
+      "leyning": {
+        "1": "Numbers 28:1-28:3",
+        "2": "Numbers 28:3-28:5",
+        "3": "Numbers 28:6-28:10",
+        "4": "Numbers 28:11-28:15",
+        "torah": "Numbers 28:1-15"
+      },
+      "link": "https://hebcal.com/h/rosh-chodesh-kislev-2022?us=js&um=api",
+      "memo":
+          "Start of month of Kislev on the Hebrew calendar. Kislev (כִּסְלֵו) is the 9th month of the Hebrew year, has 30 or 29 days, and corresponds to November or December on the Gregorian calendar.  רֹאשׁ חוֹדֶשׁ, transliterated Rosh Chodesh or Rosh Hodesh, is a minor holiday that occurs at the beginning of every month in the Hebrew calendar. It is marked by the birth of a new moon"
+    },
+    {
+      "title": "הַדלָקָת נֵרוֹת: 17:15",
+      "date": "2022-11-25T17:15:00+04:00",
+      "category": "candles",
+      "title_orig": "Candle lighting",
+      "hebrew": "הדלקת נרות",
+      "memo": "פָּרָשַׁת תּוֹלְדוֹת"
+    },
+    {
+      "title": "פָּרָשַׁת תּוֹלְדוֹת",
+      "date": "2022-11-26",
+      "hdate": "2 Kislev 5783",
+      "category": "parashat",
+      "title_orig": "Parashat Toldot",
+      "hebrew": "פרשת תולדות",
+      "leyning": {
+        "1": "Genesis 25:19-26:5",
+        "2": "Genesis 26:6-26:12",
+        "3": "Genesis 26:13-26:22",
+        "4": "Genesis 26:23-26:29",
+        "5": "Genesis 26:30-27:27",
+        "6": "Genesis 27:28-28:4",
+        "7": "Genesis 28:5-28:9",
+        "torah": "Genesis 25:19-28:9",
+        "haftarah": "Malachi 1:1-2:7",
+        "maftir": "Genesis 28:7-28:9",
+        "triennial": {
+          "1": "Genesis 25:19-25:22",
+          "2": "Genesis 25:23-25:26",
+          "3": "Genesis 25:27-25:34",
+          "4": "Genesis 26:1-26:5",
+          "5": "Genesis 26:6-26:12",
+          "6": "Genesis 26:13-26:16",
+          "7": "Genesis 26:17-26:22",
+          "maftir": "Genesis 26:19-26:22"
+        }
+      },
+      "link": "https://hebcal.com/s/toldot-20221126?us=js&um=api"
+    },
+    {
+      "title": "הַבדָלָה: 18:10",
+      "date": "2022-11-26T18:10:00+04:00",
+      "category": "havdalah",
+      "title_orig": "Havdalah",
+      "hebrew": "הבדלה"
+    }
+  ]
+};
+
+var z = {
+  "title": "Hebcal Beersheba October 2022",
+  "date": "2022-11-20T11:54:07.475Z",
+  "location": {
+    "title": "Beersheba, Israel",
+    "city": "Beersheba",
+    "tzid": "Asia/Jerusalem",
+    "latitude": 31.25181,
+    "longitude": 34.7913,
+    "cc": "IL",
+    "country": "Israel",
+    "admin1": "Southern District",
+    "asciiname": "Beersheba",
+    "geo": "geoname",
+    "geonameid": 295530
+  },
+  "range": {"start": "2022-10-05", "end": "2022-10-10"},
+  "items": [
+    {
+      "title": "יוֹם כִּפּוּר",
+      "date": "2022-10-05",
+      "hdate": "10 Tishrei 5783",
+      "category": "holiday",
+      "subcat": "major",
+      "yomtov": true,
+      "title_orig": "Yom Kippur",
+      "hebrew": "יום כפור",
+      "leyning": {
+        "1": "Leviticus 16:1-16:6",
+        "2": "Leviticus 16:7-16:11",
+        "3": "Leviticus 16:12-16:17",
+        "4": "Leviticus 16:18-16:24",
+        "5": "Leviticus 16:25-16:30",
+        "6": "Leviticus 16:31-16:34",
+        "torah": "Leviticus 16:1-34; Numbers 29:7-11",
+        "haftarah": "Isaiah 57:14-58:14",
+        "maftir": "Numbers 29:7-29:11"
+      },
+      "link": "https://hebcal.com/h/yom-kippur-2022?i=on&us=js&um=api",
+      "memo": "Day of Atonement"
+    },
+    {
+      "title": "הַבדָלָה: 18:57",
+      "date": "2022-10-05T18:57:00+03:00",
+      "category": "havdalah",
+      "title_orig": "Havdalah",
+      "hebrew": "הבדלה",
+      "memo": "יוֹם כִּפּוּר"
+    },
+    {
+      "title": "הַדלָקָת נֵרוֹת: 18:00",
+      "date": "2022-10-07T18:00:00+03:00",
+      "category": "candles",
+      "title_orig": "Candle lighting",
+      "hebrew": "הדלקת נרות",
+      "memo": "פָּרָשַׁת הַאֲזִינוּ"
+    },
+    {
+      "title": "פָּרָשַׁת הַאֲזִינוּ",
+      "date": "2022-10-08",
+      "hdate": "13 Tishrei 5783",
+      "category": "parashat",
+      "title_orig": "Parashat Ha'Azinu",
+      "hebrew": "פרשת האזינו",
+      "leyning": {
+        "1": "Deuteronomy 32:1-32:6",
+        "2": "Deuteronomy 32:7-32:12",
+        "3": "Deuteronomy 32:13-32:18",
+        "4": "Deuteronomy 32:19-32:28",
+        "5": "Deuteronomy 32:29-32:39",
+        "6": "Deuteronomy 32:40-32:43",
+        "7": "Deuteronomy 32:44-32:52",
+        "torah": "Deuteronomy 32:1-52",
+        "haftarah": "II Samuel 22:1-51",
+        "maftir": "Deuteronomy 32:48-32:52"
+      },
+      "link": "https://hebcal.com/s/haazinu-20221008?i=on&us=js&um=api"
+    },
+    {
+      "title": "הַבדָלָה: 18:54",
+      "date": "2022-10-08T18:54:00+03:00",
+      "category": "havdalah",
+      "title_orig": "Havdalah",
+      "hebrew": "הבדלה"
+    },
+    {
+      "title": "עֶרֶב סוּכּוֹת",
+      "date": "2022-10-09",
+      "hdate": "14 Tishrei 5783",
+      "category": "holiday",
+      "subcat": "major",
+      "title_orig": "Erev Sukkot",
+      "hebrew": "ערב סוכות",
+      "link": "https://hebcal.com/h/sukkot-2022?i=on&us=js&um=api",
+      "memo": "Feast of Booths"
+    },
+    {
+      "title": "הַדלָקָת נֵרוֹת: 17:58",
+      "date": "2022-10-09T17:58:00+03:00",
+      "category": "candles",
+      "title_orig": "Candle lighting",
+      "hebrew": "הדלקת נרות",
+      "memo": "עֶרֶב סוּכּוֹת"
+    },
+    {
+      "title": "סוּכּוֹת א׳",
+      "date": "2022-10-10",
+      "hdate": "15 Tishrei 5783",
+      "category": "holiday",
+      "subcat": "major",
+      "yomtov": true,
+      "title_orig": "Sukkot I",
+      "hebrew": "סוכות א׳",
+      "leyning": {
+        "1": "Leviticus 22:26-23:3",
+        "2": "Leviticus 23:4-23:14",
+        "3": "Leviticus 23:15-23:22",
+        "4": "Leviticus 23:23-23:32",
+        "5": "Leviticus 23:33-23:44",
+        "torah": "Leviticus 22:26-23:44; Numbers 29:12-16",
+        "haftarah": "Zechariah 14:1-21",
+        "maftir": "Numbers 29:12-29:16"
+      },
+      "link": "https://hebcal.com/h/sukkot-2022?i=on&us=js&um=api",
+      "memo": "Feast of Booths"
+    },
+    {
+      "title": "הַבדָלָה: 18:51",
+      "date": "2022-10-10T18:51:00+03:00",
+      "category": "havdalah",
+      "title_orig": "Havdalah",
+      "hebrew": "הבדלה",
+      "memo": "סוּכּוֹת א׳"
+    }
+  ]
+};
+
+var w = { //13.9.22
+  "title": "Hebcal Beersheba September 2022",
+  "date": "2022-11-21T09:43:10.005Z",
+  "location": {
+    "title": "Beersheba, Israel",
+    "city": "Beersheba",
+    "tzid": "Asia/Jerusalem",
+    "latitude": 31.25181,
+    "longitude": 34.7913,
+    "cc": "IL",
+    "country": "Israel",
+    "admin1": "Southern District",
+    "asciiname": "Beersheba",
+    "geo": "geoname",
+    "geonameid": 295530
+  },
+  "range": {"start": "2022-09-16", "end": "2022-09-17"},
+  "items": [
+    {
+      "title": "הַדלָקָת נֵרוֹת: 18:27",
+      "date": "2022-09-16T18:27:00+03:00",
+      "category": "candles",
+      "title_orig": "Candle lighting",
+      "hebrew": "הדלקת נרות",
+      "memo": "פָּרָשַׁת כִּי־תָבוֹא"
+    },
+    {
+      "title": "סליחות",
+      "date": "2022-09-17",
+      "hdate": "21 Elul 5782",
+      "category": "holiday",
+      "subcat": "minor",
+      "title_orig": "Leil Selichot",
+      "hebrew": "סליחות",
+      "link": "https://hebcal.com/h/leil-selichot-2022?i=on&us=js&um=api",
+      "memo": "Prayers for forgiveness in preparation for the High Holidays"
+    },
+    {
+      "title": "פָּרָשַׁת כִּי־תָבוֹא",
+      "date": "2022-09-17",
+      "hdate": "21 Elul 5782",
+      "category": "parashat",
+      "title_orig": "Parashat Ki Tavo",
+      "hebrew": "פרשת כי־תבוא",
+      "leyning": {
+        "1": "Deuteronomy 26:1-26:11",
+        "2": "Deuteronomy 26:12-26:15",
+        "3": "Deuteronomy 26:16-26:19",
+        "4": "Deuteronomy 27:1-27:10",
+        "5": "Deuteronomy 27:11-28:6",
+        "6": "Deuteronomy 28:7-28:69",
+        "7": "Deuteronomy 29:1-29:8",
+        "torah": "Deuteronomy 26:1-29:8",
+        "haftarah": "Isaiah 60:1-22",
+        "maftir": "Deuteronomy 29:6-29:8"
+      },
+      "link": "https://hebcal.com/s/ki-tavo-20220917?i=on&us=js&um=api"
+    },
+    {
+      "title": "הַבדָלָה: 19:20",
+      "date": "2022-09-17T19:20:00+03:00",
+      "category": "havdalah",
+      "title_orig": "Havdalah",
+      "hebrew": "הבדלה"
+    }
+  ]
+};
