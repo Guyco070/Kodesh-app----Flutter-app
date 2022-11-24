@@ -217,7 +217,17 @@ class Reminders with ChangeNotifier {
             .subtract(const Duration(days: 1));
 
         if (dayBefore.weekday > 5) {
-          dayBefore = dayBefore.subtract(Duration(days: dayBefore.weekday == 6 ? 1 : 2));
+          DateTime twoOc = DateTime(
+                e.entryDate!.year,
+                e.entryDate!.month,
+                e.entryDate!.day,
+                14,0)
+            .subtract(const Duration(days: 1));
+          if(dayBefore.isAfter(twoOc)){
+            dayBefore = dayBefore.subtract(Duration(days: dayBefore.weekday == 6 ? 1 : 2));
+          }else{
+            dayBefore = dayBefore.subtract(const Duration(days: 1));
+          }
         }
         
         if (now.isBefore(dayBefore)) {

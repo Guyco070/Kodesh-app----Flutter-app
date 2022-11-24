@@ -261,7 +261,7 @@ class _SchedualNotficationsScreenState
                       const Text('הזכר לי יום לפני ראש חודש בשעה'),
                     ],
                   ),
-                  Text('תזכורת זו תוקדם תמיד לימים שאינם שישי או שבת *', style: TextStyle(color: Colors.grey.shade700, fontSize: 12)),
+                  Text('תזכורת זו תוקדם לימי חול עד השעה שתיים בצהריים בשישי *', style: TextStyle(color: Colors.grey.shade700, fontSize: 12)), // todo: fix it to be syncronize with shabat and holidays
                   const SizedBox(
                     height: 7,
                   ),
