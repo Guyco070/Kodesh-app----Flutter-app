@@ -17,7 +17,7 @@ class _SchedualNotficationsScreenState
     extends State<SchedualNotficationsScreen> {
   bool tefilin = false;
   bool preys = false;
-  bool roshHodesh = false;
+  bool roshChodesh = false;
   String tefilinTime = '';
 
   // TextEditingController? tefilinController;
@@ -36,12 +36,8 @@ class _SchedualNotficationsScreenState
     }
 
     while (hour!.length < 2 || minute!.length < 2) {
-      if (hour.length < 2) {
-        hour = '0$hour';
-      }
-      if (minute!.length < 2) {
-        minute = '0$minute';
-      }
+      hour = getSingleElementTime(hour);
+      minute = getSingleElementTime(minute!);
     }
     return '$hour:$minute';
   }
@@ -58,6 +54,22 @@ class _SchedualNotficationsScreenState
   @override
   Widget build(BuildContext context) {
     var reminders = Provider.of<Reminders>(context);
+
+    Card checkWidget({required String title, required bool value, required void Function(bool newValue) setter, }) {
+    return Card(
+            child: Row(
+              textDirection: TextDirection.rtl,
+              children: [
+                Checkbox(
+                    value: value,
+                    onChanged: (newTefilin) async {
+                      setter(newTefilin!);
+                    }),
+                Text(title)
+              ],
+            ),
+          );
+  }
 
     shabatAndHolidaysElements() {
       return [
@@ -155,6 +167,7 @@ class _SchedualNotficationsScreenState
     return Scaffold(
       appBar: AppBar(
         title: const Text('קביעת תזכורות'),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -173,50 +186,82 @@ class _SchedualNotficationsScreenState
               ),
             ),
             if (reminders.shabatAndHolidays) ...shabatAndHolidaysElements(),
-            Card(
-              child: Row(
-                textDirection: TextDirection.rtl,
-                children: [
-                  Checkbox(
-                      value: reminders.tefilin,
-                      onChanged: (newTefilin) async {
-                        reminders.setTefilin(newTefilin!);
-                        // tefilinController = TextEditingController(
-                        //     text: getTime(
-                        //         Provider.of<Events>(context, listen: false)
-                        //             .items[0]
-                        //             .entryDate as DateTime));
-                      }),
-                  const Text('תפילין')
-                ],
-              ),
-            ),
+            checkWidget(title: 'תפילין', value: reminders.tefilin, setter: reminders.setTefilin),
             if (reminders.tefilin)
               Column(
                 children: [
-                  TextButton(
-                    onPressed: () async {
-                      TimeOfDay? time = await showTimePicker(
-                          context: context,
-                          initialTime: const TimeOfDay(hour: 6, minute: 00),
-                          initialEntryMode: TimePickerEntryMode.dialOnly,
-                          builder: (context, childWidget) {
-                            return MediaQuery(
-                                data: MediaQuery.of(context).copyWith(
-                                    // Using 24-Hour format
-                                    alwaysUse24HourFormat: true),
-                                // If you want 12-Hour format, just change alwaysUse24HourFormat to false or remove all the builder argument
-                                child: childWidget!);
-                          });
-                      if (time != null) {
-                        print(time);
-                        reminders.setTefilinTime('${time.hour}:${time.minute}');
-                      }
-                    },
-                    child: Text(reminders.tefilinTime),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: () async {
+                          TimeOfDay? time = await showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay(
+                                  hour: reminders.getTefilinTimeObject.hour,
+                                  minute:
+                                      reminders.getTefilinTimeObject.minute),
+                              builder: (context, childWidget) {
+                                return MediaQuery(
+                                    data: MediaQuery.of(context).copyWith(
+                                        // Using 24-Hour format
+                                        alwaysUse24HourFormat: true),
+                                    // If you want 12-Hour format, just change alwaysUse24HourFormat to false or remove all the builder argument
+                                    child: childWidget!);
+                              });
+                          if (time != null) {
+                            reminders.setTefilinTime(getTime(null,
+                                time.minute.toString(), time.hour.toString()));
+                          }
+                        },
+                        child: Text(reminders.tefilinTime),
+                      ),
+                      const Text('הזכר לי להניח תפילין כל יום בשעה'),
+                    ],
                   ),
-                  Text(
-                      'הזכר לי להניח תפילין כל יום בשעה ${reminders.tefilinTime}'),
+                  const SizedBox(
+                    height: 7,
+                  ),
+                  const Divider(height: 15, thickness: 1.5),
+                  const SizedBox(
+                    height: 7,
+                  ),
+                ],
+              ),
+            checkWidget(title: 'ראש חודש', value: reminders.roshChodesh, setter: reminders.setRoshChodesh),
+             if (reminders.roshChodesh)
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: () async {
+                          TimeOfDay? time = await showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay(
+                                  hour: reminders.getRoshChodeshTimeObject.hour,
+                                  minute:
+                                      reminders.getRoshChodeshTimeObject.minute),
+                              builder: (context, childWidget) {
+                                return MediaQuery(
+                                    data: MediaQuery.of(context).copyWith(
+                                        // Using 24-Hour format
+                                        alwaysUse24HourFormat: true),
+                                    // If you want 12-Hour format, just change alwaysUse24HourFormat to false or remove all the builder argument
+                                    child: childWidget!);
+                              });
+                          if (time != null) {
+                            reminders.setRoshChodeshTime(getTime(null,
+                                time.minute.toString(), time.hour.toString()));
+                          }
+                        },
+                        child: Text(reminders.roshChodeshTime),
+                      ),
+                      const Text('הזכר לי יום לפני ראש חודש בשעה'),
+                    ],
+                  ),
+                  Text('תזכורת זו תוקדם תמיד לימים שאינם שישי או שבת *', style: TextStyle(color: Colors.grey.shade700, fontSize: 12)),
                   const SizedBox(
                     height: 7,
                   ),
@@ -228,7 +273,9 @@ class _SchedualNotficationsScreenState
               ),
             ElevatedButton(
                 onPressed: () {
-                  reminders.setReminders(context);
+                  reminders.setReminders(update: true);
+                  Navigator.pushNamed(
+                      context, '/');
                 },
                 child: const Text('עדכן תזכורות'))
           ],

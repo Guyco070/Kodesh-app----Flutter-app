@@ -79,16 +79,16 @@ class Events with ChangeNotifier {
   tryFetch({String? cityToTake, bool isToday = false}) async {
     cityToTake ??= city;
     var response;
-    var url = Uri.parse(
-        isToday ? 'https://www.hebcal.com/shabbat?cfg=json&zip=${cityToTake.split('|')[1]}&lg=he' :
-        'https://www.hebcal.com/shabbat?cfg=json&gy=${startDate.year}&gm=${startDate.month}&gd=${startDate.day}&zip=${cityToTake.split('|')[1]}&lg=he');
+    var url = Uri.parse(isToday
+        ? 'https://www.hebcal.com/shabbat?cfg=json&zip=${cityToTake.split('|')[1]}&lg=he'
+        : 'https://www.hebcal.com/shabbat?cfg=json&gy=${startDate.year}&gm=${startDate.month}&gd=${startDate.day}&zip=${cityToTake.split('|')[1]}&lg=he');
     response = await get(url);
     if ((jsonDecode(response.body) as Map<String, dynamic>)
         .keys
         .contains('error')) {
-      url = Uri.parse(
-          isToday ? 'https://www.hebcal.com/shabbat?cfg=json&city=${cityToTake.split('|')[0]}&lg=he' :
-          'https://www.hebcal.com/shabbat?cfg=json&gy=${startDate.year}&gm=${startDate.month}&gd=${startDate.day}&city=${cityToTake.split('|')[0]}&lg=he');
+      url = Uri.parse(isToday
+          ? 'https://www.hebcal.com/shabbat?cfg=json&city=${cityToTake.split('|')[0]}&lg=he'
+          : 'https://www.hebcal.com/shabbat?cfg=json&gy=${startDate.year}&gm=${startDate.month}&gd=${startDate.day}&city=${cityToTake.split('|')[0]}&lg=he');
       response = await get(url);
     }
     return jsonDecode(response.body) as Map<String, dynamic>;

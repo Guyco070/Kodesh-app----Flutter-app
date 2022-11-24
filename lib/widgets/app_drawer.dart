@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kodesh_app/screens/schedual_notifications.dart';
-import 'package:provider/provider.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({Key? key}) : super(key: key);
@@ -13,10 +12,11 @@ class AppDrawer extends StatelessWidget {
           AppBar(
             title: const Text('שבת שלום'),
             automaticallyImplyLeading: false, // No back button
+            centerTitle: true,
           ),
           const Divider(),
           ListTile(
-            leading: const Icon(Icons.shop),
+            leading: const Icon(Icons.watch_later_outlined),
             title: const Text('קביעת תזכורות'),
             onTap: () => Navigator.pushNamed(context, SchedualNotficationsScreen.routeName),
           ),

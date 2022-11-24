@@ -1,13 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:kodesh_app/data/cities.dart';
 import 'package:kodesh_app/models/event.dart';
 import 'package:kodesh_app/models/shabat.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/widgets/default_scaffold.dart';
 import 'package:kodesh_app/widgets/events_widgets/event_factory_widget.dart';
-import 'package:kodesh_app/widgets/loading_scaffold.dart';
 import 'package:kodesh_app/widgets/settings_bar.dart';
 import 'package:provider/provider.dart';
 import '../api/notification_api.dart';
@@ -26,15 +22,9 @@ class _EventScreenState extends State<EventScreen> {
 
   String? title;
 
-  late final NotificationApi service;
   @override
   void initState() {
     super.initState();
-
-    var events = Provider.of<Events>(context, listen: false);
-    events.getData();
-    service = NotificationApi();
-    service.initialize();
   }
 
   @override
@@ -108,20 +98,20 @@ class _EventScreenState extends State<EventScreen> {
               else
                 ..._getEventwidgets(events.items, events.isOnlyShabat),
 
-              ElevatedButton(
-                  onPressed: () async {
-                    await service.showNotification(
-                        title: 'Guy', body: 'Instant notfication');
-                  },
-                  child: const Text('Instant notification')),
-              ElevatedButton(
-                  onPressed: () async {
-                    await NotificationApi.showSchedualedNotification(
-                          title: 'Guy', body: 'Schedualed notfication',
-                          date: DateTime.now().add(const Duration(seconds: 5))
-                        );
-                  },
-                  child: const Text('Schedualed notification'))
+              // ElevatedButton(
+              //     onPressed: () async {
+              //       await NotificationApi.showNotification(
+              //           title: 'Guy', body: 'Instant notfication');
+              //     },
+              //     child: const Text('Instant notification')),
+              // ElevatedButton(
+              //     onPressed: () async {
+              //       await NotificationApi.showSchedualedNotification(
+              //             title: 'Guy', body: 'Schedualed notfication',
+              //             date: DateTime.now().add(const Duration(seconds: 5))
+              //           );
+              //     },
+              //     child: const Text('Schedualed notification'))
             ],
           ),
         ));

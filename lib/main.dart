@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kodesh_app/api/notification_api.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/providers/reminders.dart';
 import 'package:kodesh_app/screens/schedual_notifications.dart';
@@ -14,11 +15,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Reminders reminders = Reminders();
+    Events events = Events();
+    NotificationApi().initialize();
+    reminders.setReminders();
     return MultiProvider(
       providers: [
-          ChangeNotifierProvider(create: (context) =>  Events()),
-          ChangeNotifierProvider(create: (context) =>  Reminders()),
-        ],
+        ChangeNotifierProvider(create: (context) => events),
+        ChangeNotifierProvider(create: (context) => reminders),
+      ],
       child: MaterialApp(
         title: 'Kodesh',
         theme: ThemeData(
@@ -26,7 +31,8 @@ class MyApp extends StatelessWidget {
         ),
         home: const EventScreen(),
         routes: {
-          SchedualNotficationsScreen.routeName:(context) => const SchedualNotficationsScreen(),
+          SchedualNotficationsScreen.routeName: (context) =>
+              const SchedualNotficationsScreen(),
         },
       ),
     );

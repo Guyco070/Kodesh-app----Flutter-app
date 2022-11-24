@@ -40,12 +40,11 @@ class NotificationApi {
     );
   }
 
-
   static void cancel(int id) => _notifications.cancel(id);
   static void cancelAll() => _notifications.cancelAll();
-  
+
   // instant notifications
-  Future<void> showNotification({
+  static Future<void> showNotification({
     int id = 0,
     String? title,
     String? body,
@@ -95,19 +94,19 @@ class NotificationApi {
     );
   }
 
-  Future<void> showSchedualeDailyNotification({
-    //including shabat...
-    int id = 0,
-    String? title,
-    String? body,
-    String? payload,
-  }) async {
+  static Future<void> showSchedualeDailyNotification( // set reminders evry day including sutterdays and holidays
+      {
+      //including shabat...
+      int id = 0,
+      String? title,
+      String? body,
+      String? payload,
+      required Time time}) async {
     return _notifications.zonedSchedule(
       id,
       title,
       body,
-      _schedualeDailyWithoutSaturday(
-          const Time(8)), // every day at 08:00 not including saturday
+      schedualeDaily(time),
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time,
@@ -115,6 +114,10 @@ class NotificationApi {
       _notificationDetails(),
       payload: payload,
     );
+  }
+
+  static Future<List<PendingNotificationRequest>> get getPendingNotificationRequests async {
+    return (await _notifications.pendingNotificationRequests());
   }
 
   static DateTime _nextTimeWeekday(int wantedDayweek) {
@@ -130,7 +133,7 @@ class NotificationApi {
     return y; // if today is weekday
   }
 
-  static TZDateTime _schedualeDaily(Time time) {
+  static TZDateTime schedualeDaily(Time time) {
     final now = TZDateTime.now(local);
     final schedualedDate = TZDateTime(local, now.year, now.month, now.day,
         time.hour, time.minute, time.second);
@@ -140,23 +143,24 @@ class NotificationApi {
         : schedualedDate;
   }
 
-  static TZDateTime _schedualeDailyWithoutSaturday(Time time,
-      {List<int> days = const [
-        DateTime.sunday,
-        DateTime.monday,
-        DateTime.tuesday,
-        DateTime.wednesday,
-        DateTime.thursday,
-        DateTime.friday
-      ]}) {
-    // TODO: include holidays
-    final schedualedDate = _schedualeDaily(time);
-    while (!days.contains(schedualedDate.weekday)) {
-      schedualedDate.add(const Duration(days: 1));
-    }
+  // static TZDateTime schedualeDailyWithoutSaturday(Time time,
+  //     {List<int> days = const [
+  //       DateTime.sunday,
+  //       DateTime.monday,
+  //       DateTime.tuesday,
+  //       DateTime.wednesday,
+  //       DateTime.thursday,
+  //       DateTime.friday
+  //     ]}) {
+  //   // TODO: include holidays
 
-    return schedualedDate;
-  }
+  //   final schedualedDate = schedualeDaily(time);
+  //   while (!days.contains(schedualedDate.weekday)) {
+  //     schedualedDate.add(const Duration(days: 1));
+  //   }
+
+  //   return schedualedDate;
+  // }
 
   // actions
   void onDidReceiveLocalNotification(
