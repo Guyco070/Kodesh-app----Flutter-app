@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:kodesh_app/models/event.dart';
 import 'package:kodesh_app/models/shabat.dart';
 import 'package:kodesh_app/providers/events.dart';
+import 'package:kodesh_app/screens/sederAnahatTefilin.dart';
 import 'package:kodesh_app/widgets/default_scaffold.dart';
 import 'package:kodesh_app/widgets/events_widgets/event_factory_widget.dart';
 import 'package:kodesh_app/widgets/settings_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:timezone/timezone.dart' as tz;
 import '../api/notification_api.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 class EventScreen extends StatefulWidget {
   const EventScreen({super.key});
@@ -25,14 +28,27 @@ class _EventScreenState extends State<EventScreen> {
   @override
   void initState() {
     super.initState();
+    NotificationApi.initialize();
+    NotificationApi.onNotifications.distinct();
+    if (NotificationApi.isFirstInit) {
+      listenNotifictions();
+      NotificationApi.isFirstInit = false;
+    }
   }
+
+  void listenNotifictions() {
+    NotificationApi.onNotifications.stream.listen(onClickNotification);
+  }
+
+  void onClickNotification(String? payload) async =>
+      await Navigator.pushNamed(context, payload!);
 
   @override
   void didChangeDependencies() {
     if (_isInit) {
       _isLoading = true;
       Provider.of<Events>(context, listen: false)
-          .fetchAndSetProducts()
+          .fetchAndSetProducts(getDataFirst: true)
           .then((_) => setIsLoading());
     }
 
@@ -97,21 +113,39 @@ class _EventScreenState extends State<EventScreen> {
                 )
               else
                 ..._getEventwidgets(events.items, events.isOnlyShabat),
-
               // ElevatedButton(
               //     onPressed: () async {
               //       await NotificationApi.showNotification(
-              //           title: 'Guy', body: 'Instant notfication');
+              //           title: 'Guy',
+              //           body: 'Instant notfication',
+              //           payload: SederAnahatTefilin.routeName);
               //     },
               //     child: const Text('Instant notification')),
               // ElevatedButton(
               //     onPressed: () async {
-              //       await NotificationApi.showSchedualedNotification(
-              //             title: 'Guy', body: 'Schedualed notfication',
-              //             date: DateTime.now().add(const Duration(seconds: 5))
-              //           );
+              //       await NotificationApi.showSchedualedNotification2(
+              //           title: 'Guy',
+              //           body: 'Schedualed notfication',
+              //           date: tz.TZDateTime.from(
+              //             DateTime.now().add(const Duration(seconds: 1)),
+              //             tz.local,
+              //           ),
+              //           payload: SederAnahatTefilin.routeName);
               //     },
-              //     child: const Text('Schedualed notification'))
+              //     child: const Text('Schedualed notification')),
+              // ElevatedButton(
+              //     onPressed: () async {
+              //       tz.initializeTimeZones();
+
+              //       tz.TZDateTime zonedTime =
+              //           tz.TZDateTime.local(2022, 11, 27, 09, 07);
+              //       print(zonedTime);
+              //       print(tz.TZDateTime.from(
+              //           DateTime.now().add(const Duration(seconds: 5)),
+              //           tz.local));
+              //       print(DateTime.now().add(const Duration(seconds: 5)));
+              //     },
+              //     child: const Text('date')),
             ],
           ),
         ));

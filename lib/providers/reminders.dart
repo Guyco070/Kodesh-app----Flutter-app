@@ -7,6 +7,7 @@ import 'package:kodesh_app/models/holiday.dart';
 import 'package:kodesh_app/models/rosh_chodesh.dart';
 import 'package:kodesh_app/models/shabat.dart';
 import 'package:kodesh_app/providers/events.dart';
+import 'package:kodesh_app/screens/sederAnahatTefilin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/timezone.dart';
 
@@ -24,6 +25,8 @@ class Reminders with ChangeNotifier {
 
   String tefilinTime = '06:00';
   String roshChodeshTime = '06:00';
+
+  List<Map<String, Object>> notValues = [];
 
   Reminders() {
     getData();
@@ -111,6 +114,8 @@ class Reminders with ChangeNotifier {
       roshChodeshTime = prefs.getString('roshChodeshTime')!;
     }
     notifyListeners();
+
+    setReminders();
   }
 
   updateAll() async {
@@ -137,7 +142,6 @@ class Reminders with ChangeNotifier {
 
     List<TZDateTime> tefilinDates = [];
     List<int> tzToRemove = [];
-
     if (tefilin) tefilinDates = await setRemindersForTefilin();
 
     Map<String, dynamic> extractData =
@@ -145,6 +149,8 @@ class Reminders with ChangeNotifier {
 
     List<Event> items = Events.getEventsItemsFromMap(extractData['items']);
     final DateTime now = DateTime.now();
+
+    notValues = [];
     for (Event e in items) {
       if (shabatAndHolidays) {
         if (e is Shabat) {
@@ -154,13 +160,18 @@ class Reminders with ChangeNotifier {
           if (now.isBefore(x)) {
             String body =
                 'אל תשכח להדליק מיחם ולחבר פלטה. ההדלקת נרות בשעה ${DateFormat('HH:mm').format(e.entryDate!)}.';
-            if (e.releaseDate != null){
+            if (e.releaseDate != null) {
               body +=
                   '\nזמן הבדלה: ${DateFormat('dd/MM/yy - hh:mm').format(e.releaseDate!)}';
             }
-              
-            await NotificationApi.showSchedualedNotification(
-                id: id, title: 'שבת שלום מאפליקציית קודש', body: body, date: x);
+
+            notValues.add({
+              'id': id,
+              'title': 'שבת שלום מאפליקציית קודש',
+              'body': body,
+              'date': x,
+              'tzDateTime': TZDateTime.from(x, local)
+            });
             id++;
           }
         } else if (e is Holiday) {
@@ -180,11 +191,14 @@ class Reminders with ChangeNotifier {
               body +=
                   '\nזמן הבדלה: ${DateFormat('dd/MM/yy - hh:mm').format(e.releaseDate!)}';
             }
-            await NotificationApi.showSchedualedNotification(
-                id: id,
-                title: 'חג שמח ${e.title} מאפליקציית קודש',
-                body: body,
-                date: x);
+
+            notValues.add({
+              'id': id,
+              'title': 'חג שמח ${e.title} מאפליקציית קודש',
+              'body': body,
+              'date': x,
+              'tzDateTime': TZDateTime.from(x, local)
+            });
             id++;
           }
           if (tefilinDates.isNotEmpty && e.releaseDate != null) {
@@ -216,37 +230,50 @@ class Reminders with ChangeNotifier {
                 getRoshChodeshTimeObject.minute)
             .subtract(const Duration(days: 1));
 
-        if (dayBefore.weekday > 5) {
-          DateTime twoOc = DateTime(
-                e.entryDate!.year,
-                e.entryDate!.month,
-                e.entryDate!.day,
-                14,0)
-            .subtract(const Duration(days: 1));
-          if(dayBefore.isAfter(twoOc)){
-            dayBefore = dayBefore.subtract(Duration(days: dayBefore.weekday == 6 ? 1 : 2));
-          }else{
+        if (dayBefore.weekday == 5 || dayBefore.weekday == 6) {
+          DateTime twoOc = DateTime(e.entryDate!.year, e.entryDate!.month,
+                  e.entryDate!.day, 14, 0)
+              .subtract(const Duration(days: 1));
+          if (dayBefore.isAfter(twoOc)) {
+            dayBefore = dayBefore
+                .subtract(Duration(days: dayBefore.weekday == 5 ? 1 : 2));
+          } else {
             dayBefore = dayBefore.subtract(const Duration(days: 1));
           }
         }
-        
+
         if (now.isBefore(dayBefore)) {
-          await NotificationApi.showSchedualedNotification(
-              id: id,
-              title:
-                  '${e.title} - ${DateFormat('dd/MM/yy').format(e.entryDate!)}',
-              body:
-                  'ביקשת שנזכיר לך שבתאריך ${DateFormat('HH:mm').format(e.entryDate!)} יתקיים ${e.title}',
-              date: dayBefore);
+          notValues.add({
+            'id': id,
+            'title':
+                '${e.title} - ${DateFormat('dd/MM/yy').format(e.entryDate!)}',
+            'body':
+                'ביקשת שנזכיר לך שבתאריך ${DateFormat('HH:mm').format(e.entryDate!)} יתקיים ${e.title}',
+            'date': dayBefore,
+            'tzDateTime': TZDateTime.from(dayBefore, local)
+          });
           id++;
         }
       }
-      
+
       //else if(shabatAndHolidays && e is Shabat){ // tefila
 
       // }else if(shabatAndHolidays && e is Shabat){ // נרורת חנוכה ???
 
+      // }else if(shabatAndHolidays && e is Shabat){ // ספירת העומר ???
+
       // }
+    }
+
+    for (Map<String, Object> e in notValues) {
+      await NotificationApi.showSchedualedNotification(
+        id: e['id'] as int,
+        title: e['title'] as String,
+        body: e['body'] as String,
+        date: e['date'] as DateTime,
+        tzDateTime: e['tzDateTime'] as TZDateTime,
+        payload: e['payload'] as String?,
+      );
     }
 
     for (int i in tzToRemove) {
@@ -256,16 +283,44 @@ class Reminders with ChangeNotifier {
   }
 
   Future<List<TZDateTime>> setRemindersForTefilin() async {
+    TZDateTime first = NotificationApi.schedualeDaily(getTefilinTimeObject);
+
+    final DateTime now = DateTime.now();
+    final tzNow = TZDateTime(
+        local, now.year, now.month, now.day, now.hour, now.minute, now.second);
+
+    if (tzNow.isAfter(first)) {
+      first = first.add(const Duration(days: 1));
+    }
+    if (first.weekday == 6) first = first.add(const Duration(days: 1));
+
     final tefilinDates = [
-      NotificationApi.schedualeDaily(getTefilinTimeObject),
+      first,
     ];
 
     for (int i = 0; i < 7; i++) {
       TZDateTime tz = tefilinDates.last
-          .add(Duration(days: tefilinDates.last.weekday == 6 ? 2 : 1));
+          .add(Duration(days: tefilinDates.last.weekday == 5 ? 2 : 1));
       tefilinDates.add(tz);
+      // notValues.add({
+      //           'id': id,
+      //           'title': 'תפילין',
+      //           'body': 'הגיע הזמן להניח תפילין!',
+      //           'date': tz,
+      //           'tzDateTime': tz,
+      //           'payload': SederAnahatTefilin.routeName
+      //         });
+
+    }
+
+    for (TZDateTime tz in tefilinDates) {
       await NotificationApi.showSchedualedNotification(
-              id: id, title: 'קודש', body: 'הגיע הזמן להניח תפילין!', date: tz)
+              id: id,
+              title: 'תפילין',
+              body: 'הגיע הזמן להניח תפילין!',
+              date: tz,
+              tzDateTime: tz,
+              payload: SederAnahatTefilin.routeName)
           .then((value) => id++);
     }
     return tefilinDates;

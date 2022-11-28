@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kodesh_app/screens/schedual_notifications.dart';
+import 'package:kodesh_app/screens/sederAnahatTefilin.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({Key? key}) : super(key: key);
@@ -20,13 +21,12 @@ class AppDrawer extends StatelessWidget {
             title: const Text('קביעת תזכורות'),
             onTap: () => Navigator.pushNamed(context, SchedualNotficationsScreen.routeName),
           ),
-          // const Divider(),
-          // ListTile(
-          //   leading: const Icon(Icons.payment),
-          //   title: const Text('Orders'),
-          //   onTap: () => Navigator.pushNamed(context, OrdersScreen.routeName),
-          //   // onTap: () => Navigator.pushReplacement(context, CustomRoute(builder: ((context) => const OrdersScreen()))),
-          // ),
+          const Divider(),
+          ListTile(
+            leading: const Icon(Icons.add_reaction_outlined),
+            title: const Text('סדר הנחת תפילין'),
+            onTap: () => Navigator.pushNamed(context, SederAnahatTefilin.routeName),
+          ),
           // const Divider(),
           // ListTile(
           //   leading: const Icon(Icons.edit),

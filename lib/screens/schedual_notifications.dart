@@ -22,13 +22,6 @@ class _SchedualNotficationsScreenState
 
   // TextEditingController? tefilinController;
 
-  @override
-  void initState() {
-    Provider.of<Reminders>(context, listen: false).getData();
-
-    super.initState();
-  }
-
   String getTime(DateTime? dateTime, String? minute, String? hour) {
     if (dateTime != null) {
       hour = '${dateTime.hour}';
@@ -51,25 +44,56 @@ class _SchedualNotficationsScreenState
     return timeEl;
   }
 
+  DropdownMenuItem<String> buildMenuItem(String item) {
+    return DropdownMenuItem(
+        value: item,
+        child: Text(
+          item.split('|')[0],
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ));
+  }
+
+  buildSelectedMenuItem() {
+    return cities.map<Widget>((String item) {
+      return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 6),
+        alignment: Alignment.center,
+        child: Text(
+          item.split('|')[0],
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      );
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     var reminders = Provider.of<Reminders>(context);
 
-    Card checkWidget({required String title, required bool value, required void Function(bool newValue) setter, }) {
-    return Card(
-            child: Row(
-              textDirection: TextDirection.rtl,
-              children: [
-                Checkbox(
-                    value: value,
-                    onChanged: (newTefilin) async {
-                      setter(newTefilin!);
-                    }),
-                Text(title)
-              ],
-            ),
-          );
-  }
+    Card checkWidget({
+      required String title,
+      required bool value,
+      required void Function(bool newValue) setter,
+    }) {
+      return Card(
+        child: Row(
+          textDirection: TextDirection.rtl,
+          children: [
+            Checkbox(
+                value: value,
+                onChanged: (newTefilin) async {
+                  setter(newTefilin!);
+                }),
+            Text(title)
+          ],
+        ),
+      );
+    }
 
     shabatAndHolidaysElements() {
       return [
@@ -82,21 +106,24 @@ class _SchedualNotficationsScreenState
               style: TextStyle(
                   color: Theme.of(context).primaryColor, fontSize: 16),
             ),
-            PopupMenuButton(
-              icon: const Icon(Icons.arrow_drop_down),
-              itemBuilder: (context) {
-                return cities.map((element) {
-                  return PopupMenuItem(
-                    value: element,
-                    child: Text(element.split('|')[0]),
-                  );
-                }).toList();
-              },
-              onSelected: (value) {
-                reminders.setReminderCity(value);
-              },
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 7),
+              decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),),
+                  width: MediaQuery.of(context).size.width / 2.3,
+              child: DropdownButtonFormField<String>(
+                isDense: false,
+                decoration: const InputDecoration(
+                    isCollapsed: true, enabledBorder: InputBorder.none),
+                selectedItemBuilder: (_) => buildSelectedMenuItem(),
+                value: reminders.reminderCity,
+                isExpanded: true,
+                alignment: AlignmentDirectional.center,
+                items: cities.map<DropdownMenuItem<String>>(buildMenuItem).toList(),
+                onChanged: (value) {
+                  reminders.setReminderCity(value ?? reminders.reminderCity);
+                }),
             ),
-            Text(reminders.reminderCity.split('|')[0]),
           ],
         ),
         const SizedBox(
@@ -186,7 +213,10 @@ class _SchedualNotficationsScreenState
               ),
             ),
             if (reminders.shabatAndHolidays) ...shabatAndHolidaysElements(),
-            checkWidget(title: 'תפילין', value: reminders.tefilin, setter: reminders.setTefilin),
+            checkWidget(
+                title: 'תפילין',
+                value: reminders.tefilin,
+                setter: reminders.setTefilin),
             if (reminders.tefilin)
               Column(
                 children: [
@@ -228,8 +258,11 @@ class _SchedualNotficationsScreenState
                   ),
                 ],
               ),
-            checkWidget(title: 'ראש חודש', value: reminders.roshChodesh, setter: reminders.setRoshChodesh),
-             if (reminders.roshChodesh)
+            checkWidget(
+                title: 'ראש חודש',
+                value: reminders.roshChodesh,
+                setter: reminders.setRoshChodesh),
+            if (reminders.roshChodesh)
               Column(
                 children: [
                   Row(
@@ -241,8 +274,8 @@ class _SchedualNotficationsScreenState
                               context: context,
                               initialTime: TimeOfDay(
                                   hour: reminders.getRoshChodeshTimeObject.hour,
-                                  minute:
-                                      reminders.getRoshChodeshTimeObject.minute),
+                                  minute: reminders
+                                      .getRoshChodeshTimeObject.minute),
                               builder: (context, childWidget) {
                                 return MediaQuery(
                                     data: MediaQuery.of(context).copyWith(
@@ -261,7 +294,11 @@ class _SchedualNotficationsScreenState
                       const Text('הזכר לי יום לפני ראש חודש בשעה'),
                     ],
                   ),
-                  Text('תזכורת זו תוקדם לימי חול עד השעה שתיים בצהריים בשישי *', style: TextStyle(color: Colors.grey.shade700, fontSize: 12)), // todo: fix it to be syncronize with shabat and holidays
+                  Text('תזכורת זו תוקדם לימי חול עד השעה שתיים בצהריים בשישי *',
+                      style: TextStyle(
+                          color: Colors.grey.shade700,
+                          fontSize:
+                              12)), // todo: fix it to be syncronize with shabat and holidays
                   const SizedBox(
                     height: 7,
                   ),
@@ -274,8 +311,7 @@ class _SchedualNotficationsScreenState
             ElevatedButton(
                 onPressed: () {
                   reminders.setReminders(update: true);
-                  Navigator.pushNamed(
-                      context, '/');
+                  Navigator.pushNamed(context, '/');
                 },
                 child: const Text('עדכן תזכורות'))
           ],

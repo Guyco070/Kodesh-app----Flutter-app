@@ -25,10 +25,6 @@ class Events with ChangeNotifier {
     'roshchodesh',
   ];
 
-  Events() {
-    getData();
-  }
-
   List<Event> get items {
     return [..._items];
   }
@@ -94,9 +90,9 @@ class Events with ChangeNotifier {
     return jsonDecode(response.body) as Map<String, dynamic>;
   }
 
-  Future<List<Event>> fetchAndSetProducts([
-    bool filterByUser = false,
-  ]) async {
+  Future<List<Event>> fetchAndSetProducts(
+      {bool filterByUser = false, bool getDataFirst = false}) async {
+    if (getDataFirst) await getData();
     try {
       final extractData = await tryFetch();
       _items = [];
@@ -174,6 +170,9 @@ class Events with ChangeNotifier {
         tempItems.add(newRs);
       }
     }
+    // Shabat newS = Shabat.createShabat(
+    //         candles: {'date': DateTime.now().add(Duration(minutes: 31, hours: 2)).toString()}, parashat: {'title': 'ddddd'}, havdalah: {'date': DateTime.now().add(Duration(seconds: 2)).toString()}); // try for ome more minute from now
+    // tempItems.add(newS);
     return tempItems;
   }
 

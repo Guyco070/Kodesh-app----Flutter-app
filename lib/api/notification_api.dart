@@ -1,11 +1,14 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest.dart'; // for showSchedualedNotification function
 import 'package:timezone/timezone.dart'; // for showSchedualedNotification function
 
 class NotificationApi {
   static final _notifications = FlutterLocalNotificationsPlugin();
+  static final onNotifications = BehaviorSubject<String?>();
+  static bool isFirstInit = true;
 
-  initialize() async {
+  static initialize() async {
     initializeTimeZones(); // for showSchedualedNotification function
     const AndroidInitializationSettings androidInitializationSettings =
         AndroidInitializationSettings('mipmap/ic_launcher');
@@ -20,10 +23,12 @@ class NotificationApi {
       iOS: iosinitializationSetting,
     );
 
-    await _notifications.initialize(settings,
-        onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
-        onDidReceiveBackgroundNotificationResponse:
-            onDidReceiveBackgroundNotificationResponse);
+    await _notifications.initialize(
+      settings,
+      onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
+      onDidReceiveBackgroundNotificationResponse:
+          onDidReceiveBackgroundNotificationResponse,
+    );
   }
 
   static NotificationDetails _notificationDetails() {
@@ -60,7 +65,45 @@ class NotificationApi {
     String? body,
     String? payload,
     required DateTime date,
+    TZDateTime? tzDateTime,
   }) async {
+    final int dtH = DateTime.now().hour;
+    final int tZdtH = TZDateTime.now(local).hour;
+    date = (((dtH - tZdtH) > 0)
+        ? date.subtract(Duration(hours: dtH - tZdtH))
+        : date.add(Duration(hours: tZdtH - dtH)));
+
+    // print(TZDateTime.from(date, local));
+    // print(TZDateTime.from(
+    //                     DateTime.now().add(const Duration(seconds: 5)),
+    //                     local));
+
+    return _notifications.zonedSchedule(
+      id,
+      title,
+      body,
+      TZDateTime.from(date, local),
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      androidAllowWhileIdle: true,
+      _notificationDetails(),
+      payload: payload,
+    );
+  }
+
+  static Future<void> showSchedualedNotification2({
+    int id = 0,
+    String? title,
+    String? body,
+    String? payload,
+    required DateTime date,
+    TZDateTime? tzDateTime,
+  }) async {
+    // print(TZDateTime.from(date, local));
+    // print(TZDateTime.from(
+    //                     DateTime.now().add(const Duration(seconds: 5)),
+    //                     local));
+
     return _notifications.zonedSchedule(
       id,
       title,
@@ -94,7 +137,8 @@ class NotificationApi {
     );
   }
 
-  static Future<void> showSchedualeDailyNotification( // set reminders evry day including sutterdays and holidays
+  static Future<void> showSchedualeDailyNotification(
+      // set reminders evry day including sutterdays and holidays
       {
       //including shabat...
       int id = 0,
@@ -116,7 +160,8 @@ class NotificationApi {
     );
   }
 
-  static Future<List<PendingNotificationRequest>> get getPendingNotificationRequests async {
+  static Future<List<PendingNotificationRequest>>
+      get getPendingNotificationRequests async {
     return (await _notifications.pendingNotificationRequests());
   }
 
@@ -163,7 +208,7 @@ class NotificationApi {
   // }
 
   // actions
-  void onDidReceiveLocalNotification(
+  static void onDidReceiveLocalNotification(
     int id,
     String? title,
     String? body,
@@ -172,8 +217,11 @@ class NotificationApi {
     print('id $id');
   }
 
-  void onDidReceiveNotificationResponse(NotificationResponse details) {
+  static void onDidReceiveNotificationResponse(NotificationResponse details) {
     print('onDidReceiveNotificationResponse');
+    if (details.payload != null) {
+      onNotifications.add(details.payload);
+    }
   }
 
   static void onDidReceiveBackgroundNotificationResponse(

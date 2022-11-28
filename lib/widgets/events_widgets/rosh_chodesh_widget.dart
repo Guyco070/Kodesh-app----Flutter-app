@@ -11,16 +11,17 @@ class RoshChodeshWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if (data.entryDate != null) dateFix('e'),
+        if (data.releaseDate == null && data.entryDate != null) dateFix('oe')
+        else if (data.entryDate != null) dateFix('e'),
         if (data.releaseDate != null) dateFix('r'),
       ],
     );
   }
 
   ListTile dateFix(String type) {
-    DateTime date = type == 'e' ? data.entryDate! : data.releaseDate!;
-    String subtitle = type == 'e' ? 'תאריך התחלה' : 'תאריך סיום';
-    IconData icon = type == 'e' ? Icons.first_page : Icons.last_page;
+    DateTime date = type == 'oe' || type == 'e' ? data.entryDate! : data.releaseDate!;
+    String subtitle = type == 'oe' ? 'תאריך סיום האירוע' : type == 'e' ? 'תאריך התחלה' : 'תאריך סיום';
+    IconData icon = type == 'oe' ? Icons.calendar_month_outlined : type == 'e' ? Icons.first_page : Icons.last_page;
       return ListTile(
         title: Text(
           DateFormat('dd/MM/yyyy').format(date),
