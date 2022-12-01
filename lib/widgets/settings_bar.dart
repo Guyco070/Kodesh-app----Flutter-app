@@ -153,8 +153,10 @@ class SettingsBar extends StatelessWidget {
                   iconSize: 22,
                   onPressed: () {
                     DateTime today = DateTime.now();
-                    if (df.DateFormat('dd/MM/yy').format(today) !=
-                        df.DateFormat('dd/MM/yy').format(events.startDate)) {
+                    if (events.items == null ||
+                        df.DateFormat('dd/MM/yy').format(today) !=
+                            df.DateFormat('dd/MM/yy')
+                                .format(events.startDate)) {
                       events.setStartDate(DateTime.now(),
                           setIsLoading: setIsLoading);
                     }

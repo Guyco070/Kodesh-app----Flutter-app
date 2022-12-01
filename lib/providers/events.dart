@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:kodesh_app/models/event.dart';
 import 'package:http/http.dart';
 import 'package:kodesh_app/models/holiday.dart';
@@ -12,7 +13,7 @@ import 'package:kodesh_app/widgets/events_widgets/shabat_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Events with ChangeNotifier {
-  List<Event> _items = [];
+  List<Event>? _items = [];
   String city = 'IL-Jerusalem|281184';
   DateTime startDate = DateTime.now();
   bool isOnlyShabat = false;
@@ -25,8 +26,8 @@ class Events with ChangeNotifier {
     'roshchodesh',
   ];
 
-  List<Event> get items {
-    return [..._items];
+  List<Event>? get items {
+    return _items == null ? null : [..._items!];
   }
 
   setCity(String newCity, {Function? setIsLoading}) async {
@@ -57,6 +58,9 @@ class Events with ChangeNotifier {
     });
     notifyListeners();
   }
+
+  Future<bool> isThereInternetConnection() async =>
+      await InternetConnectionChecker().hasConnection;
 
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -90,29 +94,38 @@ class Events with ChangeNotifier {
     return jsonDecode(response.body) as Map<String, dynamic>;
   }
 
-  Future<List<Event>> fetchAndSetProducts(
-      {bool filterByUser = false, bool getDataFirst = false}) async {
+  Future<List<Event>?> fetchAndSetProducts(
+      {bool filterByUser = false,
+      bool getDataFirst = false,
+      void Function(bool bool)? setIsThereInternetConnection}) async {
     if (getDataFirst) await getData();
-    try {
-      final extractData = await tryFetch();
-      _items = [];
-      _items = getEventsItemsFromMap(extractData['items'] as List);
-      // print(items);
+    if (await isThereInternetConnection()) {
+      // setIsThereInternetConnection(true);
+      try {
+        final extractData = await tryFetch();
+        _items = [];
+        _items = getEventsItemsFromMap(extractData['items'] as List);
+        // print(items);
 
-      // final List<Event> loadedProducts = [];
-      // extractData.forEach((prodId, prodData) {
-      //   loadedProducts.add(Event(
-      //     title: prodData['title'] as String,
-      //   ));
-      //   _items = loadedProducts;
-      //   notifyListeners();
-      // });
-      // print('_items');
-      // print(_items);
+        // final List<Event> loadedProducts = [];
+        // extractData.forEach((prodId, prodData) {
+        //   loadedProducts.add(Event(
+        //     title: prodData['title'] as String,
+        //   ));
+        //   _items = loadedProducts;
+        //   notifyListeners();
+        // });
+        // print('_items');
+        // print(_items);
+        notifyListeners();
+        return _items;
+      } catch (error) {
+        rethrow;
+      }
+    } else {
+      _items = null;
       notifyListeners();
       return _items;
-    } catch (error) {
-      rethrow;
     }
   }
 

@@ -25,6 +25,8 @@ class _EventScreenState extends State<EventScreen> {
 
   String? title;
 
+  bool _isThereInternetConnection = false;
+
   @override
   void initState() {
     super.initState();
@@ -43,13 +45,22 @@ class _EventScreenState extends State<EventScreen> {
   void onClickNotification(String? payload) async =>
       await Navigator.pushNamed(context, payload!);
 
+  void setIsThereInternetConnection(bool bool) =>
+      setState(() {
+        _isThereInternetConnection = bool;
+      });
+
   @override
   void didChangeDependencies() {
     if (_isInit) {
       _isLoading = true;
       Provider.of<Events>(context, listen: false)
           .fetchAndSetProducts(getDataFirst: true)
-          .then((_) => setIsLoading());
+          .then((items) {
+        print(items);
+        setIsThereInternetConnection(items != null);
+        setIsLoading();
+      });
     }
 
     setState(() {
@@ -64,7 +75,14 @@ class _EventScreenState extends State<EventScreen> {
       _isLoading = !_isLoading;
     });
   }
-
+  
+  SizedBox renderLoading(BuildContext context) {
+    return SizedBox(
+                  height: MediaQuery.of(context).size.height / 2,
+                  child: const Center(child: CircularProgressIndicator()),
+                );
+  }
+  
   List<Widget> _getEventwidgets(List<Event> events, bool isOnlyShabat) {
     List<Widget> widgets = [];
     events.sort((a, b) {
@@ -93,6 +111,21 @@ class _EventScreenState extends State<EventScreen> {
     });
   }
 
+  Widget renderNoInternetConnection() {
+    return SizedBox(
+        height: MediaQuery.of(context).size.height*(2/5),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: const [
+            Icon(Icons.network_cell_outlined, color: Colors.red, size: 25,),
+            SizedBox(height: 20,),
+            Text('מצטערים, נראה שאין חיבור לאינטרנט, אנה התחבר ולחץ על כפתור רענון.', textAlign: TextAlign.center, textDirection: TextDirection.rtl, style: TextStyle(fontSize: 16,),),
+          ],
+        ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Events events = Provider.of<Events>(context);
@@ -106,13 +139,18 @@ class _EventScreenState extends State<EventScreen> {
                 updateIsOnlyShabat: setIsOnlyShabat,
                 setIsLoading: setIsLoading,
               ),
-              if (_isLoading)
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 2,
-                  child: const Center(child: CircularProgressIndicator()),
-                )
-              else
-                ..._getEventwidgets(events.items, events.isOnlyShabat),
+              if (events.items != null) ...{
+                if (_isLoading)
+                  renderLoading(context)
+                else
+                  ..._getEventwidgets(events.items!, events.isOnlyShabat),
+              } else...{
+                if (_isLoading)
+                  renderLoading(context)
+                else
+                  renderNoInternetConnection(),
+              }
+                
               // ElevatedButton(
               //     onPressed: () async {
               //       await NotificationApi.showNotification(

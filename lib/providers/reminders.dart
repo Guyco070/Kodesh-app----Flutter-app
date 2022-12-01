@@ -143,126 +143,128 @@ class Reminders with ChangeNotifier {
     List<TZDateTime> tefilinDates = [];
     List<int> tzToRemove = [];
     if (tefilin) tefilinDates = await setRemindersForTefilin();
+    Events events = Events();
+    if (await events.isThereInternetConnection()) {
+      Map<String, dynamic> extractData =
+          await events.tryFetch(cityToTake: reminderCity, isToday: true);
 
-    Map<String, dynamic> extractData =
-        await Events().tryFetch(cityToTake: reminderCity, isToday: true);
+      List<Event> items = Events.getEventsItemsFromMap(extractData['items']);
+      final DateTime now = DateTime.now();
 
-    List<Event> items = Events.getEventsItemsFromMap(extractData['items']);
-    final DateTime now = DateTime.now();
-
-    notValues = [];
-    for (Event e in items) {
-      if (shabatAndHolidays) {
-        if (e is Shabat) {
-          DateTime? x = e.entryDate!.subtract(
-              Duration(hours: beforeShabatHours, minutes: beforeShabatMinutes));
-
-          if (now.isBefore(x)) {
-            String body =
-                'אל תשכח להדליק מיחם ולחבר פלטה. ההדלקת נרות בשעה ${DateFormat('HH:mm').format(e.entryDate!)}.';
-            if (e.releaseDate != null) {
-              body +=
-                  '\nזמן הבדלה: ${DateFormat('dd/MM/yy - hh:mm').format(e.releaseDate!)}';
-            }
-
-            notValues.add({
-              'id': id,
-              'title': 'שבת שלום מאפליקציית קודש',
-              'body': body,
-              'date': x,
-              'tzDateTime': TZDateTime.from(x, local)
-            });
-            id++;
-          }
-        } else if (e is Holiday) {
-          DateTime? x;
-          if (DateFormat('HH:mm').format(e.entryDate!) == '00:00') {
-            x = DateTime(e.entryDate!.year, e.entryDate!.month,
-                e.entryDate!.day - 1, 20, 0);
-          } else {
-            x = e.entryDate!.subtract(Duration(
+      notValues = [];
+      for (Event e in items) {
+        if (shabatAndHolidays) {
+          if (e is Shabat) {
+            DateTime? x = e.entryDate!.subtract(Duration(
                 hours: beforeShabatHours, minutes: beforeShabatMinutes));
-          }
 
-          if (now.isBefore(x)) {
-            String body =
-                'אל תשכח להדליק מיחם ולחבר פלטה. ההדלקת נרות בשעה ${DateFormat('HH:mm').format(e.entryDate!)}.';
-            if (e.releaseDate != null) {
-              body +=
-                  '\nזמן הבדלה: ${DateFormat('dd/MM/yy - hh:mm').format(e.releaseDate!)}';
+            if (now.isBefore(x)) {
+              String body =
+                  'אל תשכח להדליק מיחם ולחבר פלטה. ההדלקת נרות בשעה ${DateFormat('HH:mm').format(e.entryDate!)}.';
+              if (e.releaseDate != null) {
+                body +=
+                    '\nזמן הבדלה: ${DateFormat('dd/MM/yy - hh:mm').format(e.releaseDate!)}';
+              }
+
+              notValues.add({
+                'id': id,
+                'title': 'שבת שלום מאפליקציית קודש',
+                'body': body,
+                'date': x,
+                'tzDateTime': TZDateTime.from(x, local)
+              });
+              id++;
+            }
+          } else if (e is Holiday) {
+            DateTime? x;
+            if (DateFormat('HH:mm').format(e.entryDate!) == '00:00') {
+              x = DateTime(e.entryDate!.year, e.entryDate!.month,
+                  e.entryDate!.day - 1, 20, 0);
+            } else {
+              x = e.entryDate!.subtract(Duration(
+                  hours: beforeShabatHours, minutes: beforeShabatMinutes));
             }
 
-            notValues.add({
-              'id': id,
-              'title': 'חג שמח ${e.title} מאפליקציית קודש',
-              'body': body,
-              'date': x,
-              'tzDateTime': TZDateTime.from(x, local)
-            });
-            id++;
-          }
-          if (tefilinDates.isNotEmpty && e.releaseDate != null) {
-            tzToRemove.add(tefilinDates.indexOf(tefilinDates[0]));
-            for (TZDateTime tz in tefilinDates) {
-              if (tz.isAfter(e.entryDate!) &&
-                  tz.day == e.entryDate!.day &&
-                  tz.month == e.entryDate!.month &&
-                  tz.year == e.entryDate!.year) {
-                TZDateTime temp = tz.add(const Duration(days: 1));
+            if (now.isBefore(x)) {
+              String body =
+                  'אל תשכח להדליק מיחם ולחבר פלטה. ההדלקת נרות בשעה ${DateFormat('HH:mm').format(e.entryDate!)}.';
+              if (e.releaseDate != null) {
+                body +=
+                    '\nזמן הבדלה: ${DateFormat('dd/MM/yy - hh:mm').format(e.releaseDate!)}';
+              }
 
-                while (temp.isBefore(e.releaseDate!)) {
-                  tzToRemove.add(tefilinDates.indexOf(temp));
-                  temp = temp.add(const Duration(days: 1));
+              notValues.add({
+                'id': id,
+                'title': 'חג שמח ${e.title} מאפליקציית קודש',
+                'body': body,
+                'date': x,
+                'tzDateTime': TZDateTime.from(x, local)
+              });
+              id++;
+            }
+            if (tefilinDates.isNotEmpty && e.releaseDate != null) {
+              tzToRemove.add(tefilinDates.indexOf(tefilinDates[0]));
+              for (TZDateTime tz in tefilinDates) {
+                if (tz.isAfter(e.entryDate!) &&
+                    tz.day == e.entryDate!.day &&
+                    tz.month == e.entryDate!.month &&
+                    tz.year == e.entryDate!.year) {
+                  TZDateTime temp = tz.add(const Duration(days: 1));
+
+                  while (temp.isBefore(e.releaseDate!)) {
+                    tzToRemove.add(tefilinDates.indexOf(temp));
+                    temp = temp.add(const Duration(days: 1));
+                  }
                 }
               }
             }
           }
         }
-      }
 
-      if (roshChodesh && e is RoshChodesh) {
-        // rosh chodesh
-        DateTime dayBefore = DateTime(
-                e.entryDate!.year,
-                e.entryDate!.month,
-                e.entryDate!.day,
-                getRoshChodeshTimeObject.hour,
-                getRoshChodeshTimeObject.minute)
-            .subtract(const Duration(days: 1));
-
-        if (dayBefore.weekday == 5 || dayBefore.weekday == 6) {
-          DateTime twoOc = DateTime(e.entryDate!.year, e.entryDate!.month,
-                  e.entryDate!.day, 14, 0)
+        if (roshChodesh && e is RoshChodesh) {
+          // rosh chodesh
+          DateTime dayBefore = DateTime(
+                  e.entryDate!.year,
+                  e.entryDate!.month,
+                  e.entryDate!.day,
+                  getRoshChodeshTimeObject.hour,
+                  getRoshChodeshTimeObject.minute)
               .subtract(const Duration(days: 1));
-          if (dayBefore.isAfter(twoOc)) {
-            dayBefore = dayBefore
-                .subtract(Duration(days: dayBefore.weekday == 5 ? 1 : 2));
-          } else {
-            dayBefore = dayBefore.subtract(const Duration(days: 1));
+
+          if (dayBefore.weekday == 5 || dayBefore.weekday == 6) {
+            DateTime twoOc = DateTime(e.entryDate!.year, e.entryDate!.month,
+                    e.entryDate!.day, 14, 0)
+                .subtract(const Duration(days: 1));
+            if (dayBefore.isAfter(twoOc)) {
+              dayBefore = dayBefore
+                  .subtract(Duration(days: dayBefore.weekday == 5 ? 1 : 2));
+            } else {
+              dayBefore = dayBefore.subtract(const Duration(days: 1));
+            }
+          }
+
+          if (now.isBefore(dayBefore)) {
+            notValues.add({
+              'id': id,
+              'title':
+                  '${e.title} - ${DateFormat('dd/MM/yy').format(e.entryDate!)}',
+              'body':
+                  'ביקשת שנזכיר לך שבתאריך ${DateFormat('HH:mm').format(e.entryDate!)} יתקיים ${e.title}',
+              'date': dayBefore,
+              'tzDateTime': TZDateTime.from(dayBefore, local)
+            });
+            id++;
           }
         }
 
-        if (now.isBefore(dayBefore)) {
-          notValues.add({
-            'id': id,
-            'title':
-                '${e.title} - ${DateFormat('dd/MM/yy').format(e.entryDate!)}',
-            'body':
-                'ביקשת שנזכיר לך שבתאריך ${DateFormat('HH:mm').format(e.entryDate!)} יתקיים ${e.title}',
-            'date': dayBefore,
-            'tzDateTime': TZDateTime.from(dayBefore, local)
-          });
-          id++;
-        }
+        //else if(shabatAndHolidays && e is Shabat){ // tefila
+
+        // }else if(shabatAndHolidays && e is Shabat){ // נרורת חנוכה ???
+
+        // }else if(shabatAndHolidays && e is Shabat){ // ספירת העומר ???
+
+        // }
       }
-
-      //else if(shabatAndHolidays && e is Shabat){ // tefila
-
-      // }else if(shabatAndHolidays && e is Shabat){ // נרורת חנוכה ???
-
-      // }else if(shabatAndHolidays && e is Shabat){ // ספירת העומר ???
-
-      // }
     }
 
     for (Map<String, Object> e in notValues) {
