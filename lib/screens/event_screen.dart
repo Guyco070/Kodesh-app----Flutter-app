@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:kodesh_app/models/event.dart';
 import 'package:kodesh_app/models/shabat.dart';
 import 'package:kodesh_app/providers/events.dart';
-import 'package:kodesh_app/screens/sederAnahatTefilin.dart';
+import 'package:kodesh_app/screens/tpilot/seder_anahat_tefilin.dart';
+import 'package:kodesh_app/widgets/app_drawer.dart';
 import 'package:kodesh_app/widgets/default_scaffold.dart';
 import 'package:kodesh_app/widgets/events_widgets/event_factory_widget.dart';
 import 'package:kodesh_app/widgets/settings_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:timezone/timezone.dart' as tz;
 import '../api/notification_api.dart';
-import 'package:timezone/data/latest.dart' as tz;
 
 class EventScreen extends StatefulWidget {
   const EventScreen({super.key});
@@ -30,23 +29,35 @@ class _EventScreenState extends State<EventScreen> {
   @override
   void initState() {
     super.initState();
-    NotificationApi.initialize();
-    NotificationApi.onNotifications.distinct();
     if (NotificationApi.isFirstInit) {
+      NotificationApi.initialize();
+      NotificationApi.onNotifications.distinct();
       listenNotifictions();
       NotificationApi.isFirstInit = false;
     }
   }
 
-  void listenNotifictions() {
+  void listenNotifictions() async {
     NotificationApi.onNotifications.stream.listen(onClickNotification);
   }
 
-  void onClickNotification(String? payload) async =>
-      await Navigator.pushNamed(context, payload!);
+  void onClickNotification(String? payload) async {
+    if (payload != '') {
+      bool isNeedToNavigate = true;
 
-  void setIsThereInternetConnection(bool bool) =>
-      setState(() {
+      Navigator.of(context).popUntil((route) {
+        isNeedToNavigate = !(route.settings.name == payload);
+        return (route.isFirst && route.isCurrent) ||
+            route.settings.name == payload;
+      }); // pop until route is equal to the payload route or route is the route of first page
+      if (isNeedToNavigate) {
+        // only if route is not equal to the payload
+        Navigator.pushNamed(context, payload!);
+      }
+    }
+  }
+
+  void setIsThereInternetConnection(bool bool) => setState(() {
         _isThereInternetConnection = bool;
       });
 
@@ -57,7 +68,6 @@ class _EventScreenState extends State<EventScreen> {
       Provider.of<Events>(context, listen: false)
           .fetchAndSetProducts(getDataFirst: true)
           .then((items) {
-        print(items);
         setIsThereInternetConnection(items != null);
         setIsLoading();
       });
@@ -75,14 +85,14 @@ class _EventScreenState extends State<EventScreen> {
       _isLoading = !_isLoading;
     });
   }
-  
+
   SizedBox renderLoading(BuildContext context) {
     return SizedBox(
-                  height: MediaQuery.of(context).size.height / 2,
-                  child: const Center(child: CircularProgressIndicator()),
-                );
+      height: MediaQuery.of(context).size.height / 2,
+      child: const Center(child: CircularProgressIndicator()),
+    );
   }
-  
+
   List<Widget> _getEventwidgets(List<Event> events, bool isOnlyShabat) {
     List<Widget> widgets = [];
     events.sort((a, b) {
@@ -113,16 +123,29 @@ class _EventScreenState extends State<EventScreen> {
 
   Widget renderNoInternetConnection() {
     return SizedBox(
-        height: MediaQuery.of(context).size.height*(2/5),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: const [
-            Icon(Icons.network_cell_outlined, color: Colors.red, size: 25,),
-            SizedBox(height: 20,),
-            Text('מצטערים, נראה שאין חיבור לאינטרנט, אנה התחבר ולחץ על כפתור רענון.', textAlign: TextAlign.center, textDirection: TextDirection.rtl, style: TextStyle(fontSize: 16,),),
-          ],
-        ),
+      height: MediaQuery.of(context).size.height * (2 / 5),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: const [
+          Icon(
+            Icons.network_cell_outlined,
+            color: Colors.red,
+            size: 25,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Text(
+            'מצטערים, נראה שאין חיבור לאינטרנט, אנה התחבר ולחץ על כפתור רענון.',
+            textAlign: TextAlign.center,
+            textDirection: TextDirection.rtl,
+            style: TextStyle(
+              fontSize: 16,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -144,21 +167,21 @@ class _EventScreenState extends State<EventScreen> {
                   renderLoading(context)
                 else
                   ..._getEventwidgets(events.items!, events.isOnlyShabat),
-              } else...{
+              } else ...{
                 if (_isLoading)
                   renderLoading(context)
                 else
                   renderNoInternetConnection(),
-              }
-                
-              // ElevatedButton(
-              //     onPressed: () async {
-              //       await NotificationApi.showNotification(
-              //           title: 'Guy',
-              //           body: 'Instant notfication',
-              //           payload: SederAnahatTefilin.routeName);
-              //     },
-              //     child: const Text('Instant notification')),
+              },
+              ElevatedButton(
+                  onPressed: () async {
+                    await NotificationApi.showNotification(
+                        title: 'Guy',
+                        body:
+                            'Instant notfication Instant notification ddddd dasdasd  sadaghrtyj tyj ykluy  cfghb sgh sfgth trgh sdtfgh stdgh stdeh dth serth tgh s',
+                        payload: SederAnahatTefilin.routeName);
+                  },
+                  child: const Text('Instant notification')),
               // ElevatedButton(
               //     onPressed: () async {
               //       await NotificationApi.showSchedualedNotification2(

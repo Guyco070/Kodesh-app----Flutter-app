@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:kodesh_app/api/notification_api.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/providers/reminders.dart';
+import 'package:kodesh_app/screens/shabat_and_holidays_check_list.dart';
 import 'package:kodesh_app/screens/schedual_notifications.dart';
 import 'package:kodesh_app/screens/event_screen.dart';
-import 'package:kodesh_app/screens/sederAnahatTefilin.dart';
+import 'package:kodesh_app/screens/tpilot/adlakat_nerot.dart';
+import 'package:kodesh_app/screens/tpilot/seder_anahat_tefilin.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -32,7 +33,9 @@ class MyApp extends StatelessWidget {
         routes: {
           SchedualNotficationsScreen.routeName: (_) =>
               const SchedualNotficationsScreen(),
-          SederAnahatTefilin.routeName:(_) => const SederAnahatTefilin()
+          SederAnahatTefilin.routeName:(_) => const SederAnahatTefilin(),
+          AdlakatNerot.routeName: (_) => const AdlakatNerot(),
+          ShabatAndHolidaysCheckList.routeName: (_) => const ShabatAndHolidaysCheckList(),
         },
       ),
     );

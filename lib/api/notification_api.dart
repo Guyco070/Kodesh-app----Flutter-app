@@ -7,13 +7,22 @@ class NotificationApi {
   static final _notifications = FlutterLocalNotificationsPlugin();
   static final onNotifications = BehaviorSubject<String?>();
   static bool isFirstInit = true;
-
+  
   static initialize() async {
     initializeTimeZones(); // for showSchedualedNotification function
+
+    // when the app is closed
+    final details = await _notifications.getNotificationAppLaunchDetails();
+    if (details != null &&
+        details.didNotificationLaunchApp &&
+        details.notificationResponse != null) {
+      onNotifications.add(details.notificationResponse!.payload);
+    }
+
     const AndroidInitializationSettings androidInitializationSettings =
         AndroidInitializationSettings('mipmap/ic_launcher');
     DarwinInitializationSettings iosinitializationSetting =
-        DarwinInitializationSettings(
+        const DarwinInitializationSettings(
             requestAlertPermission: true,
             requestBadgePermission: true,
             requestSoundPermission: true,
@@ -40,6 +49,7 @@ class NotificationApi {
         importance: Importance.max,
         // priority: Priority.max,
         playSound: true,
+        styleInformation: BigTextStyleInformation(''),
       ),
       iOS: DarwinNotificationDetails(),
     );
@@ -69,6 +79,12 @@ class NotificationApi {
   }) async {
     final int dtH = DateTime.now().hour;
     final int tZdtH = TZDateTime.now(local).hour;
+    // if (title == 'שבת שלום מאפליקציית קודש') {
+    //   print(date);
+    //   print(dtH);
+    //   print(tZdtH);
+    // }
+
     date = (((dtH - tZdtH) > 0)
         ? date.subtract(Duration(hours: dtH - tZdtH))
         : date.add(Duration(hours: tZdtH - dtH)));
@@ -77,6 +93,7 @@ class NotificationApi {
     // print(TZDateTime.from(
     //                     DateTime.now().add(const Duration(seconds: 5)),
     //                     local));
+    // if (title == 'שבת שלום מאפליקציית קודש') print(TZDateTime.from(date, local));
 
     return _notifications.zonedSchedule(
       id,

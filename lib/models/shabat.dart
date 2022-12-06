@@ -14,12 +14,13 @@ class Shabat extends Event {
   }
 
   static Shabat createShabat({
+    String? title,
     required Map<String, dynamic> candles,
     required Map<String, dynamic> parashat,
     required Map<String, dynamic> havdalah,
   }) {
     return Shabat(
-        title: 'שבת',
+        title: title ?? 'שבת',
         parasha: parashat['title'],
         entryDate: DateTime.tryParse(Events.getDateWithoutTime(candles['date'])),
         releaseDate: DateTime.tryParse(Events.getDateWithoutTime(havdalah['date'])));

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kodesh_app/widgets/default_scaffold.dart';
+import 'package:kodesh_app/widgets/appBar.dart';
 
 class SederAnahatTefilin extends StatelessWidget {
   const SederAnahatTefilin({super.key});
@@ -35,10 +35,7 @@ class SederAnahatTefilin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('סדר הנחת תפילין'),
-        centerTitle: true,
-      ),
+      appBar: getRightBackAppBar(context, 'סדר הנחת תפילין'),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(8.0),

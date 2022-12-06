@@ -9,7 +9,7 @@ class DefaultScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: const AppDrawer(),
+        endDrawer: const AppDrawer(),
         appBar: AppBar(
           title: Text(
             title,

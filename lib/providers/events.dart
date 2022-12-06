@@ -100,23 +100,10 @@ class Events with ChangeNotifier {
       void Function(bool bool)? setIsThereInternetConnection}) async {
     if (getDataFirst) await getData();
     if (await isThereInternetConnection()) {
-      // setIsThereInternetConnection(true);
       try {
         final extractData = await tryFetch();
         _items = [];
         _items = getEventsItemsFromMap(extractData['items'] as List);
-        // print(items);
-
-        // final List<Event> loadedProducts = [];
-        // extractData.forEach((prodId, prodData) {
-        //   loadedProducts.add(Event(
-        //     title: prodData['title'] as String,
-        //   ));
-        //   _items = loadedProducts;
-        //   notifyListeners();
-        // });
-        // print('_items');
-        // print(_items);
         notifyListeners();
         return _items;
       } catch (error) {
@@ -138,7 +125,12 @@ class Events with ChangeNotifier {
           tempI--;
         }
         Shabat newS = Shabat.createShabat(
-            candles: items[tempI], parashat: items[i], havdalah: items[i + 1]);
+            title: items[tempI + 1]['title'] != items[i]['title']
+                ? items[tempI + 1]['title']
+                : null,
+            candles: items[tempI],
+            parashat: items[i],
+            havdalah: items[i + 1]);
         tempItems.add(newS);
       } else if (items[i]['category'] == 'holiday') {
         if (i == 0) {
@@ -186,7 +178,26 @@ class Events with ChangeNotifier {
     // Shabat newS = Shabat.createShabat(
     //         candles: {'date': DateTime.now().add(Duration(minutes: 31, hours: 2)).toString()}, parashat: {'title': 'ddddd'}, havdalah: {'date': DateTime.now().add(Duration(seconds: 2)).toString()}); // try for ome more minute from now
     // tempItems.add(newS);
-    return tempItems;
+
+    List<int> toRemove = [];
+    for (int i = 0; i < tempItems.length; i++) {
+      for (Event x in tempItems) {
+        if (tempItems[i] != x && tempItems[i].title == x.title) {
+          if (tempItems[i].entryDate!.minute == 0 &&
+              tempItems[i].entryDate!.hour == 0) {
+            toRemove.add(i);
+          }
+        }
+      }
+    }
+
+    List<Event> aftetrFiltering = [];
+    for (int i = 0; i < tempItems.length; i++) {
+      if(!toRemove.contains(i)) {
+        aftetrFiltering.add(tempItems[i]);
+      }
+    }
+    return aftetrFiltering;
   }
 
   static getDateWithoutTime(String date) {

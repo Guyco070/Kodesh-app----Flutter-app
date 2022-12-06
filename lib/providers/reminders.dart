@@ -7,7 +7,9 @@ import 'package:kodesh_app/models/holiday.dart';
 import 'package:kodesh_app/models/rosh_chodesh.dart';
 import 'package:kodesh_app/models/shabat.dart';
 import 'package:kodesh_app/providers/events.dart';
-import 'package:kodesh_app/screens/sederAnahatTefilin.dart';
+import 'package:kodesh_app/screens/Shabat_and_holidays_check_list.dart';
+import 'package:kodesh_app/screens/tpilot/adlakat_nerot.dart';
+import 'package:kodesh_app/screens/tpilot/seder_anahat_tefilin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/timezone.dart';
 
@@ -23,8 +25,46 @@ class Reminders with ChangeNotifier {
   int beforeShabatMinutes = 0;
   int beforeShabatHours = 0;
 
+  bool shabatAndHolidaysCandles = false;
+  int beforeShabatAndHolidaysCandlesMinutes = 5;
+  int beforeShabatAndHolidaysCandlesHours = 0;
+
   String tefilinTime = '06:00';
   String roshChodeshTime = '06:00';
+
+  final List<String> allShabatAndHolidaysThingsToRemindList = [
+    'פלטה',
+    'מיחם',
+    'שעון שבת',
+    'הדלקת נרות',
+    'מזגן',
+  ];
+
+  final Map<String, Map<String, Object>> allShabatAndHolidaysThingsToRemindMap =
+      {
+    'פלטה': {
+      'icon': Icons.heat_pump,
+      'text': 'לחבר פלטה',
+    },
+    'מיחם': {
+      'icon': Icons.coffee_maker_outlined,
+      'text': 'לחבר מיחם',
+    },
+    'שעון שבת': {
+      'icon': Icons.lock_clock_outlined,
+      'text': 'להפעיל שעון שבת',
+    },
+    'מזגן': {
+      'icon': Icons.ac_unit_outlined,
+      'text': 'להדליק מזגן',
+    },
+    'הדלקת נרות': {
+      'icon': Icons.fireplace_outlined,
+      'text': 'להדליק נרות',
+    },
+  };
+
+  List<String> shabatAndHolidaysThingsToRemindList = ['פלטה', 'מיחם'];
 
   List<Map<String, Object>> notValues = [];
 
@@ -37,13 +77,28 @@ class Reminders with ChangeNotifier {
     notifyListeners();
   }
 
-  setRoshChodesh(bool newRoshChodesh) {
-    roshChodesh = newRoshChodesh;
+  setRoshChodesh({bool? newRoshChodesh}) {
+    if (newRoshChodesh != null) {
+      roshChodesh = newRoshChodesh;
+    } else {
+      roshChodesh = !roshChodesh;
+    }
     notifyListeners();
   }
 
-  setShabatAndHolidays(bool newShabatAndHolidaysy) {
-    shabatAndHolidays = newShabatAndHolidaysy;
+  setShabatAndHolidays({bool? newShabatAndHolidays}) {
+    if (newShabatAndHolidays != null) {
+      shabatAndHolidays = newShabatAndHolidays;
+    } else {
+      shabatAndHolidays = !shabatAndHolidays;
+    }
+    notifyListeners();
+  }
+
+  setShabatAndHolidaysThingsToRemindList(
+      {required List<String> newShabatAndHolidaysThingsToRemindList}) {
+    shabatAndHolidaysThingsToRemindList =
+        newShabatAndHolidaysThingsToRemindList;
     notifyListeners();
   }
 
@@ -57,8 +112,31 @@ class Reminders with ChangeNotifier {
     notifyListeners();
   }
 
-  void setTefilin(bool newTefilin) {
-    tefilin = newTefilin;
+  setShabatAndHolidaysCandles({bool? newShabatAndHolidaysCandles}) {
+    if (newShabatAndHolidaysCandles != null) {
+      shabatAndHolidaysCandles = newShabatAndHolidaysCandles;
+    } else {
+      shabatAndHolidaysCandles = !shabatAndHolidaysCandles;
+    }
+    notifyListeners();
+  }
+
+  setShabatAndHolidaysCandlesMinutes(int newBeforeShabatCandlesMinutes) {
+    beforeShabatAndHolidaysCandlesMinutes = newBeforeShabatCandlesMinutes;
+    notifyListeners();
+  }
+
+  setShabatAndHolidaysCandlesHours(int newBeforeShabatCandlesHours) {
+    beforeShabatAndHolidaysCandlesHours = newBeforeShabatCandlesHours;
+    notifyListeners();
+  }
+
+  void setTefilin({bool? newTefilin}) {
+    if (newTefilin != null) {
+      tefilin = newTefilin;
+    } else {
+      tefilin = !tefilin;
+    }
     notifyListeners();
   }
 
@@ -98,6 +176,25 @@ class Reminders with ChangeNotifier {
       beforeShabatMinutes = prefs.getInt('beforeShabatMinutes')!;
     }
 
+    if (prefsKeys.contains('shabatAndHolidaysThingsToRemindList')) {
+      shabatAndHolidaysThingsToRemindList =
+          prefs.getStringList('shabatAndHolidaysThingsToRemindList')!;
+    }
+
+    if (prefsKeys.contains('shabatAndHolidaysCandles')) {
+      shabatAndHolidaysCandles = prefs.getBool('shabatAndHolidaysCandles')!;
+    }
+
+    if (prefsKeys.contains('beforeShabatAndHolidaysCandlesHours')) {
+      beforeShabatAndHolidaysCandlesHours =
+          prefs.getInt('beforeShabatAndHolidaysCandlesHours')!;
+    }
+
+    if (prefsKeys.contains('beforeShabatAndHolidaysCandlesMinutes')) {
+      beforeShabatAndHolidaysCandlesMinutes =
+          prefs.getInt('beforeShabatAndHolidaysCandlesMinutes')!;
+    }
+
     if (prefsKeys.contains('tefilin')) {
       tefilin = prefs.getBool('tefilin')!;
     }
@@ -121,18 +218,30 @@ class Reminders with ChangeNotifier {
   updateAll() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('shabatAndHolidays', shabatAndHolidays);
-    prefs.setString('reminderCity', reminderCity);
     prefs.setInt('beforeShabatHours', beforeShabatHours);
     prefs.setInt('beforeShabatMinutes', beforeShabatMinutes);
 
+    prefs.setString('reminderCity', reminderCity);
+
     prefs.setBool('tefilin', tefilin);
     prefs.setBool('roshChodesh', roshChodesh);
+
+    if (shabatAndHolidays) {
+      prefs.setStringList('shabatAndHolidaysThingsToRemindList',
+          shabatAndHolidaysThingsToRemindList);
+    }
+
+    prefs.setBool('shabatAndHolidaysCandles', shabatAndHolidaysCandles);
+    prefs.setInt('beforeShabatAndHolidaysCandlesHours',
+        beforeShabatAndHolidaysCandlesHours);
+    prefs.setInt('beforeShabatAndHolidaysCandlesMinutes',
+        beforeShabatAndHolidaysCandlesMinutes);
 
     if (tefilin) prefs.setString('tefilinTime', tefilinTime);
     if (roshChodesh) prefs.setString('roshChodeshTime', roshChodeshTime);
   }
 
-  setReminders({bool update = false}) async {
+  Future<void> setReminders({bool update = false}) async {
     if (update) {
       updateAll();
     }
@@ -150,7 +259,11 @@ class Reminders with ChangeNotifier {
 
       List<Event> items = Events.getEventsItemsFromMap(extractData['items']);
       final DateTime now = DateTime.now();
-
+      items.add(Shabat(
+          title: 'שבת',
+          parasha: 'פָּרָשַׁת וַיִּשְׁלַח',
+          entryDate: DateTime.now().add(const Duration(hours: 2, minutes: 3)),
+          releaseDate: DateTime.now().add(const Duration(minutes: 10))));
       notValues = [];
       for (Event e in items) {
         if (shabatAndHolidays) {
@@ -159,11 +272,20 @@ class Reminders with ChangeNotifier {
                 hours: beforeShabatHours, minutes: beforeShabatMinutes));
 
             if (now.isBefore(x)) {
-              String body =
-                  'אל תשכח להדליק מיחם ולחבר פלטה. ההדלקת נרות בשעה ${DateFormat('HH:mm').format(e.entryDate!)}.';
+              String body = 'ביקשת שנזכיר לך:';
+              for (int i = 0;
+                  i < shabatAndHolidaysThingsToRemindList.length;
+                  i++) {
+                body +=
+                    '\n${i + 1}. ${allShabatAndHolidaysThingsToRemindMap[shabatAndHolidaysThingsToRemindList[i]]!['text']}';
+              }
+
+              body +=
+                  '.\nהדלקת נרות בשעה ${DateFormat('HH:mm').format(e.entryDate!)}.';
+
               if (e.releaseDate != null) {
                 body +=
-                    '\nזמן הבדלה: ${DateFormat('dd/MM/yy - hh:mm').format(e.releaseDate!)}';
+                    '\nזמן הבדלה: ${DateFormat('dd/MM/yy - hh:mm').format(e.releaseDate!)}.';
               }
 
               notValues.add({
@@ -171,9 +293,31 @@ class Reminders with ChangeNotifier {
                 'title': 'שבת שלום מאפליקציית קודש',
                 'body': body,
                 'date': x,
-                'tzDateTime': TZDateTime.from(x, local)
+                'tzDateTime': TZDateTime.from(x, local),
+                'payload': ShabatAndHolidaysCheckList.routeName
               });
               id++;
+            }
+
+            if (shabatAndHolidaysCandles) {
+              x = e.entryDate!.subtract(Duration(
+                  hours: beforeShabatAndHolidaysCandlesHours,
+                  minutes: beforeShabatAndHolidaysCandlesMinutes));
+
+              if (now.isBefore(x)) {
+                String body =
+                    'בעוד $beforeShabatAndHolidaysCandlesHours שעות ו-$beforeShabatAndHolidaysCandlesMinutes דקות תכנס השבת , לא לשכוח להדליק נרות.';
+
+                notValues.add({
+                  'id': id,
+                  'title': 'שבת שלום מאפליקציית קודש - זמן להדלקת נרות',
+                  'body': body,
+                  'date': x,
+                  'tzDateTime': TZDateTime.from(x, local),
+                  'payload': AdlakatNerot.routeName,
+                });
+                id++;
+              }
             }
           } else if (e is Holiday) {
             DateTime? x;
@@ -186,16 +330,28 @@ class Reminders with ChangeNotifier {
             }
 
             if (now.isBefore(x)) {
-              String body =
-                  'אל תשכח להדליק מיחם ולחבר פלטה. ההדלקת נרות בשעה ${DateFormat('HH:mm').format(e.entryDate!)}.';
+              String body = 'ביקשת שנזכיר לך:';
+              for (int i = 0;
+                  i < shabatAndHolidaysThingsToRemindList.length;
+                  i++) {
+                    if(e.subcat == 'major') {
+                      body +=
+                    '\n${i + 1}. ${allShabatAndHolidaysThingsToRemindMap[shabatAndHolidaysThingsToRemindList[i]]!['text']}';
+                    }
+              }
+              if (DateFormat('HH:mm').format(e.entryDate!) != '00:00') {
+                body +=
+                    '.\nהדלקת נרות בשעה ${DateFormat('HH:mm').format(e.entryDate!)}.';
+              }
+
               if (e.releaseDate != null) {
                 body +=
-                    '\nזמן הבדלה: ${DateFormat('dd/MM/yy - hh:mm').format(e.releaseDate!)}';
+                    '\nזמן הבדלה: ${DateFormat('dd/MM/yy - hh:mm').format(e.releaseDate!)}.';
               }
 
               notValues.add({
                 'id': id,
-                'title': 'חג שמח ${e.title} מאפליקציית קודש',
+                'title': e.title,
                 'body': body,
                 'date': x,
                 'tzDateTime': TZDateTime.from(x, local)

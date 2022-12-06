@@ -2,11 +2,17 @@ import 'package:kodesh_app/models/event.dart';
 import 'package:kodesh_app/providers/events.dart';
 
 class Holiday extends Event {
-  Holiday({required super.title, super.entryDate, super.releaseDate});
+  Holiday({
+    required super.title,
+    super.entryDate,
+    super.releaseDate,
+    required this.subcat,
+  });
+  String subcat;
 
   @override
   String toString() {
-    return '${super.toString()} - title: $title, entryDate: $entryDate, releaseDate: $releaseDate.\n';
+    return '${super.toString()} - title: $title, entryDate: $entryDate, releaseDate: $releaseDate, subcat: $subcat.\n';
   }
 
   static createHoliday(
@@ -17,11 +23,14 @@ class Holiday extends Event {
     } else {
       date = DateTime.tryParse(Events.getDateWithoutTime(parashat['date']));
     }
+    print(parashat['subcat']);
     return Holiday(
-        title: parashat['title'],
-        entryDate: date,
-        releaseDate: havdalah != null
-            ? DateTime.tryParse(Events.getDateWithoutTime(havdalah['date']))
-            : null);
+      title: parashat['title'],
+      entryDate: date,
+      releaseDate: havdalah != null
+          ? DateTime.tryParse(Events.getDateWithoutTime(havdalah['date']))
+          : null,
+      subcat: parashat['subcat'], // major, modern
+    );
   }
 }

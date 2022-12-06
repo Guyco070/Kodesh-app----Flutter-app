@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as df;
 import 'package:kodesh_app/data/cities.dart';
 import 'package:kodesh_app/providers/events.dart';
+import 'package:kodesh_app/widgets/swiches/cupertino_text_check_switch.dart';
 import 'package:provider/provider.dart';
 
 class SettingsBar extends StatelessWidget {
@@ -16,11 +16,11 @@ class SettingsBar extends StatelessWidget {
   final Function updateIsOnlyShabat;
   final Function setIsLoading;
 
-  DropdownMenuItem<String> buildMenuItem(String item) {
+  DropdownMenuItem<String> buildMenuItem(Map item) {
     return DropdownMenuItem(
-        value: item,
+        value: item['eNameAndCode'],
         child: Text(
-          item.split('|')[0],
+          item['hName'],
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
@@ -29,12 +29,12 @@ class SettingsBar extends StatelessWidget {
   }
 
   buildSelectedMenuItem() {
-    return cities.map<Widget>((String item) {
+    return cities.map<Widget>((Map item) {
       return Container(
         margin: const EdgeInsets.symmetric(horizontal: 6),
         alignment: Alignment.center,
         child: Text(
-          item.split('|')[0],
+          item['hName'],
           style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w500,
@@ -128,19 +128,10 @@ class SettingsBar extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text('הצג רק שבת'),
-                ),
-                CupertinoSwitch(
-                    activeColor: Theme.of(context).primaryColor,
-                    value: isOnlyShabat,
-                    onChanged: (_) => updateIsOnlyShabat()),
-              ],
-            ),
+            child: CuperinoTextCheckSwitch(
+                value: isOnlyShabat,
+                onChanged: updateIsOnlyShabat,
+                text: 'הצג רק שבת',),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
