@@ -290,7 +290,7 @@ class Reminders with ChangeNotifier {
       // items.add(Shabat(
       //     title: 'שבת',
       //     parasha: 'פָּרָשַׁת וַיִּשְׁלַח',
-      //     entryDate: DateTime.now().add(const Duration(hours: 2, minutes: 3)),
+      //     entryDate: DateTime.now().add(const Duration(minutes: 2)),
       //     releaseDate: DateTime.now().add(const Duration(minutes: 10))));
       notValues = [];
       for (Event e in items) {
@@ -325,7 +325,6 @@ class Reminders with ChangeNotifier {
                 'title': 'שבת שלום מאפליקציית קודש',
                 'body': body,
                 'date': x,
-                'tzDateTime': TZDateTime.from(x, local),
                 'payload': ShabatAndHolidaysCheckList.routeName
               });
               id++;
@@ -345,7 +344,6 @@ class Reminders with ChangeNotifier {
                   'title': 'שבת שלום מאפליקציית קודש - זמן להדלקת נרות',
                   'body': body,
                   'date': x,
-                  'tzDateTime': TZDateTime.from(x, local),
                   'payload': AdlakatNerot.routeName,
                 });
                 id++;
@@ -386,7 +384,6 @@ class Reminders with ChangeNotifier {
                 'title': e.title,
                 'body': body,
                 'date': x,
-                'tzDateTime': TZDateTime.from(x, local)
               });
               id++;
             }
@@ -439,7 +436,7 @@ class Reminders with ChangeNotifier {
               'body':
                   'ביקשת שנזכיר לך שבתאריך ${DateFormat('HH:mm').format(e.entryDate!)} יתקיים ${e.title}',
               'date': dayBefore,
-              'tzDateTime': TZDateTime.from(dayBefore, local)
+              // 'tzDateTime': TZDateTime.from(dayBefore, local)
             });
             id++;
           }
@@ -461,7 +458,6 @@ class Reminders with ChangeNotifier {
         title: e['title'] as String,
         body: e['body'] as String,
         date: e['date'] as DateTime,
-        tzDateTime: e['tzDateTime'] as TZDateTime,
         payload: e['payload'] as String?,
       );
     }
@@ -509,7 +505,6 @@ class Reminders with ChangeNotifier {
               title: 'תפילין',
               body: 'הגיע הזמן להניח תפילין!',
               date: tz,
-              tzDateTime: tz,
               payload: SederAnahatTefilin.routeName)
           .then((value) => id++);
     }

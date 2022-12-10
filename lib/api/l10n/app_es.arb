@@ -21,8 +21,8 @@
   "parasha": "Porción semanal de la Torá",
   "yesterday": "El dia de ayer",
   "tomorrow": "Mañana",
-  "inXDays": "En {días} días",
-  "xDaysAgo": "hace {días} días",
+  "inXDays": "En {days} días",
+  "xDaysAgo": "hace {days} días",
   "noIntrnetMessage":
       "Lo sentimos, parece que no hay conexión a Internet, conéctese a Internet y presione el botón Actualizar.",
   "beforeShabatAndHolidaysSettengs": "Antes del shabat y festivos",
@@ -30,7 +30,7 @@
   "minutes": "minutos",
   "hours": "horas",
   "remindMeXhoursAndYMinutesBeforeShbatAndHolidays":
-      "Recordarme {horas} horas y {minutos} minutos antes del shabat o festivo",
+      "Recordarme {hours} horas y {minutes} minutos antes del shabat o festivo",
   "whatToRemindSettings": "¿Qué te gustaría que te recordáramos?",
   "plata": "blanqueamiento de Shabat",
   "plataAction": "Conectar blej de Shabat",
@@ -45,7 +45,7 @@
   "remindCandleLightningSeperateSettings":
       "Recuérdame encender las velas por separado",
   "remindMeXhoursAndYMinutesBeforeCandlesLighning":
-      "Recuérdame encender las velas {horas} horas y {minutos} minutos antes del shabat o festivo",
+      "Recuérdame encender las velas {hours} horas y {minutes} minutos antes del shabat o festivo",
   "tefillin": "Tefilín",
   "remindTeffilinSettingsAt":
       "Recuérdame leer sobre tefilín todos los días a las",

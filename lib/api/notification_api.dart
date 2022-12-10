@@ -1,4 +1,5 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest.dart'; // for showSchedualedNotification function
 import 'package:timezone/timezone.dart'; // for showSchedualedNotification function
@@ -7,9 +8,11 @@ class NotificationApi {
   static final _notifications = FlutterLocalNotificationsPlugin();
   static final onNotifications = BehaviorSubject<String?>();
   static bool isFirstInit = true;
-  
+
   static initialize() async {
     initializeTimeZones(); // for showSchedualedNotification function
+    String timeZone = await FlutterNativeTimezone.getLocalTimezone();
+    setLocalLocation(getLocation(timeZone));
 
     // when the app is closed
     final details = await _notifications.getNotificationAppLaunchDetails();
@@ -75,19 +78,21 @@ class NotificationApi {
     String? body,
     String? payload,
     required DateTime date,
-    TZDateTime? tzDateTime,
+    // TZDateTime? tzDateTime,
   }) async {
-    final int dtH = DateTime.now().hour;
-    final int tZdtH = TZDateTime.now(local).hour;
-    // if (title == 'שבת שלום מאפליקציית קודש') {
-    //   print(date);
-    //   print(dtH);
-    //   print(tZdtH);
-    // }
+    // final int dtH = DateTime.now().hour;
+    // final int tZdtH = TZDateTime.now(local).hour;
+    if (title == 'שבת שלום מאפליקציית קודש') {
+      print(DateTime.now().add(Duration(minutes: 1)));
+      print('date: $date');
+      print(TZDateTime.now(local));
+      // print(dtH);
+      // print(tZdtH);
+    }
 
-    date = (((dtH - tZdtH) > 0)
-        ? date.subtract(Duration(hours: dtH - tZdtH))
-        : date.add(Duration(hours: tZdtH - dtH)));
+    // date = (((dtH - tZdtH) > 0)
+    //     ? date.subtract(Duration(hours: dtH - tZdtH))
+    //     : date.add(Duration(hours: tZdtH - dtH)));
 
     // print(TZDateTime.from(date, local));
     // print(TZDateTime.from(

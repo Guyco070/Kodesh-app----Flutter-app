@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:kodesh_app/models/event.dart';
 import 'package:kodesh_app/models/shabat.dart';
 import 'package:kodesh_app/providers/events.dart';
@@ -7,6 +8,8 @@ import 'package:kodesh_app/widgets/default_scaffold.dart';
 import 'package:kodesh_app/widgets/events_widgets/event_factory_widget.dart';
 import 'package:kodesh_app/widgets/settings_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:timezone/timezone.dart';
+import 'package:timezone/data/latest.dart';
 import '../api/notification_api.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -28,6 +31,8 @@ class _EventScreenState extends State<EventScreen> {
 
   @override
   void initState() {
+    initializeTimeZones();
+
     super.initState();
     if (NotificationApi.isFirstInit) {
       NotificationApi.initialize();
@@ -66,7 +71,11 @@ class _EventScreenState extends State<EventScreen> {
     if (_isInit) {
       _isLoading = true;
       Provider.of<Events>(context, listen: false)
-          .fetchAndSetProducts(getDataFirst: true, lang: Provider.of<LanguageChangeProvider>(context).currentLocale.languageCode)
+          .fetchAndSetProducts(
+              getDataFirst: true,
+              lang: Provider.of<LanguageChangeProvider>(context)
+                  .currentLocale
+                  .languageCode)
           .then((items) {
         setIsThereInternetConnection(items != null);
         setIsLoading();
@@ -127,7 +136,7 @@ class _EventScreenState extends State<EventScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
-        children:  [
+        children: [
           const Icon(
             Icons.signal_cellular_nodata_rounded,
             color: Colors.red,
@@ -136,7 +145,8 @@ class _EventScreenState extends State<EventScreen> {
           const SizedBox(
             height: 20,
           ),
-          Text(localErrorMessage,
+          Text(
+            localErrorMessage,
             // 'מצטערים, נראה שאין חיבור לאינטרנט, אנה התחבר ולחץ על כפתור רענון.',
             textAlign: TextAlign.center,
             textDirection: TextDirection.rtl,
@@ -171,17 +181,24 @@ class _EventScreenState extends State<EventScreen> {
                 if (_isLoading)
                   renderLoading(context)
                 else
-                  renderNoInternetConnection(AppLocalizations.of(context)!.noIntrnetMessage),
+                  renderNoInternetConnection(
+                      AppLocalizations.of(context)!.noIntrnetMessage),
               },
-              // ElevatedButton(
-              //     onPressed: () async {
-              //       await NotificationApi.showNotification(
-              //           title: 'Guy',
-              //           body:
-              //               'Instant notfication Instant notification ddddd dasdasd  sadaghrtyj tyj ykluy  cfghb sgh sfgth trgh sdtfgh stdgh stdeh dth serth tgh s',
-              //           payload: SederAnahatTefilin.routeName);
-              //     },
-              //     child: const Text('Instant notification')),
+              ElevatedButton(
+                  onPressed: () async {
+                    // await NotificationApi.showNotification(
+                    //     title: 'Guy',
+                    //     body:
+                    //         'Instant notfication Instant notification ddddd dasdasd  sadaghrtyj tyj ykluy  cfghb sgh sfgth trgh sdtfgh stdgh stdeh dth serth tgh s',
+                    //     payload: SederAnahatTefilin.routeName);
+                    print(DateTime.now());
+                    print(local);
+                    String timeZone =
+                        await FlutterNativeTimezone.getLocalTimezone();
+                    setLocalLocation(getLocation(timeZone));
+                    print(TZDateTime.from(DateTime.now(), local));
+                  },
+                  child: const Text('Instant notification')),
               // ElevatedButton(
               //     onPressed: () async {
               //       await NotificationApi.showSchedualedNotification2(

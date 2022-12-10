@@ -21,9 +21,11 @@ class CuperinoTextCheckSwitch extends StatelessWidget {
             activeColor: Theme.of(context).primaryColor,
             value: value,
             onChanged: (_) => onChanged()),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(text),
+        Flexible(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(text),
+          ),
         ),
       ],
     );
