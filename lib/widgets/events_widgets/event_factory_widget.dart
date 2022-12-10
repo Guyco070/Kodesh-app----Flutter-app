@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kodesh_app/models/event.dart';
 import 'package:kodesh_app/providers/events.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EventFactoryWidget extends StatelessWidget {
   const EventFactoryWidget({super.key, required this.data});
@@ -16,7 +17,7 @@ class EventFactoryWidget extends StatelessWidget {
           endIndent: 35,
           height: 40,
         ),
-        Text(data.title),
+        Text(data.title == 'Shabat' ? AppLocalizations.of(context)!.shabat : data.title),
         Events.eventsFactoryMethod(data)!,
       ],
     );

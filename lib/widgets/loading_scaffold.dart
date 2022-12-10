@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:kodesh_app/widgets/default_scaffold.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoadingScaffold extends StatefulWidget {
   const LoadingScaffold({super.key});
@@ -13,6 +12,6 @@ class LoadingScaffold extends StatefulWidget {
 class _LoadingScaffoldState extends State<LoadingScaffold> {
   @override
   Widget build(BuildContext context) {
-    return const DefaultScaffold(title: 'טוען...', body: Center(child: CircularProgressIndicator()));
+    return DefaultScaffold(title: AppLocalizations.of(context)!.loading, body: const Center(child: CircularProgressIndicator()));
   }
 }

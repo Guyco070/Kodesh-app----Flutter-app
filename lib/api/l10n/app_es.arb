@@ -1,0 +1,61 @@
+{
+  "language": "español",
+  "menu": "Menú",
+  "settingRemindersMenu": "Configuración de recordatorios",
+  "candleLightingOrderMenu": "Orden de encendido de velas",
+  "tefilinOrderMenu": "Orden de colocación de filacterias",
+  "choresBeforeShabbatMenu": "Tareas antes de Shabat",
+  "nextWeekEvants": "Eventos de la próxima semana",
+  "shabat": "Shabat",
+  "loading": "Cargando...",
+  "onlyShabat": "Ver solo shabat",
+  "currentDate": "Fecha actual",
+  "entryAndLightingCandles": "Entrada y encendido de velas.",
+  "departureAndHavdalah": "Salida y havdalá",
+  "startDate": "Fecha de inicio",
+  "endDate": "Fecha final",
+  
+  "eventStartDate": "Fecha de inicio del evento",
+  "eventEndDate": "Fecha de finalización del evento",
+  "eventDay": "día del evento",
+  "parasha": "Porción semanal de la Torá",
+  "yesterday": "El dia de ayer",
+  "tomorrow": "Mañana",
+  "inXDays": "En {días} días",
+  "xDaysAgo": "hace {días} días",
+  "noIntrnetMessage":
+      "Lo sentimos, parece que no hay conexión a Internet, conéctese a Internet y presione el botón Actualizar.",
+  "beforeShabatAndHolidaysSettengs": "Antes del shabat y festivos",
+  "city": "ciudad",
+  "minutes": "minutos",
+  "hours": "horas",
+  "remindMeXhoursAndYMinutesBeforeShbatAndHolidays":
+      "Recordarme {horas} horas y {minutos} minutos antes del shabat o festivo",
+  "whatToRemindSettings": "¿Qué te gustaría que te recordáramos?",
+  "plata": "blanqueamiento de Shabat",
+  "plataAction": "Conectar blej de Shabat",
+  "miham": "Samovar",
+  "mihamAction": "conectar samovar",
+  "shabbatClock": "reloj de shabat",
+  "shabbatClockAction": "Enciende el reloj de Shabat",
+  "candleLighting": "encendido de velas",
+  "candleLightingAction": "luz de las velas",
+  "airConditioner": "Aire acondicionado",
+  "airConditionerAction": "Enciende el aire acondicionado",
+  "remindCandleLightningSeperateSettings":
+      "Recuérdame encender las velas por separado",
+  "remindMeXhoursAndYMinutesBeforeCandlesLighning":
+      "Recuérdame encender las velas {horas} horas y {minutos} minutos antes del shabat o festivo",
+  "tefillin": "Tefilín",
+  "remindTeffilinSettingsAt":
+      "Recuérdame leer sobre tefilín todos los días a las",
+  "roshHodesh": "Rosh Jodesh",
+  "remindRoshHodeshSettingsAt": "Recuérdame el día antes de Rosh Jodesh en",
+  "roshHodeshReminderWillBeAdvanced":
+      "Este recordatorio se adelantará a los días laborables hasta las dos de la tarde.",
+  "updateRemindersTitle": "Actualizar recordatorios",
+  "all": "Todos",
+  "my": "Mi",
+  "noChroesMessage":
+      "No hay tareas que nos haya pedido que le recordemos, esto se puede cambiar en la página de configuración de recordatorios."
+}

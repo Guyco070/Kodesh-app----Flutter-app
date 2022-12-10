@@ -20,7 +20,7 @@ class Shabat extends Event {
     required Map<String, dynamic> havdalah,
   }) {
     return Shabat(
-        title: title ?? 'שבת',
+        title: title ?? 'Shabat',
         parasha: parashat['title'],
         entryDate: DateTime.tryParse(Events.getDateWithoutTime(candles['date'])),
         releaseDate: DateTime.tryParse(Events.getDateWithoutTime(havdalah['date'])));

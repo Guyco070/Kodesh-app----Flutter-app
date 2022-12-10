@@ -1,0 +1,192 @@
+{
+    "language": "English",
+    "@language": { "description": "English" },
+
+
+    "menu": "Menu",
+    "@menu": { "description": "menu" },
+
+    "settingRemindersMenu": "Setting reminders",
+    "@settingRemindersMenu": { "description": "settingRemindersMenu" },
+
+    "candleLightingOrderMenu": "Candle lighting order",
+    "@candleLightingOrderMenu": { "description": "candleLightingOrderMenu" },
+
+    "tefilinOrderMenu": "Laying of phylacteries order",
+    "@tefilinOrderMenu": { "description": "tefilinOrderMenu" },
+
+    "choresBeforeShabbatMenu": "Chores before Shabbat",
+    "@choresBeforeShabbatMenu": { "description": "choresBeforeShabbatMenu" },
+
+
+    "nextWeekEvants": "Next Week Evants",
+    "@nextWeekEvants": { "description": "nextWeekEvants" },
+
+    "shabat": "Shabat",
+    "@shabat": { "description": "Shabat day" },
+
+    "loading": "Loading...",
+    "@loading": { "description": "loading..." },
+
+    "onlyShabat": "View only shabat",
+    "@onlyShabat": { "description": "onlyShabat" },
+
+    "currentDate": "Current date",
+    "@currentDate": { "description": "currentDate" },
+
+    "entryAndLightingCandles": "Entry and lighting candles",
+    "@EntryAndLightingCandles": { "description": "EntryAndLightingCandles" },
+
+    "departureAndHavdalah": "Departure and havdalah",
+    "@departureAndHavdalah": { "description": "departureAndHavdalah" },
+
+    "startDate": "Start date",
+    "@startDate": { "description": "startDate" },
+
+    "endDate": "End date",
+    "@endDate": { "description": "endDate" },
+
+    "eventStartDate": "Event start date",
+    "@eventStartDate": { "description": "eventStartDate" },
+
+    "eventEndDate": "Event end date",
+    "@eventEndDate": { "description": "eventEndDate" },
+
+    "eventDay": "Event day",
+    "@eventDay": { "description": "eventDay" },
+
+    "parasha": "Weekly Torah Portion",
+    "@parasha": { "description": "parasha" },
+
+    "yesterday": "Yesterday",
+    "@yesterday": { "description": "yesterday" },
+
+    "tomorrow": "Tomorrow",
+    "@tomorrow": { "description": "tomorrow" },
+    
+    "inXDays": "In {days} days",
+    "@inXDays": { 
+        "description": "inXDays",
+        "placeholders": {
+            "days": {
+                "type": "String"
+            }
+        }
+    },
+
+    "xDaysAgo": "{days} days ago",
+    "@xDaysAgo": {
+        "description": "inXDays",
+        "placeholders": {
+            "days": {
+                "type": "String"
+            }
+        }
+    },
+
+
+    "noIntrnetMessage": "Sorry, it appears that there is no internet connection, please connect to the internet and press the refresh button.",
+    "@noIntrnetMessage": { "description": "noIntrnetMessage" },
+
+
+    "beforeShabatAndHolidaysSettengs": "Before shabat and holidays",
+    "@beforeShabatAndHolidaysSettengs": { "description": "beforeShabatAndHolidaysSettengs" },
+
+    "city": "city",
+    "@city": { "description": "city" },
+   
+    "minutes": "minutes",
+    "@minutes": { "description": "minutes" },
+
+    "hours": "hours",
+    "@hours": { "description": "hours" },
+
+    "remindMeXhoursAndYMinutesBeforeShbatAndHolidays": "Remind me {hours} hours and {minutes} minutes before shabat or holiday",
+    "@remindMeXhoursAndYMinutesBeforeShbatAndHolidays": {
+        "description": "inXDays",
+        "placeholders": {
+            "hours": {
+                "type": "String"
+            },
+            "minutes": {
+                "type": "String"
+            }
+        }
+    },
+   
+    "whatToRemindSettings": "What would you like us to remind you ?",
+    "@whatToRemindSettings": { "description": "whatToRemindSettings" },
+    
+    "plata": "Shabbat blech",
+    "@plata": { "description": "plata" },
+
+    "plataAction": "Connect Shabbat blech",
+    "@plataAction": { "description": "plataAction" },
+
+    "miham": "Samovar",
+    "@miham": { "description": " miham" },
+
+    "mihamAction": "Connect samovar",
+    "@mihamAction": { "description": " mihamAction" },
+
+    "shabbatClock": "Shabbat clock",
+    "@shabbatClock": { "description": "shabbatClock" },
+
+    "shabbatClockAction": "Turn on Shabbat clock",
+    "@shabbatClockAction": { "description": " shabbatClockAction" },
+    
+    "candleLighting": "Candle lighting",
+    "@candleLighting": { "description": "candleLighting" },
+
+    "candleLightingAction": "light candles",
+    "@candleLightingAction": { "description": " candleLightingAction" },
+
+    "airConditioner": "Air conditioner",
+    "@airConditioner": { "description": "airConditioner" },
+
+    "airConditionerAction": "Turn on the air conditioner",
+    "@airConditionerAction": { "description": " airConditionerAction" },
+    
+    "remindCandleLightningSeperateSettings": "Remind me to light candles separately",
+    "@remindCandleLightningSeperateSettings": { "description": "remindCandleLightningSeperateSettings" },
+
+    "remindMeXhoursAndYMinutesBeforeCandlesLighning": "Remind me to light candles {hours} hours and {minutes} minutes before shabat or holiday",
+    "@remindMeXhoursAndYMinutesBeforeCandlesLighning": {
+        "description": "inXDays",
+        "placeholders": {
+            "hours": {
+                "type": "String"
+            },
+            "minutes": {
+                "type": "String"
+            }
+        }
+    },
+
+    "tefillin": "Tefillin",
+    "@tefillin": { "description": "tefillin" },
+
+    "remindTeffilinSettingsAt": "Remind me to ley on tefillin every day at",
+    "@remindTeffilinSettingsAt": { "description": "remindTeffilinSettingsAt" },
+
+    "roshHodesh": "Rosh Hodesh",
+     "@roshHodesh": { "description": "roshHodesh" },
+
+    "remindRoshHodeshSettingsAt": "Remind me the day before Rosh Chodesh at",
+    "@remindRoshHodeshSettingsAt": { "description": "remindRoshHodeshSettingsAt" },
+
+    "roshHodeshReminderWillBeAdvanced": "This reminder will be advanced to weekdays until two o'clock in the afternoon",
+    "@roshHodeshReminderWillBeAdvanced": { "description": "roshHodeshReminderWillBeAdvanced" },
+
+    "updateRemindersTitle": "Update reminders",
+    "@updateRemindersTitle": { "description": "updateRemindersTitle" },
+
+    "all": "All",
+    "@all": { "description": "all" },
+
+    "my": "My",
+    "@my": { "description": "my" },
+    
+    "noChroesMessage": "There are no tasks that you asked us to remind you of, this can be changed on the setting reminders page.",
+    "@noChroesMessage": { "description": "noChroesMessage" }
+}

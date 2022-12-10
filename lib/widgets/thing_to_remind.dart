@@ -46,17 +46,6 @@ class _ThingToRemindState extends State<ThingToRemind> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Expanded(
-                          child: Text(
-                        widget.title,
-                        textDirection: TextDirection.rtl,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: isChecked ? Colors.white : Colors.black,
-                        ),
-                      )),
                       isChecked
                           ? const Icon(
                               Icons.check,
@@ -68,6 +57,16 @@ class _ThingToRemindState extends State<ThingToRemind> {
                               color: Colors.red,
                               size: 30,
                             ),
+                      Expanded(
+                          child: Text(
+                        widget.title,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: isChecked ? Colors.white : Colors.black,
+                        ),
+                      )),
                     ],
                   ),
                 ),

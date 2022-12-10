@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:kodesh_app/models/event.dart';
 import 'package:kodesh_app/models/shabat.dart';
 import 'package:kodesh_app/providers/events.dart';
-import 'package:kodesh_app/screens/tpilot/seder_anahat_tefilin.dart';
-import 'package:kodesh_app/widgets/app_drawer.dart';
+import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/widgets/default_scaffold.dart';
 import 'package:kodesh_app/widgets/events_widgets/event_factory_widget.dart';
 import 'package:kodesh_app/widgets/settings_bar.dart';
 import 'package:provider/provider.dart';
 import '../api/notification_api.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EventScreen extends StatefulWidget {
   const EventScreen({super.key});
@@ -66,7 +66,7 @@ class _EventScreenState extends State<EventScreen> {
     if (_isInit) {
       _isLoading = true;
       Provider.of<Events>(context, listen: false)
-          .fetchAndSetProducts(getDataFirst: true)
+          .fetchAndSetProducts(getDataFirst: true, lang: Provider.of<LanguageChangeProvider>(context).currentLocale.languageCode)
           .then((items) {
         setIsThereInternetConnection(items != null);
         setIsLoading();
@@ -121,26 +121,26 @@ class _EventScreenState extends State<EventScreen> {
     });
   }
 
-  Widget renderNoInternetConnection() {
+  Widget renderNoInternetConnection(String localErrorMessage) {
     return SizedBox(
       height: MediaQuery.of(context).size.height * (2 / 5),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
-        children: const [
-          Icon(
-            Icons.network_cell_outlined,
+        children:  [
+          const Icon(
+            Icons.signal_cellular_nodata_rounded,
             color: Colors.red,
             size: 25,
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          Text(
-            'מצטערים, נראה שאין חיבור לאינטרנט, אנה התחבר ולחץ על כפתור רענון.',
+          Text(localErrorMessage,
+            // 'מצטערים, נראה שאין חיבור לאינטרנט, אנה התחבר ולחץ על כפתור רענון.',
             textAlign: TextAlign.center,
             textDirection: TextDirection.rtl,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
             ),
           ),
@@ -153,7 +153,7 @@ class _EventScreenState extends State<EventScreen> {
   Widget build(BuildContext context) {
     Events events = Provider.of<Events>(context);
     return DefaultScaffold(
-        title: 'ראשי',
+        title: AppLocalizations.of(context)!.nextWeekEvants,
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -171,17 +171,17 @@ class _EventScreenState extends State<EventScreen> {
                 if (_isLoading)
                   renderLoading(context)
                 else
-                  renderNoInternetConnection(),
+                  renderNoInternetConnection(AppLocalizations.of(context)!.noIntrnetMessage),
               },
-              ElevatedButton(
-                  onPressed: () async {
-                    await NotificationApi.showNotification(
-                        title: 'Guy',
-                        body:
-                            'Instant notfication Instant notification ddddd dasdasd  sadaghrtyj tyj ykluy  cfghb sgh sfgth trgh sdtfgh stdgh stdeh dth serth tgh s',
-                        payload: SederAnahatTefilin.routeName);
-                  },
-                  child: const Text('Instant notification')),
+              // ElevatedButton(
+              //     onPressed: () async {
+              //       await NotificationApi.showNotification(
+              //           title: 'Guy',
+              //           body:
+              //               'Instant notfication Instant notification ddddd dasdasd  sadaghrtyj tyj ykluy  cfghb sgh sfgth trgh sdtfgh stdgh stdeh dth serth tgh s',
+              //           payload: SederAnahatTefilin.routeName);
+              //     },
+              //     child: const Text('Instant notification')),
               // ElevatedButton(
               //     onPressed: () async {
               //       await NotificationApi.showSchedualedNotification2(

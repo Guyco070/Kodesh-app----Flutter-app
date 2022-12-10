@@ -17,6 +17,24 @@ class Events with ChangeNotifier {
   String city = 'IL-Jerusalem|281184';
   DateTime startDate = DateTime.now();
   bool isOnlyShabat = false;
+  Locale _currentLocale = const Locale('en');
+
+  Locale get currentLocale => _currentLocale;
+
+  void changeLocale(String locale, {Function? setIsLoading}) async {
+    if(_currentLocale.languageCode != locale){
+      _currentLocale = Locale(locale);
+      if (setIsLoading != null) setIsLoading();
+
+      fetchAndSetProducts().then((value) {
+        if (setIsLoading != null) setIsLoading();
+      });
+      notifyListeners();
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('language', locale);
+    }
+  }
 
   static const eventTypes = [
     'candles',
@@ -72,23 +90,26 @@ class Events with ChangeNotifier {
     if (prefsKeys.contains('isOnlyShabat')) {
       isOnlyShabat = prefs.getBool('isOnlyShabat')!;
     }
+    if (prefsKeys.contains('language')) {
+      _currentLocale = Locale(prefs.getString('language')!);
+    }
 
     notifyListeners();
   }
 
-  tryFetch({String? cityToTake, bool isToday = false}) async {
+  tryFetch({String? cityToTake, String lang = 'en' , bool isToday = false}) async {
     cityToTake ??= city;
     var response;
     var url = Uri.parse(isToday
-        ? 'https://www.hebcal.com/shabbat?cfg=json&zip=${cityToTake.split('|')[1]}&lg=he'
-        : 'https://www.hebcal.com/shabbat?cfg=json&gy=${startDate.year}&gm=${startDate.month}&gd=${startDate.day}&zip=${cityToTake.split('|')[1]}&lg=he');
+        ? 'https://www.hebcal.com/shabbat?cfg=json&zip=${cityToTake.split('|')[1]}&lg=${_currentLocale.languageCode}'
+        : 'https://www.hebcal.com/shabbat?cfg=json&gy=${startDate.year}&gm=${startDate.month}&gd=${startDate.day}&zip=${cityToTake.split('|')[1]}&lg=${_currentLocale.languageCode}');
     response = await get(url);
     if ((jsonDecode(response.body) as Map<String, dynamic>)
         .keys
         .contains('error')) {
       url = Uri.parse(isToday
-          ? 'https://www.hebcal.com/shabbat?cfg=json&city=${cityToTake.split('|')[0]}&lg=he'
-          : 'https://www.hebcal.com/shabbat?cfg=json&gy=${startDate.year}&gm=${startDate.month}&gd=${startDate.day}&city=${cityToTake.split('|')[0]}&lg=he');
+          ? 'https://www.hebcal.com/shabbat?cfg=json&city=${cityToTake.split('|')[0]}&lg=${_currentLocale.languageCode}'
+          : 'https://www.hebcal.com/shabbat?cfg=json&gy=${startDate.year}&gm=${startDate.month}&gd=${startDate.day}&city=${cityToTake.split('|')[0]}&lg=${_currentLocale.languageCode}');
       response = await get(url);
     }
     return jsonDecode(response.body) as Map<String, dynamic>;
@@ -97,11 +118,12 @@ class Events with ChangeNotifier {
   Future<List<Event>?> fetchAndSetProducts(
       {bool filterByUser = false,
       bool getDataFirst = false,
+      String lang = 'en' ,
       void Function(bool bool)? setIsThereInternetConnection}) async {
     if (getDataFirst) await getData();
     if (await isThereInternetConnection()) {
       try {
-        final extractData = await tryFetch();
+        final extractData = await tryFetch(lang: lang);
         _items = [];
         _items = getEventsItemsFromMap(extractData['items'] as List);
         notifyListeners();
@@ -193,7 +215,7 @@ class Events with ChangeNotifier {
 
     List<Event> aftetrFiltering = [];
     for (int i = 0; i < tempItems.length; i++) {
-      if(!toRemove.contains(i)) {
+      if (!toRemove.contains(i)) {
         aftetrFiltering.add(tempItems[i]);
       }
     }

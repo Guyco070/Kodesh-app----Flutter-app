@@ -8,10 +8,11 @@ import 'package:kodesh_app/models/rosh_chodesh.dart';
 import 'package:kodesh_app/models/shabat.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/screens/Shabat_and_holidays_check_list.dart';
-import 'package:kodesh_app/screens/tpilot/adlakat_nerot.dart';
-import 'package:kodesh_app/screens/tpilot/seder_anahat_tefilin.dart';
+import 'package:kodesh_app/screens/tfilot/adlakat_nerot.dart';
+import 'package:kodesh_app/screens/tfilot/seder_anahat_tefilin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/timezone.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Reminders with ChangeNotifier {
   int id = 0;
@@ -32,44 +33,67 @@ class Reminders with ChangeNotifier {
   String tefilinTime = '06:00';
   String roshChodeshTime = '06:00';
 
-  final List<String> allShabatAndHolidaysThingsToRemindList = [
-    'פלטה',
-    'מיחם',
-    'שעון שבת',
-    'הדלקת נרות',
-    'מזגן',
+  List<String> allShabatAndHolidaysThingsToRemindList(BuildContext context) {
+    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+    return [
+      'Shabbat blech',
+      'Samovar',
+      'Shabbat clock',
+      'Candle lighting',
+      'Air conditioner'
+    ];
+  }
+
+  Map<String, Map<String, Object>> allShabatAndHolidaysThingsToRemindMap(
+      BuildContext context) {
+    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+
+    return {
+      'Shabbat blech': {
+        'icon': Icons.heat_pump,
+        'action': appLocalizations.plataAction,
+        'text': appLocalizations.plata
+      },
+      'Samovar': {
+        'icon': Icons.coffee_maker_outlined,
+        'action': appLocalizations.mihamAction,
+        'text': appLocalizations.miham
+      },
+      'Shabbat clock': {
+        'icon': Icons.lock_clock_outlined,
+        'action': appLocalizations.shabbatClockAction,
+        'text': appLocalizations.shabbatClock
+      },
+      'Candle lighting': {
+        'icon': Icons.ac_unit_outlined,
+        'action': appLocalizations.airConditionerAction,
+        'text': appLocalizations.airConditioner
+      },
+      'Air conditioner': {
+        'icon': Icons.fireplace_outlined,
+        'action': appLocalizations.candleLightingAction,
+        'text': appLocalizations.candleLighting
+      },
+    };
+  }
+
+  List<String> shabatAndHolidaysThingsToRemindList = [
+    'Shabbat blech',
+    'Samovar'
   ];
 
-  final Map<String, Map<String, Object>> allShabatAndHolidaysThingsToRemindMap =
-      {
-    'פלטה': {
-      'icon': Icons.heat_pump,
-      'text': 'לחבר פלטה',
-    },
-    'מיחם': {
-      'icon': Icons.coffee_maker_outlined,
-      'text': 'לחבר מיחם',
-    },
-    'שעון שבת': {
-      'icon': Icons.lock_clock_outlined,
-      'text': 'להפעיל שעון שבת',
-    },
-    'מזגן': {
-      'icon': Icons.ac_unit_outlined,
-      'text': 'להדליק מזגן',
-    },
-    'הדלקת נרות': {
-      'icon': Icons.fireplace_outlined,
-      'text': 'להדליק נרות',
-    },
-  };
-
-  List<String> shabatAndHolidaysThingsToRemindList = ['פלטה', 'מיחם'];
+  List<String> shabatAndHolidaysThingsToRemindListCreate(context) {
+    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+    return [
+      appLocalizations.plata,
+      appLocalizations.miham,
+    ];
+  }
 
   List<Map<String, Object>> notValues = [];
 
-  Reminders() {
-    getData();
+  Reminders(BuildContext context) {
+    getData(context);
   }
 
   setReminderCity(String newCity) {
@@ -150,7 +174,7 @@ class Reminders with ChangeNotifier {
     notifyListeners();
   }
 
-  getData() async {
+  getData(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Set<String> prefsKeys = prefs.getKeys();
 
@@ -179,6 +203,9 @@ class Reminders with ChangeNotifier {
     if (prefsKeys.contains('shabatAndHolidaysThingsToRemindList')) {
       shabatAndHolidaysThingsToRemindList =
           prefs.getStringList('shabatAndHolidaysThingsToRemindList')!;
+    } else {
+      shabatAndHolidaysThingsToRemindList =
+          shabatAndHolidaysThingsToRemindListCreate(context);
     }
 
     if (prefsKeys.contains('shabatAndHolidaysCandles')) {
@@ -212,7 +239,7 @@ class Reminders with ChangeNotifier {
     }
     notifyListeners();
 
-    setReminders();
+    setReminders(context: context);
   }
 
   updateAll() async {
@@ -241,7 +268,8 @@ class Reminders with ChangeNotifier {
     if (roshChodesh) prefs.setString('roshChodeshTime', roshChodeshTime);
   }
 
-  Future<void> setReminders({bool update = false}) async {
+  Future<void> setReminders(
+      {bool update = false, required BuildContext context}) async {
     if (update) {
       updateAll();
     }
@@ -259,11 +287,11 @@ class Reminders with ChangeNotifier {
 
       List<Event> items = Events.getEventsItemsFromMap(extractData['items']);
       final DateTime now = DateTime.now();
-      items.add(Shabat(
-          title: 'שבת',
-          parasha: 'פָּרָשַׁת וַיִּשְׁלַח',
-          entryDate: DateTime.now().add(const Duration(hours: 2, minutes: 3)),
-          releaseDate: DateTime.now().add(const Duration(minutes: 10))));
+      // items.add(Shabat(
+      //     title: 'שבת',
+      //     parasha: 'פָּרָשַׁת וַיִּשְׁלַח',
+      //     entryDate: DateTime.now().add(const Duration(hours: 2, minutes: 3)),
+      //     releaseDate: DateTime.now().add(const Duration(minutes: 10))));
       notValues = [];
       for (Event e in items) {
         if (shabatAndHolidays) {
@@ -272,13 +300,17 @@ class Reminders with ChangeNotifier {
                 hours: beforeShabatHours, minutes: beforeShabatMinutes));
 
             if (now.isBefore(x)) {
-              String body = 'ביקשת שנזכיר לך:';
-              for (int i = 0;
-                  i < shabatAndHolidaysThingsToRemindList.length;
-                  i++) {
-                body +=
-                    '\n${i + 1}. ${allShabatAndHolidaysThingsToRemindMap[shabatAndHolidaysThingsToRemindList[i]]!['text']}';
-              }
+              String body = 'ביקשת שנזכיר לך כמה מטלות לפני שבת.\n';
+              // for (int i = 0;
+              //     i < shabatAndHolidaysThingsToRemindList.length;
+              //     i++) {
+              //   print('allShabatAndHolidaysThingsToRemindMap');
+              //   print(shabatAndHolidaysThingsToRemindList[i]);
+              //   print(allShabatAndHolidaysThingsToRemindMap(
+              //       context)[shabatAndHolidaysThingsToRemindList[i]]);
+              //   body +=
+              //       '\n${i + 1}. ${(allShabatAndHolidaysThingsToRemindMap(context))..[shabatAndHolidaysThingsToRemindList[i]]!['action']}';
+              // }
 
               body +=
                   '.\nהדלקת נרות בשעה ${DateFormat('HH:mm').format(e.entryDate!)}.';
@@ -334,10 +366,10 @@ class Reminders with ChangeNotifier {
               for (int i = 0;
                   i < shabatAndHolidaysThingsToRemindList.length;
                   i++) {
-                    if(e.subcat == 'major') {
-                      body +=
-                    '\n${i + 1}. ${allShabatAndHolidaysThingsToRemindMap[shabatAndHolidaysThingsToRemindList[i]]!['text']}';
-                    }
+                if (e.subcat == 'major') {
+                  body +=
+                      '\n${i + 1}. ${allShabatAndHolidaysThingsToRemindMap(context)[shabatAndHolidaysThingsToRemindList[i]]!['text']}';
+                }
               }
               if (DateFormat('HH:mm').format(e.entryDate!) != '00:00') {
                 body +=

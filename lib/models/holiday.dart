@@ -23,14 +23,14 @@ class Holiday extends Event {
     } else {
       date = DateTime.tryParse(Events.getDateWithoutTime(parashat['date']));
     }
-    print(parashat['subcat']);
+
     return Holiday(
       title: parashat['title'],
       entryDate: date,
       releaseDate: havdalah != null
           ? DateTime.tryParse(Events.getDateWithoutTime(havdalah['date']))
           : null,
-      subcat: parashat['subcat'], // major, modern
+      subcat: parashat['subcat'], // major, minor, modern, shabat, fast
     );
   }
 }

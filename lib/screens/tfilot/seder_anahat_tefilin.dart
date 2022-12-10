@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kodesh_app/widgets/appBar.dart';
+import 'package:kodesh_app/widgets/custom_app_bar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SederAnahatTefilin extends StatelessWidget {
   const SederAnahatTefilin({super.key});
@@ -35,7 +36,7 @@ class SederAnahatTefilin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getRightBackAppBar(context, 'סדר הנחת תפילין'),
+      appBar: CustomAppBar(title: AppLocalizations.of(context)!.tefilinOrderMenu),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
