@@ -78,54 +78,7 @@ class NotificationApi {
     String? body,
     String? payload,
     required DateTime date,
-    // TZDateTime? tzDateTime,
   }) async {
-    // final int dtH = DateTime.now().hour;
-    // final int tZdtH = TZDateTime.now(local).hour;
-    if (title == 'שבת שלום מאפליקציית קודש') {
-      print(DateTime.now().add(Duration(minutes: 1)));
-      print('date: $date');
-      print(TZDateTime.now(local));
-      // print(dtH);
-      // print(tZdtH);
-    }
-
-    // date = (((dtH - tZdtH) > 0)
-    //     ? date.subtract(Duration(hours: dtH - tZdtH))
-    //     : date.add(Duration(hours: tZdtH - dtH)));
-
-    // print(TZDateTime.from(date, local));
-    // print(TZDateTime.from(
-    //                     DateTime.now().add(const Duration(seconds: 5)),
-    //                     local));
-    // if (title == 'שבת שלום מאפליקציית קודש') print(TZDateTime.from(date, local));
-
-    return _notifications.zonedSchedule(
-      id,
-      title,
-      body,
-      TZDateTime.from(date, local),
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
-      androidAllowWhileIdle: true,
-      _notificationDetails(),
-      payload: payload,
-    );
-  }
-
-  static Future<void> showSchedualedNotification2({
-    int id = 0,
-    String? title,
-    String? body,
-    String? payload,
-    required DateTime date,
-    TZDateTime? tzDateTime,
-  }) async {
-    // print(TZDateTime.from(date, local));
-    // print(TZDateTime.from(
-    //                     DateTime.now().add(const Duration(seconds: 5)),
-    //                     local));
-
     return _notifications.zonedSchedule(
       id,
       title,
