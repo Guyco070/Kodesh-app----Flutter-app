@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:intl/intl.dart';
 import 'package:kodesh_app/api/notification_api.dart';
 import 'package:kodesh_app/models/event.dart';
@@ -12,9 +11,7 @@ import 'package:kodesh_app/screens/Shabat_and_holidays_check_list.dart';
 import 'package:kodesh_app/screens/tfilot/adlakat_nerot.dart';
 import 'package:kodesh_app/screens/tfilot/seder_anahat_tefilin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:timezone/timezone.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:timezone/data/latest.dart';
 
 class Reminders with ChangeNotifier {
   int id = 0;
