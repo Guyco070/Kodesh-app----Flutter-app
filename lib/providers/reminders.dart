@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:intl/intl.dart';
 import 'package:kodesh_app/api/notification_api.dart';
 import 'package:kodesh_app/models/event.dart';
@@ -13,6 +14,7 @@ import 'package:kodesh_app/screens/tfilot/seder_anahat_tefilin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/timezone.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:timezone/data/latest.dart';
 
 class Reminders with ChangeNotifier {
   int id = 0;
@@ -277,9 +279,10 @@ class Reminders with ChangeNotifier {
     NotificationApi.cancelAll();
     id = 0;
 
-    List<TZDateTime> tefilinDates = [];
+    List<DateTime> tefilinDates = [];
     List<int> tzToRemove = [];
     if (tefilin) tefilinDates = await setRemindersForTefilin();
+
     Events events = Events();
     if (await events.isThereInternetConnection()) {
       Map<String, dynamic> extractData =
@@ -292,7 +295,7 @@ class Reminders with ChangeNotifier {
       //     parasha: 'פָּרָשַׁת וַיִּשְׁלַח',
       //     entryDate: DateTime.now().add(const Duration(minutes: 2)),
       //     releaseDate: DateTime.now().add(const Duration(minutes: 10))));
-      notValues = [];
+     
       for (Event e in items) {
         if (shabatAndHolidays) {
           if (e is Shabat) {
@@ -313,7 +316,7 @@ class Reminders with ChangeNotifier {
               // }
 
               body +=
-                  '.\nהדלקת נרות בשעה ${DateFormat('HH:mm').format(e.entryDate!)}.';
+                  'הדלקת נרות בשעה ${DateFormat('HH:mm').format(e.entryDate!)}.';
 
               if (e.releaseDate != null) {
                 body +=
@@ -389,12 +392,12 @@ class Reminders with ChangeNotifier {
             }
             if (tefilinDates.isNotEmpty && e.releaseDate != null) {
               tzToRemove.add(tefilinDates.indexOf(tefilinDates[0]));
-              for (TZDateTime tz in tefilinDates) {
-                if (tz.isAfter(e.entryDate!) &&
-                    tz.day == e.entryDate!.day &&
-                    tz.month == e.entryDate!.month &&
-                    tz.year == e.entryDate!.year) {
-                  TZDateTime temp = tz.add(const Duration(days: 1));
+              for (DateTime dt in tefilinDates) {
+                if (dt.isAfter(e.entryDate!) &&
+                    dt.day == e.entryDate!.day &&
+                    dt.month == e.entryDate!.month &&
+                    dt.year == e.entryDate!.year) {
+                  DateTime temp = dt.add(const Duration(days: 1));
 
                   while (temp.isBefore(e.releaseDate!)) {
                     tzToRemove.add(tefilinDates.indexOf(temp));
@@ -408,6 +411,7 @@ class Reminders with ChangeNotifier {
 
         if (roshChodesh && e is RoshChodesh) {
           // rosh chodesh
+
           DateTime dayBefore = DateTime(
                   e.entryDate!.year,
                   e.entryDate!.month,
@@ -439,19 +443,25 @@ class Reminders with ChangeNotifier {
               // 'tzDateTime': TZDateTime.from(dayBefore, local)
             });
             id++;
-            for (TZDateTime tz in tefilinDates) {
-              String tefTzFormated = DateFormat('dd/MM/yy').format(tz);
-              if ((e.entryDate != null &&
-                        DateFormat('dd/MM/yy').format(e.entryDate!) ==
-                            tefTzFormated) ||
-                    (e.releaseDate != null &&
-                        DateFormat('dd/MM/yy').format(e.releaseDate!) ==
-                            tefTzFormated)) {
-                  Map<String, Object> toChange = notValues
-                      .firstWhere((element) => element['date'] == tefTzFormated);
-                  toChange['body'] = '${toChange['body']}\nלא לשכוח היום ראש חודש.';
-                  notValues[toChange['id'] as int] = toChange;
-              }
+          }
+
+          for (DateTime tz in tefilinDates) {
+            String tefTzFormated = DateFormat('dd/MM/yy').format(tz);
+            if ((e.entryDate != null &&
+                    DateFormat('dd/MM/yy').format(e.entryDate!) ==
+                        tefTzFormated) ||
+                (e.releaseDate != null &&
+                    DateFormat('dd/MM/yy').format(e.releaseDate!) ==
+                        tefTzFormated)) {
+
+              Map<String, Object> toChange = notValues.firstWhere((element) =>
+                  DateFormat('dd/MM/yy').format(element['date'] as DateTime) ==
+                  tefTzFormated);
+
+              toChange['body'] =
+                  '${toChange['body']}\nלא לשכוח, היום ראש חודש.';
+              toChange['title'] = '${toChange['title']} + ראש חודש';
+              notValues[toChange['id'] as int] = toChange;
             }
           }
         }
@@ -482,14 +492,14 @@ class Reminders with ChangeNotifier {
     }
   }
 
-  Future<List<TZDateTime>> setRemindersForTefilin() async {
-    TZDateTime first = NotificationApi.schedualeDaily(getTefilinTimeObject);
-
-    final DateTime now = DateTime.now();
-    final tzNow = TZDateTime(
-        local, now.year, now.month, now.day, now.hour, now.minute, now.second);
+  Future<List<DateTime>> setRemindersForTefilin() async {
+    DateTime first =
+        NotificationApi.schedualeDailyDateTime(getTefilinTimeObject);
+    final tzNow = DateTime.now();
+    print(first);
 
     if (tzNow.isAfter(first)) {
+      print('true');
       first = first.add(const Duration(days: 1));
     }
     if (first.weekday == 6) first = first.add(const Duration(days: 1));
@@ -497,9 +507,16 @@ class Reminders with ChangeNotifier {
     final tefilinDates = [
       first,
     ];
-
+    notValues.add({
+        'id': id,
+        'title': 'תפילין',
+        'body': 'הגיע הזמן להניח תפילין!',
+        'date': first,
+        'payload': SederAnahatTefilin.routeName
+      });
+      id++;
     for (int i = 0; i < 7; i++) {
-      TZDateTime tz = tefilinDates.last
+      DateTime tz = tefilinDates.last
           .add(Duration(days: tefilinDates.last.weekday == 5 ? 2 : 1));
       tefilinDates.add(tz);
       notValues.add({
@@ -511,7 +528,6 @@ class Reminders with ChangeNotifier {
       });
       id++;
     }
-
     // for (TZDateTime tz in tefilinDates) {
     //   await NotificationApi.showSchedualedNotification(
     //           id: id,

@@ -184,21 +184,15 @@ class _EventScreenState extends State<EventScreen> {
                   renderNoInternetConnection(
                       AppLocalizations.of(context)!.noIntrnetMessage),
               },
-              ElevatedButton(
-                  onPressed: () async {
-                    // await NotificationApi.showNotification(
-                    //     title: 'Guy',
-                    //     body:
-                    //         'Instant notfication Instant notification ddddd dasdasd  sadaghrtyj tyj ykluy  cfghb sgh sfgth trgh sdtfgh stdgh stdeh dth serth tgh s',
-                    //     payload: SederAnahatTefilin.routeName);
-                    print(DateTime.now());
-                    print(local);
-                    String timeZone =
-                        await FlutterNativeTimezone.getLocalTimezone();
-                    setLocalLocation(getLocation(timeZone));
-                    print(TZDateTime.from(DateTime.now(), local));
-                  },
-                  child: const Text('Instant notification')),
+              // ElevatedButton(
+              //     onPressed: () async {
+              //       await NotificationApi.showNotification(
+              //           title: 'Guy',
+              //           body:
+              //               'Instant notfication Instant notification ddddd dasdasd  sadaghrtyj tyj ykluy  cfghb sgh sfgth trgh sdtfgh stdgh stdeh dth serth tgh s',
+              //           payload: SederAnahatTefilin.routeName);
+              //     },
+              //     child: const Text('Instant notification')),
               // ElevatedButton(
               //     onPressed: () async {
               //       await NotificationApi.showSchedualedNotification2(

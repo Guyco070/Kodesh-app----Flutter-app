@@ -163,6 +163,16 @@ class NotificationApi {
         : schedualedDate;
   }
 
+  static DateTime schedualeDailyDateTime(Time time) {
+    final now = DateTime.now();
+    final schedualedDate = DateTime(now.year, now.month, now.day,
+        time.hour, time.minute, time.second);
+
+    return schedualedDate.isBefore(now)
+        ? schedualedDate.add(const Duration(days: 1))
+        : schedualedDate;
+  }
+
   // static TZDateTime schedualeDailyWithoutSaturday(Time time,
   //     {List<int> days = const [
   //       DateTime.sunday,
