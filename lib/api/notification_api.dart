@@ -173,25 +173,6 @@ class NotificationApi {
         : schedualedDate;
   }
 
-  // static TZDateTime schedualeDailyWithoutSaturday(Time time,
-  //     {List<int> days = const [
-  //       DateTime.sunday,
-  //       DateTime.monday,
-  //       DateTime.tuesday,
-  //       DateTime.wednesday,
-  //       DateTime.thursday,
-  //       DateTime.friday
-  //     ]}) {
-  //   // TODO: include holidays
-
-  //   final schedualedDate = schedualeDaily(time);
-  //   while (!days.contains(schedualedDate.weekday)) {
-  //     schedualedDate.add(const Duration(days: 1));
-  //   }
-
-  //   return schedualedDate;
-  // }
-
   // actions
   static void onDidReceiveLocalNotification(
     int id,
