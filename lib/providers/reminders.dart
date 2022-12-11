@@ -439,6 +439,20 @@ class Reminders with ChangeNotifier {
               // 'tzDateTime': TZDateTime.from(dayBefore, local)
             });
             id++;
+            for (TZDateTime tz in tefilinDates) {
+              String tefTzFormated = DateFormat('dd/MM/yy').format(tz);
+              if ((e.entryDate != null &&
+                        DateFormat('dd/MM/yy').format(e.entryDate!) ==
+                            tefTzFormated) ||
+                    (e.releaseDate != null &&
+                        DateFormat('dd/MM/yy').format(e.releaseDate!) ==
+                            tefTzFormated)) {
+                  Map<String, Object> toChange = notValues
+                      .firstWhere((element) => element['date'] == tefTzFormated);
+                  toChange['body'] = '${toChange['body']}\nלא לשכוח היום ראש חודש.';
+                  notValues[toChange['id'] as int] = toChange;
+              }
+            }
           }
         }
 
@@ -488,26 +502,25 @@ class Reminders with ChangeNotifier {
       TZDateTime tz = tefilinDates.last
           .add(Duration(days: tefilinDates.last.weekday == 5 ? 2 : 1));
       tefilinDates.add(tz);
-      // notValues.add({
-      //           'id': id,
-      //           'title': 'תפילין',
-      //           'body': 'הגיע הזמן להניח תפילין!',
-      //           'date': tz,
-      //           'tzDateTime': tz,
-      //           'payload': SederAnahatTefilin.routeName
-      //         });
-
+      notValues.add({
+        'id': id,
+        'title': 'תפילין',
+        'body': 'הגיע הזמן להניח תפילין!',
+        'date': tz,
+        'payload': SederAnahatTefilin.routeName
+      });
+      id++;
     }
 
-    for (TZDateTime tz in tefilinDates) {
-      await NotificationApi.showSchedualedNotification(
-              id: id,
-              title: 'תפילין',
-              body: 'הגיע הזמן להניח תפילין!',
-              date: tz,
-              payload: SederAnahatTefilin.routeName)
-          .then((value) => id++);
-    }
+    // for (TZDateTime tz in tefilinDates) {
+    //   await NotificationApi.showSchedualedNotification(
+    //           id: id,
+    //           title: 'תפילין',
+    //           body: 'הגיע הזמן להניח תפילין!',
+    //           date: tz,
+    //           payload: SederAnahatTefilin.routeName)
+    //       .then((value) => id++);
+    // }
     return tefilinDates;
   }
 
