@@ -360,7 +360,8 @@ class _SchedualNotficationsScreenState
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(appLocalizations.remindRoshHodeshSettingsAt),
+                                Text(appLocalizations
+                                    .remindRoshHodeshSettingsAt),
                                 TextButton(
                                   onPressed: () async {
                                     TimeOfDay? time = await showTimePicker(
@@ -369,7 +370,8 @@ class _SchedualNotficationsScreenState
                                             hour: reminders
                                                 .getRoshChodeshTimeObject.hour,
                                             minute: reminders
-                                                .getRoshChodeshTimeObject.minute),
+                                                .getRoshChodeshTimeObject
+                                                .minute),
                                         builder: (context, childWidget) {
                                           return MediaQuery(
                                               data: MediaQuery.of(context)
@@ -393,9 +395,11 @@ class _SchedualNotficationsScreenState
                             ),
                           ),
                           Text(
-                              "*${appLocalizations.roshHodeshReminderWillBeAdvanced}.",
-                              style: TextStyle(color: Colors.grey[700], fontSize: 12),
-            textAlign: TextAlign.center,), // todo: fix it to be syncronize with shabat and holidays
+                            "*${appLocalizations.roshHodeshReminderWillBeAdvanced}.",
+                            style: TextStyle(
+                                color: Colors.grey[700], fontSize: 12),
+                            textAlign: TextAlign.center,
+                          ), // todo: fix it to be syncronize with shabat and holidays
                           const SizedBox(
                             height: 7,
                           ),
@@ -411,7 +415,7 @@ class _SchedualNotficationsScreenState
                             _isLoading = true;
                           });
                           reminders
-                              .setReminders(update: true, context: context)
+                              .setReminders(update: true)
                               .then((value) => setState(() {
                                     _isLoading = false;
                                   }));

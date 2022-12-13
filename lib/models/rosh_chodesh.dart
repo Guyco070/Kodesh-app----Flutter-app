@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+import 'package:kodesh_app/api/l10n/reminders_translates.dart';
 import 'package:kodesh_app/models/event.dart';
 import 'package:kodesh_app/providers/events.dart';
 
@@ -33,4 +35,16 @@ class RoshChodesh extends Event {
     return RoshChodesh(
         title: rs1.title, entryDate: rs2.entryDate, releaseDate: rs1.entryDate);
   }
+
+  @override
+  String getReminderBody(String lang) =>  (RemindersTranslates.roshHodeshReminderTranslated[lang]!['body']!)(entryDate!, title);
+
+  @override
+  String getReminderTitle(String lang) => '$title - ${DateFormat('dd/MM/yy').format(entryDate!)}';
+
+  @override
+  String getReminderCandlesBody(int beforeShabatAndHolidaysCandlesHours, int beforeShabatAndHolidaysCandlesMinutes, String lang) => 'No need';
+
+  @override
+  String getReminderCandlesTitle(String lang) => 'No need';
 }

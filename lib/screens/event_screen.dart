@@ -8,7 +8,6 @@ import 'package:kodesh_app/widgets/default_scaffold.dart';
 import 'package:kodesh_app/widgets/events_widgets/event_factory_widget.dart';
 import 'package:kodesh_app/widgets/settings_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:timezone/timezone.dart';
 import 'package:timezone/data/latest.dart';
 import '../api/notification_api.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

@@ -2,9 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LanguageChangeProvider with ChangeNotifier {
-  Locale _currentLocale = const Locale('en');
+  static Locale _currentLocale = const Locale('en');
 
   Locale get currentLocale => _currentLocale;
+  static Locale get getCurrentLocale => _currentLocale;
 
   void changeLocale(String locale) async {
     if (_currentLocale.languageCode != locale) {

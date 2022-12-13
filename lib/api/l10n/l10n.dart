@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+Locale currentLocal = const Locale('en');
+
 class L10n {
   static final all = [
     const Locale('en', 'English'),

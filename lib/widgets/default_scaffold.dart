@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:kodesh_app/api/l10n/l10n.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/providers/language_change_provider.dart';
+import 'package:kodesh_app/providers/reminders.dart';
 import 'package:kodesh_app/widgets/app_drawer.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DefaultScaffold extends StatefulWidget {
-  DefaultScaffold({super.key, required this.title, required this.body});
+  const DefaultScaffold({super.key, required this.title, required this.body});
   final String title;
   final Widget body;
 
@@ -50,7 +51,7 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
     }).toList();
   }
 
-  x(lang) {
+  getLangDropDown(LanguageChangeProvider lang) {
     return DropdownButtonHideUnderline(
       child: DropdownButton2(
         isExpanded: true,
@@ -65,12 +66,15 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
         items: L10n.all.map<DropdownMenuItem<String>>(buildMenuItem).toList(),
         value: lang.currentLocale.countryCode,
         onChanged: (value) {
-          lang.changeLocale(
-            value ?? lang.currentLocale.languageCode,
-          );
-          Provider.of<Events>(context, listen: false).changeLocale(
+          if (value != lang.currentLocale.languageCode) {
+            lang.changeLocale(
               value ?? lang.currentLocale.languageCode,
-              setIsLoading: setIsLoading);
+            );
+            Provider.of<Events>(context, listen: false)
+                .changeLocale(value ?? lang.currentLocale.languageCode,
+                    setIsLoading: setIsLoading)
+                .then((_) => Reminders(context));
+          }
         },
         customButton: langIcon(lang),
         selectedItemHighlightColor: Colors.white,
@@ -101,25 +105,25 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
 
   FittedBox langIcon(lang) {
     return FittedBox(
-        child: Row(
-          children: [
-            const Icon(
-              Icons.language_outlined,
+      child: Row(
+        children: [
+          const Icon(
+            Icons.language_outlined,
+          ),
+          const SizedBox(
+            width: 3,
+          ),
+          Text(
+            lang.currentLocale.languageCode,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
             ),
-            const SizedBox(
-              width: 3,
-            ),
-            Text(
-              lang.currentLocale.languageCode,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-              ),
-              textDirection: TextDirection.rtl,
-            ),
-          ],
-        ),
-      );
+            textDirection: TextDirection.rtl,
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -136,7 +140,7 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
                 onPressed: () => Scaffold.of(context).openDrawer(),
                 icon: const Icon(Icons.drag_indicator_outlined));
           }),
-          trailing: x(lang)
+          trailing: getLangDropDown(lang)
           //  Container(
           //   height: 60,
           //   width: 30,

@@ -166,7 +166,7 @@ class _SettingsBarState extends State<SettingsBar> {
             ),
           ),
           Container(padding: const EdgeInsets.only(top: 0,), height: 30,child: TextButton(onPressed: () =>  widget.updateIsOnlyShabat(), child: Text(appLocalizations.onlyShabat, style: TextStyle(color: widget.isOnlyShabat ? Colors.blue : Colors.grey, fontSize: 12),)),),
-          Container(
+          SizedBox(
             height: 38,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
