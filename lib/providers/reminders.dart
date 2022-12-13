@@ -296,23 +296,23 @@ class Reminders with ChangeNotifier {
           await events.tryFetch(cityToTake: reminderCity, isToday: true, lang: lang);
       List<Event> items = Events.getEventsItemsFromMap(extractData['items']);
       final DateTime now = DateTime.now();
-      items.add(Shabat(
-          title: 'שבת',
-          parasha: 'פָּרָשַׁת וַיִּשְׁלַח',
-          entryDate: DateTime.now().add(const Duration(minutes: 3)),
-          releaseDate: DateTime.now().add(const Duration(minutes: 10))));
+      // items.add(Shabat(
+      //     title: 'שבת',
+      //     parasha: 'פָּרָשַׁת וַיִּשְׁלַח',
+      //     entryDate: DateTime.now().add(const Duration(minutes: 3)),
+      //     releaseDate: DateTime.now().add(const Duration(minutes: 10))));
 
-      items.add(Holiday(
-          title: 'חג',
-          entryDate: DateTime.now().add(const Duration(minutes: 3)),
-          releaseDate: DateTime.now().add(const Duration(minutes: 10)),
-          subcat: 'major'));
+      // items.add(Holiday(
+      //     title: 'חג',
+      //     entryDate: DateTime.now().add(const Duration(minutes: 3)),
+      //     releaseDate: DateTime.now().add(const Duration(minutes: 10)),
+      //     subcat: 'major'));
 
-      items.add(RoshChodesh(
-          title: 'ראש חודש',
-          entryDate: DateTime.now().add(const Duration(days: 1, seconds: 1)),
-          releaseDate: DateTime.now().add(const Duration(days: 1, minutes: 10)),
-          ));
+      // items.add(RoshChodesh(
+      //     title: 'ראש חודש',
+      //     entryDate: DateTime.now().add(const Duration(days: 1, seconds: 1)),
+      //     releaseDate: DateTime.now().add(const Duration(days: 1, minutes: 10)),
+      //     ));
 
       for (Event e in items) {
         if (shabatAndHolidays && e is! RoshChodesh) {
