@@ -102,8 +102,10 @@ class _SettingsBarState extends State<SettingsBar> {
                                     items, lang.currentLocale.languageCode))
                             .toList(),
                         onChanged: (value) {
-                          events.setCity(value ?? events.city,
+                          if(value != events.city) {
+                            events.setCity(value ?? events.city,
                               setIsLoading: widget.setIsLoading);
+                          }
                         }),
                   ),
                   VerticalDivider(
