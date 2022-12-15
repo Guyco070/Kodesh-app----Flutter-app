@@ -1,17 +1,26 @@
 {
     "language": "עברית",
 
+    "main": "ראשי",
+
     "menu": "תפריט",
     "settingRemindersMenu": "קביעת תזכורות",
     "candleLightingOrderMenu": "סדר הדלקת נרות",
     "tefilinOrderMenu": "סדר הנחת תפילין",
     "choresBeforeShabbatMenu": "מטלות לפני שבת",
 
-    "nextWeekEvants": "אירועי השבוע האחרון",
+    "nextWeekEvants": "אירועי השבוע הקרוב",
+    "weekEvents": "אירועי השבוע",
+    "todayTimes": "זמני היום",
+
     "shabat": "שבת",
     "loading": "טוען...",
 
     "onlyShabat": "הצג רק שבת",
+
+    "noLaterTimesToShow": "אין זמנים מעכשיו והלאה להצגה עבור תאריך זה",
+    "fromNowOn": "מעכשיו והלאה",
+
     "currentDate": "תאריך נוכחי",
     "entryAndLightingCandles": "כניסה והדלקת נרות",
     "departureAndHavdalah": "יציאה והבדלה",
@@ -21,6 +30,16 @@
     "eventStartDate": "תאריך תחילת האירוע",
     "eventEndDate": "תאריך סיום האירוע",
     "parasha": "פרשת שבוע",
+
+    "monday": "שני",    
+    "tuesday": "שלישי",    
+    "wednesday": "רביעי",
+    "thursday": "חמישי",
+    "friday": "שישי",
+    "saturday": "שבת",
+    "sunday": "ראשון",
+    
+    "today": "היום",
     "tomorrow": "מחר",
     "yesterday": "אתמול",
     "inXDays": "בעוד {days} ימים",

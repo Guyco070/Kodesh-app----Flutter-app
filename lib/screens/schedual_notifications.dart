@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kodesh_app/data/cities.dart';
+import 'package:kodesh_app/helpers/dates.dart';
 import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/providers/reminders.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
@@ -27,28 +28,6 @@ class _SchedualNotficationsScreenState
   bool _isLoading = false;
 
   // TextEditingController? tefilinController;
-
-  String getTime(DateTime? dateTime, String? minute, String? hour) {
-    if (dateTime != null) {
-      hour = '${dateTime.hour}';
-      minute = '${dateTime.minute}';
-    }
-
-    while (hour!.length < 2 || minute!.length < 2) {
-      hour = getSingleElementTime(hour);
-      minute = getSingleElementTime(minute!);
-    }
-    return '$hour:$minute';
-  }
-
-  String getSingleElementTime(String timeEl) {
-    while (timeEl.length < 2) {
-      if (timeEl.length < 2) {
-        timeEl = '0$timeEl';
-      }
-    }
-    return timeEl;
-  }
 
   DropdownMenuItem<String> buildMenuItem(Map item, String lang) {
     return DropdownMenuItem(

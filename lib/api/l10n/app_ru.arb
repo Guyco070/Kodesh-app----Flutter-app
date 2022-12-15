@@ -1,14 +1,24 @@
 {
     "language": "ру́сский язы́к",
+    "main": "главный",
+
     "menu": "Меню",
     "settingRemindersMenu": "Настройка напоминаний",
     "candleLightingOrderMenu": "Порядок зажжения свечей",
     "tefilinOrderMenu": "Порядок закладки филактерий",
     "choresBeforeShabbatMenu": "Дела перед Шаббатом",
     "nextWeekEvants": "События следующей недели",
+
+    "weekEvents": "События недели",
+    "todayTimes": "Сегодняшнее время", 
+
     "shabat": "Шаббат",
     "loading": "Загрузка...",
     "onlyShabat": "Смотреть только Шаббат",
+
+    "noLaterTimesToShow": "Более поздние времена для этой даты отсутствуют.",
+    "fromNowOn": "Впредь",
+
     "currentDate": "Текущая дата",
     "entryAndLightingCandles": "Вход и зажигание свечей",
     "departureAndHavdalah": "Отъезд и авдала",
@@ -18,7 +28,17 @@
     "eventEndDate": "Дата окончания мероприятия",
     "eventDay": "День события",
     "parasha": "Недельная глава Торы",
+
+    "monday": "Понедельник",    
+    "tuesday": "Вторник",    
+    "wednesday": "среда",
+    "thursday": "Четверг",
+    "friday": "пятница",
+    "saturday": "суббота",
+    "sunday": "Воскресенье",
+
     "yesterday": "Вчерашний день",
+    "today": "Сегодня",
     "tomorrow": "Завтра",
     "inXDays": "Через {days} дней",
     "xDaysAgo": "{days} дней назад",

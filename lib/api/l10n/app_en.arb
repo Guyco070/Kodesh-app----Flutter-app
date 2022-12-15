@@ -3,6 +3,9 @@
     "@language": { "description": "English" },
 
 
+    "main": "Main",
+    "@main": { "description": "main" },
+
     "menu": "Menu",
     "@menu": { "description": "menu" },
 
@@ -22,6 +25,12 @@
     "nextWeekEvants": "Next Week Evants",
     "@nextWeekEvants": { "description": "nextWeekEvants" },
 
+    "weekEvents": "Week's events",
+    "@weekEvents": { "description": "weekEvents" },
+
+    "todayTimes": "Today's times",
+    "@todayTimes": { "description": "todayTimes" },
+
     "shabat": "Shabat",
     "@shabat": { "description": "Shabat day" },
 
@@ -30,6 +39,12 @@
 
     "onlyShabat": "View only shabat",
     "@onlyShabat": { "description": "onlyShabat" },
+
+    "noLaterTimesToShow": "There are no later times to show for this date.",
+    "@noLaterTimesToShow": { "description": "noLaterTimesToShow" },
+
+    "fromNowOn": "From now on",
+    "@fromNowOn": { "description": "fromNowOn" },
 
     "currentDate": "Current date",
     "@currentDate": { "description": "currentDate" },
@@ -57,6 +72,31 @@
 
     "parasha": "Weekly Torah Portion",
     "@parasha": { "description": "parasha" },
+
+
+    "monday": "Monday",
+    "@monday": { "description": "monday" },
+    
+    "tuesday": "Tuesday",
+    "@tuesday": { "description": "tuesday" },
+    
+    "wednesday": "Wednesday",
+    "@wednesday": { "description": "wednesday" },
+
+    "thursday": "Thursday",
+    "@thursday": { "description": "thursday" },
+
+    "friday": "Friday",
+    "@friday": { "description": "friday" },
+
+    "saturday": "Saturday",
+    "@saturday": { "description": "saturday" },
+
+    "sunday": "Sunday",
+    "@sunday": { "description": "sunday" },
+
+    "today": "Today",
+    "@today": { "description": "today" },
 
     "yesterday": "Yesterday",
     "@yesterday": { "description": "yesterday" },

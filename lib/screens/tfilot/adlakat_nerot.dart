@@ -41,7 +41,7 @@ static String routeName = '/adlakat_nerot';
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
-              children: getSederWidgets(),
+              children: [Center(child: Text(AppLocalizations.of(context)!.candleLightingOrderMenu)),]//getSederWidgets(),
             ),
           ),
         ));

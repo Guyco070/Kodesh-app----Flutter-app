@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:kodesh_app/helpers/dates.dart';
 import 'package:kodesh_app/models/event.dart';
 import 'package:kodesh_app/models/shabat.dart';
+import 'package:kodesh_app/models/zman.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/widgets/default_scaffold.dart';
 import 'package:kodesh_app/widgets/events_widgets/event_factory_widget.dart';
 import 'package:kodesh_app/widgets/settings_bar.dart';
+import 'package:kodesh_app/widgets/zman_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/data/latest.dart';
 import '../api/notification_api.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+enum ViewState {
+  events,
+  zmanim,
+}
 
 class EventScreen extends StatefulWidget {
   const EventScreen({super.key});
@@ -23,10 +31,13 @@ class _EventScreenState extends State<EventScreen> {
   bool _isInit = true;
   bool _isLoading = false;
   bool _isOnlyShabat = false;
+  bool _isTodayTimesFromNow = false;
 
   String? title;
 
   bool _isThereInternetConnection = false;
+
+  ViewState _viewState = ViewState.events;
 
   @override
   void initState() {
@@ -78,6 +89,7 @@ class _EventScreenState extends State<EventScreen> {
           .then((items) {
         setIsThereInternetConnection(items != null);
         setIsLoading();
+        // getZmanim();
       });
     }
 
@@ -122,10 +134,63 @@ class _EventScreenState extends State<EventScreen> {
     return widgets;
   }
 
+  void getZmanim() {
+    // setIsLoading();
+    Provider.of<Events>(context, listen: false)
+        .fetchAndSetZmanimProducts(
+            // getDataFirst: true,
+            lang: Provider.of<LanguageChangeProvider>(context)
+                .currentLocale
+                .languageCode)
+        .then((items) {
+      setIsThereInternetConnection(items != null);
+      // setIsLoading();
+    });
+  }
+
+  getZmanimWidgets(List<Zman> zmanim) {
+    List<Widget> widgets = [];
+    zmanim.sort((a, b) {
+      return a.date.compareTo(b.date);
+    });
+    DateTime now = DateTime.now();
+    for (Zman z in zmanim) {
+      if (!_isTodayTimesFromNow || z.date.isAfter(now)) {
+        widgets.add(ZmanWidget(data: z));
+      }
+    }
+
+    if (widgets.isEmpty) {
+      widgets.add(SizedBox(
+          height: MediaQuery.of(context).size.height / 2,
+          child: Center(
+              child: Text(AppLocalizations.of(context)!.noLaterTimesToShow))));
+    } else {
+      widgets.add(const SizedBox(
+        height: 10,
+      ));
+    }
+    return widgets;
+  }
+
+  setViewState(ViewState newViewState) {
+    setState(() {
+      _viewState = newViewState;
+    });
+  }
+
   setIsOnlyShabat() {
     Provider.of<Events>(context, listen: false).updateIsOnlyShabat();
     setState(() {
       _isOnlyShabat = !_isOnlyShabat;
+    });
+  }
+
+  setIsTodayTimesFromNow() {
+    // not work if its means it will be empty
+    Provider.of<Events>(context, listen: false).updateIsTodayTimesFromNow();
+    setState(() {
+      _isTodayTimesFromNow = !_isTodayTimesFromNow;
     });
   }
 
@@ -148,7 +213,6 @@ class _EventScreenState extends State<EventScreen> {
             localErrorMessage,
             // 'מצטערים, נראה שאין חיבור לאינטרנט, אנה התחבר ולחץ על כפתור רענון.',
             textAlign: TextAlign.center,
-            textDirection: TextDirection.rtl,
             style: const TextStyle(
               fontSize: 16,
             ),
@@ -160,22 +224,102 @@ class _EventScreenState extends State<EventScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     Events events = Provider.of<Events>(context);
+    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+
+    Padding viewSwitch = Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: ElevatedButton(
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: !LanguageChangeProvider.isDirectionRTL(
+                                  events.currentLocale.languageCode)
+                              ? const BorderRadius.only(
+                                  topLeft: Radius.circular(50))
+                              : const BorderRadius.only(
+                                  topRight: Radius.circular(50)))),
+                  backgroundColor: _viewState == ViewState.events
+                      ? MaterialStatePropertyAll<Color>(
+                          Theme.of(context).primaryColor)
+                      : MaterialStatePropertyAll<Color>(Colors.blue.shade800),
+                ),
+                onPressed: _viewState != ViewState.events
+                    ? () => setViewState(ViewState.events)
+                    : null,
+                child: FittedBox(
+                  child: Text(
+                    appLocalizations.weekEvents,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: _viewState == ViewState.events
+                            ? FontWeight.bold
+                            : FontWeight.normal),
+                  ),
+                )),
+          ),
+          Expanded(
+            child: ElevatedButton(
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: LanguageChangeProvider.isDirectionRTL(
+                                  events.currentLocale.languageCode)
+                              ? const BorderRadius.only(
+                                  topLeft: Radius.circular(50))
+                              : const BorderRadius.only(
+                                  topRight: Radius.circular(50)))),
+                  backgroundColor: _viewState == ViewState.zmanim
+                      ? MaterialStatePropertyAll<Color>(
+                          Theme.of(context).primaryColor)
+                      : MaterialStatePropertyAll<Color>(Colors.blue.shade800),
+                ),
+                onPressed: _viewState != ViewState.zmanim
+                    ? () => setViewState(ViewState.zmanim)
+                    : () {},
+                child: FittedBox(
+                  child: Text(
+                    appLocalizations.todayTimes,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: _viewState == ViewState.zmanim
+                            ? FontWeight.bold
+                            : FontWeight.normal),
+                  ),
+                )),
+          ),
+        ],
+      ),
+    );
+
     return DefaultScaffold(
-        title: AppLocalizations.of(context)!.nextWeekEvants,
+        title: AppLocalizations.of(context)!.main,
         body: SingleChildScrollView(
           child: Column(
             children: [
               SettingsBar(
-                isOnlyShabat: events.isOnlyShabat,
-                updateIsOnlyShabat: setIsOnlyShabat,
+                isOnlyShabat: _viewState == ViewState.events
+                    ? _isOnlyShabat
+                    : _isTodayTimesFromNow,
+                updateIsOnlyShabat: _viewState == ViewState.events
+                    ? setIsOnlyShabat
+                    : setIsTodayTimesFromNow,
                 setIsLoading: setIsLoading,
+                viewState: _viewState,
               ),
-              if (events.items != null) ...{
+              viewSwitch,
+              if (events.eventsItems != null) ...{
                 if (_isLoading)
                   renderLoading(context)
                 else
-                  ..._getEventwidgets(events.items!, events.isOnlyShabat),
+                  ...(_viewState == ViewState.events
+                      ? _getEventwidgets(
+                          events.eventsItems!, events.isOnlyShabat)
+                      : getZmanimWidgets(events.zmanimItems!)),
               } else ...{
                 if (_isLoading)
                   renderLoading(context)
