@@ -88,7 +88,7 @@ class _EventScreenState extends State<EventScreen> {
                   .languageCode)
           .then((items) {
         setIsThereInternetConnection(items != null);
-        setIsLoading();
+        setIsLoading(false);
         // getZmanim();
       });
     }
@@ -100,9 +100,9 @@ class _EventScreenState extends State<EventScreen> {
     super.didChangeDependencies();
   }
 
-  setIsLoading() {
+  setIsLoading(bool newVal) {
     setState(() {
-      _isLoading = !_isLoading;
+      _isLoading = newVal;
     });
   }
 
@@ -297,6 +297,7 @@ class _EventScreenState extends State<EventScreen> {
     );
 
     return DefaultScaffold(
+        setIsLoading: setIsLoading,
         title: AppLocalizations.of(context)!.main,
         body: SingleChildScrollView(
           child: Column(

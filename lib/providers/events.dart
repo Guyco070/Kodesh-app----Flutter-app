@@ -30,10 +30,10 @@ class Events with ChangeNotifier {
     if (_currentLocale.languageCode != locale) {
       _currentLocale = Locale(locale);
 
-      if (setIsLoading != null) setIsLoading();
+      if (setIsLoading != null) setIsLoading(true);
 
       fetchAndSetProducts().then((value) {
-        if (setIsLoading != null) setIsLoading();
+        if (setIsLoading != null) setIsLoading(false);
       });
       notifyListeners();
 
@@ -60,13 +60,11 @@ class Events with ChangeNotifier {
 
   setCity(String newCity, {Function? setIsLoading}) async {
     city = newCity;
-    if (setIsLoading != null) setIsLoading();
+    if (setIsLoading != null) setIsLoading(true);
 
     fetchAndSetProducts().then((value) {
-      if (setIsLoading != null) setIsLoading();
+      if (setIsLoading != null) setIsLoading(false);
     });
-
-    notifyListeners();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('city', city);
   }
@@ -85,12 +83,11 @@ class Events with ChangeNotifier {
 
   setStartDate(DateTime newDate, {required Function? setIsLoading}) {
     startDate = newDate;
-    if (setIsLoading != null) setIsLoading();
+    if (setIsLoading != null) setIsLoading(true);
 
     fetchAndSetProducts().then((value) {
-      if (setIsLoading != null) setIsLoading();
+      if (setIsLoading != null) setIsLoading(false);
     });
-    notifyListeners();
   }
 
   Future<bool> isThereInternetConnection() async =>
@@ -122,6 +119,7 @@ class Events with ChangeNotifier {
     var url = Uri.parse(isToday
         ? 'https://www.hebcal.com/shabbat?cfg=json&zip=${cityToTake.split('|')[1]}&lg=${lang ?? _currentLocale.languageCode}'
         : 'https://www.hebcal.com/shabbat?cfg=json&gy=${startDate.year}&gm=${startDate.month}&gd=${startDate.day}&zip=${cityToTake.split('|')[1]}&lg=${lang ?? _currentLocale.languageCode}');
+    // print(url);
     response = await get(url);
     if ((jsonDecode(response.body) as Map<String, dynamic>)
         .keys
@@ -129,6 +127,8 @@ class Events with ChangeNotifier {
       url = Uri.parse(isToday
           ? 'https://www.hebcal.com/shabbat?cfg=json&city=${cityToTake.split('|')[0]}&lg=${lang ?? _currentLocale.languageCode}'
           : 'https://www.hebcal.com/shabbat?cfg=json&gy=${startDate.year}&gm=${startDate.month}&gd=${startDate.day}&city=${cityToTake.split('|')[0]}&lg=${lang ?? _currentLocale.languageCode}');
+      // print(url);
+
       response = await get(url);
     }
     return jsonDecode(response.body) as Map<String, dynamic>;
@@ -144,6 +144,7 @@ class Events with ChangeNotifier {
     if (await isThereInternetConnection()) {
       try {
         final extractData = await tryFetch();
+        // print(extractData);
         _eventsItems = [];
         _eventsItems = getEventsItemsFromMap(extractData['items'] as List);
         await fetchAndSetZmanimProducts(lang: _currentLocale.languageCode);
@@ -154,12 +155,14 @@ class Events with ChangeNotifier {
       }
     } else {
       _eventsItems = null;
+      _zmanimItems = null;
       notifyListeners();
       return _eventsItems;
     }
   }
 
   static getEventsItemsFromMap(items) {
+    if (items == null) return null;
     List<Event> tempItems = [];
     for (int i = 0; i < items.length; i++) {
       if (items[i]['category'] == 'parashat') {
@@ -276,16 +279,16 @@ class Events with ChangeNotifier {
       void Function(bool bool)? setIsThereInternetConnection}) async {
     if (getDataFirst) await getData();
     // if (await isThereInternetConnection()) {
-      try {
-        final extractData = await tryFetchZmanim();
-        _zmanimItems = [];
-        _zmanimItems =
-            getZmanimItemsFromMap(extractData['times'] as Map<String, dynamic>);
-        // notifyListeners();
-        return _zmanimItems;
-      } catch (error) {
-        rethrow;
-      }
+    try {
+      final extractData = await tryFetchZmanim();
+      _zmanimItems = [];
+      _zmanimItems =
+          getZmanimItemsFromMap(extractData['times'] as Map<String, dynamic>);
+      // notifyListeners();
+      return _zmanimItems;
+    } catch (error) {
+      rethrow;
+    }
     // } else {
     //   _zmanimItems = null;
     //   notifyListeners();

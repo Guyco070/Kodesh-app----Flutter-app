@@ -10,9 +10,10 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DefaultScaffold extends StatefulWidget {
-  const DefaultScaffold({super.key, required this.title, required this.body});
+  const DefaultScaffold({super.key, required this.title, required this.body, this.setIsLoading});
   final String title;
   final Widget body;
+  final Function? setIsLoading;
 
   @override
   State<DefaultScaffold> createState() => _DefaultScaffoldState();
@@ -72,7 +73,7 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
             );
             Provider.of<Events>(context, listen: false)
                 .changeLocale(value ?? lang.currentLocale.languageCode,
-                    setIsLoading: setIsLoading)
+                    setIsLoading: widget.setIsLoading)
                 .then((_) => Reminders(context));
           }
         },
@@ -184,9 +185,9 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
     );
   }
 
-  setIsLoading() {
+  setIsLoading(bool newVal) {
     setState(() {
-      _isLoading = !_isLoading;
+      _isLoading = newVal;
     });
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kodesh_app/widgets/compass/compass_button.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -36,7 +37,7 @@ class SederAnahatTefilin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: AppLocalizations.of(context)!.tefilinOrderMenu),
+      appBar: CustomAppBar(title: AppLocalizations.of(context)!.tefilinOrderMenu, trailing: const CompassButton(heading: 0,),),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(8.0),

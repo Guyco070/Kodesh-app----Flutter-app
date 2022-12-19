@@ -228,5 +228,8 @@
     "@my": { "description": "my" },
     
     "noChroesMessage": "There are no tasks that you asked us to remind you of, this can be changed on the setting reminders page.",
-    "@noChroesMessage": { "description": "noChroesMessage" }
+    "@noChroesMessage": { "description": "noChroesMessage" },
+
+    "compass": "Compass",
+    "@compass": { "description": "compass" }
 }

@@ -6,9 +6,9 @@ class L10n {
   static final all = [
     const Locale('en', 'English'),
     const Locale('he', 'עברית'),
-    const Locale('es'),
+    // const Locale('es'),
     // const Locale('fr'),
-    const Locale('ru', 'Rusion'),
+    // const Locale('ru', 'Rusion'),
     // const Locale('pl'),
     // const Locale('fi'),
     // const Locale('hu'),
@@ -25,13 +25,13 @@ class L10n {
       'locale': 'עברית',
       'english': 'Hebrew',
     },
-    'es': {
-      'locale': 'español',
-      'english': 'Spanish',
-    },
-    'ru': {
-      'locale': 'ру́сский язы́к',
-      'english': 'Russian',
-    },
+    // 'es': {
+    //   'locale': 'español',
+    //   'english': 'Spanish',
+    // },
+    // 'ru': {
+    //   'locale': 'ру́сский язы́к',
+    //   'english': 'Russian',
+    // },
   };
 }
