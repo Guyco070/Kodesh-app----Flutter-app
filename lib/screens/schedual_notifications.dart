@@ -79,6 +79,70 @@ class _SchedualNotficationsScreenState
       }).toList();
     }
 
+    nerotHanukkahElements() {
+      return [
+        const SizedBox(
+          height: 7,
+        ),
+        const Divider(
+          height: 15,
+          thickness: 1.5,
+          indent: 60,
+          endIndent: 60,
+        ),
+        const SizedBox(
+          height: 7,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Column(
+              children: [
+                Text(
+                  appLocalizations.hours,
+                  style: TextStyle(
+                      color: Theme.of(context).primaryColor, fontSize: 16),
+                ),
+                NumberPicker(
+                  minValue: 00,
+                  maxValue: 24,
+                  value: reminders.beforeNerotHanukkahHours,
+                  onChanged: (newVal) {
+                    reminders.setNerotHanukkahHours(newVal);
+                  },
+                  zeroPad: true,
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                Text(
+                  appLocalizations.minutes,
+                  style: TextStyle(
+                      color: Theme.of(context).primaryColor, fontSize: 16),
+                ),
+                NumberPicker(
+                  minValue: 00,
+                  maxValue: 59,
+                  value: reminders.beforeNerotHanukkahMinutes,
+                  onChanged: (newVal) {
+                    reminders.setNerotHanukkahMinutes(newVal);
+                  },
+                  zeroPad: true,
+                ),
+              ],
+            ),
+          ],
+        ),
+        FittedBox(
+            child: Text(
+          '${appLocalizations.remindMeXhoursAndYMinutesBeforeNerotHanukkah(reminders.beforeNerotHanukkahHours.toString(), reminders.beforeNerotHanukkahMinutes.toString())}.',
+          style: TextStyle(color: Colors.grey[700], fontSize: 12),
+          textAlign: TextAlign.center,
+        )),
+      ];
+    }
+
     shabatAndHolidaysElements() {
       return [
         Row(
@@ -254,6 +318,20 @@ class _SchedualNotficationsScreenState
         const SizedBox(
           height: 7,
         ),
+        CuperinoTextCheckSwitch(
+          value: reminders.nerotHanukkah,
+          onChanged: () => reminders.setNerotHanukkah(),
+          text: 'הדלקת נרות חנוכה',
+        ),
+        if (!reminders.nerotHanukkah)...{
+          const SizedBox(
+            height: 7,
+          ),
+          const Divider(height: 15, thickness: 1.5),
+        },
+        
+        if (reminders.nerotHanukkah)
+          ...nerotHanukkahElements(),
       ];
     }
 
@@ -276,6 +354,7 @@ class _SchedualNotficationsScreenState
                     ),
                     if (reminders.shabatAndHolidays)
                       ...shabatAndHolidaysElements(),
+
                     CuperinoTextCheckSwitch(
                         text: appLocalizations.tefillin,
                         value: reminders.tefilin,
@@ -388,6 +467,62 @@ class _SchedualNotficationsScreenState
                           ),
                         ],
                       ),
+                    // sfirat omer - start
+                    CuperinoTextCheckSwitch(
+                        text: 'ספירת העומר',
+                        value: reminders.sfiratOmer,
+                        onChanged: () => reminders.setSfiratOmer()),
+                    if (reminders.roshChodesh)
+                      Column(
+                        children: [
+                          FittedBox(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('הזכר לי לברך בספירת העומר בכל יום בשעה '),
+                                TextButton(
+                                  onPressed: () async {
+                                    TimeOfDay? time = await showTimePicker(
+                                        context: context,
+                                        initialTime: TimeOfDay(
+                                            hour: reminders
+                                                .getSfiratOmerTimeObject.hour,
+                                            minute: reminders
+                                                .getSfiratOmerTimeObject
+                                                .minute),
+                                        builder: (context, childWidget) {
+                                          return MediaQuery(
+                                              data: MediaQuery.of(context)
+                                                  .copyWith(
+                                                      // Using 24-Hour format
+                                                      alwaysUse24HourFormat:
+                                                          true),
+                                              // If you want 12-Hour format, just change alwaysUse24HourFormat to false or remove all the builder argument
+                                              child: childWidget!);
+                                        });
+                                    if (time != null) {
+                                      reminders.setSfiratOmerTime(getTime(
+                                          null,
+                                          time.minute.toString(),
+                                          time.hour.toString()));
+                                    }
+                                  },
+                                  child: Text(reminders.sfiratOmerTime),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 7,
+                          ),
+                          const Divider(height: 15, thickness: 1.5),
+                          const SizedBox(
+                            height: 7,
+                          ),
+                        ],
+                      ), 
+                    // sfirat omer - end
+
                     ElevatedButton(
                         onPressed: () {
                           setState(() {

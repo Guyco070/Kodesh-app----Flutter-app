@@ -6,12 +6,15 @@ abstract class Event {
       required this.title,
       this.entryDate,
       this.releaseDate,
-      this.parasha});
+      this.parasha,
+      required this.titleOrig,
+    });
   final String title; // shabat/ holiday /tefila...
   final DateTime? entryDate;
   final DateTime? releaseDate;
   final String? parasha;
-  
+  final String? titleOrig;
+
   String getReminderBody(String lang);
   String getReminderTitle(String lang);
   String getReminderCandlesTitle(String lang);

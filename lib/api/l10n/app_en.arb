@@ -153,6 +153,19 @@
             }
         }
     },
+
+    "remindMeXhoursAndYMinutesBeforeNerotHanukkah": "Remind me {hours} hours and {minutes} minutes before lighting Hanukkah candles",
+    "@remindMeXhoursAndYMinutesBeforeNerotHanukkah": {
+        "description": "inXDays",
+        "placeholders": {
+            "hours": {
+                "type": "String"
+            },
+            "minutes": {
+                "type": "String"
+            }
+        }
+    },
    
     "whatToRemindSettings": "What would you like us to remind you ?",
     "@whatToRemindSettings": { "description": "whatToRemindSettings" },

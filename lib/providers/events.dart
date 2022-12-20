@@ -7,10 +7,12 @@ import 'package:kodesh_app/models/event.dart';
 import 'package:http/http.dart';
 import 'package:kodesh_app/models/holiday.dart';
 import 'package:kodesh_app/models/rosh_chodesh.dart';
+import 'package:kodesh_app/models/sfirat_omer.dart';
 import 'package:kodesh_app/models/shabat.dart';
 import 'package:kodesh_app/models/zman.dart';
 import 'package:kodesh_app/widgets/events_widgets/holiday_widget.dart';
 import 'package:kodesh_app/widgets/events_widgets/rosh_chodesh_widget.dart';
+import 'package:kodesh_app/widgets/events_widgets/sfirat_omer_widget.dart';
 import 'package:kodesh_app/widgets/events_widgets/shabat_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -117,17 +119,17 @@ class Events with ChangeNotifier {
     cityToTake ??= city;
     var response;
     var url = Uri.parse(isToday
-        ? 'https://www.hebcal.com/shabbat?cfg=json&zip=${cityToTake.split('|')[1]}&lg=${lang ?? _currentLocale.languageCode}'
-        : 'https://www.hebcal.com/shabbat?cfg=json&gy=${startDate.year}&gm=${startDate.month}&gd=${startDate.day}&zip=${cityToTake.split('|')[1]}&lg=${lang ?? _currentLocale.languageCode}');
+        ? 'https://www.hebcal.com/shabbat?cfg=json&o=on&zip=${cityToTake.split('|')[1]}&lg=${lang ?? _currentLocale.languageCode}'
+        : 'https://www.hebcal.com/shabbat?cfg=json&o=on&gy=${startDate.year}&gm=${startDate.month}&gd=${startDate.day}&zip=${cityToTake.split('|')[1]}&lg=${lang ?? _currentLocale.languageCode}');
     // print(url);
     response = await get(url);
     if ((jsonDecode(response.body) as Map<String, dynamic>)
         .keys
         .contains('error')) {
       url = Uri.parse(isToday
-          ? 'https://www.hebcal.com/shabbat?cfg=json&city=${cityToTake.split('|')[0]}&lg=${lang ?? _currentLocale.languageCode}'
-          : 'https://www.hebcal.com/shabbat?cfg=json&gy=${startDate.year}&gm=${startDate.month}&gd=${startDate.day}&city=${cityToTake.split('|')[0]}&lg=${lang ?? _currentLocale.languageCode}');
-      // print(url);
+          ? 'https://www.hebcal.com/shabbat?cfg=json&o=on&city=${cityToTake.split('|')[0]}&lg=${lang ?? _currentLocale.languageCode}'
+          : 'https://www.hebcal.com/shabbat?cfg=json&o=on&gy=${startDate.year}&gm=${startDate.month}&gd=${startDate.day}&city=${cityToTake.split('|')[0]}&lg=${lang ?? _currentLocale.languageCode}');
+      print(url);
 
       response = await get(url);
     }
@@ -219,6 +221,11 @@ class Events with ChangeNotifier {
         }
         if (index != null) tempItems.removeAt(index);
         tempItems.add(newRs);
+      } else if (items[i]['category'] == 'omer') {
+        tempItems.add(SfiratOmer.createSfiratOmer(
+              candles: null,
+              parashat: items[i],
+            ));
       }
     }
 
@@ -316,5 +323,6 @@ class Events with ChangeNotifier {
     if (event is Shabat) return ShabatWidget(data: event);
     if (event is Holiday) return HolidayWidget(data: event);
     if (event is RoshChodesh) return RoshChodeshWidget(data: event);
+    if (event is SfiratOmer) return SfiratOmerWidget(data: event);
   }
 }

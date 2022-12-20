@@ -52,6 +52,7 @@
     "minutes": "דקות",
     "hours": "שעות",
     "remindMeXhoursAndYMinutesBeforeShbatAndHolidays": "הזכר לי {hours} שעות ו- {minutes} דקות לפני שבת או חג",
+    "remindMeXhoursAndYMinutesBeforeNerotHanukkah": "הזכר לי {hours} שעות ו- {minutes} דקות לפני הדלקת נרות חנוכה",
     "whatToRemindSettings": "מה תרצה שנזכיר לך ?",    
     "plata": "פלטה",
     "plataAction": "לחבר פלטה",

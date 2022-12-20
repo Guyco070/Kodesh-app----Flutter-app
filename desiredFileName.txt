@@ -1,9 +1,11 @@
 {
   "es": [
+    "remindMeXhoursAndYMinutesBeforeNerotHanukkah",
     "compass"
   ],
 
   "ru": [
+    "remindMeXhoursAndYMinutesBeforeNerotHanukkah",
     "compass"
   ]
 }

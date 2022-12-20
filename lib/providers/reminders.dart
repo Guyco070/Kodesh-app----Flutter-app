@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
+import 'package:kodesh_app/api/l10n/l10n.dart';
 import 'package:kodesh_app/api/l10n/reminders_translates.dart';
 import 'package:kodesh_app/api/notification_api.dart';
 import 'package:kodesh_app/models/event.dart';
 import 'package:kodesh_app/models/holiday.dart';
 import 'package:kodesh_app/models/rosh_chodesh.dart';
+import 'package:kodesh_app/models/sfirat_omer.dart';
 import 'package:kodesh_app/models/shabat.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/screens/Shabat_and_holidays_check_list.dart';
 import 'package:kodesh_app/screens/tfilot/adlakat_nerot.dart';
+import 'package:kodesh_app/screens/tfilot/adlakat_nerot_chanukah.dart';
 import 'package:kodesh_app/screens/tfilot/seder_anahat_tefilin.dart';
+import 'package:kodesh_app/screens/tfilot/sfirat_omer_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Reminders with ChangeNotifier {
   int id = 0;
   bool shabatAndHolidays = false;
+  bool nerotHanukkah = false;
+  bool sfiratOmer = false;
   bool tefilin = false;
   bool preys = false;
   bool roshChodesh = false;
@@ -26,12 +32,16 @@ class Reminders with ChangeNotifier {
   int beforeShabatMinutes = 0;
   int beforeShabatHours = 0;
 
+  int beforeNerotHanukkahMinutes = 0;
+  int beforeNerotHanukkahHours = 0;
+
   bool shabatAndHolidaysCandles = false;
   int beforeShabatAndHolidaysCandlesMinutes = 5;
   int beforeShabatAndHolidaysCandlesHours = 0;
 
   String tefilinTime = '06:00';
   String roshChodeshTime = '06:00';
+  String sfiratOmerTime = '06:00';
 
   List<String> allShabatAndHolidaysThingsToRemindList(BuildContext context) {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
@@ -119,6 +129,24 @@ class Reminders with ChangeNotifier {
     notifyListeners();
   }
 
+  setNerotHanukkah({bool? newNerotHanukkah}) {
+    if (newNerotHanukkah != null) {
+      nerotHanukkah = newNerotHanukkah;
+    } else {
+      nerotHanukkah = !nerotHanukkah;
+    }
+    notifyListeners();
+  }
+
+  setSfiratOmer({bool? newSfiratOmer}) {
+    if (newSfiratOmer != null) {
+      sfiratOmer = newSfiratOmer;
+    } else {
+      sfiratOmer = !sfiratOmer;
+    }
+    notifyListeners();
+  }
+
   setShabatAndHolidaysThingsToRemindList(
       {required List<String> newShabatAndHolidaysThingsToRemindList}) {
     shabatAndHolidaysThingsToRemindList =
@@ -133,6 +161,16 @@ class Reminders with ChangeNotifier {
 
   setShabatAndHolidaysShabatHours(int newBeforeShabatHours) {
     beforeShabatHours = newBeforeShabatHours;
+    notifyListeners();
+  }
+
+  setNerotHanukkahMinutes(int newBeforeNerotHanukkahMinutes) {
+    beforeNerotHanukkahMinutes = newBeforeNerotHanukkahMinutes;
+    notifyListeners();
+  }
+
+  setNerotHanukkahHours(int newBeforeNerotHanukkahHours) {
+    beforeNerotHanukkahHours = newBeforeNerotHanukkahHours;
     notifyListeners();
   }
 
@@ -171,6 +209,11 @@ class Reminders with ChangeNotifier {
 
   void setRoshChodeshTime(String newRoshChodeshTime) {
     roshChodeshTime = newRoshChodeshTime;
+    notifyListeners();
+  }
+
+  void setSfiratOmerTime(String newSfiratOmerTime) {
+    sfiratOmerTime = newSfiratOmerTime;
     notifyListeners();
   }
 
@@ -237,6 +280,27 @@ class Reminders with ChangeNotifier {
     if (prefsKeys.contains('roshChodeshTime')) {
       roshChodeshTime = prefs.getString('roshChodeshTime')!;
     }
+
+    if (prefsKeys.contains('sfiratOmer')) {
+      sfiratOmer = prefs.getBool('sfiratOmer')!;
+    }
+
+    if (prefsKeys.contains('sfiratOmerTime')) {
+      sfiratOmerTime = prefs.getString('sfiratOmerTime')!;
+    }
+
+    if (prefsKeys.contains('nerotHanukkah')) {
+      nerotHanukkah = prefs.getBool('nerotHanukkah')!;
+    }
+
+    if (prefsKeys.contains('beforeNerotHanukkahHours')) {
+      beforeNerotHanukkahHours = prefs.getInt('beforeNerotHanukkahHours')!;
+    }
+
+    if (prefsKeys.contains('beforeNerotHanukkahMinutes')) {
+      beforeNerotHanukkahMinutes = prefs.getInt('beforeNerotHanukkahMinutes')!;
+    }
+
     notifyListeners();
 
     setReminders();
@@ -252,6 +316,11 @@ class Reminders with ChangeNotifier {
 
     prefs.setBool('tefilin', tefilin);
     prefs.setBool('roshChodesh', roshChodesh);
+    prefs.setBool('sfiratOmer', sfiratOmer);
+
+    prefs.setBool('nerotHanukkah', nerotHanukkah);
+    prefs.setInt('beforeNerotHanukkahHours', beforeNerotHanukkahHours);
+    prefs.setInt('beforeNerotHanukkahMinutes', beforeNerotHanukkahMinutes);
 
     if (shabatAndHolidays) {
       prefs.setStringList('shabatAndHolidaysThingsToRemindList',
@@ -266,6 +335,7 @@ class Reminders with ChangeNotifier {
 
     if (tefilin) prefs.setString('tefilinTime', tefilinTime);
     if (roshChodesh) prefs.setString('roshChodeshTime', roshChodeshTime);
+    if (roshChodesh) prefs.setString('sfiratOmerTime', sfiratOmerTime);
   }
 
   Future<void> setReminders({bool update = false, String? lang}) async {
@@ -315,7 +385,7 @@ class Reminders with ChangeNotifier {
       //     ));
 
       for (Event e in items) {
-        if (shabatAndHolidays && e is! RoshChodesh) {
+        if (shabatAndHolidays && e is! RoshChodesh  && e is! SfiratOmer) {
           // if Shabat or Holiday
           DateTime? x;
           if (e is Holiday) {
@@ -345,22 +415,40 @@ class Reminders with ChangeNotifier {
 
           if (shabatAndHolidaysCandles && e is Shabat ||
               (e is Holiday && e.subcat == 'major')) {
-            // reminder to light shabat candles
-            x = e.entryDate!.subtract(Duration(
-                hours: beforeShabatAndHolidaysCandlesHours,
-                minutes: beforeShabatAndHolidaysCandlesMinutes));
-
             if (now.isBefore(x)) {
-              notValues.add({
-                'id': id,
-                'title': e.getReminderCandlesTitle(lang),
-                'body': e.getReminderCandlesBody(
-                    beforeShabatAndHolidaysCandlesHours,
-                    beforeShabatAndHolidaysCandlesMinutes,
-                    lang),
-                'date': x,
-                'payload': AdlakatNerot.routeName,
-              });
+              if(e.title.contains('Chanukah') || (e.titleOrig != null && e.titleOrig!.contains('Chanukah'))){ // reminder for Hanukkah
+                if(nerotHanukkah){
+                  // reminder to light shabat candles
+                  x = e.entryDate!.subtract(Duration(
+                      hours: beforeNerotHanukkahHours,
+                      minutes: beforeNerotHanukkahMinutes));
+                  notValues.add({
+                    'id': id,
+                    'title': e.title.replaceFirst('Chanukah', 'Hanukkah'),
+                    'body': (e as Holiday).getReminderHanukkahCandlesBody(
+                        beforeShabatAndHolidaysCandlesHours,
+                        beforeShabatAndHolidaysCandlesMinutes,
+                        lang),
+                    'date': x,
+                    'payload': AdlakatNerotChanukah.routeName,
+                  });
+                }
+              }else{
+                // reminder to light shabat candles
+                x = e.entryDate!.subtract(Duration(
+                    hours: beforeShabatAndHolidaysCandlesHours,
+                    minutes: beforeShabatAndHolidaysCandlesMinutes));
+                notValues.add({
+                  'id': id,
+                  'title': e.getReminderCandlesTitle(lang),
+                  'body': e.getReminderCandlesBody(
+                      beforeShabatAndHolidaysCandlesHours,
+                      beforeShabatAndHolidaysCandlesMinutes,
+                      lang),
+                  'date': x,
+                  'payload': AdlakatNerot.routeName,
+                });
+              }
               id++;
             }
           }
@@ -386,7 +474,7 @@ class Reminders with ChangeNotifier {
           }
         }
 
-        if (roshChodesh && e is RoshChodesh) {
+        else if (roshChodesh && e is RoshChodesh) {
           // rosh chodesh
           DateTime dayBefore = DateTime(
                   e.entryDate!.year,
@@ -407,7 +495,6 @@ class Reminders with ChangeNotifier {
               dayBefore = dayBefore.subtract(const Duration(days: 1));
             }
           }
-
           if (now.isBefore(dayBefore)) {
             notValues.add({
               'id': id,
@@ -438,15 +525,26 @@ class Reminders with ChangeNotifier {
               notValues[toChange['id'] as int] = toChange;
             }
           }
-        }
+        } else if (sfiratOmer && e is SfiratOmer) {
+            notValues.add({
+              'id': id,
+              'title': e.title,
+              'body': e.sefira['sefira'][
+                currentLocal.languageCode == 'he'
+                    ? 'he'
+                    : 'en'],
+              'date': DateTime(
+                  e.entryDate!.year,
+                  e.entryDate!.month,
+                  e.entryDate!.day,
+                  getSfiratOmerTimeObject.hour,
+                  getSfiratOmerTimeObject.minute),
+              'payload': SfiratOmerScreen.routeName,
+            });
+            id++;
+          }
 
         //else if(shabatAndHolidays && e is Shabat){ // tefila
-
-        // }else if(shabatAndHolidays && e is Shabat){ // נרורת חנוכה ???
-
-        // }else if(shabatAndHolidays && e is Shabat){ // ספירת העומר ???
-
-        // }
       }
     }
 
@@ -526,6 +624,12 @@ class Reminders with ChangeNotifier {
   Time get getRoshChodeshTimeObject {
     int hour = int.parse(roshChodeshTime.split(':')[0]);
     int minutes = int.parse(roshChodeshTime.split(':')[1]);
+    return Time(hour, minutes);
+  }
+
+  Time get getSfiratOmerTimeObject {
+    int hour = int.parse(sfiratOmerTime.split(':')[0]);
+    int minutes = int.parse(sfiratOmerTime.split(':')[1]);
     return Time(hour, minutes);
   }
 }

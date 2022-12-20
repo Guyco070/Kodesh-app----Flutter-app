@@ -9,7 +9,9 @@ import 'package:kodesh_app/screens/shabat_and_holidays_check_list.dart';
 import 'package:kodesh_app/screens/schedual_notifications.dart';
 import 'package:kodesh_app/screens/event_screen.dart';
 import 'package:kodesh_app/screens/tfilot/adlakat_nerot.dart';
+import 'package:kodesh_app/screens/tfilot/adlakat_nerot_chanukah.dart';
 import 'package:kodesh_app/screens/tfilot/seder_anahat_tefilin.dart';
+import 'package:kodesh_app/screens/tfilot/sfirat_omer_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -72,6 +74,10 @@ class MyApp extends StatelessWidget {
                 const ShabatAndHolidaysCheckList(),
             CompassScreen.routeName: (_) =>
                 const CompassScreen(),
+            AdlakatNerotChanukah.routeName: (_) =>
+                const AdlakatNerotChanukah(),
+            SfiratOmerScreen.routeName: (_) =>
+                const SfiratOmerScreen(),
           },
         );
       }),

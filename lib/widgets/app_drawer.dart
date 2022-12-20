@@ -3,8 +3,10 @@ import 'package:kodesh_app/screens/Shabat_and_holidays_check_list.dart';
 import 'package:kodesh_app/screens/compass_screen.dart';
 import 'package:kodesh_app/screens/schedual_notifications.dart';
 import 'package:kodesh_app/screens/tfilot/adlakat_nerot.dart';
+import 'package:kodesh_app/screens/tfilot/adlakat_nerot_chanukah.dart';
 import 'package:kodesh_app/screens/tfilot/seder_anahat_tefilin.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kodesh_app/screens/tfilot/sfirat_omer_screen.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -41,6 +43,16 @@ class AppDrawer extends StatelessWidget {
               leading: const Icon(Icons.add_reaction_outlined),
               title: Text(appLocalizations.tefilinOrderMenu),
               onTap: () => Navigator.pushNamed(context, SederAnahatTefilin.routeName),
+            ),
+            ListTile(
+              leading: const Icon(Icons.compass_calibration_outlined),
+              title: const Text('סדר הדלקת נרות חנוכה'),
+              onTap: () => Navigator.pushNamed(context, AdlakatNerotChanukah.routeName),
+            ),
+            ListTile(
+              leading: const Icon(Icons.compass_calibration_outlined),
+              title: const Text('ברכת ספירת עומר'),
+              onTap: () => Navigator.pushNamed(context, SfiratOmerScreen.routeName),
             ),
             const Divider(),
             ListTile(

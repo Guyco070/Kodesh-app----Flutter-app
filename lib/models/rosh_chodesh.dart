@@ -4,11 +4,11 @@ import 'package:kodesh_app/models/event.dart';
 import 'package:kodesh_app/providers/events.dart';
 
 class RoshChodesh extends Event {
-  RoshChodesh({required super.title, super.entryDate, super.releaseDate});
+  RoshChodesh({required super.title, super.entryDate, super.releaseDate, super.titleOrig,});
 
   @override
   String toString() {
-    return '${super.toString()} - title: $title, entryDate: $entryDate.\n';
+    return '${super.toString()} - title: $title, entryDate: $entryDate, titleOrig: $titleOrig.\n';
   }
 
   static createRoshChodesh(
