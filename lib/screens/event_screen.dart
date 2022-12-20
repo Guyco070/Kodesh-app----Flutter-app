@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:kodesh_app/animations/animated_events_list_view.dart';
+import 'package:kodesh_app/animations/animated_from_now_on_times_list.dart';
+import 'package:kodesh_app/animations/animated_only_shabat.dart';
+import 'package:kodesh_app/animations/animated_times_list_view.dart';
 import 'package:kodesh_app/helpers/dates.dart';
 import 'package:kodesh_app/models/event.dart';
 import 'package:kodesh_app/models/shabat.dart';
@@ -113,7 +117,8 @@ class _EventScreenState extends State<EventScreen> {
     );
   }
 
-  List<Widget> _getEventwidgets(List<Event> events, bool isOnlyShabat) {
+  Widget _getEventwidgets(
+    List<Event> events, bool isOnlyShabat) {
     List<Widget> widgets = [];
     events.sort((a, b) {
       if (a.entryDate != null && b.entryDate != null) {
@@ -131,7 +136,8 @@ class _EventScreenState extends State<EventScreen> {
     widgets.add(const SizedBox(
       height: 10,
     ));
-    return widgets;
+    if (isOnlyShabat) return AnimatedOnlyShabatListView(widgets: widgets);
+    return AnimatedEventsListView(widgets: widgets);
   }
 
   void getZmanim() {
@@ -148,7 +154,7 @@ class _EventScreenState extends State<EventScreen> {
     });
   }
 
-  getZmanimWidgets(List<Zman> zmanim) {
+  Widget _getZmanimWidgets(List<Zman> zmanim) {
     List<Widget> widgets = [];
     zmanim.sort((a, b) {
       return a.date.compareTo(b.date);
@@ -170,7 +176,8 @@ class _EventScreenState extends State<EventScreen> {
         height: 10,
       ));
     }
-    return widgets;
+    if (_isTodayTimesFromNow) return AnimatedFromNowOnTimesListView(widgets: widgets);
+    return AnimatedTimesListView(widgets: widgets);
   }
 
   setViewState(ViewState newViewState) {
@@ -224,7 +231,6 @@ class _EventScreenState extends State<EventScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     Events events = Provider.of<Events>(context);
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
 
@@ -316,11 +322,12 @@ class _EventScreenState extends State<EventScreen> {
               if (events.eventsItems != null) ...{
                 if (_isLoading)
                   renderLoading(context)
-                else
-                  ...(_viewState == ViewState.events
+                else ...{
+                  _viewState == ViewState.events
                       ? _getEventwidgets(
                           events.eventsItems!, events.isOnlyShabat)
-                      : getZmanimWidgets(events.zmanimItems!)),
+                      : _getZmanimWidgets(events.zmanimItems!)
+                },
               } else ...{
                 if (_isLoading)
                   renderLoading(context)
