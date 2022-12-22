@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:kodesh_app/screens/compass_screen.dart';
-import 'package:kodesh_app/screens/hero_dialog_route.dart';
+import 'package:kodesh_app/animations/hero_dialog_route.dart';
 import 'package:kodesh_app/widgets/compass/compass_widget.dart';
 import 'package:kodesh_app/widgets/compass/custom_rect_tween.dart';
 
