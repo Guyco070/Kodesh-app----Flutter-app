@@ -129,7 +129,7 @@ class Events with ChangeNotifier {
       url = Uri.parse(isToday
           ? 'https://www.hebcal.com/shabbat?cfg=json&o=on&city=${cityToTake.split('|')[0]}&lg=${lang ?? _currentLocale.languageCode}'
           : 'https://www.hebcal.com/shabbat?cfg=json&o=on&gy=${startDate.year}&gm=${startDate.month}&gd=${startDate.day}&city=${cityToTake.split('|')[0]}&lg=${lang ?? _currentLocale.languageCode}');
-      print(url);
+      // print(url);
 
       response = await get(url);
     }

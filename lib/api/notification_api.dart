@@ -79,6 +79,12 @@ class NotificationApi {
     String? payload,
     required DateTime date,
   }) async {
+    if (title!.contains('חֲנוּכָּה')) {
+      print(title);
+      print('TZDateTime ${TZDateTime.from(date, local)}');
+      print('date $date');
+    }
+
     return _notifications.zonedSchedule(
       id,
       title,
@@ -165,8 +171,8 @@ class NotificationApi {
 
   static DateTime schedualeDailyDateTime(Time time) {
     final now = DateTime.now();
-    final schedualedDate = DateTime(now.year, now.month, now.day,
-        time.hour, time.minute, time.second);
+    final schedualedDate = DateTime(
+        now.year, now.month, now.day, time.hour, time.minute, time.second);
 
     return schedualedDate.isBefore(now)
         ? schedualedDate.add(const Duration(days: 1))

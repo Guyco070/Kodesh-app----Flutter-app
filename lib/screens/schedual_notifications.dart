@@ -95,6 +95,7 @@ class _SchedualNotficationsScreenState
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          textDirection: TextDirection.ltr,
           children: [
             Column(
               children: [
@@ -192,6 +193,7 @@ class _SchedualNotficationsScreenState
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          textDirection: TextDirection.ltr,
           children: [
             Column(
               children: [
@@ -266,6 +268,7 @@ class _SchedualNotficationsScreenState
         if (reminders.shabatAndHolidaysCandles) ...{
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            textDirection: TextDirection.ltr,
             children: [
               Column(
                 children: [

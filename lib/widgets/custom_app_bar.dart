@@ -28,14 +28,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
            title: Column(
             mainAxisAlignment: MainAxisAlignment.center,
              children: [
-               Center(
-                    child: titleWidget ??
-                        Text(
-                          title,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                  ),
+               FittedBox(
+                 child: Center(
+                      child: titleWidget ??
+                          Text(
+                            title,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                    ),
+               ),
              ],
            ),
             trailing: trailing,

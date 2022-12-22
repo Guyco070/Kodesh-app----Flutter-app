@@ -27,13 +27,16 @@ class AppDrawer extends StatelessWidget {
               //   IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.chevron_left_outlined))
               // ],
             ),
-            const Divider(),
+            title(appLocalizations.settings),
+            const Divider(indent: 18, endIndent: 18,),
             ListTile(
               leading: const Icon(Icons.watch_later_outlined),
               title: Text(appLocalizations.settingRemindersMenu),
               onTap: () => Navigator.pushNamed(context, SchedualNotficationsScreen.routeName),
             ),
             const Divider(),
+            title(appLocalizations.prayersAndBlessings),
+            const Divider(indent: 18, endIndent: 18,),
             ListTile(
               leading: const Icon(Icons.fireplace_outlined,),
               title: Text(appLocalizations.candleLightingOrderMenu),
@@ -45,27 +48,29 @@ class AppDrawer extends StatelessWidget {
               onTap: () => Navigator.pushNamed(context, SederAnahatTefilin.routeName),
             ),
             ListTile(
-              leading: const Icon(Icons.compass_calibration_outlined),
-              title: const Text('סדר הדלקת נרות חנוכה'),
+              leading: const Icon(Icons.fireplace),
+              title: Text(appLocalizations.hanukkahCandleLightingOrderMenu,),
               onTap: () => Navigator.pushNamed(context, AdlakatNerotChanukah.routeName),
             ),
             ListTile(
-              leading: const Icon(Icons.compass_calibration_outlined),
-              title: const Text('ברכת ספירת עומר'),
+              leading: const Icon(Icons.content_cut),
+              title: Text(appLocalizations.sederSfiratOmer),
               onTap: () => Navigator.pushNamed(context, SfiratOmerScreen.routeName),
             ),
             const Divider(),
+            title(appLocalizations.aids),
+            const Divider(indent: 18, endIndent: 18,),
             ListTile(
               leading: const Icon(Icons.checklist_rtl),
               title: Text(appLocalizations.choresBeforeShabbatMenu),
               onTap: () => Navigator.pushNamed(context, ShabatAndHolidaysCheckList.routeName),
             ),
-            const Divider(),
             ListTile(
               leading: const Icon(Icons.compass_calibration_outlined),
               title: Text(appLocalizations.compass),
               onTap: () => Navigator.pushNamed(context, CompassScreen.routeName),
             ),
+            const Divider(),
             // const Divider(),
             // ListTile(
             //   leading: const Icon(Icons.edit),
@@ -87,4 +92,6 @@ class AppDrawer extends StatelessWidget {
       ),
     );
   }
+
+  Text title(String title) => Text(title, style: TextStyle(color: Colors.grey[600], fontSize: 12),);
 }

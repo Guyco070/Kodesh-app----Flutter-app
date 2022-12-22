@@ -36,12 +36,12 @@ static String routeName = '/sfirat_omer_screen';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "AppLocalizations.of(context)!.candleLightingOrderMenu - ברכת ספירת עומר"),
+      appBar: CustomAppBar(title: AppLocalizations.of(context)!.sederSfiratOmer),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
-              children: [Center(child: Text('AppLocalizations.of(context)!.candleLightingOrderMenu')),]//getSederWidgets(),
+              children: [Center(child: Text(AppLocalizations.of(context)!.sederSfiratOmer)),]//getSederWidgets(),
             ),
           ),
         ));

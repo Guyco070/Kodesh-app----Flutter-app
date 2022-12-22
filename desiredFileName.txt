@@ -1,10 +1,20 @@
 {
   "es": [
+    "settings",
+    "prayersAndBlessings",
+    "aids",
+    "hanukkahCandleLightingOrderMenu",
+    "sederSfiratOmer",
     "remindMeXhoursAndYMinutesBeforeNerotHanukkah",
     "compass"
   ],
 
   "ru": [
+    "settings",
+    "prayersAndBlessings",
+    "aids",
+    "hanukkahCandleLightingOrderMenu",
+    "sederSfiratOmer",
     "remindMeXhoursAndYMinutesBeforeNerotHanukkah",
     "compass"
   ]

@@ -4,8 +4,13 @@
     "main": "ראשי",
 
     "menu": "תפריט",
+    "settings": "הגדרות",
+    "prayersAndBlessings": "תפילות וברכות",
+    "aids": "עזרים",
     "settingRemindersMenu": "קביעת תזכורות",
     "candleLightingOrderMenu": "סדר הדלקת נרות",
+    "hanukkahCandleLightingOrderMenu": "סדר הדלקת נרות חנוכה",
+    "sederSfiratOmer": "ברכת ספירת העומר",
     "tefilinOrderMenu": "סדר הנחת תפילין",
     "choresBeforeShabbatMenu": "מטלות לפני שבת",
 

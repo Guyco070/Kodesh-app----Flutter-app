@@ -9,13 +9,28 @@
     "menu": "Menu",
     "@menu": { "description": "menu" },
 
+    "settings": "Settings",
+    "@settings": { "description": "settings" },
+
+    "prayersAndBlessings": "Prayers and Blessings",
+    "@prayersAndBlessings": { "description": "prayersAndBlessings" },
+
+    "aids": "Aids",
+    "@aids": { "description": "aids" },
+
     "settingRemindersMenu": "Setting reminders",
     "@settingRemindersMenu": { "description": "settingRemindersMenu" },
 
     "candleLightingOrderMenu": "Candle lighting order",
     "@candleLightingOrderMenu": { "description": "candleLightingOrderMenu" },
 
-    "tefilinOrderMenu": "Laying of phylacteries order",
+    "hanukkahCandleLightingOrderMenu": "Hanukkah candle lighting",
+    "@hanukkahCandleLightingOrderMenu": { "description": "hanukkahCandleLightingOrderMenu" },
+
+    "sederSfiratOmer": "Counting of the Omer",
+    "@sederSfiratOmer": { "description": "sederSfiratOmer" },
+
+    "tefilinOrderMenu": "Laying of phylacteries",
     "@tefilinOrderMenu": { "description": "tefilinOrderMenu" },
 
     "choresBeforeShabbatMenu": "Chores before Shabbat",
