@@ -172,22 +172,22 @@ class RemindersTranslates {
     'en': {
       // 'title': 'English',
       'body': (DateTime entryDate, String title) =>
-          'On the date ${DateFormat('HH:mm').format(entryDate)} - $title',
+          'On the date ${DateFormat('dd/MM/yy').format(entryDate)} - $title',
     },
     'he': {
       // 'title': 'עברית',
       'body': (DateTime entryDate, String title) =>
-          'בתאריך ${DateFormat('HH:mm').format(entryDate)} - $title',
+          'בתאריך ${DateFormat('dd/MM/yy').format(entryDate)} - $title',
     },
     'es': {
       // 'title': 'español',
       'body': (DateTime entryDate, String title) =>
-          'En la cita ${DateFormat('HH:mm').format(entryDate)} - $title',
+          'En la cita ${DateFormat('dd/MM/yy').format(entryDate)} - $title',
     },
     'ru': {
       // 'title': 'ру́сский язы́к',
       'body': (DateTime entryDate, String title) =>
-          'В день ${DateFormat('HH:mm').format(entryDate)} - $title',
+          'В день ${DateFormat('dd/MM/yy').format(entryDate)} - $title',
     },
   };
 
