@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:kodesh_app/data/cities.dart';
-import 'package:kodesh_app/helpers/dates.dart';
 import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/providers/reminders.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
+import 'package:kodesh_app/widgets/schedual_notifications_widgets/choose_time_before_widget.dart';
+import 'package:kodesh_app/widgets/schedual_notifications_widgets/choose_time_in_day_widget.dart';
 import 'package:kodesh_app/widgets/swiches/cupertino_text_check_switch.dart';
-import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -93,54 +93,21 @@ class _SchedualNotficationsScreenState
         const SizedBox(
           height: 7,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          textDirection: TextDirection.ltr,
-          children: [
-            Column(
-              children: [
-                Text(
-                  appLocalizations.hours,
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor, fontSize: 16),
-                ),
-                NumberPicker(
-                  minValue: 00,
-                  maxValue: 24,
-                  value: reminders.beforeNerotHanukkahHours,
-                  onChanged: (newVal) {
-                    reminders.setNerotHanukkahHours(newVal);
-                  },
-                  zeroPad: true,
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                Text(
-                  appLocalizations.minutes,
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor, fontSize: 16),
-                ),
-                NumberPicker(
-                  minValue: 00,
-                  maxValue: 59,
-                  value: reminders.beforeNerotHanukkahMinutes,
-                  onChanged: (newVal) {
-                    reminders.setNerotHanukkahMinutes(newVal);
-                  },
-                  zeroPad: true,
-                ),
-              ],
-            ),
-          ],
+        ChooseTimeBeforeWidget(
+          hoursValue: reminders.beforeNerotHanukkahHours,
+          minutesValue: reminders.beforeNerotHanukkahMinutes,
+          setHours: reminders.setNerotHanukkahHours,
+          setMinutess: reminders.setNerotHanukkahMinutes,
+          localizedHelpText:
+              appLocalizations.remindMeXhoursAndYMinutesBeforeNerotHanukkah,
         ),
-        FittedBox(
-            child: Text(
-          '${appLocalizations.remindMeXhoursAndYMinutesBeforeNerotHanukkah(reminders.beforeNerotHanukkahHours.toString(), reminders.beforeNerotHanukkahMinutes.toString())}.',
-          style: TextStyle(color: Colors.grey[700], fontSize: 12),
-          textAlign: TextAlign.center,
-        )),
+        const SizedBox(
+          height: 7,
+        ),
+        const Divider(height: 15, thickness: 1.5),
+        const SizedBox(
+          height: 7,
+        ),
       ];
     }
 
@@ -155,6 +122,7 @@ class _SchedualNotficationsScreenState
                   color: Theme.of(context).primaryColor, fontSize: 16),
             ),
             Container(
+              // remider city drop down button - start
               margin: const EdgeInsets.symmetric(horizontal: 7),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
@@ -176,7 +144,7 @@ class _SchedualNotficationsScreenState
                   onChanged: (value) {
                     reminders.setReminderCity(value ?? reminders.reminderCity);
                   }),
-            ),
+            ), // remider city drop down button - end
           ],
         ),
         const SizedBox(
@@ -191,54 +159,14 @@ class _SchedualNotficationsScreenState
         const SizedBox(
           height: 7,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          textDirection: TextDirection.ltr,
-          children: [
-            Column(
-              children: [
-                Text(
-                  appLocalizations.hours,
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor, fontSize: 16),
-                ),
-                NumberPicker(
-                  minValue: 00,
-                  maxValue: 24,
-                  value: reminders.beforeShabatHours,
-                  onChanged: (newVal) {
-                    reminders.setShabatAndHolidaysShabatHours(newVal);
-                  },
-                  zeroPad: true,
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                Text(
-                  appLocalizations.minutes,
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor, fontSize: 16),
-                ),
-                NumberPicker(
-                  minValue: 00,
-                  maxValue: 59,
-                  value: reminders.beforeShabatMinutes,
-                  onChanged: (newVal) {
-                    reminders.setShabatAndHolidaysShabatMinutes(newVal);
-                  },
-                  zeroPad: true,
-                ),
-              ],
-            ),
-          ],
+        ChooseTimeBeforeWidget(
+          hoursValue: reminders.beforeShabatHours,
+          minutesValue: reminders.beforeShabatMinutes,
+          setHours: reminders.setShabatAndHolidaysShabatHours,
+          setMinutess: reminders.setShabatAndHolidaysShabatMinutes,
+          localizedHelpText:
+              appLocalizations.remindMeXhoursAndYMinutesBeforeShbatAndHolidays,
         ),
-        FittedBox(
-            child: Text(
-          '${appLocalizations.remindMeXhoursAndYMinutesBeforeShbatAndHolidays(reminders.beforeShabatHours.toString(), reminders.beforeShabatMinutes.toString())}.',
-          style: TextStyle(color: Colors.grey[700], fontSize: 12),
-          textAlign: TextAlign.center,
-        )),
         const SizedBox(
           height: 7,
         ),
@@ -265,55 +193,15 @@ class _SchedualNotficationsScreenState
           onChanged: () => reminders.setShabatAndHolidaysCandles(),
           text: appLocalizations.remindCandleLightningSeperateSettings,
         ),
-        if (reminders.shabatAndHolidaysCandles) ...{
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            textDirection: TextDirection.ltr,
-            children: [
-              Column(
-                children: [
-                  Text(
-                    appLocalizations.hours,
-                    style: TextStyle(
-                        color: Theme.of(context).primaryColor, fontSize: 16),
-                  ),
-                  NumberPicker(
-                    minValue: 00,
-                    maxValue: 24,
-                    value: reminders.beforeShabatAndHolidaysCandlesHours,
-                    onChanged: (newVal) {
-                      reminders.setShabatAndHolidaysCandlesHours(newVal);
-                    },
-                    zeroPad: true,
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  Text(
-                    appLocalizations.minutes,
-                    style: TextStyle(
-                        color: Theme.of(context).primaryColor, fontSize: 16),
-                  ),
-                  NumberPicker(
-                    minValue: 00,
-                    maxValue: 59,
-                    value: reminders.beforeShabatAndHolidaysCandlesMinutes,
-                    onChanged: (newVal) {
-                      reminders.setShabatAndHolidaysCandlesMinutes(newVal);
-                    },
-                    zeroPad: true,
-                  ),
-                ],
-              ),
-            ],
+        if (reminders.shabatAndHolidaysCandles)
+          ChooseTimeBeforeWidget(
+            hoursValue: reminders.beforeShabatAndHolidaysCandlesHours,
+            minutesValue: reminders.beforeShabatAndHolidaysCandlesMinutes,
+            setHours: reminders.setShabatAndHolidaysCandlesHours,
+            setMinutess: reminders.setShabatAndHolidaysCandlesMinutes,
+            localizedHelpText:
+                appLocalizations.remindMeXhoursAndYMinutesBeforeCandlesLighning,
           ),
-          Text(
-            '${appLocalizations.remindMeXhoursAndYMinutesBeforeCandlesLighning(reminders.beforeShabatAndHolidaysCandlesHours.toString(), reminders.beforeShabatAndHolidaysCandlesMinutes.toString())}.',
-            style: TextStyle(color: Colors.grey[700], fontSize: 12),
-            textAlign: TextAlign.center,
-          ),
-        },
         const SizedBox(
           height: 7,
         ),
@@ -326,15 +214,13 @@ class _SchedualNotficationsScreenState
           onChanged: () => reminders.setNerotHanukkah(),
           text: 'הדלקת נרות חנוכה',
         ),
-        if (!reminders.nerotHanukkah)...{
+        if (!reminders.nerotHanukkah) ...{
           const SizedBox(
             height: 7,
           ),
           const Divider(height: 15, thickness: 1.5),
         },
-        
-        if (reminders.nerotHanukkah)
-          ...nerotHanukkahElements(),
+        if (reminders.nerotHanukkah) ...nerotHanukkahElements(),
       ];
     }
 
@@ -357,173 +243,43 @@ class _SchedualNotficationsScreenState
                     ),
                     if (reminders.shabatAndHolidays)
                       ...shabatAndHolidaysElements(),
+                    
+                    // tefillin - start
+                    ChooseTimeInDayWidget(
+                      title: appLocalizations.tefillin,
+                      subtitle: appLocalizations.remindTeffilinSettingsAt,
+                      isExpanded: reminders.tefilin,
+                      setIsExpanded: reminders.setTefilin,
+                      timeObject: reminders.getTefilinTimeObject,
+                      setTime: reminders.setTefilinTime,
+                      timeString: reminders.tefilinTime,
+                    ),
+                    // tefillin - end
 
-                    CuperinoTextCheckSwitch(
-                        text: appLocalizations.tefillin,
-                        value: reminders.tefilin,
-                        onChanged: () => reminders.setTefilin()),
-                    if (reminders.tefilin)
-                      Column(
-                        children: [
-                          FittedBox(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(appLocalizations.remindTeffilinSettingsAt),
-                                TextButton(
-                                  onPressed: () async {
-                                    TimeOfDay? time = await showTimePicker(
-                                        context: context,
-                                        initialTime: TimeOfDay(
-                                            hour: reminders
-                                                .getTefilinTimeObject.hour,
-                                            minute: reminders
-                                                .getTefilinTimeObject.minute),
-                                        builder: (context, childWidget) {
-                                          return MediaQuery(
-                                              data: MediaQuery.of(context)
-                                                  .copyWith(
-                                                      // Using 24-Hour format
-                                                      alwaysUse24HourFormat:
-                                                          true),
-                                              // If you want 12-Hour format, just change alwaysUse24HourFormat to false or remove all the builder argument
-                                              child: childWidget!);
-                                        });
-                                    if (time != null) {
-                                      reminders.setTefilinTime(getTime(
-                                          null,
-                                          time.minute.toString(),
-                                          time.hour.toString()));
-                                    }
-                                  },
-                                  child: Text(reminders.tefilinTime),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 7,
-                          ),
-                          const Divider(height: 15, thickness: 1.5),
-                          const SizedBox(
-                            height: 7,
-                          ),
-                        ],
-                      ),
-                    CuperinoTextCheckSwitch(
-                        text: appLocalizations.roshHodesh,
-                        value: reminders.roshChodesh,
-                        onChanged: () => reminders.setRoshChodesh()),
-                    if (reminders.roshChodesh)
-                      Column(
-                        children: [
-                          FittedBox(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(appLocalizations
-                                    .remindRoshHodeshSettingsAt),
-                                TextButton(
-                                  onPressed: () async {
-                                    TimeOfDay? time = await showTimePicker(
-                                        context: context,
-                                        initialTime: TimeOfDay(
-                                            hour: reminders
-                                                .getRoshChodeshTimeObject.hour,
-                                            minute: reminders
-                                                .getRoshChodeshTimeObject
-                                                .minute),
-                                        builder: (context, childWidget) {
-                                          return MediaQuery(
-                                              data: MediaQuery.of(context)
-                                                  .copyWith(
-                                                      // Using 24-Hour format
-                                                      alwaysUse24HourFormat:
-                                                          true),
-                                              // If you want 12-Hour format, just change alwaysUse24HourFormat to false or remove all the builder argument
-                                              child: childWidget!);
-                                        });
-                                    if (time != null) {
-                                      reminders.setRoshChodeshTime(getTime(
-                                          null,
-                                          time.minute.toString(),
-                                          time.hour.toString()));
-                                    }
-                                  },
-                                  child: Text(reminders.roshChodeshTime),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Text(
-                            "*${appLocalizations.roshHodeshReminderWillBeAdvanced}.",
-                            style: TextStyle(
-                                color: Colors.grey[700], fontSize: 12),
-                            textAlign: TextAlign.center,
-                          ), // todo: fix it to be syncronize with shabat and holidays
-                          const SizedBox(
-                            height: 7,
-                          ),
-                          const Divider(height: 15, thickness: 1.5),
-                          const SizedBox(
-                            height: 7,
-                          ),
-                        ],
-                      ),
+                    // rosh hodesh - start
+                    ChooseTimeInDayWidget(
+                      title: appLocalizations.roshHodesh,
+                      subtitle: appLocalizations.remindRoshHodeshSettingsAt,
+                      isExpanded: reminders.roshChodesh,
+                      setIsExpanded: reminders.setRoshChodesh,
+                      timeObject: reminders.getRoshChodeshTimeObject,
+                      setTime: reminders.setRoshChodeshTime,
+                      timeString: reminders.roshChodeshTime,
+                      noteText:
+                          appLocalizations.roshHodeshReminderWillBeAdvanced,
+                    ),
+                    // rosh hodesh - end
+
                     // sfirat omer - start
-                    CuperinoTextCheckSwitch(
-                        text: 'ספירת העומר',
-                        value: reminders.sfiratOmer,
-                        onChanged: () => reminders.setSfiratOmer()),
-                    if (reminders.roshChodesh)
-                      Column(
-                        children: [
-                          FittedBox(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text('הזכר לי לברך בספירת העומר בכל יום בשעה '),
-                                TextButton(
-                                  onPressed: () async {
-                                    TimeOfDay? time = await showTimePicker(
-                                        context: context,
-                                        initialTime: TimeOfDay(
-                                            hour: reminders
-                                                .getSfiratOmerTimeObject.hour,
-                                            minute: reminders
-                                                .getSfiratOmerTimeObject
-                                                .minute),
-                                        builder: (context, childWidget) {
-                                          return MediaQuery(
-                                              data: MediaQuery.of(context)
-                                                  .copyWith(
-                                                      // Using 24-Hour format
-                                                      alwaysUse24HourFormat:
-                                                          true),
-                                              // If you want 12-Hour format, just change alwaysUse24HourFormat to false or remove all the builder argument
-                                              child: childWidget!);
-                                        });
-                                    if (time != null) {
-                                      reminders.setSfiratOmerTime(getTime(
-                                          null,
-                                          time.minute.toString(),
-                                          time.hour.toString()));
-                                    }
-                                  },
-                                  child: Text(reminders.sfiratOmerTime),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 7,
-                          ),
-                          const Divider(height: 15, thickness: 1.5),
-                          const SizedBox(
-                            height: 7,
-                          ),
-                        ],
-                      ), 
+                    ChooseTimeInDayWidget(
+                      title: 'ספירת העומר',
+                      subtitle: 'הזכר לי לברך בספירת העומר בכל יום בשעה ',
+                      isExpanded: reminders.sfiratOmer,
+                      setIsExpanded: reminders.setSfiratOmer,
+                      timeObject: reminders.getSfiratOmerTimeObject,
+                      setTime: reminders.setSfiratOmerTime,
+                      timeString: reminders.sfiratOmerTime,
+                    ),
                     // sfirat omer - end
 
                     ElevatedButton(
