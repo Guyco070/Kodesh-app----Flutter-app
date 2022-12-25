@@ -20,7 +20,7 @@ class CuperinoTextCheckSwitch extends StatelessWidget {
         CupertinoSwitch(
             activeColor: Theme.of(context).primaryColor,
             value: value,
-            onChanged: (_) => onChanged()),
+            onChanged: (_) => onChanged(),),
         Flexible(
           child: Padding(
             padding: const EdgeInsets.all(8.0),

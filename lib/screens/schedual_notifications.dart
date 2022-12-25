@@ -61,6 +61,10 @@ class _SchedualNotficationsScreenState
     var reminders = Provider.of<Reminders>(context);
     var lang = Provider.of<LanguageChangeProvider>(context);
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+    var devider = Container(
+          margin: const EdgeInsets.symmetric(vertical: 7),
+          height: 7,
+          decoration: BoxDecoration(border: const Border(top: BorderSide(width: 1, color: Colors.grey), bottom: BorderSide(width: 1, color: Colors.grey),), color: Colors.grey[200]));
 
     shabatAndHolidaysThingsToRemindList() {
       return reminders.allShabatAndHolidaysThingsToRemindList(context).map((e) {
@@ -100,13 +104,6 @@ class _SchedualNotficationsScreenState
           setMinutess: reminders.setNerotHanukkahMinutes,
           localizedHelpText:
               appLocalizations.remindMeXhoursAndYMinutesBeforeNerotHanukkah,
-        ),
-        const SizedBox(
-          height: 7,
-        ),
-        const Divider(height: 15, thickness: 1.5),
-        const SizedBox(
-          height: 7,
         ),
       ];
     }
@@ -184,7 +181,7 @@ class _SchedualNotficationsScreenState
         const SizedBox(
           height: 7,
         ),
-        const Divider(height: 15, thickness: 1.5),
+        const Divider(height: 15, thickness: 1.5, indent: 15, endIndent: 15,),
         const SizedBox(
           height: 7,
         ),
@@ -202,13 +199,20 @@ class _SchedualNotficationsScreenState
             localizedHelpText:
                 appLocalizations.remindMeXhoursAndYMinutesBeforeCandlesLighning,
           ),
-
+        const SizedBox(
+          height: 7,
+        ),
+        const Divider(height: 15, thickness: 1.5, indent: 15, endIndent: 15,),
+        const SizedBox(
+          height: 7,
+        ),
         CuperinoTextCheckSwitch(
-          value: reminders.shabatAndHolidaysCandles,
+          value: reminders.havdalah,
           onChanged: () => reminders.setHavdalah(),
           text: 'הבדלה',
         ),
-        if (reminders.shabatAndHolidaysCandles)
+        
+        if (reminders.havdalah)
           ChooseTimeBeforeWidget(
             hoursValue: reminders.afterShabatHavdalahHours,
             minutesValue: reminders.afterShabatHavdalahMinutes,
@@ -220,7 +224,7 @@ class _SchedualNotficationsScreenState
         const SizedBox(
           height: 7,
         ),
-        const Divider(height: 15, thickness: 1.5),
+        const Divider(height: 15, thickness: 1.5, indent: 15, endIndent: 15,),
         const SizedBox(
           height: 7,
         ),
@@ -236,6 +240,7 @@ class _SchedualNotficationsScreenState
           const Divider(height: 15, thickness: 1.5),
         },
         if (reminders.nerotHanukkah) ...nerotHanukkahElements(),
+        devider,
       ];
     }
 
@@ -256,9 +261,12 @@ class _SchedualNotficationsScreenState
                       onChanged: () => reminders.setShabatAndHolidays(),
                       text: appLocalizations.beforeShabatAndHolidaysSettengs,
                     ),
-                    if (reminders.shabatAndHolidays)
+                    if (reminders.shabatAndHolidays)...{
                       ...shabatAndHolidaysElements(),
-                    
+                    }
+                    else...{
+                        devider
+                    },
                     // tefillin - start
                     ChooseTimeInDayWidget(
                       title: appLocalizations.tefillin,
