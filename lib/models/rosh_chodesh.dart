@@ -47,4 +47,10 @@ class RoshChodesh extends Event {
 
   @override
   String getReminderCandlesTitle(String lang) => 'No need';
+  
+  @override
+  String getReminderHavdalahTitle(String lang) => 'No need';
+
+  @override
+  String getReminderHavdalahBody(int afterShabatAndHolidaysCandlesHours, int afterShabatAndHolidaysCandlesMinutes, String lang) => 'No need';
 }

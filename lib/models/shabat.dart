@@ -52,4 +52,11 @@ class Shabat extends Event {
   String getReminderCandlesTitle(String lang) =>
       RemindersTranslates.shabatReminderTranslated[lang]!['candlesTitle']!
           as String;
+          
+  @override
+  String getReminderHavdalahTitle(String lang) => RemindersTranslates.shabatReminderTranslated[lang]!['havdalahTitle']! as String;
+
+  @override
+  String getReminderHavdalahBody(int afterShabatAndHolidaysCandlesHours, int afterShabatAndHolidaysCandlesMinutes, String lang) => (RemindersTranslates.shabatReminderTranslated[lang]!['havdalahBody']! as Function)(afterShabatAndHolidaysCandlesHours, afterShabatAndHolidaysCandlesMinutes) as String;
+
 }

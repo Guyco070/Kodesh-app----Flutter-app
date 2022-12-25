@@ -13,6 +13,7 @@ import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/screens/Shabat_and_holidays_check_list.dart';
 import 'package:kodesh_app/screens/tefilot/adlakat_nerot.dart';
 import 'package:kodesh_app/screens/tefilot/adlakat_nerot_chanukah.dart';
+import 'package:kodesh_app/screens/tefilot/havdalah.dart';
 import 'package:kodesh_app/screens/tefilot/seder_anahat_tefilin.dart';
 import 'package:kodesh_app/screens/tefilot/sfirat_omer_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,6 +27,10 @@ class Reminders with ChangeNotifier {
   bool tefilin = false;
   bool preys = false;
   bool roshChodesh = false;
+
+  bool havdalah = false;
+  int afterShabatHavdalahMinutes = 5;
+  int afterShabatHavdalahHours = 0;
 
   String reminderCity = 'IL-Jerusalem|281184';
   String city = 'IL-Jerusalem|281184';
@@ -129,6 +134,16 @@ class Reminders with ChangeNotifier {
     notifyListeners();
   }
 
+  setHavdalah({bool? newHavdalah}) {
+    if (newHavdalah != null) {
+      havdalah = newHavdalah;
+    } else {
+      havdalah = !havdalah;
+    }
+    notifyListeners();
+  }
+
+
   setNerotHanukkah({bool? newNerotHanukkah}) {
     if (newNerotHanukkah != null) {
       nerotHanukkah = newNerotHanukkah;
@@ -161,6 +176,16 @@ class Reminders with ChangeNotifier {
 
   setShabatAndHolidaysShabatHours(int newBeforeShabatHours) {
     beforeShabatHours = newBeforeShabatHours;
+    notifyListeners();
+  }
+
+  setAfterShabatHavdalahMinutes(int newAfterShabatMinutes) {
+    afterShabatHavdalahMinutes = newAfterShabatMinutes;
+    notifyListeners();
+  }
+
+  setAfterShabatHavdalahHours(int newAfterShabatHours) {
+    afterShabatHavdalahHours = newAfterShabatHours;
     notifyListeners();
   }
 
@@ -225,6 +250,10 @@ class Reminders with ChangeNotifier {
       shabatAndHolidays = prefs.getBool('shabatAndHolidays')!;
     }
 
+    if (prefsKeys.contains('havdalah')) {
+      havdalah = prefs.getBool('havdalah')!;
+    }
+
     if (prefsKeys.contains('city')) {
       city = prefs.getString('city')!;
     }
@@ -241,6 +270,14 @@ class Reminders with ChangeNotifier {
 
     if (prefsKeys.contains('beforeShabatMinutes')) {
       beforeShabatMinutes = prefs.getInt('beforeShabatMinutes')!;
+    }
+
+    if (prefsKeys.contains('afterShabatHavdalahHours')) {
+      afterShabatHavdalahHours = prefs.getInt('afterShabatHavdalahHours')!;
+    }
+
+    if (prefsKeys.contains('afterShabatHavdalahMinutes')) {
+      afterShabatHavdalahMinutes = prefs.getInt('afterShabatHavdalahMinutes')!;
     }
 
     if (prefsKeys.contains('shabatAndHolidaysThingsToRemindList')) {
@@ -311,6 +348,10 @@ class Reminders with ChangeNotifier {
     prefs.setBool('shabatAndHolidays', shabatAndHolidays);
     prefs.setInt('beforeShabatHours', beforeShabatHours);
     prefs.setInt('beforeShabatMinutes', beforeShabatMinutes);
+
+    prefs.setBool('havdalah', havdalah);
+    prefs.setInt('afterShabatHavdalahHours', afterShabatHavdalahHours);
+    prefs.setInt('afterShabatHavdalahMinutes', afterShabatHavdalahMinutes);
 
     prefs.setString('reminderCity', reminderCity);
 
@@ -431,8 +472,8 @@ class Reminders with ChangeNotifier {
             });
             id++;
 
-            if (shabatAndHolidaysCandles && e is Shabat ||
-                (e is Holiday && e.subcat == 'major')) {
+            if (shabatAndHolidaysCandles && (e is Shabat ||
+                (e is Holiday && e.subcat == 'major'))) {
               // reminder for Hanukkah
 
               // shabat or holiday
@@ -450,6 +491,30 @@ class Reminders with ChangeNotifier {
                       lang),
                   'date': x,
                   'payload': AdlakatNerot.routeName,
+                });
+              }
+              id++;
+            }
+
+            if (havdalah && (e is Shabat ||
+                (e is Holiday && e.subcat == 'major') && e.releaseDate != null)) {
+              // reminder for Hanukkah
+
+              // shabat or holiday
+              // reminder to light shabat candles
+              x = e.entryDate!.add(Duration(
+                  hours: beforeShabatAndHolidaysCandlesHours,
+                  minutes: beforeShabatAndHolidaysCandlesMinutes));
+              if (now.isBefore(x)) {
+                notValues.add({
+                  'id': id,
+                  'title': e.getReminderHavdalahTitle(lang),
+                  'body': e.getReminderHavdalahBody(
+                      beforeShabatAndHolidaysCandlesHours,
+                      beforeShabatAndHolidaysCandlesMinutes,
+                      lang),
+                  'date': x,
+                  'payload': Havdalah.routeName,
                 });
               }
               id++;

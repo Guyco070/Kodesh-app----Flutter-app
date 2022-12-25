@@ -202,6 +202,21 @@ class _SchedualNotficationsScreenState
             localizedHelpText:
                 appLocalizations.remindMeXhoursAndYMinutesBeforeCandlesLighning,
           ),
+
+        CuperinoTextCheckSwitch(
+          value: reminders.shabatAndHolidaysCandles,
+          onChanged: () => reminders.setHavdalah(),
+          text: 'הבדלה',
+        ),
+        if (reminders.shabatAndHolidaysCandles)
+          ChooseTimeBeforeWidget(
+            hoursValue: reminders.afterShabatHavdalahHours,
+            minutesValue: reminders.afterShabatHavdalahMinutes,
+            setHours: reminders.setAfterShabatHavdalahHours,
+            setMinutess: reminders.setAfterShabatHavdalahMinutes,
+            localizedHelpText:
+                (String hours, String minutes) => 'הזכר לי לעשות הבדלה $hours שעות ו- $minutes דקות אחרי שבת',
+          ),
         const SizedBox(
           height: 7,
         ),

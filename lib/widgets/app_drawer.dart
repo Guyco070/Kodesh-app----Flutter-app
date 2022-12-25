@@ -4,6 +4,7 @@ import 'package:kodesh_app/screens/compass_screen.dart';
 import 'package:kodesh_app/screens/schedual_notifications.dart';
 import 'package:kodesh_app/screens/tefilot/adlakat_nerot.dart';
 import 'package:kodesh_app/screens/tefilot/adlakat_nerot_chanukah.dart';
+import 'package:kodesh_app/screens/tefilot/havdalah.dart';
 import 'package:kodesh_app/screens/tefilot/seder_anahat_tefilin.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kodesh_app/screens/tefilot/sfirat_omer_screen.dart';
@@ -41,6 +42,11 @@ class AppDrawer extends StatelessWidget {
               leading: const Icon(Icons.fireplace_outlined,),
               title: Text(appLocalizations.candleLightingOrderMenu),
               onTap: () => Navigator.pushNamed(context, AdlakatNerot.routeName),
+            ),
+            ListTile(
+              leading: const Icon(Icons.fireplace_outlined,),
+              title: Text('הבדלה'),
+              onTap: () => Navigator.pushNamed(context, Havdalah.routeName),
             ),
             ListTile(
               leading: const Icon(Icons.add_reaction_outlined),

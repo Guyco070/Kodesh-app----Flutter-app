@@ -51,4 +51,11 @@ class Holiday extends Event {
   String getReminderCandlesTitle(lang) => RemindersTranslates.holidayReminderTranslated[lang]!['candlesTitle']! as String;
 
   String getReminderHanukkahCandlesBody(int beforeShabatAndHolidaysCandlesHours, int beforeShabatAndHolidaysCandlesMinutes, String lang) => (RemindersTranslates.holidayReminderTranslated[lang]!['chnukahCandlesBody']! as Function)(beforeShabatAndHolidaysCandlesHours, beforeShabatAndHolidaysCandlesMinutes) as String;
+  
+  @override
+  String getReminderHavdalahTitle(String lang) => RemindersTranslates.holidayReminderTranslated[lang]!['havdalahTitle']! as String;
+
+  @override
+  String getReminderHavdalahBody(int afterShabatAndHolidaysCandlesHours, int afterShabatAndHolidaysCandlesMinutes, String lang) => (RemindersTranslates.holidayReminderTranslated[lang]!['havdalahBody']! as Function)(afterShabatAndHolidaysCandlesHours, afterShabatAndHolidaysCandlesMinutes) as String;
+
 }

@@ -11,6 +11,7 @@ import 'package:kodesh_app/screens/schedual_notifications.dart';
 import 'package:kodesh_app/screens/event_screen.dart';
 import 'package:kodesh_app/screens/tefilot/adlakat_nerot.dart';
 import 'package:kodesh_app/screens/tefilot/adlakat_nerot_chanukah.dart';
+import 'package:kodesh_app/screens/tefilot/havdalah.dart';
 import 'package:kodesh_app/screens/tefilot/seder_anahat_tefilin.dart';
 import 'package:kodesh_app/screens/tefilot/sfirat_omer_screen.dart';
 import 'package:provider/provider.dart';
@@ -80,6 +81,8 @@ class MyApp extends StatelessWidget {
                 AdlakatNerotChanukah(),
             SfiratOmerScreen.routeName: (_) =>
                 SfiratOmerScreen(),
+            Havdalah.routeName: (_) =>
+                Havdalah(),
           },
         );
       }),
