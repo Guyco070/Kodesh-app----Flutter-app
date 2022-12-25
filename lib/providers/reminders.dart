@@ -11,10 +11,10 @@ import 'package:kodesh_app/models/sfirat_omer.dart';
 import 'package:kodesh_app/models/shabat.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/screens/Shabat_and_holidays_check_list.dart';
-import 'package:kodesh_app/screens/tfilot/adlakat_nerot.dart';
-import 'package:kodesh_app/screens/tfilot/adlakat_nerot_chanukah.dart';
-import 'package:kodesh_app/screens/tfilot/seder_anahat_tefilin.dart';
-import 'package:kodesh_app/screens/tfilot/sfirat_omer_screen.dart';
+import 'package:kodesh_app/screens/tefilot/adlakat_nerot.dart';
+import 'package:kodesh_app/screens/tefilot/adlakat_nerot_chanukah.dart';
+import 'package:kodesh_app/screens/tefilot/seder_anahat_tefilin.dart';
+import 'package:kodesh_app/screens/tefilot/sfirat_omer_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -42,6 +42,12 @@ class Reminders with ChangeNotifier {
   String tefilinTime = '06:00';
   String roshChodeshTime = '06:00';
   String sfiratOmerTime = '06:00';
+
+  List<Map<String, Object>> notValues = [];
+
+  Reminders(BuildContext context) {
+    getData(context);
+  }
 
   List<String> allShabatAndHolidaysThingsToRemindList(BuildContext context) {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
@@ -98,12 +104,6 @@ class Reminders with ChangeNotifier {
       appLocalizations.plata,
       appLocalizations.miham,
     ];
-  }
-
-  List<Map<String, Object>> notValues = [];
-
-  Reminders(BuildContext context) {
-    getData(context);
   }
 
   setReminderCity(String newCity) {
@@ -404,17 +404,12 @@ class Reminders with ChangeNotifier {
 
           if (nerotHanukkah && e.title.contains('Chanukah') ||
               (e.titleOrig != null && e.titleOrig!.contains('Chanukah'))) {
-            // print(e.title);
-            // reminder to light shabat candles
+            // reminder to light Chanukah candles
             x = e.entryDate!.subtract(Duration(
                 hours: beforeNerotHanukkahHours,
                 minutes: beforeNerotHanukkahMinutes));
-            // print('now $now');
-            // print('x out $x');
-            // print('isBefore ${now.isBefore(x)}');
-            if (now.isBefore(x)) {
-              // print('x in $x');
 
+            if (now.isBefore(x)) {
               notValues.add({
                 'id': id,
                 'title': e.title.replaceFirst('Chanukah', 'Hanukkah'),
@@ -423,11 +418,9 @@ class Reminders with ChangeNotifier {
                 'date': x,
                 'payload': AdlakatNerotChanukah.routeName,
               });
-              // print(notValues.last);
               id++;
             }
           } else if (now.isBefore(x)) {
-            print(e.title);
             // reminder for chores before shabat
             notValues.add({
               'id': id,
@@ -439,7 +432,7 @@ class Reminders with ChangeNotifier {
             id++;
 
             if (shabatAndHolidaysCandles && e is Shabat ||
-              (e is Holiday && e.subcat == 'major')) {
+                (e is Holiday && e.subcat == 'major')) {
               // reminder for Hanukkah
 
               // shabat or holiday

@@ -98,10 +98,10 @@ class RemindersTranslates {
       'candlesTitle': 'Holiday candle lighting time',
       'candlesBody': (int beforeShabatAndHolidaysCandlesHours,
               int beforeShabatAndHolidaysCandlesMinutes) =>
-          'In ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours hours and' : ''}$beforeShabatAndHolidaysCandlesMinutes minutes the holiday will come, don\'t forget to light candles.',
+          'In ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours hours and ' : ''}$beforeShabatAndHolidaysCandlesMinutes minutes the holiday will come, don\'t forget to light candles.',
       'chnukahCandlesBody' : (int beforeShabatAndHolidaysCandlesHours,
               int beforeShabatAndHolidaysCandlesMinutes) =>
-          'In ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours hours and' : ''}$beforeShabatAndHolidaysCandlesMinutes minutes it\'s time to light Hanukkah candles will come, don\'t forget to light candles.',
+          'In ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours hours and ' : ''}$beforeShabatAndHolidaysCandlesMinutes minutes it\'s time to light Hanukkah candles will come, don\'t forget to light candles.',
     },
     'he': {
       // 'title': 'שבת שלום',

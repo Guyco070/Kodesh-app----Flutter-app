@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 abstract class Event {
-  const Event(
+   Event(
       {Key? key,
       required this.title,
       this.entryDate,
@@ -9,7 +9,7 @@ abstract class Event {
       this.parasha,
       required this.titleOrig,
     });
-  final String title; // shabat/ holiday /tefila...
+  String title; // shabat/ holiday /tefila...
   final DateTime? entryDate;
   final DateTime? releaseDate;
   final String? parasha;

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:kodesh_app/screens/Shabat_and_holidays_check_list.dart';
 import 'package:kodesh_app/screens/compass_screen.dart';
 import 'package:kodesh_app/screens/schedual_notifications.dart';
-import 'package:kodesh_app/screens/tfilot/adlakat_nerot.dart';
-import 'package:kodesh_app/screens/tfilot/adlakat_nerot_chanukah.dart';
-import 'package:kodesh_app/screens/tfilot/seder_anahat_tefilin.dart';
+import 'package:kodesh_app/screens/tefilot/adlakat_nerot.dart';
+import 'package:kodesh_app/screens/tefilot/adlakat_nerot_chanukah.dart';
+import 'package:kodesh_app/screens/tefilot/seder_anahat_tefilin.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:kodesh_app/screens/tfilot/sfirat_omer_screen.dart';
+import 'package:kodesh_app/screens/tefilot/sfirat_omer_screen.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
 
 class AppDrawer extends StatelessWidget {

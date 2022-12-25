@@ -79,12 +79,6 @@ class NotificationApi {
     String? payload,
     required DateTime date,
   }) async {
-    if (title!.contains('חֲנוּכָּה')) {
-      print(title);
-      print('TZDateTime ${TZDateTime.from(date, local)}');
-      print('date $date');
-    }
-
     return _notifications.zonedSchedule(
       id,
       title,

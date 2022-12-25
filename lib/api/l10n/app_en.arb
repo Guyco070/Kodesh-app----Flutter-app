@@ -21,7 +21,7 @@
     "settingRemindersMenu": "Setting reminders",
     "@settingRemindersMenu": { "description": "settingRemindersMenu" },
 
-    "candleLightingOrderMenu": "Candle lighting order",
+    "candleLightingOrderMenu": "Shabat candle lighting order",
     "@candleLightingOrderMenu": { "description": "candleLightingOrderMenu" },
 
     "hanukkahCandleLightingOrderMenu": "Hanukkah candle lighting",

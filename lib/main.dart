@@ -4,14 +4,15 @@ import 'package:kodesh_app/api/l10n/l10n.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/providers/reminders.dart';
+import 'package:kodesh_app/providers/tfilot.dart';
 import 'package:kodesh_app/screens/compass_screen.dart';
 import 'package:kodesh_app/screens/shabat_and_holidays_check_list.dart';
 import 'package:kodesh_app/screens/schedual_notifications.dart';
 import 'package:kodesh_app/screens/event_screen.dart';
-import 'package:kodesh_app/screens/tfilot/adlakat_nerot.dart';
-import 'package:kodesh_app/screens/tfilot/adlakat_nerot_chanukah.dart';
-import 'package:kodesh_app/screens/tfilot/seder_anahat_tefilin.dart';
-import 'package:kodesh_app/screens/tfilot/sfirat_omer_screen.dart';
+import 'package:kodesh_app/screens/tefilot/adlakat_nerot.dart';
+import 'package:kodesh_app/screens/tefilot/adlakat_nerot_chanukah.dart';
+import 'package:kodesh_app/screens/tefilot/seder_anahat_tefilin.dart';
+import 'package:kodesh_app/screens/tefilot/sfirat_omer_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => events),
         ChangeNotifierProvider(create: (context) => reminders),
         ChangeNotifierProvider(create: (context) => lang),
+        ChangeNotifierProvider(create: (context) => Tfilot()),
       ],
       child: Builder(builder: (context) {
         return MaterialApp(
@@ -68,16 +70,16 @@ class MyApp extends StatelessWidget {
           routes: {
             SchedualNotficationsScreen.routeName: (_) =>
                 const SchedualNotficationsScreen(),
-            SederAnahatTefilin.routeName: (_) => const SederAnahatTefilin(),
-            AdlakatNerot.routeName: (_) => const AdlakatNerot(),
+            SederAnahatTefilin.routeName: (_) => SederAnahatTefilin(),
+            AdlakatNerot.routeName: (_) => AdlakatNerot(),
             ShabatAndHolidaysCheckList.routeName: (_) =>
                 const ShabatAndHolidaysCheckList(),
             CompassScreen.routeName: (_) =>
                 const CompassScreen(),
             AdlakatNerotChanukah.routeName: (_) =>
-                const AdlakatNerotChanukah(),
+                AdlakatNerotChanukah(),
             SfiratOmerScreen.routeName: (_) =>
-                const SfiratOmerScreen(),
+                SfiratOmerScreen(),
           },
         );
       }),

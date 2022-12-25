@@ -3,7 +3,6 @@ import 'package:kodesh_app/animations/animated_events_list_view.dart';
 import 'package:kodesh_app/animations/animated_from_now_on_times_list.dart';
 import 'package:kodesh_app/animations/animated_only_shabat.dart';
 import 'package:kodesh_app/animations/animated_times_list_view.dart';
-import 'package:kodesh_app/helpers/dates.dart';
 import 'package:kodesh_app/models/event.dart';
 import 'package:kodesh_app/models/shabat.dart';
 import 'package:kodesh_app/models/zman.dart';
@@ -16,7 +15,6 @@ import 'package:kodesh_app/widgets/zman_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/data/latest.dart';
 import '../api/notification_api.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum ViewState {
@@ -117,8 +115,7 @@ class _EventScreenState extends State<EventScreen> {
     );
   }
 
-  Widget _getEventwidgets(
-    List<Event> events, bool isOnlyShabat) {
+  Widget _getEventwidgets(List<Event> events, bool isOnlyShabat) {
     List<Widget> widgets = [];
     events.sort((a, b) {
       if (a.entryDate != null && b.entryDate != null) {
@@ -127,6 +124,11 @@ class _EventScreenState extends State<EventScreen> {
       return 0;
     });
     for (var e in events) {
+      if (e is Shabat) {
+        e.title = !e.title.contains(AppLocalizations.of(context)!.shabat)
+            ? '${AppLocalizations.of(context)!.shabat} - ${e.title}'
+            : e.title;
+      }
       if (isOnlyShabat && e is Shabat) {
         widgets.add(EventFactoryWidget(data: e));
       } else if (!isOnlyShabat) {
@@ -176,7 +178,8 @@ class _EventScreenState extends State<EventScreen> {
         height: 10,
       ));
     }
-    if (_isTodayTimesFromNow) return AnimatedFromNowOnTimesListView(widgets: widgets);
+    if (_isTodayTimesFromNow)
+      return AnimatedFromNowOnTimesListView(widgets: widgets);
     return AnimatedTimesListView(widgets: widgets);
   }
 
