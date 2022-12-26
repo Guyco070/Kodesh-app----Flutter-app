@@ -5,8 +5,9 @@ import 'package:kodesh_app/widgets/time_left.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DateWithTimeLeft extends StatelessWidget {
-  const DateWithTimeLeft({super.key, required this.date});
+  const DateWithTimeLeft({super.key, required this.date, this.isWithDate = true});
   final DateTime date;
+  final bool isWithDate;
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +15,12 @@ class DateWithTimeLeft extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text(DateFormat('dd/MM/yyyy').format(date)),
+          if(isWithDate) Text(DateFormat('dd/MM/yyyy').format(date)),
           Text(getDayName(AppLocalizations.of(context)!, date.weekday)),
-          TimeLeft(date: date, fontSize: 12,),
+          TimeLeft(
+            date: date,
+            fontSize: 12,
+          ),
         ],
       ),
     );

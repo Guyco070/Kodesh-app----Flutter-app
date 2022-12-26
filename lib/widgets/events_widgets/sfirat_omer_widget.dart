@@ -4,7 +4,7 @@ import 'package:kodesh_app/models/event.dart';
 import 'package:kodesh_app/models/sfirat_omer.dart';
 import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:kodesh_app/widgets/time_left.dart';
+import 'package:kodesh_app/widgets/date_with_time_left.dart';
 
 class SfiratOmerWidget extends StatelessWidget {
   const SfiratOmerWidget({super.key, required this.data});
@@ -49,7 +49,7 @@ class SfiratOmerWidget extends StatelessWidget {
       title: Text(
         DateFormat('dd/MM/yyyy').format(data.entryDate!),
       ),
-      trailing: TimeLeft(date: data.entryDate!),
+      trailing: DateWithTimeLeft(date: data.entryDate!, isWithDate: false,),
       subtitle: Text(
         appLocalizations.eventDay,
       ),

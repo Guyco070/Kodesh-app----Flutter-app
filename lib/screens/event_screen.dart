@@ -125,7 +125,7 @@ class _EventScreenState extends State<EventScreen> {
     });
     for (var e in events) {
       if (e is Shabat) {
-        e.title = !e.title.contains(AppLocalizations.of(context)!.shabat)
+        e.title = e.title == 'Shabat' ? AppLocalizations.of(context)!.shabat : e.title = !e.title.contains(AppLocalizations.of(context)!.shabat)
             ? '${AppLocalizations.of(context)!.shabat} - ${e.title}'
             : e.title;
       }

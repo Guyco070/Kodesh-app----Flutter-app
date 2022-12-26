@@ -9,6 +9,7 @@ import 'package:kodesh_app/screens/tefilot/seder_anahat_tefilin.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kodesh_app/screens/tefilot/sfirat_omer_screen.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
+import 'package:kodesh_app/widgets/custom_expanded_list_view.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({Key? key}) : super(key: key);
@@ -28,55 +29,82 @@ class AppDrawer extends StatelessWidget {
               //   IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.chevron_left_outlined))
               // ],
             ),
+            const Divider(),
             title(appLocalizations.settings),
-            const Divider(indent: 18, endIndent: 18,),
+            const Divider(
+              indent: 18,
+              endIndent: 18,
+            ),
             ListTile(
               leading: const Icon(Icons.watch_later_outlined),
               title: Text(appLocalizations.settingRemindersMenu),
-              onTap: () => Navigator.pushNamed(context, SchedualNotficationsScreen.routeName),
-            ),
-            const Divider(),
-            title(appLocalizations.prayersAndBlessings),
-            const Divider(indent: 18, endIndent: 18,),
-            ListTile(
-              leading: const Icon(Icons.fireplace_outlined,),
-              title: Text(appLocalizations.candleLightingOrderMenu),
-              onTap: () => Navigator.pushNamed(context, AdlakatNerot.routeName),
-            ),
-            ListTile(
-              leading: const Icon(Icons.fireplace_outlined,),
-              title: Text('הבדלה'),
-              onTap: () => Navigator.pushNamed(context, Havdalah.routeName),
-            ),
-            ListTile(
-              leading: const Icon(Icons.add_reaction_outlined),
-              title: Text(appLocalizations.tefilinOrderMenu),
-              onTap: () => Navigator.pushNamed(context, SederAnahatTefilin.routeName),
-            ),
-            ListTile(
-              leading: const Icon(Icons.fireplace),
-              title: Text(appLocalizations.hanukkahCandleLightingOrderMenu,),
-              onTap: () => Navigator.pushNamed(context, AdlakatNerotChanukah.routeName),
-            ),
-            ListTile(
-              leading: const Icon(Icons.content_cut),
-              title: Text(appLocalizations.sederSfiratOmer),
-              onTap: () => Navigator.pushNamed(context, SfiratOmerScreen.routeName),
+              onTap: () => Navigator.pushNamed(
+                  context, SchedualNotficationsScreen.routeName),
             ),
             const Divider(),
             title(appLocalizations.aids),
-            const Divider(indent: 18, endIndent: 18,),
+            const Divider(
+              indent: 18,
+              endIndent: 18,
+            ),
             ListTile(
               leading: const Icon(Icons.checklist_rtl),
               title: Text(appLocalizations.choresBeforeShabbatMenu),
-              onTap: () => Navigator.pushNamed(context, ShabatAndHolidaysCheckList.routeName),
+              onTap: () => Navigator.pushNamed(
+                  context, ShabatAndHolidaysCheckList.routeName),
             ),
             ListTile(
               leading: const Icon(Icons.compass_calibration_outlined),
               title: Text(appLocalizations.compass),
-              onTap: () => Navigator.pushNamed(context, CompassScreen.routeName),
+              onTap: () =>
+                  Navigator.pushNamed(context, CompassScreen.routeName),
             ),
             const Divider(),
+            title(appLocalizations.prayersAndBlessings),
+            const Divider(
+              indent: 18,
+              endIndent: 18,
+            ),
+            CustomExpandedListView(
+              children: [
+                ListTile(
+                  leading: const Icon(
+                    Icons.fireplace_outlined,
+                  ),
+                  title: Text(appLocalizations.candleLightingOrderMenu),
+                  onTap: () => Navigator.pushNamed(
+                      context, AdlakatNerot.routeName),
+                ),
+                ListTile(
+                  leading: const Icon(
+                    Icons.wine_bar,
+                  ),
+                  title: Text('הבדלה'),
+                  onTap: () =>
+                      Navigator.pushNamed(context, Havdalah.routeName),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.add_reaction_outlined),
+                  title: Text(appLocalizations.tefilinOrderMenu),
+                  onTap: () => Navigator.pushNamed(
+                      context, SederAnahatTefilin.routeName),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.fireplace),
+                  title: Text(
+                    appLocalizations.hanukkahCandleLightingOrderMenu,
+                  ),
+                  onTap: () => Navigator.pushNamed(
+                      context, AdlakatNerotChanukah.routeName),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.content_cut),
+                  title: Text(appLocalizations.sederSfiratOmer),
+                  onTap: () => Navigator.pushNamed(
+                      context, SfiratOmerScreen.routeName),
+                ),
+              ],
+            ),
             // const Divider(),
             // ListTile(
             //   leading: const Icon(Icons.edit),
@@ -99,5 +127,8 @@ class AppDrawer extends StatelessWidget {
     );
   }
 
-  Text title(String title) => Text(title, style: TextStyle(color: Colors.grey[600], fontSize: 12),);
+  Text title(String title) => Text(
+        title,
+        style: TextStyle(color: Colors.grey[600], fontSize: 12),
+      );
 }

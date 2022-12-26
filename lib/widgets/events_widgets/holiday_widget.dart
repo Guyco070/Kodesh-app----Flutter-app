@@ -38,7 +38,7 @@ class HolidayWidget extends StatelessWidget {
       return ListTile(
         title: Text(DateFormat('dd/MM/yyyy').format(data.entryDate!),
       ),
-      trailing: TimeLeft(date: data.entryDate!),
+      trailing: DateWithTimeLeft(date: data.entryDate!, isWithDate: false,),
       subtitle: Text(
         appLocalizations.eventDay,
       ),

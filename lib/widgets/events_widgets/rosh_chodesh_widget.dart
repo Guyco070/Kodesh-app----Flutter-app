@@ -41,7 +41,7 @@ class RoshChodeshWidget extends StatelessWidget {
       title: Text(
         DateFormat('dd/MM/yyyy').format(date),
       ),
-      trailing: TimeLeft(date: data.entryDate!),
+      trailing: DateWithTimeLeft(date: data.entryDate!, isWithDate: false,),
       subtitle: Text(
         subtitle,
       ),

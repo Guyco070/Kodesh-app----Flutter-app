@@ -40,7 +40,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                ),
              ],
            ),
-            trailing: trailing,
+            trailing: trailing ?? const LimitedBox(), // if no traili
         ),
     );
   }
