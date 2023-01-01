@@ -5,7 +5,15 @@
     "aids",
     "hanukkahCandleLightingOrderMenu",
     "sederSfiratOmer",
+    "havdalah",
+    "ashkenazVirsion",
+    "mizrahVirsion",
+    "sfaradVirsion",
     "remindMeXhoursAndYMinutesBeforeNerotHanukkah",
+    "hanukkahCandleLighting",
+    "remindMeXhoursAndYMinutesAfterShabatForHavdalah",
+    "sfiratOmer",
+    "remindSfiratOmerSettingsAt",
     "compass"
   ],
 
@@ -15,7 +23,15 @@
     "aids",
     "hanukkahCandleLightingOrderMenu",
     "sederSfiratOmer",
+    "havdalah",
+    "ashkenazVirsion",
+    "mizrahVirsion",
+    "sfaradVirsion",
     "remindMeXhoursAndYMinutesBeforeNerotHanukkah",
+    "hanukkahCandleLighting",
+    "remindMeXhoursAndYMinutesAfterShabatForHavdalah",
+    "sfiratOmer",
+    "remindSfiratOmerSettingsAt",
     "compass"
   ]
 }

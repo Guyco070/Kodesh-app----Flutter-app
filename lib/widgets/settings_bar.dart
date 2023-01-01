@@ -16,7 +16,7 @@ class SettingsBar extends StatefulWidget {
     required this.setIsLoading,
     required this.viewState,
   });
-  
+
   final bool isOnlyShabat;
   final Function updateIsOnlyShabat;
   final Function setIsLoading;
@@ -47,13 +47,19 @@ class _SettingsBarState extends State<SettingsBar> {
         // margin: const EdgeInsets.symmetric(horizontal: 6),
         padding: const EdgeInsets.all(2),
         alignment: Alignment.center,
-        child: Text(
-          item[lang],
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w500,
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 500),
+          transitionBuilder: ((child, animation) =>
+              ScaleTransition(scale: animation, child: child)),
+          child: Text(
+            item[lang],
+            key: ValueKey<String>(item[lang]),
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w500,
+            ),
+            textAlign: TextAlign.center,
           ),
-          textAlign: TextAlign.center,
         ),
       );
     }).toList();
@@ -66,11 +72,11 @@ class _SettingsBarState extends State<SettingsBar> {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
 
     return TweenAnimationBuilder(
-      duration: const Duration(seconds: 3),
-      tween: Tween<double>(begin: 0, end: 1),
-      builder: (context, val, child) {
-        return Opacity(
-          opacity: val,
+        duration: const Duration(seconds: 3),
+        tween: Tween<double>(begin: 0, end: 1),
+        builder: (context, val, child) {
+          return Opacity(
+            opacity: val,
             child: Container(
               padding: EdgeInsets.all((val - 1) * -20),
               margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
@@ -112,16 +118,20 @@ class _SettingsBarState extends State<SettingsBar> {
                                     isDense: false,
                                     iconEnabledColor: Colors.white,
                                     decoration: const InputDecoration(
-                                        isCollapsed: true, enabledBorder: InputBorder.none),
-                                    selectedItemBuilder: (_) => buildSelectedMenuItem(
-                                        lang.currentLocale.languageCode),
+                                        isCollapsed: true,
+                                        enabledBorder: InputBorder.none),
+                                    selectedItemBuilder: (_) =>
+                                        buildSelectedMenuItem(
+                                            lang.currentLocale.languageCode),
                                     value: events.city,
                                     isExpanded: true,
                                     alignment: AlignmentDirectional.center,
                                     items: cities
-                                        .map<DropdownMenuItem<String>>((items) =>
-                                            buildMenuItem(
-                                                items, lang.currentLocale.languageCode))
+                                        .map<DropdownMenuItem<String>>(
+                                            (items) => buildMenuItem(
+                                                items,
+                                                lang.currentLocale
+                                                    .languageCode))
                                         .toList(),
                                     onChanged: (value) {
                                       if (value != events.city) {
@@ -142,18 +152,29 @@ class _SettingsBarState extends State<SettingsBar> {
                                     DateTime? newDate = await showDatePicker(
                                         context: context,
                                         initialDate: events.startDate,
-                                        firstDate: DateTime.now()
-                                            .subtract(const Duration(days: 365)),
-                                        lastDate:
-                                            DateTime.now().add(const Duration(days: 365)));
+                                        firstDate: DateTime.now().subtract(
+                                            const Duration(days: 365)),
+                                        lastDate: DateTime.now()
+                                            .add(const Duration(days: 365)));
                                     if (newDate != null) {
                                       events.setStartDate(newDate,
                                           setIsLoading: widget.setIsLoading);
                                     }
                                   },
-                                  icon: const Icon(Icons.calendar_month_outlined),
-                                  label: Text(df.DateFormat('dd/MM/yyyy')
-                                      .format(events.startDate))),
+                                  icon:
+                                      const Icon(Icons.calendar_month_outlined),
+                                  label: AnimatedSwitcher(
+                                    duration: const Duration(milliseconds: 500),
+                                    transitionBuilder: ((child, animation) =>
+                                        ScaleTransition(
+                                            scale: animation, child: child)),
+                                    child: Text(
+                                        key: ValueKey<String>(
+                                            df.DateFormat('dd/MM/yyyy')
+                                                .format(events.startDate)),
+                                        df.DateFormat('dd/MM/yyyy')
+                                            .format(events.startDate)),
+                                  )),
                             ],
                           ),
                         ],
@@ -184,12 +205,14 @@ class _SettingsBarState extends State<SettingsBar> {
                           children: [
                             IconButton(
                                 onPressed: () => events.setStartDate(
-                                    events.startDate.subtract(const Duration(days: 1)),
+                                    events.startDate
+                                        .subtract(const Duration(days: 1)),
                                     setIsLoading: widget.setIsLoading),
                                 icon: const Icon(Icons.remove, size: 20)),
                             IconButton(
                                 onPressed: () => events.setStartDate(
-                                    events.startDate.add(const Duration(days: 1)),
+                                    events.startDate
+                                        .add(const Duration(days: 1)),
                                     setIsLoading: widget.setIsLoading),
                                 icon: const Icon(
                                   Icons.add,
@@ -207,9 +230,13 @@ class _SettingsBarState extends State<SettingsBar> {
                     child: TextButton(
                         onPressed: () => widget.updateIsOnlyShabat(),
                         child: Text(
-                          widget.viewState == ViewState.events ? appLocalizations.onlyShabat : appLocalizations.fromNowOn,
+                          widget.viewState == ViewState.events
+                              ? appLocalizations.onlyShabat
+                              : appLocalizations.fromNowOn,
                           style: TextStyle(
-                              color: widget.isOnlyShabat ? Colors.blue : Colors.grey,
+                              color: widget.isOnlyShabat
+                                  ? Colors.blue
+                                  : Colors.grey,
                               fontSize: 12),
                         )),
                   ),
@@ -251,8 +278,7 @@ class _SettingsBarState extends State<SettingsBar> {
                 ],
               ),
             ),
-        );
-      }
-    );
+          );
+        });
   }
 }

@@ -36,6 +36,19 @@
     "choresBeforeShabbatMenu": "Chores before Shabbat",
     "@choresBeforeShabbatMenu": { "description": "choresBeforeShabbatMenu" },
 
+    "havdalah": "Havdalah",
+    "@havdalah": { "description": "havdalah" },
+
+    
+    "ashkenazVirsion": "Ashkenaz Virsion",
+    "@ashkenazVirsion": { "description": "ashkenazVirsion" },
+
+    "mizrahVirsion": "Mizrah Virsion",
+    "@mizrahVirsion": { "description": "mizrahVirsion" },
+
+    "sfaradVirsion": "Sfarad Virsion",
+    "@sfaradVirsion": { "description": "sfaradVirsion" },
+
 
     "nextWeekEvants": "Next Week Evants",
     "@nextWeekEvants": { "description": "nextWeekEvants" },
@@ -206,6 +219,9 @@
     "candleLighting": "Candle lighting",
     "@candleLighting": { "description": "candleLighting" },
 
+    "hanukkahCandleLighting": "Hanukkah candle lighting",
+    "@hanukkahCandleLighting": { "description": "hanukkahCandleLighting" },
+
     "candleLightingAction": "light candles",
     "@candleLightingAction": { "description": " candleLightingAction" },
 
@@ -220,6 +236,19 @@
 
     "remindMeXhoursAndYMinutesBeforeCandlesLighning": "Remind me to light candles {hours} hours and {minutes} minutes before shabat or holiday",
     "@remindMeXhoursAndYMinutesBeforeCandlesLighning": {
+        "description": "inXDays",
+        "placeholders": {
+            "hours": {
+                "type": "String"
+            },
+            "minutes": {
+                "type": "String"
+            }
+        }
+    },
+
+    "remindMeXhoursAndYMinutesAfterShabatForHavdalah": "Remind me to light candles {hours} hours and {minutes} minutes after shabat or holiday for Havdalh",
+    "@remindMeXhoursAndYMinutesAfterShabatForHavdalah": {
         "description": "inXDays",
         "placeholders": {
             "hours": {
@@ -246,6 +275,12 @@
     "roshHodeshReminderWillBeAdvanced": "This reminder will be advanced to weekdays until two o'clock in the afternoon",
     "@roshHodeshReminderWillBeAdvanced": { "description": "roshHodeshReminderWillBeAdvanced" },
 
+    "sfiratOmer": "Counting of the Omer",
+     "@sfiratOmer": { "description": "sfiratOmer" },
+
+    "remindSfiratOmerSettingsAt": "Remind counting of the Omer at",
+    "@remindSfiratOmerSettingsAt": { "description": "remindSfiratOmerSettingsAt" },
+    
     "updateRemindersTitle": "Update reminders",
     "@updateRemindersTitle": { "description": "updateRemindersTitle" },
 

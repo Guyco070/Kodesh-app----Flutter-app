@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:kodesh_app/animations/expanded_section.dart';
 import 'package:kodesh_app/data/cities.dart';
 import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/providers/reminders.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
+import 'package:kodesh_app/widgets/group_card.dart';
 import 'package:kodesh_app/widgets/schedual_notifications_widgets/choose_time_before_widget.dart';
 import 'package:kodesh_app/widgets/schedual_notifications_widgets/choose_time_in_day_widget.dart';
 import 'package:kodesh_app/widgets/swiches/cupertino_text_check_switch.dart';
@@ -62,9 +64,14 @@ class _SchedualNotficationsScreenState
     var lang = Provider.of<LanguageChangeProvider>(context);
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     var devider = Container(
-          margin: const EdgeInsets.symmetric(vertical: 7),
-          height: 7,
-          decoration: BoxDecoration(border: const Border(top: BorderSide(width: 1, color: Colors.grey), bottom: BorderSide(width: 1, color: Colors.grey),), color: Colors.grey[200]));
+        margin: const EdgeInsets.symmetric(vertical: 7),
+        height: 7,
+        decoration: BoxDecoration(
+            border: const Border(
+              top: BorderSide(width: 1, color: Colors.grey),
+              bottom: BorderSide(width: 1, color: Colors.grey),
+            ),
+            color: Colors.grey[200]));
 
     shabatAndHolidaysThingsToRemindList() {
       return reminders.allShabatAndHolidaysThingsToRemindList(context).map((e) {
@@ -110,137 +117,145 @@ class _SchedualNotficationsScreenState
 
     shabatAndHolidaysElements() {
       return [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              appLocalizations.city,
-              style: TextStyle(
-                  color: Theme.of(context).primaryColor, fontSize: 16),
-            ),
-            Container(
-              // remider city drop down button - start
-              margin: const EdgeInsets.symmetric(horizontal: 7),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+        GroupCard(children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                appLocalizations.city,
+                style: TextStyle(
+                    color: Theme.of(context).primaryColor, fontSize: 16),
               ),
-              width: MediaQuery.of(context).size.width / 2.3,
-              child: DropdownButtonFormField<String>(
-                  isDense: false,
-                  decoration: const InputDecoration(
-                      isCollapsed: true, enabledBorder: InputBorder.none),
-                  selectedItemBuilder: (_) =>
-                      buildSelectedMenuItem(lang.currentLocale.languageCode),
-                  value: reminders.reminderCity,
-                  isExpanded: true,
-                  alignment: AlignmentDirectional.center,
-                  items: cities
-                      .map<DropdownMenuItem<String>>((items) =>
-                          buildMenuItem(items, lang.currentLocale.languageCode))
-                      .toList(),
-                  onChanged: (value) {
-                    reminders.setReminderCity(value ?? reminders.reminderCity);
-                  }),
-            ), // remider city drop down button - end
+              Container(
+                // remider city drop down button - start
+                margin: const EdgeInsets.symmetric(horizontal: 7),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                width: MediaQuery.of(context).size.width / 2.3,
+                child: DropdownButtonFormField<String>(
+                    isDense: false,
+                    decoration: const InputDecoration(
+                        isCollapsed: true, enabledBorder: InputBorder.none),
+                    selectedItemBuilder: (_) =>
+                        buildSelectedMenuItem(lang.currentLocale.languageCode),
+                    value: reminders.reminderCity,
+                    isExpanded: true,
+                    alignment: AlignmentDirectional.center,
+                    items: cities
+                        .map<DropdownMenuItem<String>>((items) => buildMenuItem(
+                            items, lang.currentLocale.languageCode))
+                        .toList(),
+                    onChanged: (value) {
+                      reminders
+                          .setReminderCity(value ?? reminders.reminderCity);
+                    }),
+              ), // remider city drop down button - end
+            ],
+          ),
+          const Divider(
+            height: 30,
+            thickness: 1.5,
+            indent: 60,
+            endIndent: 60,
+          ),
+          ChooseTimeBeforeWidget(
+            hoursValue: reminders.beforeShabatHours,
+            minutesValue: reminders.beforeShabatMinutes,
+            setHours: reminders.setShabatAndHolidaysShabatHours,
+            setMinutess: reminders.setShabatAndHolidaysShabatMinutes,
+            localizedHelpText: appLocalizations
+                .remindMeXhoursAndYMinutesBeforeShbatAndHolidays,
+          ),
+          const Divider(
+            height: 32,
+            thickness: 1.5,
+            indent: 60,
+            endIndent: 60,
+          ),
+          Text(appLocalizations.whatToRemindSettings),
+          ...shabatAndHolidaysThingsToRemindList(),
+        ]),
+
+        const Divider(
+          height: 32,
+          thickness: 1.5,
+          indent: 15,
+          endIndent: 15,
+        ),
+
+        GroupCard(
+          children: [
+            CuperinoTextCheckSwitch(
+              value: reminders.shabatAndHolidaysCandles,
+              onChanged: () => reminders.setShabatAndHolidaysCandles(),
+              text: appLocalizations.remindCandleLightningSeperateSettings,
+            ),
+            ExpandedSection(
+              expand: reminders.shabatAndHolidaysCandles,
+              child: ChooseTimeBeforeWidget(
+                hoursValue: reminders.beforeShabatAndHolidaysCandlesHours,
+                minutesValue: reminders.beforeShabatAndHolidaysCandlesMinutes,
+                setHours: reminders.setShabatAndHolidaysCandlesHours,
+                setMinutess: reminders.setShabatAndHolidaysCandlesMinutes,
+                localizedHelpText: appLocalizations
+                    .remindMeXhoursAndYMinutesBeforeCandlesLighning,
+              ),
+            ),
           ],
         ),
-        const SizedBox(
-          height: 7,
-        ),
+
         const Divider(
-          height: 15,
+          height: 32,
           thickness: 1.5,
-          indent: 60,
-          endIndent: 60,
+          indent: 15,
+          endIndent: 15,
         ),
-        const SizedBox(
-          height: 7,
+
+        GroupCard(
+          children: [
+            CuperinoTextCheckSwitch(
+              value: reminders.havdalah,
+              onChanged: () => reminders.setHavdalah(),
+              text: appLocalizations.havdalah,
+            ),
+            ExpandedSection(
+              expand: reminders.havdalah,
+              child: ChooseTimeBeforeWidget(
+                hoursValue: reminders.afterShabatHavdalahHours,
+                minutesValue: reminders.afterShabatHavdalahMinutes,
+                setHours: reminders.setAfterShabatHavdalahHours,
+                setMinutess: reminders.setAfterShabatHavdalahMinutes,
+                localizedHelpText: (String hours, String minutes) =>
+                    appLocalizations.remindMeXhoursAndYMinutesAfterShabatForHavdalah(hours, minutes)
+              ),
+            ),
+          ],
         ),
-        ChooseTimeBeforeWidget(
-          hoursValue: reminders.beforeShabatHours,
-          minutesValue: reminders.beforeShabatMinutes,
-          setHours: reminders.setShabatAndHolidaysShabatHours,
-          setMinutess: reminders.setShabatAndHolidaysShabatMinutes,
-          localizedHelpText:
-              appLocalizations.remindMeXhoursAndYMinutesBeforeShbatAndHolidays,
-        ),
-        const SizedBox(
-          height: 7,
-        ),
+
         const Divider(
-          height: 15,
+          height: 32,
           thickness: 1.5,
-          indent: 60,
-          endIndent: 60,
+          indent: 15,
+          endIndent: 15,
         ),
-        const SizedBox(
-          height: 7,
-        ),
-        Text(appLocalizations.whatToRemindSettings),
-        ...shabatAndHolidaysThingsToRemindList(),
-        const SizedBox(
-          height: 7,
-        ),
-        const Divider(height: 15, thickness: 1.5, indent: 15, endIndent: 15,),
-        const SizedBox(
-          height: 7,
-        ),
-        CuperinoTextCheckSwitch(
-          value: reminders.shabatAndHolidaysCandles,
-          onChanged: () => reminders.setShabatAndHolidaysCandles(),
-          text: appLocalizations.remindCandleLightningSeperateSettings,
-        ),
-        if (reminders.shabatAndHolidaysCandles)
-          ChooseTimeBeforeWidget(
-            hoursValue: reminders.beforeShabatAndHolidaysCandlesHours,
-            minutesValue: reminders.beforeShabatAndHolidaysCandlesMinutes,
-            setHours: reminders.setShabatAndHolidaysCandlesHours,
-            setMinutess: reminders.setShabatAndHolidaysCandlesMinutes,
-            localizedHelpText:
-                appLocalizations.remindMeXhoursAndYMinutesBeforeCandlesLighning,
+
+        GroupCard(children: [
+          CuperinoTextCheckSwitch(
+            value: reminders.nerotHanukkah,
+            onChanged: () => reminders.setNerotHanukkah(),
+            text: appLocalizations.hanukkahCandleLighting,
           ),
-        const SizedBox(
-          height: 7,
-        ),
-        const Divider(height: 15, thickness: 1.5, indent: 15, endIndent: 15,),
-        const SizedBox(
-          height: 7,
-        ),
-        CuperinoTextCheckSwitch(
-          value: reminders.havdalah,
-          onChanged: () => reminders.setHavdalah(),
-          text: 'הבדלה',
-        ),
-        
-        if (reminders.havdalah)
-          ChooseTimeBeforeWidget(
-            hoursValue: reminders.afterShabatHavdalahHours,
-            minutesValue: reminders.afterShabatHavdalahMinutes,
-            setHours: reminders.setAfterShabatHavdalahHours,
-            setMinutess: reminders.setAfterShabatHavdalahMinutes,
-            localizedHelpText:
-                (String hours, String minutes) => 'הזכר לי לעשות הבדלה $hours שעות ו- $minutes דקות אחרי שבת',
+          if (!reminders.nerotHanukkah) ...{
+            const Divider(height: 32, thickness: 1.5),
+          },
+          ExpandedSection(
+            expand: reminders.nerotHanukkah,
+            child: Column(children: nerotHanukkahElements()),
           ),
-        const SizedBox(
-          height: 7,
-        ),
-        const Divider(height: 15, thickness: 1.5, indent: 15, endIndent: 15,),
-        const SizedBox(
-          height: 7,
-        ),
-        CuperinoTextCheckSwitch(
-          value: reminders.nerotHanukkah,
-          onChanged: () => reminders.setNerotHanukkah(),
-          text: 'הדלקת נרות חנוכה',
-        ),
-        if (!reminders.nerotHanukkah) ...{
-          const SizedBox(
-            height: 7,
-          ),
-          const Divider(height: 15, thickness: 1.5),
-        },
-        if (reminders.nerotHanukkah) ...nerotHanukkahElements(),
-        devider,
+        ])
+
+        // devider,
       ];
     }
 
@@ -256,16 +271,23 @@ class _SchedualNotficationsScreenState
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: [
-                    CuperinoTextCheckSwitch(
-                      value: reminders.shabatAndHolidays,
-                      onChanged: () => reminders.setShabatAndHolidays(),
-                      text: appLocalizations.beforeShabatAndHolidaysSettengs,
+                    GroupCard(
+                      children: [
+                        CuperinoTextCheckSwitch(
+                          value: reminders.shabatAndHolidays,
+                          onChanged: () => reminders.setShabatAndHolidays(),
+                          text:
+                              appLocalizations.beforeShabatAndHolidaysSettengs,
+                        ),
+                        ExpandedSection(
+                          expand: reminders.shabatAndHolidays,
+                          child: Column(children: shabatAndHolidaysElements()),
+                        ),
+                      ],
                     ),
-                    if (reminders.shabatAndHolidays)...{
-                      ...shabatAndHolidaysElements(),
-                    }
-                    else...{
-                        devider
+
+                    if (!reminders.shabatAndHolidays) ...{
+                      const Divider(height: 32, thickness: 1.5),
                     },
                     // tefillin - start
                     ChooseTimeInDayWidget(
@@ -295,8 +317,8 @@ class _SchedualNotficationsScreenState
 
                     // sfirat omer - start
                     ChooseTimeInDayWidget(
-                      title: 'ספירת העומר',
-                      subtitle: 'הזכר לי לברך בספירת העומר בכל יום בשעה ',
+                      title: appLocalizations.sfiratOmer,
+                      subtitle: appLocalizations.remindSfiratOmerSettingsAt,
                       isExpanded: reminders.sfiratOmer,
                       setIsExpanded: reminders.setSfiratOmer,
                       timeObject: reminders.getSfiratOmerTimeObject,

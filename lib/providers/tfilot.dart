@@ -1,13 +1,21 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kodesh_app/providers/language_change_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum Nosah {
   mizrah,
   ashkenaz,
   sfarad,
+}
+
+nosahTranslate(BuildContext context) {
+  AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+  return {
+    Nosah.mizrah: appLocalizations.mizrahVirsion,
+    Nosah.ashkenaz: appLocalizations.ashkenazVirsion,
+    Nosah.sfarad: appLocalizations.sfaradVirsion,
+  };
 }
 
 class Tfilot with ChangeNotifier {
@@ -68,7 +76,7 @@ class Tfilot with ChangeNotifier {
                         Theme.of(context).primaryColor)
                     : MaterialStatePropertyAll<Color>(Colors.blue.shade800)),
             child: Text(
-              bracha[i]![0],
+              nosahTranslate(context)[i],
               style: TextStyle(
                   color: Colors.white,
                   fontWeight:
@@ -80,8 +88,10 @@ class Tfilot with ChangeNotifier {
     }
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child:
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: widgets),
+      child: ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(50)),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.center, children: widgets)),
     );
   }
 
@@ -105,7 +115,8 @@ class Tfilot with ChangeNotifier {
       } else if (seder[i][0] == 'S') {
         // S = Start of a sentens
         text = seder[i].substring(1, seder[i].length);
-        if (seder[i][seder[i].length - 1] == '.' || seder[i][seder[i].length - 1] == ':') text += '\n\n';
+        if (seder[i][seder[i].length - 1] == '.' ||
+            seder[i][seder[i].length - 1] == ':') text += '\n\n';
         font = const TextStyle(
             fontWeight: FontWeight.w400,
             fontSize: 15,

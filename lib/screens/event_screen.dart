@@ -81,18 +81,7 @@ class _EventScreenState extends State<EventScreen> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      _isLoading = true;
-      Provider.of<Events>(context, listen: false)
-          .fetchAndSetProducts(
-              getDataFirst: true,
-              lang: Provider.of<LanguageChangeProvider>(context)
-                  .currentLocale
-                  .languageCode)
-          .then((items) {
-        setIsThereInternetConnection(items != null);
-        setIsLoading(false);
-        // getZmanim();
-      });
+      getAllData();
     }
 
     setState(() {
@@ -100,6 +89,20 @@ class _EventScreenState extends State<EventScreen> {
     });
 
     super.didChangeDependencies();
+  }
+
+  getAllData() {
+    _isLoading = true;
+    Provider.of<Events>(context, listen: false)
+        .fetchAndSetProducts(
+            getDataFirst: true,
+            lang: Provider.of<LanguageChangeProvider>(context)
+                .currentLocale
+                .languageCode)
+        .then((items) {
+      setIsThereInternetConnection(items != null);
+      setIsLoading(false);
+    });
   }
 
   setIsLoading(bool newVal) {
@@ -125,9 +128,11 @@ class _EventScreenState extends State<EventScreen> {
     });
     for (var e in events) {
       if (e is Shabat) {
-        e.title = e.title == 'Shabat' ? AppLocalizations.of(context)!.shabat : e.title = !e.title.contains(AppLocalizations.of(context)!.shabat)
-            ? '${AppLocalizations.of(context)!.shabat} - ${e.title}'
-            : e.title;
+        e.title = e.title == 'Shabat'
+            ? AppLocalizations.of(context)!.shabat
+            : e.title = !e.title.contains(AppLocalizations.of(context)!.shabat)
+                ? '${AppLocalizations.of(context)!.shabat} - ${e.title}'
+                : e.title;
       }
       if (isOnlyShabat && e is Shabat) {
         widgets.add(EventFactoryWidget(data: e));
@@ -162,7 +167,9 @@ class _EventScreenState extends State<EventScreen> {
       return a.date.compareTo(b.date);
     });
     DateTime now = DateTime.now();
+    var x = {};
     for (Zman z in zmanim) {
+      x[z.title] = z.title;
       if (!_isTodayTimesFromNow || z.date.isAfter(now)) {
         widgets.add(ZmanWidget(data: z));
       }
@@ -322,6 +329,7 @@ class _EventScreenState extends State<EventScreen> {
                 viewState: _viewState,
               ),
               viewSwitch,
+
               if (events.eventsItems != null) ...{
                 if (_isLoading)
                   renderLoading(context)
@@ -338,6 +346,7 @@ class _EventScreenState extends State<EventScreen> {
                   renderNoInternetConnection(
                       AppLocalizations.of(context)!.noIntrnetMessage),
               },
+
               // ElevatedButton(
               //     onPressed: () async {
               //       await NotificationApi.showNotification(

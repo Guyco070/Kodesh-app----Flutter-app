@@ -416,9 +416,10 @@ class Reminders with ChangeNotifier {
 
       // items.add(Holiday(
       //     title: 'חג',
-      //     entryDate: DateTime.now().add(const Duration(minutes: 3)),
+      //     entryDate: DateTime.now().add(const Duration(minutes: 2)),
       //     releaseDate: DateTime.now().add(const Duration(minutes: 10)),
-      //     subcat: 'major'));
+      //     subcat: 'major',
+      //     titleOrig: 'Chanukah'));
 
       // items.add(RoshChodesh(
       //     title: 'ראש חודש',
@@ -446,20 +447,22 @@ class Reminders with ChangeNotifier {
           if (nerotHanukkah && e.title.contains('Chanukah') ||
               (e.titleOrig != null && e.titleOrig!.contains('Chanukah'))) {
             // reminder to light Chanukah candles
-            x = e.entryDate!.subtract(Duration(
-                hours: beforeNerotHanukkahHours,
-                minutes: beforeNerotHanukkahMinutes));
+            if(DateFormat('HH:mm').format(e.entryDate!) != '00:00'){ // at the last day (the day after the last night of lightning candles) time  is equal to 00:00 - skeep it
+                x = e.entryDate!.subtract(Duration(
+                  hours: beforeNerotHanukkahHours,
+                  minutes: beforeNerotHanukkahMinutes));
 
-            if (now.isBefore(x)) {
-              notValues.add({
-                'id': id,
-                'title': e.title.replaceFirst('Chanukah', 'Hanukkah'),
-                'body': (e as Holiday).getReminderHanukkahCandlesBody(
-                    beforeNerotHanukkahHours, beforeNerotHanukkahMinutes, lang),
-                'date': x,
-                'payload': AdlakatNerotChanukah.routeName,
-              });
-              id++;
+              if (now.isBefore(x)) {
+                notValues.add({
+                  'id': id,
+                  'title': e.title.replaceFirst('Chanukah', 'Hanukkah'),
+                  'body': (e as Holiday).getReminderHanukkahCandlesBody(
+                      beforeNerotHanukkahHours, beforeNerotHanukkahMinutes, lang),
+                  'date': x,
+                  'payload': AdlakatNerotChanukah.routeName,
+                });
+                id++;
+              }
             }
           } else if (now.isBefore(x)) {
             // reminder for chores before shabat

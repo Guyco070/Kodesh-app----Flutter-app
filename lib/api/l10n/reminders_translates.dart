@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-class RemindersTranslates {  
+class RemindersTranslates {
   static final shabatReminderTranslated = {
     'en': {
       'title': 'Shabbat Shalom',
@@ -12,7 +12,7 @@ class RemindersTranslates {
 
         if (releaseDate != null) {
           body +=
-              '\nHavdalah time: ${DateFormat('dd/MM/yy - hh:mm').format(releaseDate)}.';
+              '\nHavdalah time: ${DateFormat('dd/MM/yy - HH:mm').format(releaseDate)}.';
         }
         return body;
       },
@@ -33,7 +33,7 @@ class RemindersTranslates {
 
         if (releaseDate != null) {
           body +=
-              '\nזמן הבדלה: ${DateFormat('dd/MM/yy - hh:mm').format(releaseDate)}.';
+              '\nזמן הבדלה: ${DateFormat('dd/MM/yy - HH:mm').format(releaseDate)}.';
         }
         return body;
       },
@@ -57,7 +57,7 @@ class RemindersTranslates {
 
         if (releaseDate != null) {
           body +=
-              '\nTiempo de Havdalá: ${DateFormat('dd/MM/yy - hh:mm').format(releaseDate)}.';
+              '\nTiempo de Havdalá: ${DateFormat('dd/MM/yy - HH:mm').format(releaseDate)}.';
         }
         return body;
       },
@@ -76,7 +76,7 @@ class RemindersTranslates {
 
         if (releaseDate != null) {
           body +=
-              '\nВремя Хавдалы: ${DateFormat('dd/MM/yy - hh:mm').format(releaseDate)}.';
+              '\nВремя Хавдалы: ${DateFormat('dd/MM/yy - HH:mm').format(releaseDate)}.';
         }
         return body;
       },
@@ -99,7 +99,7 @@ class RemindersTranslates {
         }
         if (releaseDate != null) {
           body +=
-              '\nHavdalah time: ${DateFormat('dd/MM/yy - hh:mm').format(releaseDate)}.';
+              '\nHavdalah time: ${DateFormat('dd/MM/yy - HH:mm').format(releaseDate)}.';
         }
         return body;
       },
@@ -107,7 +107,7 @@ class RemindersTranslates {
       'candlesBody': (int beforeShabatAndHolidaysCandlesHours,
               int beforeShabatAndHolidaysCandlesMinutes) =>
           'In ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours hours and ' : ''}$beforeShabatAndHolidaysCandlesMinutes minutes the holiday will come, don\'t forget to light candles.',
-      'chnukahCandlesBody' : (int beforeShabatAndHolidaysCandlesHours,
+      'chnukahCandlesBody': (int beforeShabatAndHolidaysCandlesHours,
               int beforeShabatAndHolidaysCandlesMinutes) =>
           'In ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours hours and ' : ''}$beforeShabatAndHolidaysCandlesMinutes minutes it\'s time to light Hanukkah candles will come, don\'t forget to light candles.',
       'havdalahTitle': 'Havdalah time',
@@ -124,7 +124,7 @@ class RemindersTranslates {
         }
         if (releaseDate != null) {
           body +=
-              '\nזמן הבדלה: ${DateFormat('dd/MM/yy - hh:mm').format(releaseDate)}.';
+              '\nזמן הבדלה: ${DateFormat('dd/MM/yy - HH:mm').format(releaseDate)}.';
         }
         return body;
       },
@@ -132,7 +132,7 @@ class RemindersTranslates {
       'candlesBody': (int beforeShabatAndHolidaysCandlesHours,
               int beforeShabatAndHolidaysCandlesMinutes) =>
           'בעוד ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours שעות ו-' : ''}$beforeShabatAndHolidaysCandlesMinutes דקות יכנס החג, לא לשכוח להדליק נרות.',
-      'chnukahCandlesBody' : (int beforeShabatAndHolidaysCandlesHours,
+      'chnukahCandlesBody': (int beforeShabatAndHolidaysCandlesHours,
               int beforeShabatAndHolidaysCandlesMinutes) =>
           'בעוד ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours שעות ו-' : ''}$beforeShabatAndHolidaysCandlesMinutes דקות זמן להדלקת נרות חנוכה, לא לשכוח להדליק נרות.',
       'havdalahTitle': 'זמן הבדלה',
@@ -150,7 +150,7 @@ class RemindersTranslates {
         }
         if (releaseDate != null) {
           body +=
-              '\nTiempo de Havdalá: ${DateFormat('dd/MM/yy - hh:mm').format(releaseDate)}.';
+              '\nTiempo de Havdalá: ${DateFormat('dd/MM/yy - HH:mm').format(releaseDate)}.';
         }
         return body;
       },
@@ -158,8 +158,8 @@ class RemindersTranslates {
       'candlesBody': (int beforeShabatAndHolidaysCandlesHours,
               int beforeShabatAndHolidaysCandlesMinutes) =>
           'en ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours horas y-' : ''}$beforeShabatAndHolidaysCandlesMinutes minutos llegarán las vacaciones, no olvides encender velas.',
-      'chnukahCandlesTitle' : '', // TODO
-      'chnukahCandlesBody' : '', // TODO
+      'chnukahCandlesTitle': '', // TODO
+      'chnukahCandlesBody': '', // TODO
     },
     'ru': {
       // 'title': 'Шаббат шалом',
@@ -171,7 +171,7 @@ class RemindersTranslates {
         }
         if (releaseDate != null) {
           body +=
-              '\nВремя Хавдалы: ${DateFormat('dd/MM/yy - hh:mm').format(releaseDate)}.';
+              '\nВремя Хавдалы: ${DateFormat('dd/MM/yy - HH:mm').format(releaseDate)}.';
         }
         return body;
       },
@@ -179,8 +179,8 @@ class RemindersTranslates {
       'candlesBody': (int beforeShabatAndHolidaysCandlesHours,
               int beforeShabatAndHolidaysCandlesMinutes) =>
           'в ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours часы а также-' : ''}$beforeShabatAndHolidaysCandlesMinutes минуты праздник придет, не забудьте зажечь свечи.',
-      'chnukahCandlesTitle' : '', // TODO
-      'chnukahCandlesBody' : '', // TODO
+      'chnukahCandlesTitle': '', // TODO
+      'chnukahCandlesBody': '', // TODO
     },
   };
 

@@ -11,12 +11,12 @@ class Havdalah extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(title: 'הבדלה'),
+        appBar: CustomAppBar(title: AppLocalizations.of(context)!.havdalah),
         body: TefilaWidget(
           getBracha: getBracha,
           imagePath: 'assets/havdalah.webp',
-          imageExtaLine:
-              '* יש להניח את הנרות מימין לשמאל ולהדליקן משמאל לימין.\n',
+          // imageExtaLine:
+          //     '* יש להניח את הנרות מימין לשמאל ולהדליקן משמאל לימין.\n',
         ));
   }
 

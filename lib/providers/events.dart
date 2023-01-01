@@ -223,9 +223,9 @@ class Events with ChangeNotifier {
         tempItems.add(newRs);
       } else if (items[i]['category'] == 'omer') {
         tempItems.add(SfiratOmer.createSfiratOmer(
-              candles: null,
-              parashat: items[i],
-            ));
+          candles: null,
+          parashat: items[i],
+        ));
       }
     }
 

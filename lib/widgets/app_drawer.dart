@@ -29,24 +29,18 @@ class AppDrawer extends StatelessWidget {
               //   IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.chevron_left_outlined))
               // ],
             ),
-            const Divider(),
-            title(appLocalizations.settings),
-            const Divider(
-              indent: 18,
-              endIndent: 18,
-            ),
+
+            ...devidedTitle(appLocalizations.settings),
+            
             ListTile(
               leading: const Icon(Icons.watch_later_outlined),
               title: Text(appLocalizations.settingRemindersMenu),
               onTap: () => Navigator.pushNamed(
                   context, SchedualNotficationsScreen.routeName),
             ),
-            const Divider(),
-            title(appLocalizations.aids),
-            const Divider(
-              indent: 18,
-              endIndent: 18,
-            ),
+
+            ...devidedTitle(appLocalizations.aids),
+            
             ListTile(
               leading: const Icon(Icons.checklist_rtl),
               title: Text(appLocalizations.choresBeforeShabbatMenu),
@@ -59,13 +53,9 @@ class AppDrawer extends StatelessWidget {
               onTap: () =>
                   Navigator.pushNamed(context, CompassScreen.routeName),
             ),
-            const Divider(),
-            title(appLocalizations.prayersAndBlessings),
-            const Divider(
-              indent: 18,
-              endIndent: 18,
-            ),
+            
             CustomExpandedListView(
+              titledExpandIcon: title(appLocalizations.prayersAndBlessings),
               children: [
                 ListTile(
                   leading: const Icon(
@@ -79,7 +69,7 @@ class AppDrawer extends StatelessWidget {
                   leading: const Icon(
                     Icons.wine_bar,
                   ),
-                  title: Text('הבדלה'),
+                  title: Text(appLocalizations.havdalah),
                   onTap: () =>
                       Navigator.pushNamed(context, Havdalah.routeName),
                 ),
@@ -131,4 +121,16 @@ class AppDrawer extends StatelessWidget {
         title,
         style: TextStyle(color: Colors.grey[600], fontSize: 12),
       );
+
+  List<Widget> devidedTitle(String title) => [
+        const Divider(),
+        Text(
+          title,
+          style: TextStyle(color: Colors.grey[600], fontSize: 12),
+        ),
+        const Divider(
+          indent: 18,
+          endIndent: 18,
+        ),
+      ];
 }
