@@ -24,11 +24,13 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   // This widget is the root of your application.
-  
+
   @override
   Widget build(BuildContext context) {
-
-  MaterialColor mycolor = const MaterialColor(0xFF0047AE, <int, Color>{
+     
+    MaterialColor mycolor = const MaterialColor(
+      0xFF0047AE,
+      <int, Color>{
         50: Color(0xFF0047AE),
         100: Color(0xFF0047AE),
         200: Color(0xFF0047AE),
@@ -46,6 +48,7 @@ class MyApp extends StatelessWidget {
     Events events = Events();
     LanguageChangeProvider lang = LanguageChangeProvider();
     lang.getData();
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => events),
@@ -75,14 +78,10 @@ class MyApp extends StatelessWidget {
             AdlakatNerot.routeName: (_) => AdlakatNerot(),
             ShabatAndHolidaysCheckList.routeName: (_) =>
                 const ShabatAndHolidaysCheckList(),
-            CompassScreen.routeName: (_) =>
-                const CompassScreen(),
-            AdlakatNerotChanukah.routeName: (_) =>
-                AdlakatNerotChanukah(),
-            SfiratOmerScreen.routeName: (_) =>
-                SfiratOmerScreen(),
-            Havdalah.routeName: (_) =>
-                Havdalah(),
+            CompassScreen.routeName: (_) => const CompassScreen(),
+            AdlakatNerotChanukah.routeName: (_) => AdlakatNerotChanukah(),
+            SfiratOmerScreen.routeName: (_) => SfiratOmerScreen(),
+            Havdalah.routeName: (_) => Havdalah(),
           },
         );
       }),
