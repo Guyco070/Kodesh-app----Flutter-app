@@ -25,7 +25,6 @@ class _AnimatedLongTextState extends State<AnimatedLongText> {
           value <= _charToView && value != widget.text.length
               ? '${widget.text.substring(0, value)}...'
               : value < widget.text.length ? '${widget.text.substring(0, value)}_' : widget.text.substring(0, value),
-          textAlign: TextAlign.left,
         ),
       ),
     );
