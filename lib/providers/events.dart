@@ -111,13 +111,13 @@ class Events with ChangeNotifier {
     if (prefsKeys.contains('language')) {
       _currentLocale = Locale(prefs.getString('language')!);
     }
-
+    
     notifyListeners();
   }
 
   tryFetch({String? cityToTake, String? lang, bool isToday = false}) async {
     cityToTake ??= city;
-    var response;
+    Response response;
     var url = Uri.parse(isToday
         ? 'https://www.hebcal.com/shabbat?cfg=json&o=on&zip=${cityToTake.split('|')[1]}&lg=${lang ?? _currentLocale.languageCode}'
         : 'https://www.hebcal.com/shabbat?cfg=json&o=on&gy=${startDate.year}&gm=${startDate.month}&gd=${startDate.day}&zip=${cityToTake.split('|')[1]}&lg=${lang ?? _currentLocale.languageCode}');
@@ -263,7 +263,7 @@ class Events with ChangeNotifier {
   tryFetchZmanim(
       {String? cityToTake, String? lang, bool isToday = false}) async {
     cityToTake ??= city;
-    var response;
+    Response response;
     var url = Uri.parse(isToday
         ? 'https://www.hebcal.com/zmanim?cfg=json&zip=${cityToTake.split('|')[1]}&lg=${lang ?? _currentLocale.languageCode}'
         : 'https://www.hebcal.com/zmanim?cfg=json&date=${getDushedFormatedDate(startDate)}&zip=${cityToTake.split('|')[1]}&lg=${lang ?? _currentLocale.languageCode}');

@@ -32,6 +32,7 @@ class EventScreen extends StatefulWidget {
 class _EventScreenState extends State<EventScreen> {
   bool _isInit = true;
   bool _isLoading = false;
+  bool _isLoadingLang = false;
   bool _isOnlyShabat = false;
   bool _isTodayTimesFromNow = false;
 
@@ -108,6 +109,13 @@ class _EventScreenState extends State<EventScreen> {
   setIsLoading(bool newVal) {
     setState(() {
       _isLoading = newVal;
+    });
+  }
+
+
+  setIsLoadingLang(bool newVal) {
+    setState(() {
+      _isLoadingLang = newVal;
     });
   }
 
@@ -248,72 +256,74 @@ class _EventScreenState extends State<EventScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
       child: Row(
         children: [
-          Expanded(
-            child: ElevatedButton(
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: !LanguageChangeProvider.isDirectionRTL(
-                                  events.currentLocale.languageCode)
-                              ? const BorderRadius.only(
-                                  topLeft: Radius.circular(50))
-                              : const BorderRadius.only(
-                                  topRight: Radius.circular(50)))),
-                  backgroundColor: _viewState == ViewState.events
-                      ? MaterialStatePropertyAll<Color>(
-                          Theme.of(context).primaryColor)
-                      : MaterialStatePropertyAll<Color>(Colors.blue.shade800),
-                ),
-                onPressed: _viewState != ViewState.events
-                    ? () => setViewState(ViewState.events)
-                    : null,
-                child: FittedBox(
-                  child: Text(
-                    appLocalizations.weekEvents,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: _viewState == ViewState.events
-                            ? FontWeight.bold
-                            : FontWeight.normal),
-                  ),
-                )),
-          ),
-          Expanded(
-            child: ElevatedButton(
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: LanguageChangeProvider.isDirectionRTL(
-                                  events.currentLocale.languageCode)
-                              ? const BorderRadius.only(
-                                  topLeft: Radius.circular(50))
-                              : const BorderRadius.only(
-                                  topRight: Radius.circular(50)))),
-                  backgroundColor: _viewState == ViewState.zmanim
-                      ? MaterialStatePropertyAll<Color>(
-                          Theme.of(context).primaryColor)
-                      : MaterialStatePropertyAll<Color>(Colors.blue.shade800),
-                ),
-                onPressed: _viewState != ViewState.zmanim
-                    ? () => setViewState(ViewState.zmanim)
-                    : () {},
-                child: FittedBox(
-                  child: Text(
-                    appLocalizations.todayTimes,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: _viewState == ViewState.zmanim
-                            ? FontWeight.bold
-                            : FontWeight.normal),
-                  ),
-                )),
-          ),
+              Expanded(
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius:
+                                  !LanguageChangeProvider.isDirectionRTL(null)
+                                      ? const BorderRadius.only(
+                                          topLeft: Radius.circular(50))
+                                      : const BorderRadius.only(
+                                          topRight: Radius.circular(50)))),
+                      backgroundColor: _viewState == ViewState.events
+                          ? MaterialStatePropertyAll<Color>(
+                              Theme.of(context).primaryColor)
+                          : MaterialStatePropertyAll<Color>(
+                              Colors.blue.shade800),
+                    ),
+                    onPressed: _viewState != ViewState.events
+                        ? () => setViewState(ViewState.events)
+                        : null,
+                    child: FittedBox(
+                      child: Text(
+                        appLocalizations.weekEvents,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: _viewState == ViewState.events
+                                ? FontWeight.bold
+                                : FontWeight.normal),
+                      ),
+                    )),
+              ),
+              Expanded(
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius:
+                                  LanguageChangeProvider.isDirectionRTL(null)
+                                      ? const BorderRadius.only(
+                                          topLeft: Radius.circular(50))
+                                      : const BorderRadius.only(
+                                          topRight: Radius.circular(50)))),
+                      backgroundColor: _viewState == ViewState.zmanim
+                          ? MaterialStatePropertyAll<Color>(
+                              Theme.of(context).primaryColor)
+                          : MaterialStatePropertyAll<Color>(
+                              Colors.blue.shade800),
+                    ),
+                    onPressed: _viewState != ViewState.zmanim
+                        ? () => setViewState(ViewState.zmanim)
+                        : () {},
+                    child: FittedBox(
+                      child: Text(
+                        appLocalizations.todayTimes,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: _viewState == ViewState.zmanim
+                                ? FontWeight.bold
+                                : FontWeight.normal),
+                      ),
+                    )),
+              ),
         ],
       ),
     );
 
     return DefaultScaffold(
-        setIsLoading: setIsLoading,
+        setIsLoading: setIsLoadingLang,
         title: AppLocalizations.of(context)!.main,
         body: SingleChildScrollView(
           child: Column(
@@ -328,10 +338,10 @@ class _EventScreenState extends State<EventScreen> {
                 setIsLoading: setIsLoading,
                 viewState: _viewState,
               ),
-              viewSwitch,
+              if(LanguageChangeProvider.isInitialized && !_isLoadingLang) viewSwitch,
 
               if (events.eventsItems != null) ...{
-                if (_isLoading)
+                if (_isLoading || _isLoadingLang)
                   renderLoading(context)
                 else ...{
                   _viewState == ViewState.events
@@ -340,7 +350,7 @@ class _EventScreenState extends State<EventScreen> {
                       : _getZmanimWidgets(events.zmanimItems!)
                 },
               } else ...{
-                if (_isLoading)
+                if (_isLoading || _isLoadingLang)
                   renderLoading(context)
                 else
                   renderNoInternetConnection(
