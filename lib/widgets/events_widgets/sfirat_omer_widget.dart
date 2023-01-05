@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kodesh_app/models/event.dart';
 import 'package:kodesh_app/models/sfirat_omer.dart';
+import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kodesh_app/widgets/date_with_time_left.dart';
+import 'package:provider/provider.dart';
 
 class SfiratOmerWidget extends StatelessWidget {
   const SfiratOmerWidget({super.key, required this.data});
@@ -13,6 +15,7 @@ class SfiratOmerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+    final bool isHebrewDate = Provider.of<Events>(context).isHebrewDate;
 
     return Column(
       children: [
@@ -39,17 +42,17 @@ class SfiratOmerWidget extends StatelessWidget {
             textAlign: TextAlign.center,
           )),
         ),
-        if (data.entryDate != null) entryDateFix(appLocalizations),
+        if (data.entryDate != null) entryDateFix(appLocalizations, isHebrewDate),
       ],
     );
   }
 
-  ListTile entryDateFix(AppLocalizations appLocalizations) {
+  ListTile entryDateFix(AppLocalizations appLocalizations, bool isHebrewDate) {
     return ListTile(
       title: Text(
         DateFormat('dd/MM/yyyy').format(data.entryDate!),
       ),
-      trailing: DateWithTimeLeft(date: data.entryDate!, isWithDate: false,),
+      trailing: DateWithTimeLeft(date: data.entryDate!, isWithDate: false, hebrewDate: isHebrewDate ? data.entryHebrewDate : null,),
       subtitle: Text(
         appLocalizations.eventDay,
       ),

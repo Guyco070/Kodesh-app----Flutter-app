@@ -19,10 +19,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Events with ChangeNotifier {
   List<Event>? _eventsItems = [];
   List<Zman>? _zmanimItems = [];
+  Map<DateTime, String>? _hebrewDates = {};
   String city = 'IL-Jerusalem|281184';
   DateTime startDate = DateTime.now();
   bool isOnlyShabat = false;
   bool isTodayTimesFromNow = false;
+  bool isHebrewDate = false;
 
   Locale _currentLocale = const Locale('en');
 
@@ -60,6 +62,10 @@ class Events with ChangeNotifier {
     return _zmanimItems == null ? null : [..._zmanimItems!];
   }
 
+  Map<DateTime, String>? get hebrewDates {
+    return _hebrewDates == null ? null : {..._hebrewDates!};
+  }
+
   setCity(String newCity, {Function? setIsLoading}) async {
     city = newCity;
     if (setIsLoading != null) setIsLoading(true);
@@ -81,6 +87,13 @@ class Events with ChangeNotifier {
     isTodayTimesFromNow = !isTodayTimesFromNow;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('isTodayTimesFromNow', isTodayTimesFromNow);
+  }
+
+  updateIsHebrewDate() async {
+    isHebrewDate = !isHebrewDate;
+    notifyListeners();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isHebrewDate', isHebrewDate);
   }
 
   setStartDate(DateTime newDate, {required Function? setIsLoading}) {
@@ -105,13 +118,16 @@ class Events with ChangeNotifier {
     if (prefsKeys.contains('isOnlyShabat')) {
       isOnlyShabat = prefs.getBool('isOnlyShabat')!;
     }
+    if (prefsKeys.contains('isHebrewDate')) {
+      isHebrewDate = prefs.getBool('isHebrewDate')!;
+    }
     if (prefsKeys.contains('isTodayTimesFromNow')) {
       isTodayTimesFromNow = prefs.getBool('isTodayTimesFromNow')!;
     }
     if (prefsKeys.contains('language')) {
       _currentLocale = Locale(prefs.getString('language')!);
     }
-    
+
     notifyListeners();
   }
 
@@ -121,7 +137,6 @@ class Events with ChangeNotifier {
     var url = Uri.parse(isToday
         ? 'https://www.hebcal.com/shabbat?cfg=json&o=on&zip=${cityToTake.split('|')[1]}&lg=${lang ?? _currentLocale.languageCode}'
         : 'https://www.hebcal.com/shabbat?cfg=json&o=on&gy=${startDate.year}&gm=${startDate.month}&gd=${startDate.day}&zip=${cityToTake.split('|')[1]}&lg=${lang ?? _currentLocale.languageCode}');
-    // print(url);
     response = await get(url);
     if ((jsonDecode(response.body) as Map<String, dynamic>)
         .keys
@@ -129,8 +144,6 @@ class Events with ChangeNotifier {
       url = Uri.parse(isToday
           ? 'https://www.hebcal.com/shabbat?cfg=json&o=on&city=${cityToTake.split('|')[0]}&lg=${lang ?? _currentLocale.languageCode}'
           : 'https://www.hebcal.com/shabbat?cfg=json&o=on&gy=${startDate.year}&gm=${startDate.month}&gd=${startDate.day}&city=${cityToTake.split('|')[0]}&lg=${lang ?? _currentLocale.languageCode}');
-      // print(url);
-
       response = await get(url);
     }
     return jsonDecode(response.body) as Map<String, dynamic>;
@@ -146,10 +159,10 @@ class Events with ChangeNotifier {
     if (await isThereInternetConnection()) {
       try {
         final extractData = await tryFetch();
-        // print(extractData);
         _eventsItems = [];
         _eventsItems = getEventsItemsFromMap(extractData['items'] as List);
-        await fetchAndSetZmanimProducts(lang: _currentLocale.languageCode);
+        // fetchAndSetZmanimProducts(lang: _currentLocale.languageCode);
+        fetchAndSetHebrewDatesProducts();
         notifyListeners();
         return _eventsItems;
       } catch (error) {
@@ -158,6 +171,7 @@ class Events with ChangeNotifier {
     } else {
       _eventsItems = null;
       _zmanimItems = null;
+      _hebrewDates = null;
       notifyListeners();
       return _eventsItems;
     }
@@ -284,14 +298,15 @@ class Events with ChangeNotifier {
       bool getDataFirst = false,
       String lang = 'en',
       void Function(bool bool)? setIsThereInternetConnection}) async {
-    if (getDataFirst) await getData();
+    // if (getDataFirst) await getData();
     // if (await isThereInternetConnection()) {
     try {
       final extractData = await tryFetchZmanim();
       _zmanimItems = [];
       _zmanimItems =
           getZmanimItemsFromMap(extractData['times'] as Map<String, dynamic>);
-      // notifyListeners();
+      notifyListeners();
+      // print(zmanimItems);
       return _zmanimItems;
     } catch (error) {
       rethrow;
@@ -308,6 +323,92 @@ class Events with ChangeNotifier {
     for (var i in items.keys) {
       DateTime? date = DateTime.tryParse(getDateWithoutTime(items[i]));
       if (date != null) tempItems.add(Zman(i, date));
+    }
+    return tempItems.isEmpty ? null : tempItems;
+  }
+
+  tryFetchHebrewDates(
+      {String? cityToTake, String? lang, bool isToday = false}) async {
+    cityToTake ??= city;
+    Response response;
+    DateTime now = DateTime.now();
+    var url = Uri.parse(
+        'https://www.hebcal.com/converter?cfg=json&start=${getDushedFormatedDate(now.isBefore(startDate) ? now.subtract(const Duration(days: 1)) : startDate.subtract(const Duration(days: 1)))}&&end=${getDushedFormatedDate(startDate.add(const Duration(days: 10)))}');
+    response = await get(url);
+
+    return jsonDecode(response.body) as Map<String, dynamic>;
+  }
+
+  Future<Map<DateTime, String>?> fetchAndSetHebrewDatesProducts(
+      {bool filterByUser = false,
+      bool getDataFirst = false,
+      void Function(bool bool)? setIsThereInternetConnection}) async {
+    // if (getDataFirst) await getData();
+    // if (await isThereInternetConnection()) {
+    try {
+      final extractData = await tryFetchHebrewDates();
+      _hebrewDates = {};
+      _hebrewDates = getHebrewDatesItemsFromMap(
+          extractData['hdates'] as Map<String, dynamic>);
+      notifyListeners();
+      return _hebrewDates;
+    } catch (error) {
+      rethrow;
+    }
+    // } else {
+    //   _zmanimItems = null;
+    //   notifyListeners();
+    //   return _zmanimItems;
+    // }
+  }
+
+  getHebrewDatesItemsFromMap(Map<String, dynamic> items) {
+    Map<DateTime, String> tempItems = {};
+    DateTime? now = DateTime.now();
+
+    if (_currentLocale.languageCode == 'he') {
+      tempItems[getDateTimeSetToZero(now)] =
+          items[getDushedFormatedDate(now)]['hebrew'];
+    } else {
+      String dushedDate = getDushedFormatedDate(now);
+      tempItems[getDateTimeSetToZero(now)] =
+          '${items[dushedDate]['hd']} ${items[dushedDate]['hm']} ${items[dushedDate]['hy']}';
+    }
+    if (_eventsItems != null) {
+      for (Event e in _eventsItems!) {
+        if (e.entryDate != null) {
+          String dushedDate = getDushedFormatedDate(e.entryDate!);
+          if (_currentLocale.languageCode == 'he') {
+            tempItems[e.entryDate!] = items[dushedDate]['hebrew'];
+          } else {
+            tempItems[e.entryDate!] =
+                '${items[dushedDate]['hd']} ${items[dushedDate]['hm']} ${items[dushedDate]['hy']}';
+          }
+          e.setEntryHebrewDate(tempItems[e.entryDate!]);
+        }
+
+        if (e.releaseDate != null) {
+          String dushedDate = getDushedFormatedDate(e.releaseDate!);
+          if (_currentLocale.languageCode == 'he') {
+            tempItems[e.releaseDate!] = items[dushedDate]['hebrew'];
+          } else {
+            tempItems[e.releaseDate!] =
+                '${items[dushedDate]['hd']} ${items[dushedDate]['hm']} ${items[dushedDate]['hy']}';
+          }
+          e.setReleaseHebrewDate(tempItems[e.releaseDate!]);
+        }
+      }
+    }
+    if (_zmanimItems != null) {
+      for (Zman e in _zmanimItems!) {
+        String dushedDate = getDushedFormatedDate(e.date);
+        if (_currentLocale.languageCode == 'he') {
+          tempItems[e.date] = items[dushedDate]['hebrew'];
+        } else {
+          tempItems[e.date] =
+              '${items[dushedDate]['hd']} ${items[dushedDate]['hm']} ${items[dushedDate]['hy']}';
+        }
+      }
     }
     return tempItems;
   }

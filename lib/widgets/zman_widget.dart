@@ -1,11 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kodesh_app/helpers/dates.dart';
 import 'package:kodesh_app/models/zman.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/widgets/animated_long_text.dart';
 import 'package:kodesh_app/widgets/time_left.dart';
+import 'package:provider/provider.dart';
 
 class ZmanWidget extends StatelessWidget {
   const ZmanWidget({super.key, required this.data});
@@ -15,6 +17,8 @@ class ZmanWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     // AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     bool isNotYTT = !isYesterdayTodayOrTomorrow(data.date);
+    Events events = Provider.of<Events>(context);
+
     return Card(
       child: ListTile(
           // isThreeLine: true,
@@ -32,12 +36,25 @@ class ZmanWidget extends StatelessWidget {
             children: [
               Text(
                 getTime(data.date, null, null),
-                style: TextStyle(fontSize: isNotYTT ? 13 : 14),
+                style: TextStyle(fontSize: isNotYTT ? 12 : 14),
               ),
-              if (isNotYTT)
-                Text(DateFormat('dd/MM/yy').format(data.date),
-                    style:
-                        TextStyle(color: Colors.grey.shade600, fontSize: 11)),
+
+              SizedBox(
+                width: 110,
+                 child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 400),
+                  transitionBuilder: ((child, animation) =>
+                      ScaleTransition(scale: animation, child: child)),
+                  child: 
+                  isNotYTT ? 
+                    events.isHebrewDate ? 
+                      (events.hebrewDates!.isNotEmpty && events.hebrewDates!.containsKey(data.date) ?
+                        Text(key: ValueKey<bool>(events.isHebrewDate), events.hebrewDates![data.date]!, style:  TextStyle(color: Colors.grey.shade600, fontSize: 11)) : 
+                        const CupertinoActivityIndicator(key: ValueKey<String>('CupertinoActivityIndicator'),radius: 9,)) :
+                    Text(key: ValueKey<bool>(events.isHebrewDate), DateFormat('dd/MM/yy').format(data.date), style:  TextStyle(color: Colors.grey.shade600, fontSize: 12)) : Container() 
+                 ),
+               ),
+                
               TimeLeft(
                 date: data.date,
                 fontSize: isNotYTT ? 11 : null,

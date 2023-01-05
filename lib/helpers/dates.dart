@@ -1,7 +1,7 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kodesh_app/providers/events.dart';
 
-String getDayName(AppLocalizations appLocalizations, weekDay)
-{
+String getDayName(AppLocalizations appLocalizations, weekDay) {
   return {
     1: appLocalizations.monday,
     2: appLocalizations.tuesday,
@@ -51,6 +51,14 @@ bool isYesterdayTodayOrTomorrow(DateTime date) {
       .difference(DateTime(date.year, date.month, date.day))
       .inDays;
   return timeLeft == 0 || timeLeft == 1;
+}
+
+DateTime getDateTimeSetToZero(DateTime date) {
+  return DateTime(
+    date.year,
+    date.month,
+    date.day,
+  );
 }
 
 // getf() {

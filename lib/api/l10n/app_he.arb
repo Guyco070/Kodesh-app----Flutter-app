@@ -27,6 +27,9 @@
     "loading": "טוען...",
 
     "onlyShabat": "הצג רק שבת",
+    "viewAllEvents": "הצג את כל האירועים",
+    "viewForeignDates": "הצג תאריכים לועזיים",
+    "viewHebrewDates": "הצג תאריכים עבריים",
 
     "noLaterTimesToShow": "אין זמנים מעכשיו והלאה להצגה עבור תאריך זה",
     "fromNowOn": "מעכשיו והלאה",

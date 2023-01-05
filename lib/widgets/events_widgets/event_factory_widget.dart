@@ -9,26 +9,40 @@ class EventFactoryWidget extends StatelessWidget {
   final Event data;
 
   @override
+  String toStringShort() {
+    return '${super.toStringShort()} - ${data.toString()}';
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if(data is! Shabat)...{
+        if (data is! Shabat) ...{
           const Divider(
-          thickness: 2,
-          indent: 10,
-          endIndent: 10,
-          height: 40,
-        ),
-        }else...{
-        const Divider(
-          thickness: 2,
-          indent: 10,
-          endIndent: 10,
-          height: 5,
-        ),
-        const SizedBox(height: 15,)
+            thickness: 2,
+            indent: 10,
+            endIndent: 10,
+            height: 40,
+          ),
+        } else ...{
+          const Divider(
+            thickness: 2,
+            indent: 10,
+            endIndent: 10,
+            height: 5,
+          ),
+          const SizedBox(
+            height: 15,
+          )
         },
-        Text(data.title == 'Shabat' ? AppLocalizations.of(context)!.shabat : data.title, style: TextStyle(fontWeight: FontWeight.w600,),),
+        Text(
+          data.title == 'Shabat'
+              ? AppLocalizations.of(context)!.shabat
+              : data.title,
+          style: const TextStyle(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         const Divider(
           thickness: 0.5,
           indent: 35,

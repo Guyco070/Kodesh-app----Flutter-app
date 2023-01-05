@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as df;
 import 'package:kodesh_app/data/cities.dart';
@@ -8,6 +9,8 @@ import 'package:kodesh_app/screens/event_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../helpers/dates.dart';
+
 class SettingsBar extends StatefulWidget {
   const SettingsBar({
     super.key,
@@ -15,12 +18,16 @@ class SettingsBar extends StatefulWidget {
     required this.updateIsOnlyShabat,
     required this.setIsLoading,
     required this.viewState,
+    required this.isHebrewDate,
+    required this.updateIsHebrewDate,
   });
 
   final bool isOnlyShabat;
   final Function updateIsOnlyShabat;
   final Function setIsLoading;
   final ViewState viewState;
+  final bool isHebrewDate;
+  final Function updateIsHebrewDate;
 
   @override
   State<SettingsBar> createState() => _SettingsBarState();
@@ -227,18 +234,41 @@ class _SettingsBarState extends State<SettingsBar> {
                       top: 0,
                     ),
                     height: 30,
-                    child: TextButton(
-                        onPressed: () => widget.updateIsOnlyShabat(),
-                        child: Text(
-                          widget.viewState == ViewState.events
-                              ? appLocalizations.onlyShabat
-                              : appLocalizations.fromNowOn,
-                          style: TextStyle(
-                              color: widget.isOnlyShabat
-                                  ? Colors.blue
-                                  : Colors.grey,
-                              fontSize: 12),
-                        )),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(width: 30,),
+                        Expanded(
+                          child: TextButton(
+                            onPressed: () => widget.updateIsOnlyShabat(),
+                            child: Text(
+                              widget.viewState == ViewState.events
+                                  ? widget.isOnlyShabat ? appLocalizations.viewAllEvents : appLocalizations.onlyShabat
+                                  : appLocalizations.fromNowOn,
+                              style: TextStyle(
+                                  color: widget.isOnlyShabat
+                                      ? Colors.blue
+                                      : Colors.grey,
+                                  fontSize: 12),
+                            )),
+                        ),
+                        Expanded(
+                          child: TextButton(
+                            onPressed: () => widget.updateIsHebrewDate(),
+                            child: Text(
+                              widget.isHebrewDate
+                                  ? appLocalizations.viewForeignDates
+                                  : appLocalizations.viewHebrewDates,
+                              style: TextStyle(
+                                  color: widget.isHebrewDate
+                                      ? Colors.blue
+                                      : Colors.grey,
+                                  fontSize: 12),
+                            )),
+                        ),
+                        const SizedBox(width: 30,),
+                      ],
+                    ),
                   ),
                   SizedBox(
                     height: 38,
@@ -246,34 +276,60 @@ class _SettingsBarState extends State<SettingsBar> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         IconButton(
-                            iconSize: _isExpanded ? 22 : 20,
-                            onPressed: () {
-                              DateTime today = DateTime.now();
-                              if (events.eventsItems == null ||
-                                  df.DateFormat('dd/MM/yy').format(today) !=
-                                      df.DateFormat('dd/MM/yy')
-                                          .format(events.startDate)) {
-                                events.setStartDate(DateTime.now(),
-                                    setIsLoading: widget.setIsLoading);
-                              }
-                            },
-                            icon: Icon(
-                              Icons.refresh,
-                              color: Theme.of(context).primaryColor,
-                            )),
-                        Text(
-                          '${appLocalizations.currentDate}: ${df.DateFormat('dd/MM/yyyy').format(DateTime.now())}',
-                          style: const TextStyle(fontSize: 12),
+                                  iconSize: _isExpanded ? 22 : 20,
+                                  onPressed: () {
+                                    DateTime today = DateTime.now();
+                                    if (events.eventsItems == null ||
+                                        df.DateFormat('dd/MM/yy').format(today) !=
+                                            df.DateFormat('dd/MM/yy')
+                                                .format(events.startDate)) {
+                                      events.setStartDate(DateTime.now(),
+                                          setIsLoading: widget.setIsLoading);
+                                    }
+                                  },
+                                  icon: Icon(
+                                    Icons.refresh,
+                                    color: Theme.of(context).primaryColor,
+                                  )),
+                         Text('${appLocalizations.currentDate}: ',
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                        SizedBox(
+                          width: 130,
+                          child: AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 400),
+                                transitionBuilder: ((child, animation) =>
+                                    ScaleTransition(scale: animation, child: child)),
+                                child: Row(
+                                  key: ValueKey<String>(events.isHebrewDate ? events.hebrewDates!.isEmpty ? '  ' : events.hebrewDates![getDateTimeSetToZero(DateTime.now())]! : df.DateFormat('dd/MM/yyyy').format(DateTime.now())),
+                                  children: [ 
+                                    if(events.isHebrewDate && events.hebrewDates!.isEmpty) ...{
+                                      Text(
+                                          events.isHebrewDate ? events.hebrewDates!.isEmpty ? '  ' : events.hebrewDates![getDateTimeSetToZero(DateTime.now())]! : df.DateFormat('dd/MM/yyyy').format(DateTime.now()),
+                                          style: const TextStyle(fontSize: 12),
+                                        ),
+                                        const CupertinoActivityIndicator()
+                                    }else...{
+                                      Text(
+                                          events.isHebrewDate && events.hebrewDates!.isNotEmpty ? events.hebrewDates![getDateTimeSetToZero(DateTime.now())]! : df.DateFormat('dd/MM/yyyy').format(DateTime.now()),
+                                          style: const TextStyle(fontSize: 12),
+                                        ),
+                                    },
+  
+                              
+                              // IconButton( 
+                              //     onPressed: () {
+                              //       setState(() {
+                              //         _isExpanded = !_isExpanded;
+                              //       });
+                              //     },
+                              //     icon: Icon(_isExpanded ? Icons.keyboard_double_arrow_up : Icons.keyboard_double_arrow_down, size: _isExpanded ? 22 : 20,))
+                            ],
+                          ),
+                          ),
                         ),
-                        // IconButton(
-                        //     onPressed: () {
-                        //       setState(() {
-                        //         _isExpanded = !_isExpanded;
-                        //       });
-                        //     },
-                        //     icon: Icon(_isExpanded ? Icons.keyboard_double_arrow_up : Icons.keyboard_double_arrow_down, size: _isExpanded ? 22 : 20,))
                       ],
-                    ),
+                    )
                   ),
                 ],
               ),

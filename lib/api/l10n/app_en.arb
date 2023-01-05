@@ -65,8 +65,19 @@
     "loading": "Loading...",
     "@loading": { "description": "loading..." },
 
+
     "onlyShabat": "View only shabat",
     "@onlyShabat": { "description": "onlyShabat" },
+
+    "viewAllEvents": "View all events",
+    "@viewAllEvents": { "description": "viewAllEvents" },
+
+    "viewForeignDates": "View foreign dates",
+    "@viewForeignDates": { "description": "viewForeignDates" },
+    
+    "viewHebrewDates": "View hebrew dates",
+    "@viewHebrewDates": { "description": "viewHebrewDates" },
+
 
     "noLaterTimesToShow": "There are no later times to show for this date.",
     "@noLaterTimesToShow": { "description": "noLaterTimesToShow" },

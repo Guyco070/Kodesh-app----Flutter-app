@@ -32,6 +32,7 @@ class EventScreen extends StatefulWidget {
 class _EventScreenState extends State<EventScreen> {
   bool _isInit = true;
   bool _isLoading = false;
+  bool _isLoadingZmanim = true;
   bool _isLoadingLang = false;
   bool _isOnlyShabat = false;
   bool _isTodayTimesFromNow = false;
@@ -94,15 +95,17 @@ class _EventScreenState extends State<EventScreen> {
 
   getAllData() {
     _isLoading = true;
+    String lang = Provider.of<LanguageChangeProvider>(context)
+                .currentLocale
+                .languageCode;
     Provider.of<Events>(context, listen: false)
         .fetchAndSetProducts(
             getDataFirst: true,
-            lang: Provider.of<LanguageChangeProvider>(context)
-                .currentLocale
-                .languageCode)
+            lang: lang)
         .then((items) {
       setIsThereInternetConnection(items != null);
       setIsLoading(false);
+      getZmanim(lang: lang);
     });
   }
 
@@ -112,6 +115,11 @@ class _EventScreenState extends State<EventScreen> {
     });
   }
 
+  setIsLoadingZmanim(bool newVal) {
+    setState(() {
+      _isLoadingZmanim = newVal;
+    });
+  }
 
   setIsLoadingLang(bool newVal) {
     setState(() {
@@ -155,31 +163,31 @@ class _EventScreenState extends State<EventScreen> {
     return AnimatedEventsListView(widgets: widgets);
   }
 
-  void getZmanim() {
-    // setIsLoading();
+  void getZmanim({required String lang}) {
+    setIsLoadingZmanim(true);
     Provider.of<Events>(context, listen: false)
         .fetchAndSetZmanimProducts(
             // getDataFirst: true,
-            lang: Provider.of<LanguageChangeProvider>(context)
-                .currentLocale
-                .languageCode)
+            lang: lang)
         .then((items) {
-      setIsThereInternetConnection(items != null);
-      // setIsLoading();
+      // setIsThereInternetConnection(items != null);
+      setIsLoadingZmanim(false);
     });
   }
 
-  Widget _getZmanimWidgets(List<Zman> zmanim) {
+  Widget _getZmanimWidgets(List<Zman>? zmanim) {
     List<Widget> widgets = [];
-    zmanim.sort((a, b) {
-      return a.date.compareTo(b.date);
-    });
-    DateTime now = DateTime.now();
-    var x = {};
-    for (Zman z in zmanim) {
-      x[z.title] = z.title;
-      if (!_isTodayTimesFromNow || z.date.isAfter(now)) {
-        widgets.add(ZmanWidget(data: z));
+    if (zmanim != null) {
+      zmanim.sort((a, b) {
+        return a.date.compareTo(b.date);
+      });
+      DateTime now = DateTime.now();
+      var x = {};
+      for (Zman z in zmanim) {
+        x[z.title] = z.title;
+        if (!_isTodayTimesFromNow || z.date.isAfter(now)) {
+          widgets.add(ZmanWidget(data: z));
+        }
       }
     }
 
@@ -193,8 +201,9 @@ class _EventScreenState extends State<EventScreen> {
         height: 10,
       ));
     }
-    if (_isTodayTimesFromNow)
+    if (_isTodayTimesFromNow) {
       return AnimatedFromNowOnTimesListView(widgets: widgets);
+    }
     return AnimatedTimesListView(widgets: widgets);
   }
 
@@ -256,68 +265,66 @@ class _EventScreenState extends State<EventScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
       child: Row(
         children: [
-              Expanded(
-                child: ElevatedButton(
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                              borderRadius:
-                                  !LanguageChangeProvider.isDirectionRTL(null)
-                                      ? const BorderRadius.only(
-                                          topLeft: Radius.circular(50))
-                                      : const BorderRadius.only(
-                                          topRight: Radius.circular(50)))),
-                      backgroundColor: _viewState == ViewState.events
-                          ? MaterialStatePropertyAll<Color>(
-                              Theme.of(context).primaryColor)
-                          : MaterialStatePropertyAll<Color>(
-                              Colors.blue.shade800),
-                    ),
-                    onPressed: _viewState != ViewState.events
-                        ? () => setViewState(ViewState.events)
-                        : null,
-                    child: FittedBox(
-                      child: Text(
-                        appLocalizations.weekEvents,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: _viewState == ViewState.events
-                                ? FontWeight.bold
-                                : FontWeight.normal),
-                      ),
-                    )),
-              ),
-              Expanded(
-                child: ElevatedButton(
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                              borderRadius:
-                                  LanguageChangeProvider.isDirectionRTL(null)
-                                      ? const BorderRadius.only(
-                                          topLeft: Radius.circular(50))
-                                      : const BorderRadius.only(
-                                          topRight: Radius.circular(50)))),
-                      backgroundColor: _viewState == ViewState.zmanim
-                          ? MaterialStatePropertyAll<Color>(
-                              Theme.of(context).primaryColor)
-                          : MaterialStatePropertyAll<Color>(
-                              Colors.blue.shade800),
-                    ),
-                    onPressed: _viewState != ViewState.zmanim
-                        ? () => setViewState(ViewState.zmanim)
-                        : () {},
-                    child: FittedBox(
-                      child: Text(
-                        appLocalizations.todayTimes,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: _viewState == ViewState.zmanim
-                                ? FontWeight.bold
-                                : FontWeight.normal),
-                      ),
-                    )),
-              ),
+          Expanded(
+            child: ElevatedButton(
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius:
+                              !LanguageChangeProvider.isDirectionRTL(null)
+                                  ? const BorderRadius.only(
+                                      topLeft: Radius.circular(50))
+                                  : const BorderRadius.only(
+                                      topRight: Radius.circular(50)))),
+                  backgroundColor: _viewState == ViewState.events
+                      ? MaterialStatePropertyAll<Color>(
+                          Theme.of(context).primaryColor)
+                      : MaterialStatePropertyAll<Color>(Colors.blue.shade800),
+                ),
+                onPressed: _viewState != ViewState.events
+                    ? () => setViewState(ViewState.events)
+                    : null,
+                child: FittedBox(
+                  child: Text(
+                    appLocalizations.weekEvents,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: _viewState == ViewState.events
+                            ? FontWeight.bold
+                            : FontWeight.normal),
+                  ),
+                )),
+          ),
+          Expanded(
+            child: ElevatedButton(
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius:
+                              LanguageChangeProvider.isDirectionRTL(null)
+                                  ? const BorderRadius.only(
+                                      topLeft: Radius.circular(50))
+                                  : const BorderRadius.only(
+                                      topRight: Radius.circular(50)))),
+                  backgroundColor: _viewState == ViewState.zmanim
+                      ? MaterialStatePropertyAll<Color>(
+                          Theme.of(context).primaryColor)
+                      : MaterialStatePropertyAll<Color>(Colors.blue.shade800),
+                ),
+                onPressed: _viewState != ViewState.zmanim
+                    ? () => setViewState(ViewState.zmanim)
+                    : () {},
+                child: FittedBox(
+                  child: Text(
+                    appLocalizations.todayTimes,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: _viewState == ViewState.zmanim
+                            ? FontWeight.bold
+                            : FontWeight.normal),
+                  ),
+                )),
+          ),
         ],
       ),
     );
@@ -337,18 +344,24 @@ class _EventScreenState extends State<EventScreen> {
                     : setIsTodayTimesFromNow,
                 setIsLoading: setIsLoading,
                 viewState: _viewState,
+                isHebrewDate: events.isHebrewDate,
+                updateIsHebrewDate: events.updateIsHebrewDate,
               ),
-              if(LanguageChangeProvider.isInitialized && !_isLoadingLang) viewSwitch,
+              if (LanguageChangeProvider.isInitialized && !_isLoadingLang)
+                viewSwitch,
 
-              if (events.eventsItems != null) ...{
+              if (events.eventsItems != null &&
+                  _viewState == ViewState.events) ...{
                 if (_isLoading || _isLoadingLang)
                   renderLoading(context)
                 else ...{
-                  _viewState == ViewState.events
-                      ? _getEventwidgets(
-                          events.eventsItems!, events.isOnlyShabat)
-                      : _getZmanimWidgets(events.zmanimItems!)
+                  _getEventwidgets(events.eventsItems!, events.isOnlyShabat)
                 },
+              } else if (events.zmanimItems != null &&
+                  _viewState == ViewState.zmanim) ...{
+                if (_isLoadingZmanim || _isLoadingLang)
+                  renderLoading(context)
+                else ...{_getZmanimWidgets(events.zmanimItems)},
               } else ...{
                 if (_isLoading || _isLoadingLang)
                   renderLoading(context)

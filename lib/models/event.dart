@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 
 abstract class Event {
-   Event(
-      {Key? key,
-      required this.title,
-      this.entryDate,
-      this.releaseDate,
-      this.parasha,
-      required this.titleOrig,
-    });
+  Event({
+    Key? key,
+    required this.title,
+    this.entryDate,
+    this.releaseDate,
+    this.parasha,
+    required this.titleOrig,
+  });
   String title; // shabat/ holiday /tefila...
   final DateTime? entryDate;
   final DateTime? releaseDate;
   final String? parasha;
   final String? titleOrig;
+  String? entryHebrewDate;
+  String? releaseHebrewDate;
+
+  void setEntryHebrewDate(String? newVal) => entryHebrewDate = newVal;
+  void setReleaseHebrewDate(String? newVal) => releaseHebrewDate = newVal;
 
   String getReminderBody(String lang);
   String getReminderTitle(String lang);

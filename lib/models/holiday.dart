@@ -8,7 +8,6 @@ class Holiday extends Event {
     super.entryDate,
     super.releaseDate,
     required super.titleOrig,
-
     required this.subcat,
   });
   String subcat;
