@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kodesh_app/screens/Shabat_and_holidays_check_list.dart';
+import 'package:kodesh_app/screens/about.dart';
 import 'package:kodesh_app/screens/compass_screen.dart';
 import 'package:kodesh_app/screens/schedual_notifications.dart';
 import 'package:kodesh_app/screens/tefilot/adlakat_nerot.dart';
@@ -17,7 +18,6 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
-
     return Drawer(
       child: SingleChildScrollView(
         child: Column(
@@ -31,7 +31,7 @@ class AppDrawer extends StatelessWidget {
             ),
 
             ...devidedTitle(appLocalizations.settings),
-            
+
             ListTile(
               leading: const Icon(Icons.watch_later_outlined),
               title: Text(appLocalizations.settingRemindersMenu),
@@ -40,7 +40,7 @@ class AppDrawer extends StatelessWidget {
             ),
 
             ...devidedTitle(appLocalizations.aids),
-            
+
             ListTile(
               leading: const Icon(Icons.checklist_rtl),
               title: Text(appLocalizations.choresBeforeShabbatMenu),
@@ -53,7 +53,7 @@ class AppDrawer extends StatelessWidget {
               onTap: () =>
                   Navigator.pushNamed(context, CompassScreen.routeName),
             ),
-            
+
             CustomExpandedListView(
               titledExpandIcon: title(appLocalizations.prayersAndBlessings),
               children: [
@@ -62,16 +62,15 @@ class AppDrawer extends StatelessWidget {
                     Icons.fireplace_outlined,
                   ),
                   title: Text(appLocalizations.candleLightingOrderMenu),
-                  onTap: () => Navigator.pushNamed(
-                      context, AdlakatNerot.routeName),
+                  onTap: () =>
+                      Navigator.pushNamed(context, AdlakatNerot.routeName),
                 ),
                 ListTile(
                   leading: const Icon(
                     Icons.wine_bar,
                   ),
                   title: Text(appLocalizations.havdalah),
-                  onTap: () =>
-                      Navigator.pushNamed(context, Havdalah.routeName),
+                  onTap: () => Navigator.pushNamed(context, Havdalah.routeName),
                 ),
                 ListTile(
                   leading: const Icon(Icons.add_reaction_outlined),
@@ -90,27 +89,24 @@ class AppDrawer extends StatelessWidget {
                 ListTile(
                   leading: const Icon(Icons.content_cut),
                   title: Text(appLocalizations.sederSfiratOmer),
-                  onTap: () => Navigator.pushNamed(
-                      context, SfiratOmerScreen.routeName),
+                  onTap: () =>
+                      Navigator.pushNamed(context, SfiratOmerScreen.routeName),
                 ),
               ],
             ),
-            // const Divider(),
-            // ListTile(
-            //   leading: const Icon(Icons.edit),
-            //   title: const Text('Manage Products'),
-            //   onTap: () => Navigator.pushReplacementNamed(
-            //       context, UserProductsScreen.routeName),
-            // ),
-            // const Divider(),
-            // ListTile(
-            //     leading: const Icon(Icons.exit_to_app),
-            //     title: const Text('Logout'),
-            //     onTap: () {
-            //       Navigator.of(context).pop();
-            //       Navigator.of(context).pushReplacementNamed('/');
-            //       Provider.of<Auth>(context, listen: false).logout();
-            //     }),
+            SizedBox(
+              height: MediaQuery.of(context).size.height > 650 ? MediaQuery.of(context).size.height - 650 : 30,
+            ),
+            const Divider(
+              indent: 18,
+              endIndent: 18,
+            ),
+            ListTile(
+              leading: const Icon(Icons.info_outline),
+              title: Text(appLocalizations.aboutMenu),
+              onTap: () =>
+                  Navigator.pushNamed(context, AboutScreen.routeName),
+            ),
           ],
         ),
       ),

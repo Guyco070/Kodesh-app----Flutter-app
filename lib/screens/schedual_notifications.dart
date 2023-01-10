@@ -75,10 +75,11 @@ class _SchedualNotficationsScreenState
 
     shabatAndHolidaysThingsToRemindList() {
       return reminders.allShabatAndHolidaysThingsToRemindList(context).map((e) {
+        Map<String, Object> element = reminders.allShabatAndHolidaysThingsToRemindMap(context)[e]!;
         return TextCheckBox(
             value: reminders.shabatAndHolidaysThingsToRemindList.contains(e),
-            text: reminders.allShabatAndHolidaysThingsToRemindMap(
-                context)[e]!['text'] as String,
+            text: element['text'] as String,
+            subText: (element['text'] as String) != (element['action'] as String) ? element['action'] as String : null,
             onChanged: (isCheked) {
               isCheked
                   ? reminders.shabatAndHolidaysThingsToRemindList.add(e)
@@ -222,13 +223,14 @@ class _SchedualNotficationsScreenState
             ExpandedSection(
               expand: reminders.havdalah,
               child: ChooseTimeBeforeWidget(
-                hoursValue: reminders.afterShabatHavdalahHours,
-                minutesValue: reminders.afterShabatHavdalahMinutes,
-                setHours: reminders.setAfterShabatHavdalahHours,
-                setMinutess: reminders.setAfterShabatHavdalahMinutes,
-                localizedHelpText: (String hours, String minutes) =>
-                    appLocalizations.remindMeXhoursAndYMinutesAfterShabatForHavdalah(hours, minutes)
-              ),
+                  hoursValue: reminders.afterShabatHavdalahHours,
+                  minutesValue: reminders.afterShabatHavdalahMinutes,
+                  setHours: reminders.setAfterShabatHavdalahHours,
+                  setMinutess: reminders.setAfterShabatHavdalahMinutes,
+                  localizedHelpText: (String hours, String minutes) =>
+                      appLocalizations
+                          .remindMeXhoursAndYMinutesAfterShabatForHavdalah(
+                              hours, minutes)),
             ),
           ],
         ),
@@ -354,21 +356,26 @@ class TextCheckBox extends StatelessWidget {
     required this.value,
     required this.text,
     required this.onChanged,
+    this.subText,
   }) : super(key: key);
 
   final bool value;
   final String text;
   final Function onChanged;
+  final String? subText;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Row(
-        children: [
-          Checkbox(value: value, onChanged: (newValue) => onChanged(newValue)),
-          Text(text),
-        ],
-      ),
+    return Column(
+      children: [
+        Card(
+          child: ListTile(
+            title: Text(text),
+            subtitle: subText != null ? Text(subText!) : null,
+            leading: Checkbox(value: value, onChanged: (newValue) => onChanged(newValue)),
+          ),
+        ),
+      ],
     );
   }
 }

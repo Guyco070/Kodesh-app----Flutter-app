@@ -11,6 +11,7 @@
     "candleLightingOrderMenu": "סדר הדלקת נרות שבת",
     "hanukkahCandleLightingOrderMenu": "סדר הדלקת נרות חנוכה",
     "sederSfiratOmer": "ברכת ספירת העומר",
+    "aboutMenu": "אודות",
     "tefilinOrderMenu": "סדר הנחת תפילין",
     "choresBeforeShabbatMenu": "מטלות לפני שבת",
     "havdalah": "הבדלה",
@@ -78,6 +79,9 @@
     "candleLightingAction": "להדליק נרות",
     "airConditioner": "מזגן", 
     "airConditionerAction": "להדליק מזגן",
+    "phone": "פלאפון",
+    "phoneAction": "לכבות את הפלאפון",
+
     "remindCandleLightningSeperateSettings": "הזכר לי בנפרד להדליק נרות",
     "remindMeXhoursAndYMinutesBeforeCandlesLighning": "הזכר לי להדליק נרות {hours} שעות ו- {minutes} דקות לפני שבת או חג",
     "remindMeXhoursAndYMinutesAfterShabatForHavdalah": "הזכר לי להדליק נרות {hours} שעות ו- {minutes} דקות אחרי שבת או חג להבדלה",

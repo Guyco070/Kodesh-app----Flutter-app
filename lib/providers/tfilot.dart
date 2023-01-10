@@ -95,8 +95,10 @@ class Tfilot with ChangeNotifier {
     );
   }
 
-  List<TextSpan> getSederWidgets(Map getBracha, bool isWithNosah) {
-    final List<String> seder = (getBracha[LanguageChangeProvider
+  List<TextSpan> getSederWidgets({Map getBracha = const {}, bool isWithNosah = false, Map<String, List<String>>? textList}) {
+    final List<String> seder = textList != null ? textList[LanguageChangeProvider
+        .getCurrentLocale
+        .languageCode]! : (getBracha[LanguageChangeProvider
         .getCurrentLocale
         .languageCode])![isWithNosah ? _nosah : Nosah.mizrah] as List<String>;
     TextStyle font;

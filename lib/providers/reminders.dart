@@ -61,7 +61,8 @@ class Reminders with ChangeNotifier {
       'Samovar',
       'Shabbat clock',
       'Candle lighting',
-      'Air conditioner'
+      'Air conditioner',
+      'Cell phone',
     ];
   }
 
@@ -94,6 +95,11 @@ class Reminders with ChangeNotifier {
         'icon': Icons.fireplace_outlined,
         'action': appLocalizations.candleLightingAction,
         'text': appLocalizations.candleLighting
+      },
+      'Cell phone': {
+        'icon': Icons.fireplace_outlined,
+        'action': appLocalizations.phoneAction,
+        'text': appLocalizations.phone
       },
     };
   }
@@ -142,7 +148,6 @@ class Reminders with ChangeNotifier {
     }
     notifyListeners();
   }
-
 
   setNerotHanukkah({bool? newNerotHanukkah}) {
     if (newNerotHanukkah != null) {
@@ -428,6 +433,7 @@ class Reminders with ChangeNotifier {
       //     ));
 
       for (Event e in items) {
+        // print(e);
         if (shabatAndHolidays && e is! RoshChodesh && e is! SfiratOmer) {
           // if Shabat or Holiday
           DateTime? x;
@@ -438,17 +444,20 @@ class Reminders with ChangeNotifier {
             } else {
               x = e.entryDate!.subtract(Duration(
                   hours: beforeShabatHours, minutes: beforeShabatMinutes));
+              // print('Entry holiday $x');
             }
           } else {
             x = e.entryDate!.subtract(Duration(
                 hours: beforeShabatHours, minutes: beforeShabatMinutes));
+            // print('Entry shabat $x');
           }
 
           if (nerotHanukkah && e.title.contains('Chanukah') ||
               (e.titleOrig != null && e.titleOrig!.contains('Chanukah'))) {
             // reminder to light Chanukah candles
-            if(DateFormat('HH:mm').format(e.entryDate!) != '00:00'){ // at the last day (the day after the last night of lightning candles) time  is equal to 00:00 - skeep it
-                x = e.entryDate!.subtract(Duration(
+            if (DateFormat('HH:mm').format(e.entryDate!) != '00:00') {
+              // at the last day (the day after the last night of lightning candles) time  is equal to 00:00 - skeep it
+              x = e.entryDate!.subtract(Duration(
                   hours: beforeNerotHanukkahHours,
                   minutes: beforeNerotHanukkahMinutes));
 
@@ -457,7 +466,9 @@ class Reminders with ChangeNotifier {
                   'id': id,
                   'title': e.title.replaceFirst('Chanukah', 'Hanukkah'),
                   'body': (e as Holiday).getReminderHanukkahCandlesBody(
-                      beforeNerotHanukkahHours, beforeNerotHanukkahMinutes, lang),
+                      beforeNerotHanukkahHours,
+                      beforeNerotHanukkahMinutes,
+                      lang),
                   'date': x,
                   'payload': AdlakatNerotChanukah.routeName,
                 });
@@ -475,8 +486,8 @@ class Reminders with ChangeNotifier {
             });
             id++;
 
-            if (shabatAndHolidaysCandles && (e is Shabat ||
-                (e is Holiday && e.subcat == 'major'))) {
+            if (shabatAndHolidaysCandles &&
+                (e is Shabat || (e is Holiday && e.subcat == 'major'))) {
               // reminder for Hanukkah
 
               // shabat or holiday
@@ -499,8 +510,10 @@ class Reminders with ChangeNotifier {
               id++;
             }
 
-            if (havdalah && (e is Shabat ||
-                (e is Holiday && e.subcat == 'major') && e.releaseDate != null)) {
+            if (havdalah &&
+                (e is Shabat ||
+                    (e is Holiday && e.subcat == 'major') &&
+                        e.releaseDate != null)) {
               // reminder for Hanukkah
 
               // shabat or holiday
@@ -508,6 +521,8 @@ class Reminders with ChangeNotifier {
               x = e.entryDate!.add(Duration(
                   hours: beforeShabatAndHolidaysCandlesHours,
                   minutes: beforeShabatAndHolidaysCandlesMinutes));
+              // print('Release $x');
+
               if (now.isBefore(x)) {
                 notValues.add({
                   'id': id,

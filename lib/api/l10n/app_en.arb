@@ -33,6 +33,9 @@
     "tefilinOrderMenu": "Laying of phylacteries",
     "@tefilinOrderMenu": { "description": "tefilinOrderMenu" },
 
+    "aboutMenu": "About",
+    "@aboutMenu": { "description": "aboutMenu" },
+
     "choresBeforeShabbatMenu": "Chores before Shabbat",
     "@choresBeforeShabbatMenu": { "description": "choresBeforeShabbatMenu" },
 
@@ -241,6 +244,12 @@
 
     "airConditionerAction": "Turn on the air conditioner",
     "@airConditionerAction": { "description": " airConditionerAction" },
+
+    "phone": "cell phone",
+    "@phone": { "description": "phone" },
+
+    "phoneAction": "Turn off the cell phone",
+    "@phoneAction": { "description": "phoneAction" },
     
     "remindCandleLightningSeperateSettings": "Remind me to light candles separately",
     "@remindCandleLightningSeperateSettings": { "description": "remindCandleLightningSeperateSettings" },

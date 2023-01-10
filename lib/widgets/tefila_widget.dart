@@ -50,7 +50,7 @@ class TefilaWidget extends StatelessWidget {
                 textAlign: TextAlign.center,
                 TextSpan(
                     children: Provider.of<Tfilot>(context, listen: false)
-                        .getSederWidgets(getBracha, isWithNosah))),
+                        .getSederWidgets(getBracha: getBracha, isWithNosah: isWithNosah))),
           )
         ]),
       ),

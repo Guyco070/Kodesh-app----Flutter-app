@@ -251,8 +251,9 @@ class Events with ChangeNotifier {
     //   'date': DateTime.now().add(const Duration(seconds: 2)).toString()
     // }); // try for ome more minute from now
     // tempItems.add(newS);
-    // Holiday newH = Holiday(title: 'חג', subcat: 'major', entryDate: DateTime.now().add(const Duration(days: 1),), releaseDate: DateTime.now().add(const Duration(days: 1))); // try
+    // Holiday newH = Holiday(title: 'חג', subcat: 'major', entryDate: DateTime.now().add(const Duration(seconds: 1)), releaseDate: DateTime.now().add(const Duration(seconds: 1)), titleOrig: ''); // try
     // tempItems.add(newH);
+
     List<int> toRemove = [];
     for (int i = 0; i < tempItems.length; i++) {
       for (Event x in tempItems) {

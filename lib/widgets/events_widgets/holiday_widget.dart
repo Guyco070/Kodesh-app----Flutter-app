@@ -24,7 +24,7 @@ class HolidayWidget extends StatelessWidget {
             subtitle: Text(
               appLocalizations.departureAndHavdalah,
             ),
-            trailing: DateWithTimeLeft(date: data.releaseDate!, hebrewDate: data.releaseHebrewDate,),
+            trailing: DateWithTimeLeft(date: data.releaseDate!, hebrewDate: isHebrewDate ? data.releaseHebrewDate : null,),
             leading: const Icon(Icons.wine_bar),
           ),
       ],

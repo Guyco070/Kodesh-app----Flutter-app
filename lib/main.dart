@@ -5,6 +5,7 @@ import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/providers/reminders.dart';
 import 'package:kodesh_app/providers/tfilot.dart';
+import 'package:kodesh_app/screens/about.dart';
 import 'package:kodesh_app/screens/compass_screen.dart';
 import 'package:kodesh_app/screens/shabat_and_holidays_check_list.dart';
 import 'package:kodesh_app/screens/schedual_notifications.dart';
@@ -82,6 +83,7 @@ class MyApp extends StatelessWidget {
             AdlakatNerotChanukah.routeName: (_) => AdlakatNerotChanukah(),
             SfiratOmerScreen.routeName: (_) => SfiratOmerScreen(),
             Havdalah.routeName: (_) => Havdalah(),
+            AboutScreen.routeName: (_) => const AboutScreen(),
           },
         );
       }),
