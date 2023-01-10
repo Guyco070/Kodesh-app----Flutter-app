@@ -5,27 +5,22 @@
 The application was developed to help its users who want to know the entry and exit times of Shabbats and Jewish holidays, Jewish times of the day, and more by logging in or by receiving notifications as the users wish.
 It is also possible to set notifications for additional reminders, for example, reminders to put on tefillin.
 
-<a href='https://vimeo.com/748682939'>
+<!-- <a href='https://vimeo.com/748682939'>
   <img align="center"  alt="Watch the video" width="500px" src="./readmeAssets/HomEco.png" />
-</a>
+</a> -->
 
 ---
 
 ### Technologies:
 
 <div>
-    <img alt="React Native" src="https://img.shields.io/badge/React%20Native-61DBFB?style=for-the-badge&logo=react&logoColor=white" />
-    <img alt="Expo" src="https://img.shields.io/badge/Expo-33363b?style=for-the-badge&logo=Expo&logoColor=white" />
+    <img alt="Flutter" src="https://img.shields.io/badge/React%20Native-61DBFB?style=for-the-badge&logo=react&logoColor=white" />
 </div>
-
-### Databases:
-
-<img alt="Firebase" src="https://img.shields.io/badge/Firebase-F6820D?style=for-the-badge&logo=Firebase&logoColor=white" />
 
 ### Programming Languages:
 
 <div>
-    <img alt="Java Script" src="https://img.shields.io/badge/Java%20Script-f7df1e?style=for-the-badge&logo=javascript&logoColor=white" />
+    <img alt="Dart" src="https://img.shields.io/badge/Dart-00579c?style=for-the-badge&logo=dart&logoColor=white" />
 </div>
 
 ---
