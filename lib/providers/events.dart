@@ -343,7 +343,7 @@ class Events with ChangeNotifier {
     return tempItems.isEmpty ? null : tempItems;
   }
 
-  tryFetchHebrewDates(
+  Future<dynamic> tryFetchHebrewDates(
       {String? cityToTake, String? lang, bool isToday = false}) async {
     cityToTake ??= city;
     Response response;
@@ -362,11 +362,12 @@ class Events with ChangeNotifier {
     // if (getDataFirst) await getData();
     // if (await isThereInternetConnection()) {
     try {
-      final extractData = await tryFetchHebrewDates();
-      _hebrewDates = {};
-      _hebrewDates = getHebrewDatesItemsFromMap(
-          extractData['hdates'] as Map<String, dynamic>);
-      notifyListeners();
+      tryFetchHebrewDates().then((extractData) {
+        _hebrewDates = {};
+        _hebrewDates = getHebrewDatesItemsFromMap(
+            extractData['hdates'] as Map<String, dynamic>);
+        notifyListeners();
+      });
 
       return _hebrewDates;
     } catch (error) {
