@@ -5,7 +5,7 @@ import 'package:kodesh_app/helpers/dates.dart';
 import 'package:kodesh_app/models/zman.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/providers/language_change_provider.dart';
-import 'package:kodesh_app/widgets/animated_long_text.dart';
+import 'package:kodesh_app/animations/animated_long_text.dart';
 import 'package:kodesh_app/widgets/time_left.dart';
 import 'package:provider/provider.dart';
 
