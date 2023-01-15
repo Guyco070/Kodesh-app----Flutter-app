@@ -66,12 +66,19 @@ class Events with ChangeNotifier {
     return _hebrewDates == null ? null : {..._hebrewDates!};
   }
 
-  setCity(String newCity, {Function? setIsLoading}) async {
+  setCity(String newCity,
+      {Function? setIsLoading, Function? setIsLoadingZmanim}) async {
     city = newCity;
     if (setIsLoading != null) setIsLoading(true);
 
     fetchAndSetProducts().then((value) {
       if (setIsLoading != null) setIsLoading(false);
+    });
+
+    if (setIsLoadingZmanim != null) setIsLoadingZmanim(true);
+
+    fetchAndSetZmanimProducts().then((value) {
+      if (setIsLoadingZmanim != null) setIsLoadingZmanim(false);
     });
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('city', city);
@@ -96,12 +103,20 @@ class Events with ChangeNotifier {
     prefs.setBool('isHebrewDate', isHebrewDate);
   }
 
-  setStartDate(DateTime newDate, {required Function? setIsLoading}) {
+  setStartDate(DateTime newDate,
+      {required Function? setIsLoading,
+      required Function? setIsLoadingZmanim}) {
     startDate = newDate;
     if (setIsLoading != null) setIsLoading(true);
 
     fetchAndSetProducts().then((value) {
       if (setIsLoading != null) setIsLoading(false);
+    });
+
+    if (setIsLoadingZmanim != null) setIsLoadingZmanim(true);
+
+    fetchAndSetZmanimProducts().then((value) {
+      if (setIsLoadingZmanim != null) setIsLoadingZmanim(false);
     });
   }
 
@@ -161,7 +176,7 @@ class Events with ChangeNotifier {
         final extractData = await tryFetch();
         _eventsItems = [];
         _eventsItems = getEventsItemsFromMap(extractData['items'] as List);
-        // fetchAndSetZmanimProducts(lang: _currentLocale.languageCode);
+
         fetchAndSetHebrewDatesProducts();
         notifyListeners();
         return _eventsItems;
@@ -352,6 +367,7 @@ class Events with ChangeNotifier {
       _hebrewDates = getHebrewDatesItemsFromMap(
           extractData['hdates'] as Map<String, dynamic>);
       notifyListeners();
+
       return _hebrewDates;
     } catch (error) {
       rethrow;

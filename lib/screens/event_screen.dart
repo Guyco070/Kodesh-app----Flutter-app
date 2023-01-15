@@ -95,13 +95,10 @@ class _EventScreenState extends State<EventScreen> {
 
   getAllData() {
     _isLoading = true;
-    String lang = Provider.of<LanguageChangeProvider>(context)
-                .currentLocale
-                .languageCode;
+    String lang =
+        Provider.of<LanguageChangeProvider>(context).currentLocale.languageCode;
     Provider.of<Events>(context, listen: false)
-        .fetchAndSetProducts(
-            getDataFirst: true,
-            lang: lang)
+        .fetchAndSetProducts(getDataFirst: true, lang: lang)
         .then((items) {
       setIsThereInternetConnection(items != null);
       setIsLoading(false);
@@ -343,6 +340,7 @@ class _EventScreenState extends State<EventScreen> {
                     ? setIsOnlyShabat
                     : setIsTodayTimesFromNow,
                 setIsLoading: setIsLoading,
+                setIsLoadingZmanim: setIsLoadingZmanim,
                 viewState: _viewState,
                 isHebrewDate: events.isHebrewDate,
                 updateIsHebrewDate: events.updateIsHebrewDate,

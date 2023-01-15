@@ -18,7 +18,6 @@ class ZmanWidget extends StatelessWidget {
     // AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     bool isNotYTT = !isYesterdayTodayOrTomorrow(data.date);
     Events events = Provider.of<Events>(context);
-
     return Card(
       child: ListTile(
           // isThreeLine: true,
@@ -29,7 +28,9 @@ class ZmanWidget extends StatelessWidget {
                 .elementAt(0),
           ),
           subtitle: AnimatedLongText(
-            types[LanguageChangeProvider.getCurrentLocale.languageCode]![data.title]!.elementAt(1),
+            types[LanguageChangeProvider.getCurrentLocale.languageCode]![
+                    data.title]!
+                .elementAt(1),
           ),
           trailing: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -38,23 +39,34 @@ class ZmanWidget extends StatelessWidget {
                 getTime(data.date, null, null),
                 style: TextStyle(fontSize: isNotYTT ? 12 : 14),
               ),
-
               SizedBox(
                 width: 110,
-                 child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 400),
-                  transitionBuilder: ((child, animation) =>
-                      ScaleTransition(scale: animation, child: child)),
-                  child: 
-                  isNotYTT ? 
-                    events.isHebrewDate ? 
-                      (events.hebrewDates!.isNotEmpty && events.hebrewDates!.containsKey(data.date) ?
-                        Text(key: ValueKey<bool>(events.isHebrewDate), events.hebrewDates![data.date]!, style:  TextStyle(color: Colors.grey.shade600, fontSize: 11)) : 
-                        const CupertinoActivityIndicator(key: ValueKey<String>('CupertinoActivityIndicator'),radius: 9,)) :
-                    Text(key: ValueKey<bool>(events.isHebrewDate), DateFormat('dd/MM/yy').format(data.date), style:  TextStyle(color: Colors.grey.shade600, fontSize: 12)) : Container() 
-                 ),
-               ),
-                
+                child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 400),
+                    transitionBuilder: ((child, animation) =>
+                        ScaleTransition(scale: animation, child: child)),
+                    child: isNotYTT
+                        ? events.isHebrewDate
+                            ? (events.hebrewDates!.isNotEmpty &&
+                                    events.hebrewDates!.containsKey(data.date)
+                                ? Text(
+                                    key: ValueKey<bool>(events.isHebrewDate),
+                                    events.hebrewDates![data.date]!,
+                                    style: TextStyle(
+                                        color: Colors.grey.shade600,
+                                        fontSize: events.hebrewDates![data.date]!.length <= 17 ? 11 : 10))
+                                : const CupertinoActivityIndicator(
+                                    key: ValueKey<String>(
+                                        'CupertinoActivityIndicator'),
+                                    radius: 9,
+                                  ))
+                            : Text(
+                                key: ValueKey<bool>(events.isHebrewDate),
+                                DateFormat('dd/MM/yy').format(data.date),
+                                style: TextStyle(
+                                    color: Colors.grey.shade600, fontSize: 12))
+                        : Container()),
+              ),
               TimeLeft(
                 date: data.date,
                 fontSize: isNotYTT ? 11 : null,
@@ -64,7 +76,6 @@ class ZmanWidget extends StatelessWidget {
     );
   }
 }
-
 
 const Map<String, Map<String, Set<String>>> types = {
   'en': {
@@ -155,10 +166,7 @@ const Map<String, Map<String, Set<String>>> types = {
       'שמע אחרון (מג"א)',
       ' זריחה ועוד 3 שעות הלכתיות לפי מגן אברהם'
     },
-    'sofZmanShma': {
-      'שמע אחרון (גר"א)',
-      ' זריחה ועוד 3 שעות הלכתיות ע"פ הגר"א'
-    },
+    'sofZmanShma': {'שמע אחרון (גר"א)', ' זריחה ועוד 3 שעות הלכתיות ע"פ הגר"א'},
     'sofZmanTfillaMGA': {
       'שחרית אחרונה (מג"א)',
       ' זריחה פלוס 4 שעות הלכתיות לפי מגן אברהם'

@@ -17,6 +17,7 @@ class SettingsBar extends StatefulWidget {
     required this.isOnlyShabat,
     required this.updateIsOnlyShabat,
     required this.setIsLoading,
+    required this.setIsLoadingZmanim,
     required this.viewState,
     required this.isHebrewDate,
     required this.updateIsHebrewDate,
@@ -25,6 +26,7 @@ class SettingsBar extends StatefulWidget {
   final bool isOnlyShabat;
   final Function updateIsOnlyShabat;
   final Function setIsLoading;
+  final Function setIsLoadingZmanim;
   final ViewState viewState;
   final bool isHebrewDate;
   final Function updateIsHebrewDate;
@@ -143,7 +145,9 @@ class _SettingsBarState extends State<SettingsBar> {
                                     onChanged: (value) {
                                       if (value != events.city) {
                                         events.setCity(value ?? events.city,
-                                            setIsLoading: widget.setIsLoading);
+                                            setIsLoading: widget.setIsLoading,
+                                            setIsLoadingZmanim: widget.setIsLoadingZmanim,
+                                          );
                                       }
                                     }),
                               ),
@@ -165,7 +169,8 @@ class _SettingsBarState extends State<SettingsBar> {
                                             .add(const Duration(days: 365)));
                                     if (newDate != null) {
                                       events.setStartDate(newDate,
-                                          setIsLoading: widget.setIsLoading);
+                                          setIsLoading: widget.setIsLoading,
+                                          setIsLoadingZmanim: widget.setIsLoadingZmanim,);
                                     }
                                   },
                                   icon:
@@ -214,13 +219,15 @@ class _SettingsBarState extends State<SettingsBar> {
                                 onPressed: () => events.setStartDate(
                                     events.startDate
                                         .subtract(const Duration(days: 1)),
-                                    setIsLoading: widget.setIsLoading),
+                                    setIsLoading: widget.setIsLoading,
+                                    setIsLoadingZmanim: widget.setIsLoadingZmanim),
                                 icon: const Icon(Icons.remove, size: 20)),
                             IconButton(
                                 onPressed: () => events.setStartDate(
                                     events.startDate
                                         .add(const Duration(days: 1)),
-                                    setIsLoading: widget.setIsLoading),
+                                    setIsLoading: widget.setIsLoading,
+                                    setIsLoadingZmanim: widget.setIsLoadingZmanim),
                                 icon: const Icon(
                                   Icons.add,
                                   size: 20,
@@ -284,7 +291,8 @@ class _SettingsBarState extends State<SettingsBar> {
                                             df.DateFormat('dd/MM/yy')
                                                 .format(events.startDate)) {
                                       events.setStartDate(DateTime.now(),
-                                          setIsLoading: widget.setIsLoading);
+                                          setIsLoading: widget.setIsLoading,
+                                          setIsLoadingZmanim: widget.setIsLoadingZmanim);
                                     }
                                   },
                                   icon: Icon(
