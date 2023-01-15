@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kodesh_app/animations/expanded_section.dart';
 import 'package:kodesh_app/providers/language_change_provider.dart';
 
 class CustomExpandedListView extends StatefulWidget {
@@ -61,11 +62,20 @@ class _CutomExpandedListViewState extends State<CustomExpandedListView> {
               // stops: [0, 1], if you want to adjust the gradiet this is where you would do it
             ),
           ),
-          child: LimitedBox(
-            maxHeight: _isExpanded ? widget.maxHeight : widget.minHeight,
-            child: ListView(
-              padding: const EdgeInsets.all(0),
-              children: widget.children,
+          child: !_isExpanded ? LimitedBox(
+              maxHeight: _isExpanded ? widget.maxHeight : widget.minHeight,
+              child: ListView(
+                padding: const EdgeInsets.all(0),
+                children: widget.children,
+              ),
+            ) : ExpandedSection(
+            expand: _isExpanded,
+            child: LimitedBox(
+              maxHeight: _isExpanded ? widget.maxHeight : widget.minHeight,
+              child: ListView(
+                padding: const EdgeInsets.all(0),
+                children: widget.children,
+              ),
             ),
           ),
         ),
