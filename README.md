@@ -27,20 +27,18 @@ It is also possible to set notifications for additional reminders, for example, 
 
 ## In the app you will find:
 
-#### Display in different languages.
+#### • Display in different languages.
 
-### Using three different APIs:
+### • Using three different APIs:
 
 1. [Hebcal Shabbat Times REST API](https://www.hebcal.com/home/197/shabbat-times-rest-api)
 2. [Hebcal Zmanim API](https://www.hebcal.com/home/1663/zmanim-halachic-times-api)
 3. [Hebcal Hebrew Date Converter REST API](https://www.hebcal.com/home/219/hebrew-date-converter-rest-api)
 
-#### Reminders - using local notifications.
+#### • Reminders - using local notifications.
 
-#### Several different prayers that are opened according to the notification.
+#### • Several different prayers that are opened according to the notification.
 
-#### Prayer compass.
+#### • Prayer compass.
 
-#### Animations.
-
-#### • Permission to update the house income:
+#### • Animations.
