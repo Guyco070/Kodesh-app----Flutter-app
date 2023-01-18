@@ -349,7 +349,7 @@ class Events with ChangeNotifier {
     Response response;
     DateTime now = DateTime.now();
     var url = Uri.parse(
-        'https://www.hebcal.com/converter?cfg=json&start=${getDushedFormatedDate(now.isBefore(startDate) ? now.subtract(const Duration(days: 1)) : startDate.subtract(const Duration(days: 1)))}&&end=${getDushedFormatedDate(startDate.add(const Duration(days: 10)))}');
+        'https://www.hebcal.com/converter?cfg=json&start=${getDushedFormatedDate(now.isBefore(startDate) ? now.subtract(const Duration(days: 1)) : startDate.subtract(const Duration(days: 1)))}&&end=${getDushedFormatedDate(now.add(const Duration(days: 10)))}');
     response = await get(url);
 
     return jsonDecode(response.body) as Map<String, dynamic>;
@@ -385,6 +385,11 @@ class Events with ChangeNotifier {
     DateTime? now = DateTime.now();
 
     if (_currentLocale.languageCode == 'he') {
+      // items.forEach((key, value) {
+      //   print(key);
+      // });
+      // print(getDushedFormatedDate(now));
+      // print(items[getDushedFormatedDate(now)]);
       tempItems[getDateTimeSetToZero(now)] =
           items[getDushedFormatedDate(now)]['hebrew'];
     } else {
