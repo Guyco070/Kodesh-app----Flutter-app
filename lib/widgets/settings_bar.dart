@@ -250,7 +250,7 @@ class _SettingsBarState extends State<SettingsBar> {
                             onPressed: () => widget.updateIsOnlyShabat(),
                             child: Text(
                               widget.viewState == ViewState.events
-                                  ? widget.isOnlyShabat ? appLocalizations.viewAllEvents : appLocalizations.onlyShabat
+                                  ? widget.isOnlyShabat ? appLocalizations.onlyShabat : appLocalizations.viewAllEvents
                                   : appLocalizations.fromNowOn,
                               style: TextStyle(
                                   color: widget.isOnlyShabat
