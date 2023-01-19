@@ -39,12 +39,9 @@ It is also possible to set notifications for additional reminders, for example, 
 
 1. Before Shabat and holidays:
 
-&nbsp;
+</br> - A reminder to connect Shabat blech, samovar, Shabat clock and more.
 
-- A reminder to connect Shabat blech, samovar, Shabat clock and more.
-  &nbsp;
 - A seperate reminder to light candles.
-  &nbsp;
 - A reminder for havdalah.
 
 2. Hanukkah candles lighting.
