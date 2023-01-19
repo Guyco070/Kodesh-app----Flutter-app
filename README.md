@@ -6,7 +6,7 @@ The application developed to help its users who want to know the entry and exit 
 It is also possible to set notifications for additional reminders, for example, reminders to put on tefillin.
 
 <a href='https://vimeo.com/790796748'>
-  <img align="center"  alt="Watch the video" width="500px" src="./readmeAssets/kodesh.png" />
+  <img align="center"  alt="Watch the video" width="500px" height="300px" src="./readmeAssets/kodesh.png" />
 </a>
 
 ---
