@@ -47,7 +47,7 @@ class ZmanWidget extends StatelessWidget {
                         ScaleTransition(scale: animation, child: child)),
                     child: isNotYTT
                         ? events.isHebrewDate
-                            ? (events.hebrewDates!.isNotEmpty &&
+                            ? (events.hebrewDates != null && events.hebrewDates!.isNotEmpty &&
                                     events.hebrewDates!.containsKey(data.date)
                                 ? Text(
                                     key: ValueKey<bool>(events.isHebrewDate),

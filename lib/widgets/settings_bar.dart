@@ -309,17 +309,17 @@ class _SettingsBarState extends State<SettingsBar> {
                                 transitionBuilder: ((child, animation) =>
                                     ScaleTransition(scale: animation, child: child)),
                                 child: Row(
-                                  key: ValueKey<String>(events.isHebrewDate ? events.hebrewDates!.isEmpty ? '  ' : events.hebrewDates![getDateTimeSetToZero(DateTime.now())]! : df.DateFormat('dd/MM/yyyy').format(DateTime.now())),
+                                  key: ValueKey<String>(events.isHebrewDate ? events.hebrewDates == null || events.hebrewDates!.isEmpty ? '  ' : events.hebrewDates![getDateTimeSetToZero(DateTime.now())]! : df.DateFormat('dd/MM/yyyy').format(DateTime.now())),
                                   children: [ 
-                                    if(events.isHebrewDate && events.hebrewDates!.isEmpty) ...{
+                                    if(events.isHebrewDate && (events.hebrewDates == null ||  events.hebrewDates!.isEmpty)) ...{
                                       Text(
-                                          events.isHebrewDate ? events.hebrewDates!.isEmpty ? '  ' : events.hebrewDates![getDateTimeSetToZero(DateTime.now())]! : df.DateFormat('dd/MM/yyyy').format(DateTime.now()),
+                                          events.isHebrewDate ? events.hebrewDates == null || events.hebrewDates!.isEmpty ? '  ' : events.hebrewDates![getDateTimeSetToZero(DateTime.now())]! : df.DateFormat('dd/MM/yyyy').format(DateTime.now()),
                                           style: const TextStyle(fontSize: 12),
                                         ),
                                         const CupertinoActivityIndicator()
                                     }else...{
                                       Text(
-                                          events.isHebrewDate && events.hebrewDates!.isNotEmpty ? events.hebrewDates![getDateTimeSetToZero(DateTime.now())]! : df.DateFormat('dd/MM/yyyy').format(DateTime.now()),
+                                          events.isHebrewDate && events.hebrewDates != null && events.hebrewDates!.isNotEmpty ? events.hebrewDates![getDateTimeSetToZero(DateTime.now())]! : df.DateFormat('dd/MM/yyyy').format(DateTime.now()),
                                           style: const TextStyle(fontSize: 12),
                                         ),
                                     },
