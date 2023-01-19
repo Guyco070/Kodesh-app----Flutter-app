@@ -14,13 +14,13 @@ It is also possible to set notifications for additional reminders, for example, 
 ### Technologies:
 
 <div>
-    <img alt="Flutter" src="https://img.shields.io/badge/React%20Native-61DBFB?style=for-the-badge&logo=react&logoColor=white" />
+  <img alt="Flutter" src="https://img.shields.io/badge/Flutter-00579c?style=for-the-badge&logo=flutter&logoColor=white" />
 </div>
 
 ### Programming Languages:
 
 <div>
-    <img alt="Dart" src="https://img.shields.io/badge/Dart-00579c?style=for-the-badge&logo=dart&logoColor=white" />
+  <img alt="Dart" src="https://img.shields.io/badge/Dart-00579c?style=for-the-badge&logo=dart&logoColor=white" />
 </div>
 
 ---
