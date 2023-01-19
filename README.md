@@ -2,7 +2,7 @@
 
 ## 2023 - Kodesh – IOS/ Android smartphone application.
 
-The application was developed to help its users who want to know the entry and exit times of Shabbats and Jewish holidays, Jewish times of the day, and more by logging in or by receiving notifications as the users wish.
+The application developed to help its users who want to know the entry and exit times of Shabbats and Jewish holidays, Jewish times of the day, and more by logging in or by receiving notifications as the users wish.
 It is also possible to set notifications for additional reminders, for example, reminders to put on tefillin.
 
 <a href='https://vimeo.com/790796748'>
