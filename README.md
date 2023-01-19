@@ -1,6 +1,4 @@
-:candle:
-
-# Kodesh :candle:
+# Kodesh :candle::candle:
 
 ## 2023 - Kodesh – IOS/ Android smartphone application.
 
