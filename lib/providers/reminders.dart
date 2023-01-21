@@ -518,9 +518,9 @@ class Reminders with ChangeNotifier {
 
               // shabat or holiday
               // reminder to light shabat candles
-              x = e.entryDate!.add(Duration(
-                  hours: beforeShabatAndHolidaysCandlesHours,
-                  minutes: beforeShabatAndHolidaysCandlesMinutes));
+              x = e.releaseDate!.add(Duration(
+                  hours: afterShabatHavdalahHours,
+                  minutes: afterShabatHavdalahMinutes));
               // print('Release $x');
 
               if (now.isBefore(x)) {
@@ -528,8 +528,8 @@ class Reminders with ChangeNotifier {
                   'id': id,
                   'title': e.getReminderHavdalahTitle(lang),
                   'body': e.getReminderHavdalahBody(
-                      beforeShabatAndHolidaysCandlesHours,
-                      beforeShabatAndHolidaysCandlesMinutes,
+                      afterShabatHavdalahHours,
+                      afterShabatHavdalahHours,
                       lang),
                   'date': x,
                   'payload': Havdalah.routeName,

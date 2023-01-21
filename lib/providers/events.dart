@@ -259,11 +259,11 @@ class Events with ChangeNotifier {
     }
 
     // Shabat newS = Shabat.createShabat(candles: {
-    //   'date': DateTime.now().subtract(const Duration(days: 1)).toString()
+    //   'date': DateTime.now().add(const Duration(seconds: 2)).toString()
     // }, parashat: {
     //   'title': 'ddddd'
     // }, havdalah: {
-    //   'date': DateTime.now().add(const Duration(seconds: 2)).toString()
+    //   'date': DateTime.now().add(const Duration(seconds: 5)).toString()
     // }); // try for ome more minute from now
     // tempItems.add(newS);
     // Holiday newH = Holiday(title: 'חג', subcat: 'major', entryDate: DateTime.now().add(const Duration(seconds: 1)), releaseDate: DateTime.now().add(const Duration(seconds: 1)), titleOrig: ''); // try
@@ -385,11 +385,6 @@ class Events with ChangeNotifier {
     DateTime? now = DateTime.now();
 
     if (_currentLocale.languageCode == 'he') {
-      // items.forEach((key, value) {
-      //   print(key);
-      // });
-      // print(getDushedFormatedDate(now));
-      // print(items[getDushedFormatedDate(now)]);
       tempItems[getDateTimeSetToZero(now)] =
           items[getDushedFormatedDate(now)]['hebrew'];
     } else {
