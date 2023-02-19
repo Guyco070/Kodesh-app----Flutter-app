@@ -95,44 +95,49 @@ class Tfilot with ChangeNotifier {
     );
   }
 
-  List<TextSpan> getSederWidgets({Map getBracha = const {}, bool isWithNosah = false, Map<String, List<String>>? textList}) {
-    final List<String> seder = textList != null ? textList[LanguageChangeProvider
-        .getCurrentLocale
-        .languageCode]! : (getBracha[LanguageChangeProvider
-        .getCurrentLocale
-        .languageCode])![isWithNosah ? _nosah : Nosah.mizrah] as List<String>;
+  List<TextSpan> getSederWidgets(
+      {Map getBracha = const {},
+      bool isWithNosah = false,
+      Map<String, List<String>>? textList,
+      double fontSizeScale = 0}) {
+    final List<String> seder = textList != null
+        ? textList[LanguageChangeProvider.getCurrentLocale.languageCode]!
+        : (getBracha[LanguageChangeProvider.getCurrentLocale.languageCode])![
+            isWithNosah ? _nosah : Nosah.mizrah] as List<String>;
     TextStyle font;
     List<TextSpan> widgets = [];
+    final double titleFontSize = 15 + fontSizeScale;
+    final double bodyFontSize = 14 + fontSizeScale;
 
     for (int i = 1; i < seder.length; i++) {
       String? text;
       if (seder[i][0] == 'B') {
         // B = First line of the prey
-        font = const TextStyle(fontWeight: FontWeight.w600, fontSize: 15);
+        font = TextStyle(fontWeight: FontWeight.w600, fontSize: titleFontSize);
         text = '${seder[i].substring(1, seder[i].length)}\n';
       } else if (seder[i][0] == 'T') {
         // T = title
-        font = const TextStyle(fontWeight: FontWeight.w600, fontSize: 15);
+        font = TextStyle(fontWeight: FontWeight.w600, fontSize: titleFontSize);
         text = '\n${seder[i].substring(1, seder[i].length)}\n';
       } else if (seder[i][0] == 'S') {
         // S = Start of a sentens
         text = seder[i].substring(1, seder[i].length);
         if (seder[i][seder[i].length - 1] == '.' ||
             seder[i][seder[i].length - 1] == ':') text += '\n\n';
-        font = const TextStyle(
+        font = TextStyle(
             fontWeight: FontWeight.w400,
-            fontSize: 15,
+            fontSize: titleFontSize,
             color: Colors.blueAccent);
       } else if (seder[i][seder[i].length - 1] == '.') {
         // end of line
         text = '${seder[i]}\n';
-        font = const TextStyle(fontWeight: FontWeight.w300, fontSize: 14);
+        font = TextStyle(fontWeight: FontWeight.w300, fontSize: bodyFontSize);
       } else if (seder[i][seder[i].length - 1] == ':') {
         // end of line
         text = '${seder[i]}\n\n';
-        font = const TextStyle(fontWeight: FontWeight.w300, fontSize: 14);
+        font = TextStyle(fontWeight: FontWeight.w300, fontSize: bodyFontSize);
       } else {
-        font = const TextStyle(fontWeight: FontWeight.w300, fontSize: 14);
+        font = TextStyle(fontWeight: FontWeight.w300, fontSize: bodyFontSize);
       }
 
       widgets.add(TextSpan(

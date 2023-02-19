@@ -25,7 +25,6 @@ class CompassButton extends StatelessWidget {
           Navigator.of(context).push(
               HeroDialogRoute(builder: ((context) => CompassWidget())));
         },
-        
           child: Container(
             padding: const EdgeInsets.all(5.0),
             decoration: BoxDecoration(
