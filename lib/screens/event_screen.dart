@@ -11,6 +11,7 @@ import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/widgets/default_scaffold.dart';
 import 'package:kodesh_app/widgets/events_widgets/event_factory_widget.dart';
 import 'package:kodesh_app/widgets/settings_bar.dart';
+import 'package:kodesh_app/widgets/swiches/view_type_switch.dart';
 import 'package:kodesh_app/widgets/zman_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/data/latest.dart';
@@ -147,7 +148,7 @@ class _EventScreenState extends State<EventScreen> {
                 ? '${AppLocalizations.of(context)!.shabat} - ${e.title}'
                 : e.title;
       }
-      if (isOnlyShabat && e is Shabat) {
+      if (isOnlyShabat && (e is Shabat || e.entryDate?.hour != 0)) {
         widgets.add(EventFactoryWidget(data: e));
       } else if (!isOnlyShabat) {
         widgets.add(EventFactoryWidget(data: e));
@@ -163,11 +164,8 @@ class _EventScreenState extends State<EventScreen> {
   void getZmanim({required String lang}) {
     setIsLoadingZmanim(true);
     Provider.of<Events>(context, listen: false)
-        .fetchAndSetZmanimProducts(
-            // getDataFirst: true,
-            lang: lang)
+        .fetchAndSetZmanimProducts(lang: lang)
         .then((items) {
-      // setIsThereInternetConnection(items != null);
       setIsLoadingZmanim(false);
     });
   }
@@ -258,74 +256,6 @@ class _EventScreenState extends State<EventScreen> {
     Events events = Provider.of<Events>(context);
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
 
-    Padding viewSwitch = Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-      child: Row(
-        children: [
-          Expanded(
-            child: ElevatedButton(
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius:
-                              !LanguageChangeProvider.isDirectionRTL(null)
-                                  ? const BorderRadius.only(
-                                      topLeft: Radius.circular(50))
-                                  : const BorderRadius.only(
-                                      topRight: Radius.circular(50)))),
-                  backgroundColor: _viewState == ViewState.events
-                      ? MaterialStatePropertyAll<Color>(
-                          Theme.of(context).primaryColor)
-                      : MaterialStatePropertyAll<Color>(Colors.blue.shade800),
-                ),
-                onPressed: _viewState != ViewState.events
-                    ? () => setViewState(ViewState.events)
-                    : null,
-                child: FittedBox(
-                  child: Text(
-                    appLocalizations.weekEvents,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: _viewState == ViewState.events
-                            ? FontWeight.bold
-                            : FontWeight.normal),
-                  ),
-                )),
-          ),
-          Expanded(
-            child: ElevatedButton(
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius:
-                              LanguageChangeProvider.isDirectionRTL(null)
-                                  ? const BorderRadius.only(
-                                      topLeft: Radius.circular(50))
-                                  : const BorderRadius.only(
-                                      topRight: Radius.circular(50)))),
-                  backgroundColor: _viewState == ViewState.zmanim
-                      ? MaterialStatePropertyAll<Color>(
-                          Theme.of(context).primaryColor)
-                      : MaterialStatePropertyAll<Color>(Colors.blue.shade800),
-                ),
-                onPressed: _viewState != ViewState.zmanim
-                    ? () => setViewState(ViewState.zmanim)
-                    : () {},
-                child: FittedBox(
-                  child: Text(
-                    appLocalizations.todayTimes,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: _viewState == ViewState.zmanim
-                            ? FontWeight.bold
-                            : FontWeight.normal),
-                  ),
-                )),
-          ),
-        ],
-      ),
-    );
-
     return DefaultScaffold(
         setIsLoading: setIsLoadingLang,
         title: AppLocalizations.of(context)!.main,
@@ -346,8 +276,10 @@ class _EventScreenState extends State<EventScreen> {
                 updateIsHebrewDate: events.updateIsHebrewDate,
               ),
               if (LanguageChangeProvider.isInitialized && !_isLoadingLang)
-                viewSwitch,
-
+                ViewTypeSwitch(
+                    appLocalizations: appLocalizations,
+                    viewState: _viewState,
+                    setViewState: setViewState),
               if (events.eventsItems != null &&
                   _viewState == ViewState.events) ...{
                 if (_isLoading || _isLoadingLang)
@@ -367,41 +299,6 @@ class _EventScreenState extends State<EventScreen> {
                   renderNoInternetConnection(
                       AppLocalizations.of(context)!.noIntrnetMessage),
               },
-
-              // ElevatedButton(
-              //     onPressed: () async {
-              //       await NotificationApi.showNotification(
-              //           title: 'Guy',
-              //           body:
-              //               'Instant notfication Instant notification ddddd dasdasd  sadaghrtyj tyj ykluy  cfghb sgh sfgth trgh sdtfgh stdgh stdeh dth serth tgh s',
-              //           payload: SederAnahatTefilin.routeName);
-              //     },
-              //     child: const Text('Instant notification')),
-              // ElevatedButton(
-              //     onPressed: () async {
-              //       await NotificationApi.showSchedualedNotification2(
-              //           title: 'Guy',
-              //           body: 'Schedualed notfication',
-              //           date: tz.TZDateTime.from(
-              //             DateTime.now().add(const Duration(seconds: 1)),
-              //             tz.local,
-              //           ),
-              //           payload: SederAnahatTefilin.routeName);
-              //     },
-              //     child: const Text('Schedualed notification')),
-              // ElevatedButton(
-              //     onPressed: () async {
-              //       tz.initializeTimeZones();
-
-              //       tz.TZDateTime zonedTime =
-              //           tz.TZDateTime.local(2022, 11, 27, 09, 07);
-              //       print(zonedTime);
-              //       print(tz.TZDateTime.from(
-              //           DateTime.now().add(const Duration(seconds: 5)),
-              //           tz.local));
-              //       print(DateTime.now().add(const Duration(seconds: 5)));
-              //     },
-              //     child: const Text('date')),
             ],
           ),
         ));

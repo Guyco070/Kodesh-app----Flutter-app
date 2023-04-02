@@ -258,17 +258,6 @@ class Events with ChangeNotifier {
       }
     }
 
-    // Shabat newS = Shabat.createShabat(candles: {
-    //   'date': DateTime.now().add(const Duration(seconds: 2)).toString()
-    // }, parashat: {
-    //   'title': 'ddddd'
-    // }, havdalah: {
-    //   'date': DateTime.now().add(const Duration(seconds: 5)).toString()
-    // }); // try for ome more minute from now
-    // tempItems.add(newS);
-    // Holiday newH = Holiday(title: 'חג', subcat: 'major', entryDate: DateTime.now().add(const Duration(seconds: 1)), releaseDate: DateTime.now().add(const Duration(seconds: 1)), titleOrig: ''); // try
-    // tempItems.add(newH);
-
     List<int> toRemove = [];
     for (int i = 0; i < tempItems.length; i++) {
       for (Event x in tempItems) {
@@ -314,24 +303,16 @@ class Events with ChangeNotifier {
       bool getDataFirst = false,
       String lang = 'en',
       void Function(bool bool)? setIsThereInternetConnection}) async {
-    // if (getDataFirst) await getData();
-    // if (await isThereInternetConnection()) {
     try {
       final extractData = await tryFetchZmanim();
       _zmanimItems = [];
       _zmanimItems =
           getZmanimItemsFromMap(extractData['times'] as Map<String, dynamic>);
       notifyListeners();
-      // print(zmanimItems);
       return _zmanimItems;
     } catch (error) {
       rethrow;
     }
-    // } else {
-    //   _zmanimItems = null;
-    //   notifyListeners();
-    //   return _zmanimItems;
-    // }
   }
 
   static getZmanimItemsFromMap(Map<String, dynamic> items) {
@@ -359,8 +340,6 @@ class Events with ChangeNotifier {
       {bool filterByUser = false,
       bool getDataFirst = false,
       void Function(bool bool)? setIsThereInternetConnection}) async {
-    // if (getDataFirst) await getData();
-    // if (await isThereInternetConnection()) {
     try {
       tryFetchHebrewDates().then((extractData) {
         _hebrewDates = {};
@@ -373,11 +352,6 @@ class Events with ChangeNotifier {
     } catch (error) {
       rethrow;
     }
-    // } else {
-    //   _zmanimItems = null;
-    //   notifyListeners();
-    //   return _zmanimItems;
-    // }
   }
 
   getHebrewDatesItemsFromMap(Map<String, dynamic> items) {
