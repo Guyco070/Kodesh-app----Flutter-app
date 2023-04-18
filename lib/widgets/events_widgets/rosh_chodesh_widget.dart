@@ -13,6 +13,7 @@ class RoshChodeshWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(data);
     return Column(
       children: [
         if (data.releaseDate == null && data.entryDate != null)

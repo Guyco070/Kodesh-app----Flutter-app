@@ -18,13 +18,29 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Events with ChangeNotifier {
   List<Event>? _eventsItems = [];
+
+  /// [_eventsItems] : contains the asked week's events.
   List<Zman>? _zmanimItems = [];
-  Map<DateTime, String>? _hebrewDates = {};
+
+  /// [_zmanimItems] : contains today's times.
   String city = 'IL-Jerusalem|281184';
+
+  /// [city] : the city that the user chose for the events times.
   DateTime startDate = DateTime.now();
+
+  /// [startDate] : represent the first date that the user want to see the events from. (until week later)
   bool isOnlyShabat = false;
+
+  /// [isOnlyShabat] : if false - the user will see the details of all of the events at the week. else, the user will see only Shabat's details.
   bool isTodayTimesFromNow = false;
+
+  /// [isTodayTimesFromNow] : if false - the user will see all of today's times. else, the user will see only the times from current moment to the end of the day.
   bool isHebrewDate = false;
+
+  /// [isHebrewDate] : if false - the dates will view in Gregorian Date format. else, the dates will view in Hebrew Date format.
+  Map<DateTime, String>? _hebrewDates = {};
+
+  /// [_hebrewDates] : if isHebrewDate is true, fill in the Hebrew dates that correspond to the Gregorian dates of the events. Fill by fetching from an appropriate API.
 
   Locale _currentLocale = const Locale('en');
 
@@ -66,6 +82,7 @@ class Events with ChangeNotifier {
     return _hebrewDates == null ? null : {..._hebrewDates!};
   }
 
+  /// Changing the [city] and adjusting the events and times to the selected city
   setCity(String newCity,
       {Function? setIsLoading, Function? setIsLoadingZmanim}) async {
     city = newCity;
@@ -84,6 +101,7 @@ class Events with ChangeNotifier {
     prefs.setString('city', city);
   }
 
+  /// update [isOnlyShabat] value
   updateIsOnlyShabat() async {
     isOnlyShabat = !isOnlyShabat;
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -192,7 +210,16 @@ class Events with ChangeNotifier {
     }
   }
 
-  static getEventsItemsFromMap(items) {
+  static getEventsItemsFromMap(List? items) {
+    dynamic searchHavdalah(List items, int index) {
+      while (index < items.length) {
+        if (items[index]['category'] == 'havdalah') {
+          return items[index];
+        }
+        index++;
+      }
+    }
+
     if (items == null) return null;
     List<Event> tempItems = [];
     for (int i = 0; i < items.length; i++) {
@@ -207,7 +234,7 @@ class Events with ChangeNotifier {
                 : null,
             candles: items[tempI],
             parashat: items[i],
-            havdalah: items[i + 1]);
+            havdalah: searchHavdalah(items, i));
         tempItems.add(newS);
       } else if (items[i]['category'] == 'holiday') {
         if (i == 0) {
@@ -235,13 +262,14 @@ class Events with ChangeNotifier {
                 parashat: items[i],
                 havdalah: items[i + 1]['category'] == 'havdalah'
                     ? items[i + 1]
-                    : null));
+                    : searchHavdalah(items, i)));
           }
         }
       } else if (items[i]['category'] == 'roshchodesh') {
         RoshChodesh newRs = RoshChodesh.createRoshChodesh(
             candles: null, parashat: items[i], havdalah: null);
         int? index;
+
         for (Event e in tempItems) {
           if (e is RoshChodesh) {
             newRs = RoshChodesh.marge(newRs, e);
@@ -257,7 +285,6 @@ class Events with ChangeNotifier {
         ));
       }
     }
-
     List<int> toRemove = [];
     for (int i = 0; i < tempItems.length; i++) {
       for (Event x in tempItems) {
