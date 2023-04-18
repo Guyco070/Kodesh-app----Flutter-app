@@ -68,5 +68,4 @@ DateTime getDateTimeSetToZero(DateTime date) {
 //     x[date.weekday] = DateFormat('EEEE').format(date);
 //     date = date.add(const Duration(days: 1));
 //   }
-//   print(x);
 // }

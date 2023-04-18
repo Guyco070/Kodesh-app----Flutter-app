@@ -197,6 +197,7 @@ class Events with ChangeNotifier {
 
         fetchAndSetHebrewDatesProducts();
         notifyListeners();
+
         return _eventsItems;
       } catch (error) {
         rethrow;
@@ -288,7 +289,7 @@ class Events with ChangeNotifier {
     List<int> toRemove = [];
     for (int i = 0; i < tempItems.length; i++) {
       for (Event x in tempItems) {
-        if (tempItems[i] != x && tempItems[i].title == x.title) {
+        if (tempItems[i] != x && tempItems[i].title == x.title && tempItems[i].runtimeType == x.runtimeType) {
           if (tempItems[i].entryDate!.minute == 0 &&
               tempItems[i].entryDate!.hour == 0) {
             toRemove.add(i);
@@ -303,6 +304,7 @@ class Events with ChangeNotifier {
         aftetrFiltering.add(tempItems[i]);
       }
     }
+
     return aftetrFiltering;
   }
 

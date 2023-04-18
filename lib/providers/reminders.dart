@@ -433,7 +433,6 @@ class Reminders with ChangeNotifier {
       //     ));
 
       for (Event e in items) {
-        // print(e);
         if (shabatAndHolidays && e is! RoshChodesh && e is! SfiratOmer) {
           // if Shabat or Holiday
           DateTime? x;
@@ -444,12 +443,10 @@ class Reminders with ChangeNotifier {
             } else {
               x = e.entryDate!.subtract(Duration(
                   hours: beforeShabatHours, minutes: beforeShabatMinutes));
-              // print('Entry holiday $x');
             }
           } else {
             x = e.entryDate!.subtract(Duration(
                 hours: beforeShabatHours, minutes: beforeShabatMinutes));
-            // print('Entry shabat $x');
           }
 
           if (nerotHanukkah && e.title.contains('Chanukah') ||
@@ -521,7 +518,6 @@ class Reminders with ChangeNotifier {
               x = e.releaseDate!.add(Duration(
                   hours: afterShabatHavdalahHours,
                   minutes: afterShabatHavdalahMinutes));
-              // print('Release $x');
 
               if (now.isBefore(x)) {
                 notValues.add({
