@@ -177,6 +177,7 @@ class Events with ChangeNotifier {
       url = Uri.parse(isToday
           ? 'https://www.hebcal.com/shabbat?cfg=json&o=on&city=${cityToTake.split('|')[0]}&lg=${lang ?? _currentLocale.languageCode}'
           : 'https://www.hebcal.com/shabbat?cfg=json&o=on&gy=${startDate.year}&gm=${startDate.month}&gd=${startDate.day}&city=${cityToTake.split('|')[0]}&lg=${lang ?? _currentLocale.languageCode}');
+      print(url);
       response = await get(url);
     }
     return jsonDecode(response.body) as Map<String, dynamic>;
@@ -222,11 +223,13 @@ class Events with ChangeNotifier {
     }
 
     if (items == null) return null;
+
     List<Event> tempItems = [];
     for (int i = 0; i < items.length; i++) {
       if (items[i]['category'] == 'parashat') {
+
         int tempI = i - 1;
-        while (tempI != -1 && items[tempI]['category'] != 'candles') {
+        while (tempI != -1 && items[tempI]['category'] != 'candles') { // go back and search for shaabat candles lightning time
           tempI--;
         }
         Shabat newS = Shabat.createShabat(
@@ -236,6 +239,7 @@ class Events with ChangeNotifier {
             candles: items[tempI],
             parashat: items[i],
             havdalah: searchHavdalah(items, i));
+
         tempItems.add(newS);
       } else if (items[i]['category'] == 'holiday') {
         if (i == 0) {
@@ -263,7 +267,7 @@ class Events with ChangeNotifier {
                 parashat: items[i],
                 havdalah: items[i + 1]['category'] == 'havdalah'
                     ? items[i + 1]
-                    : searchHavdalah(items, i)));
+                    : null));
           }
         }
       } else if (items[i]['category'] == 'roshchodesh') {
@@ -289,7 +293,9 @@ class Events with ChangeNotifier {
     List<int> toRemove = [];
     for (int i = 0; i < tempItems.length; i++) {
       for (Event x in tempItems) {
-        if (tempItems[i] != x && tempItems[i].title == x.title && tempItems[i].runtimeType == x.runtimeType) {
+        if (tempItems[i] != x &&
+            tempItems[i].title == x.title &&
+            tempItems[i].runtimeType == x.runtimeType) {
           if (tempItems[i].entryDate!.minute == 0 &&
               tempItems[i].entryDate!.hour == 0) {
             toRemove.add(i);
