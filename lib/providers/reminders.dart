@@ -540,6 +540,8 @@ class Reminders with ChangeNotifier {
             !(e.title.contains('Chanukah') ||
                 (e.titleOrig != null && e.titleOrig!.contains('Chanukah')))) {
           // removing tefillin reminders from holidays
+          print("tzToRemove");
+          print(e);
           if (tefilinDates.isNotEmpty && e.releaseDate != null) {
             tzToRemove.add(tefilinDates.indexOf(tefilinDates[0]));
             for (DateTime dt in tefilinDates) {
@@ -556,7 +558,9 @@ class Reminders with ChangeNotifier {
               }
             }
           }
-        } else if (roshChodesh && e is RoshChodesh) {
+        }else if((e.titleOrig != null && e.titleOrig!.contains("(CH''M)")) || e.title.contains("(CH''M)")) { // Chole Mohed - no need for tefilin
+            tzToRemove.add(tefilinDates.indexOf(e.entryDate!));
+          } else if (roshChodesh && e is RoshChodesh) {
           // rosh chodesh
           DateTime dayBefore = DateTime(
                   e.entryDate!.year,
