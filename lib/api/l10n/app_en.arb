@@ -33,6 +33,9 @@
     "tefilinOrderMenu": "Laying of phylacteries",
     "@tefilinOrderMenu": { "description": "tefilinOrderMenu" },
 
+    "noTefilin": "Do not put on tefillin on this day",
+    "@noTefilin": { "description": "noTefilin" },
+
     "aboutMenu": "About",
     "@aboutMenu": { "description": "aboutMenu" },
 

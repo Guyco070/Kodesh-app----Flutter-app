@@ -14,9 +14,19 @@ class HolidayWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     bool isHebrewDate = Provider.of<Events>(context).isHebrewDate;
-
+    
     return Column(
       children: [
+        if((data.titleOrig != null && data.titleOrig!.contains("(CH''M)")) || data.title.contains("(CH''M)")) ...{ // Chole Mohed - no need for tefilin
+          Text(
+            appLocalizations.noTefilin,
+            style: TextStyle(
+              color: Colors.grey[700],
+            ),
+            textAlign: TextAlign.center,
+          ), 
+          SizedBox(height: 15,),
+        },
         if (data.entryDate != null) entryDateFix(appLocalizations, isHebrewDate),
         if (data.releaseDate != null)
           ListTile(
