@@ -41,7 +41,7 @@ class Tfilot with ChangeNotifier {
     _nosah = newNosah;
     notifyListeners();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(_nosah.name, 'nosah');
+    prefs.setString('nosah', _nosah.name);
   }
 
   Nosah getNosahFromString(String? nosahName) {
