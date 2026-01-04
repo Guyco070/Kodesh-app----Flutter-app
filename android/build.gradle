@@ -1,5 +1,10 @@
 buildscript {
     ext.kotlin_version = '1.6.10'
+    ext.flutter = [
+        compileSdkVersion: 34,
+        targetSdkVersion: 34,
+        ndkVersion: "23.1.7779620"
+    ]
     repositories {
         google()
         mavenCentral()
@@ -26,6 +31,6 @@ subprojects {
     project.evaluationDependsOn(':app')
 }
 
-task clean(type: Delete) {
+tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }

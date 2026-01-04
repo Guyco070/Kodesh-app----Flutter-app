@@ -78,28 +78,37 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
           }
         },
         customButton: langIcon(lang),
-        selectedItemHighlightColor: Colors.white,
-        buttonPadding: const EdgeInsets.only(left: 14, right: 14),
-        buttonDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(
-            color: Colors.black26,
+        buttonStyleData: ButtonStyleData(
+          padding: const EdgeInsets.only(left: 14, right: 14),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(
+              color: Colors.black26,
+            ),
+          ),
+          elevation: 2,
+        ),
+        iconStyleData: const IconStyleData(
+          iconEnabledColor: Colors.white,
+        ),
+        dropdownStyleData: DropdownStyleData(
+          maxHeight: 200,
+          width: 200,
+          padding: null,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(14),
+          ),
+          elevation: 8,
+          offset: const Offset(-20, 0),
+          scrollbarTheme: ScrollbarThemeData(
+            radius: const Radius.circular(40),
+            thickness: MaterialStateProperty.all<double>(6),
+            thumbVisibility: MaterialStateProperty.all<bool>(true),
           ),
         ),
-        buttonElevation: 2,
-        // itemHeight: 40,
-        itemPadding: const EdgeInsets.only(left: 14, right: 14),
-        // dropdownMaxHeight: 200,
-        dropdownWidth: 200,
-        dropdownPadding: null,
-        dropdownDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(14),
+        menuItemStyleData: const MenuItemStyleData(
+          padding: EdgeInsets.only(left: 14, right: 14),
         ),
-        dropdownElevation: 8,
-        scrollbarRadius: const Radius.circular(40),
-        scrollbarThickness: 6,
-        scrollbarAlwaysShow: true,
-        offset: const Offset(-20, 0),
       ),
     );
   }

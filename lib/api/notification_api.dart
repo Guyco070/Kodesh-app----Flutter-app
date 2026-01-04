@@ -1,5 +1,5 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest.dart'; // for showSchedualedNotification function
 import 'package:timezone/timezone.dart'; // for showSchedualedNotification function
@@ -11,7 +11,7 @@ class NotificationApi {
 
   static initialize() async {
     initializeTimeZones(); // for showSchedualedNotification function
-    String timeZone = await FlutterNativeTimezone.getLocalTimezone();
+    String timeZone = await FlutterTimezone.getLocalTimezone();
     setLocalLocation(getLocation(timeZone));
 
     // when the app is closed
@@ -28,8 +28,7 @@ class NotificationApi {
         const DarwinInitializationSettings(
             requestAlertPermission: true,
             requestBadgePermission: true,
-            requestSoundPermission: true,
-            onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+            requestSoundPermission: true);
     final InitializationSettings settings = InitializationSettings(
       android: androidInitializationSettings,
       iOS: iosinitializationSetting,
@@ -84,10 +83,10 @@ class NotificationApi {
       title,
       body,
       TZDateTime.from(date, local),
+      _notificationDetails(),
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
-      androidAllowWhileIdle: true,
-      _notificationDetails(),
       payload: payload,
     );
   }
@@ -103,11 +102,11 @@ class NotificationApi {
       title,
       body,
       TZDateTime.from(_nextTimeWeekday(weekday), local),
+      _notificationDetails(),
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
-      androidAllowWhileIdle: true,
-      _notificationDetails(),
       payload: payload,
     );
   }
@@ -120,17 +119,18 @@ class NotificationApi {
       String? title,
       String? body,
       String? payload,
-      required Time time}) async {
+      required int hour,
+      required int minute}) async {
     return _notifications.zonedSchedule(
       id,
       title,
       body,
-      schedualeDaily(time),
+      schedualeDaily(hour, minute),
+      _notificationDetails(),
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time,
-      androidAllowWhileIdle: true,
-      _notificationDetails(),
       payload: payload,
     );
   }
@@ -153,20 +153,20 @@ class NotificationApi {
     return y; // if today is weekday
   }
 
-  static TZDateTime schedualeDaily(Time time) {
+  static TZDateTime schedualeDaily(int hour, int minute) {
     final now = TZDateTime.now(local);
     final schedualedDate = TZDateTime(local, now.year, now.month, now.day,
-        time.hour, time.minute, time.second);
+        hour, minute, 0);
 
     return schedualedDate.isBefore(now)
         ? schedualedDate.add(const Duration(days: 1))
         : schedualedDate;
   }
 
-  static DateTime schedualeDailyDateTime(Time time) {
+  static DateTime schedualeDailyDateTime(int hour, int minute) {
     final now = DateTime.now();
     final schedualedDate = DateTime(
-        now.year, now.month, now.day, time.hour, time.minute, time.second);
+        now.year, now.month, now.day, hour, minute, 0);
 
     return schedualedDate.isBefore(now)
         ? schedualedDate.add(const Duration(days: 1))
@@ -185,6 +185,7 @@ class NotificationApi {
 
   static void onDidReceiveNotificationResponse(NotificationResponse details) {
     print('onDidReceiveNotificationResponse');
+    print('id ${details.id}'); // Preserving functionality from deprecated onDidReceiveLocalNotification
     if (details.payload != null) {
       onNotifications.add(details.payload);
     }

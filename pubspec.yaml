@@ -20,7 +20,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.18.4 <3.0.0"
+  sdk: ">=3.0.0 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -36,25 +36,25 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
-  http: ^0.13.5
-  provider: ^6.0.4
-  intl: ^0.17.0
-  flutter_local_notifications: ^12.0.3
-  timezone: ^0.9.0
-  numberpicker: ^2.1.1
-  shared_preferences: ^2.0.15
-  rxdart: ^0.27.7
-  internet_connection_checker: ^1.0.0+1
-  dropdown_button2: ^1.9.2
-  flutter_native_timezone: ^2.0.0
-  flutter_compass: ^0.7.0
+  cupertino_icons: ^1.0.8
+  http: ^1.2.2
+  provider: ^6.1.2
+  intl: ^0.18.1
+  flutter_local_notifications: ^18.0.1
+  timezone: ^0.9.4
+  numberpicker: ^2.1.2
+  shared_preferences: ^2.2.3
+  rxdart: ^0.28.0
+  internet_connection_checker_plus: ^2.5.2
+  dropdown_button2: ^2.3.9
+  flutter_timezone: ^1.0.8
+  flutter_compass: ^0.8.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.12.0
-  flutter_native_splash: ^2.2.19
+  flutter_launcher_icons: ^0.14.1
+  flutter_native_splash: ^2.3.13
 
 flutter_icons:
   android: true
