@@ -18,9 +18,7 @@ import 'package:kodesh_app/screens/tefilot/sfirat_omer_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -28,8 +26,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     
-    MaterialColor mycolor = const MaterialColor(
+
+    final MaterialColor mycolor = const MaterialColor(
       0xFF0047AE,
       <int, Color>{
         50: Color(0xFF0047AE),
@@ -41,24 +39,18 @@ class MyApp extends StatelessWidget {
         600: Color(0xFF0047AE),
         700: Color(0xFF0047AE),
         800: Color(0xFF0047AE),
-        900: Color(0xFF0047AE),
-      },
+        900: Color(0xFF0047AE)
+      }
     );
-
-    Reminders reminders = Reminders(context);
-    Events events = Events();
-    LanguageChangeProvider lang = LanguageChangeProvider();
-    lang.getData();
 
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => events),
-        ChangeNotifierProvider(create: (context) => reminders),
-        ChangeNotifierProvider(create: (context) => lang),
-        ChangeNotifierProvider(create: (context) => Tfilot()),
+        ChangeNotifierProvider(create: (context) => Events()),
+        ChangeNotifierProvider(create: (context) => Reminders(context)),
+        ChangeNotifierProvider(create: (context) => LanguageChangeProvider()..getData()),
+        ChangeNotifierProvider(create: (context) => Tfilot())
       ],
-      child: Builder(builder: (context) {
-        return MaterialApp(
+      child: Builder(builder: (context) => MaterialApp(
           locale: Provider.of<LanguageChangeProvider>(context).currentLocale,
           title: 'Kodesh',
           theme: ThemeData(
@@ -68,7 +60,7 @@ class MyApp extends StatelessWidget {
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate
           ],
           supportedLocales: L10n.all,
           home: const EventScreen(),
@@ -83,10 +75,9 @@ class MyApp extends StatelessWidget {
             AdlakatNerotChanukah.routeName: (_) => AdlakatNerotChanukah(),
             SfiratOmerScreen.routeName: (_) => SfiratOmerScreen(),
             Havdalah.routeName: (_) => Havdalah(),
-            AboutScreen.routeName: (_) => const AboutScreen(),
-          },
-        );
-      }),
+            AboutScreen.routeName: (_) => const AboutScreen()
+          }
+        ))
     );
   }
 }
