@@ -1,0 +1,10 @@
+Name,Status,Priority,Notes
+Fix Tefilin on Chol HaMoed removal logic,Not Started,High,"[Bug] Uses indexOf(e.entryDate!) which won't match DateTime objects properly. Should compare dates not object references | File: lib/providers/reminders.dart:567-568 | Est: 3h"
+Implement background notification handler,Not Started,High,"[Feature] Currently only prints debug message should navigate to appropriate screen | File: lib/api/notification_api.dart:194-197 | Est: 5h"
+Complete Hanukkah translations,Not Started,High,"[Bug] Spanish and Russian translations missing would cause null reference errors | File: lib/api/l10n/reminders_translates.dart:161-162 | Est: 2h"
+Add exact alarm permission handling,Not Started,Medium,"[Feature] Required for Android 12+ to schedule exact notifications | File: lib/api/notification_api.dart | Est: 4h"
+Fix Rosh Chodesh reminder edge cases,Not Started,Medium,"[Bug] Complex logic doesn't handle all edge cases (e.g. Rosh Chodesh on Sunday/Monday) | File: lib/providers/reminders.dart:571-598 | Est: 6h"
+Add notification retry logic,Not Started,Medium,"[Feature] Implement retry mechanism for failed notification scheduling | File: lib/api/notification_api.dart | Est: 4h"
+Validate user input for notification times,Not Started,Medium,"[Bug] Currently allows invalid values (negative numbers hours > 24 minutes > 60) | File: lib/widgets/schedual_notifications_widgets/ | Est: 3h"
+Add notification preview,Not Started,Medium,"[Feature] Allow users to preview what notification will look like before enabling | File: lib/widgets/ | Est: 5h"
+Add notification test button,Not Started,Medium,"[Feature] Let users test notifications immediately to verify settings | File: lib/widgets/ | Est: 3h"

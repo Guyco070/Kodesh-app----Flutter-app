@@ -1,0 +1,12 @@
+Name,Status,Priority,Notes
+Complete Spanish translation,Not Started,Low,"[I18n] Many strings missing Spanish translations | File: lib/api/l10n/ | Est: 8h"
+Complete Russian translation,Not Started,Low,"[I18n] Many strings missing Russian translations | File: lib/api/l10n/ | Est: 8h"
+Add RTL support validation,Not Started,Low,"[I18n] Test right-to-left layout for Hebrew | File: lib/ | Est: 4h"
+Add language selection onboarding,Not Started,Low,"[I18n] Guide new users to select language | File: lib/widgets/ | Est: 4h"
+Add translation management system,Not Started,Low,"[I18n] Use proper i18n management tool (like Lokalise or Crowdin) | File: N/A | Est: 6h"
+Add semantic labels,Not Started,Low,"[Accessibility] Ensure all widgets have semantic labels for screen readers | File: lib/widgets/ | Est: 8h"
+Test with TalkBack/VoiceOver,Not Started,Low,"[Accessibility] Verify screen reader compatibility | File: N/A | Est: 4h"
+Add high contrast mode,Not Started,Low,"[Accessibility] Support for users with vision impairments | File: lib/ | Est: 6h"
+Test font scaling,Not Started,Low,"[Accessibility] Ensure UI works with system font size settings | File: N/A | Est: 4h"
+Add keyboard navigation,Not Started,Low,"[Accessibility] Support for keyboard-only navigation | File: lib/widgets/ | Est: 8h"
+Color blind friendly,Not Started,Low,"[Accessibility] Ensure color choices work for color blind users | File: lib/ | Est: 4h"

@@ -1,0 +1,12 @@
+Name,Status,Priority,Notes
+Widget for home screen,Not Started,Low,"[Feature] Android/iOS widget showing next Shabbat/holiday time | File: platform_channels/ | Est: 20h"
+Share feature,Not Started,Low,"[Feature] Share Shabbat/holiday times via social media or messaging | File: lib/ | Est: 6h"
+Location auto-detection,Not Started,Low,"[Feature] Use GPS to automatically detect user's city | File: lib/ | Est: 8h"
+Multiple location support,Not Started,Low,"[Feature] Support for users who travel between cities regularly | File: lib/ | Est: 12h"
+Custom zmanim,Not Started,Low,"[Feature] Allow users to select which zmanim they want to see | File: lib/widgets/ | Est: 8h"
+Zmanim widget,Not Started,Low,"[Feature] Quick view widget for today's zmanim | File: lib/widgets/ | Est: 6h"
+Prayer times notifications,Not Started,Low,"[Feature] Add notifications for Shacharit Mincha Maariv based on zmanim | File: lib/ | Est: 12h"
+Theme support,Not Started,Low,"[Feature] Add dark mode and custom color themes | File: lib/ | Est: 12h"
+Font size controls,Not Started,Low,"[Feature] More granular font size customization | File: lib/widgets/ | Est: 4h"
+Custom date formats,Not Started,Low,"[Feature] Allow users to choose date format preferences | File: lib/ | Est: 4h"
+Sound effects,Not Started,Low,"[Feature] Optional sounds for candle lighting havdalah countdown etc. | File: lib/ | Est: 8h"

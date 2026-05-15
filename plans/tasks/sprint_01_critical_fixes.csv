@@ -1,0 +1,7 @@
+Name,Status,Priority,Notes
+Fix provider initialization in main.dart,Not Started,Critical,"[Bug] Providers are being created in build() method causing recreation on every rebuild. Move to proper initialization pattern using MultiProvider or lazy initialization | File: lib/main.dart:48-51 | Est: 3h"
+Fix Tfilot provider SharedPreferences bug,Not Started,Critical,"[Bug] Parameters are reversed: prefs.setString(_nosah.name 'nosah') should be prefs.setString('nosah' _nosah.name) | File: lib/providers/tfilot.dart:44 | Est: 1h"
+Fix locale dropdown bug,Not Started,Critical,"[Bug] Uses countryCode instead of languageCode for dropdown value | File: lib/widgets/default_scaffold.dart:68 | Est: 1h"
+Add error handling to all API calls,Not Started,Critical,"[Bug] Errors just rethrown without user-friendly handling | File: lib/providers/events.dart:194-205 | Est: 4h"
+Test Chol HaMoed logic thoroughly,Not Started,Critical,"[Testing] Recent commit added tefilin removal on Chol HaMoed - needs comprehensive testing | File: lib/providers/reminders.dart | Est: 5h"
+Add notification permission checking,Not Started,Critical,"[Feature] Check and request notification permissions before scheduling especially for Android 13+ | File: lib/api/notification_api.dart | Est: 3h"

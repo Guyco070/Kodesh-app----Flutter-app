@@ -1,0 +1,6 @@
+Name,Status,Priority,Notes
+Add privacy policy,Not Started,Low,"[Legal] Document data collection and usage | File: docs/ | Est: 4h"
+Implement data encryption,Not Started,Low,"[Security] Encrypt sensitive user data | File: lib/ | Est: 6h"
+Add app permissions documentation,Not Started,Low,"[Documentation] Explain why each permission is needed | File: docs/ | Est: 3h"
+Security audit,Not Started,Low,"[Security] Review for common security vulnerabilities | File: All files | Est: 12h"
+Add GDPR compliance,Not Started,Low,"[Legal] If targeting EU users | File: lib/ | Est: 8h"
