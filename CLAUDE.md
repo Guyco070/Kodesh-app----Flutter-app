@@ -135,14 +135,6 @@ These are existing patterns in the codebase to be aware of — do not replicate 
 - Sub-widgets used exclusively by one parent widget go in a subdirectory named after that parent (e.g., `lib/widgets/compass/compass_button.dart` for a sub-widget of `CompassWidget`). Do not dump them in the global `lib/widgets/` folder.
 - Extract sub-widgets into separate `StatelessWidget`/`StatefulWidget` classes. Do not build them via private builder methods like `Widget _buildSection()` — that pattern is only acceptable for very small, highly repetitive elements within the same file.
 
-### Directionality & RTL
-The app supports both Hebrew (RTL) and English (LTR). The active direction is managed by `LanguageChangeProvider.isDirectionRTL()`.
-
-- **Never hardcode direction**: Do not set `textDirection`, `textAlign: TextAlign.left/right`, or `Directionality` explicitly.
-- **Use semantic positioning**: Use `CrossAxisAlignment.start`, `MainAxisAlignment.start`, `Alignment.centerLeft` → `Alignment.centerStart`, and `EdgeInsetsDirectional` instead of `EdgeInsets`.
-- **RTL `Row` order**: In Hebrew mode, `Row.children[0]` renders on the **right** of the screen. When reading a Hebrew design, walk it **right-to-left**: whatever appears rightmost is `children[0]`. Do not list children in visual left-to-right order.
-- Use `LanguageChangeProvider.isDirectionRTL()` only when you genuinely need conditional logic (e.g., swapping an icon). Don't use it as a workaround for incorrect layout code.
-
 ### UI Text
 All hardcoded UI strings must go in ARB files (`lib/api/l10n/app_en.arb`, `app_he.arb`), not inlined in widgets. Run `flutter gen-l10n` after editing and access via `AppLocalizations.of(context)!.yourKey`. Notification strings go in `RemindersTranslates` instead (see Localization section above).
 
