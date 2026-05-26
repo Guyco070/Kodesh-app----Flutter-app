@@ -49,6 +49,7 @@ dependencies:
   dropdown_button2: ^2.3.9
   flutter_timezone: ^1.0.8
   flutter_compass: ^0.8.0
+  logger: ^2.5.0
 
 dev_dependencies:
   flutter_test:
