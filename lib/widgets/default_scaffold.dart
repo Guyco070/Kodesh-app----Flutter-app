@@ -65,11 +65,11 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
           textDirection: TextDirection.rtl,
         ),
         items: L10n.all.map<DropdownMenuItem<String>>(buildMenuItem).toList(),
-        value: lang.currentLocale.countryCode,
+        value: lang.currentLocale.languageCode,
         onChanged: (value) {
           if (value != lang.currentLocale.languageCode) {
             lang.changeLocale(
-              value ?? lang.currentLocale.languageCode,
+              value ?? lang.currentLocale.languageCode
             );
             Provider.of<Events>(context, listen: false)
                 .changeLocale(value ?? lang.currentLocale.languageCode,
@@ -78,54 +78,61 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
           }
         },
         customButton: langIcon(lang),
-        selectedItemHighlightColor: Colors.white,
-        buttonPadding: const EdgeInsets.only(left: 14, right: 14),
-        buttonDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(
-            color: Colors.black26,
+        buttonStyleData: ButtonStyleData(
+          padding: const EdgeInsets.only(left: 14, right: 14),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(
+              color: Colors.black26,
+            ),
           ),
+          elevation: 2,
         ),
-        buttonElevation: 2,
-        // itemHeight: 40,
-        itemPadding: const EdgeInsets.only(left: 14, right: 14),
-        // dropdownMaxHeight: 200,
-        dropdownWidth: 200,
-        dropdownPadding: null,
-        dropdownDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(14),
+        iconStyleData: const IconStyleData(
+          iconEnabledColor: Colors.white,
         ),
-        dropdownElevation: 8,
-        scrollbarRadius: const Radius.circular(40),
-        scrollbarThickness: 6,
-        scrollbarAlwaysShow: true,
-        offset: const Offset(-20, 0),
-      ),
+        dropdownStyleData: DropdownStyleData(
+          maxHeight: 200,
+          width: 200,
+          padding: null,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(14),
+          ),
+          elevation: 8,
+          offset: const Offset(-20, 0),
+          scrollbarTheme: ScrollbarThemeData(
+            radius: const Radius.circular(40),
+            thickness: MaterialStateProperty.all<double>(6),
+            thumbVisibility: MaterialStateProperty.all<bool>(true)
+          )
+        ),
+        menuItemStyleData: const MenuItemStyleData(
+          padding: EdgeInsets.only(left: 14, right: 14)
+        )
+      )
     );
   }
 
-  FittedBox langIcon(lang) {
-    return FittedBox(
+  FittedBox langIcon(lang) => FittedBox(
       child: Row(
         children: [
           const Icon(
-            Icons.language_outlined,
+            Icons.language_outlined
           ),
           const SizedBox(
-            width: 3,
+            width: 3
           ),
           Text(
             lang.currentLocale.languageCode,
             style: const TextStyle(
               fontSize: 14,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.bold
             ),
-            textDirection: TextDirection.rtl,
-          ),
-        ],
-      ),
+            textDirection: TextDirection.rtl
+          )
+        ]
+      )
     );
-  }
 
   @override
   Widget build(BuildContext context) {

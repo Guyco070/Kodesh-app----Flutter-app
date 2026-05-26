@@ -1,0 +1,9 @@
+Name,Status,Priority,Notes
+Remove static state from providers,Not Started,Medium,"[Architecture] LanguageChangeProvider and NotificationApi use static fields that violate state management principles | File: lib/providers/ | Est: 6h"
+Fix circular dependencies,Not Started,Medium,"[Architecture] Reminders provider depends on Events provider both depend on SharedPreferences. Implement proper dependency injection | File: lib/providers/ | Est: 8h"
+Implement repository pattern,Not Started,Medium,"[Architecture] Create separate repositories for Events Zmanim and Reminders to separate business logic from data access | File: lib/repositories/ | Est: 12h"
+Add dependency injection,Not Started,Medium,"[Architecture] Use get_it or provider pattern properly for dependency management | File: lib/ | Est: 8h"
+Create proper error boundaries,Not Started,Medium,"[Architecture] Wrap main app in error boundary widget to catch and display errors gracefully | File: lib/ | Est: 4h"
+Separate concerns in Events provider,Not Started,Low,"[Architecture] Events provider handles both API calls and data parsing. Split into separate services | File: lib/providers/events.dart | Est: 10h"
+Implement proper state management architecture,Not Started,Low,"[Architecture] Consider migrating to Riverpod or BLoC for better testability and separation of concerns | File: lib/ | Est: 20h"
+Remove context from Reminders constructor,Not Started,Low,"[Architecture] Pass only required dependencies not BuildContext | File: lib/providers/reminders.dart | Est: 3h"

@@ -1,0 +1,6 @@
+Name,Status,Priority,Notes
+Optimize cities list loading,Not Started,Medium,"[Performance] 1200+ entries loaded at once implement lazy loading or search-as-you-type | File: lib/widgets/ | Est: 8h"
+Add image caching,Not Started,Low,"[Performance] Cache images to reduce network calls | File: lib/ | Est: 4h"
+Optimize widget rebuilds,Not Started,Low,"[Performance] Use const constructors where possible implement shouldRebuild | File: lib/widgets/ | Est: 6h"
+Profile app performance,Not Started,Low,"[Performance] Use Flutter DevTools to identify bottlenecks | File: N/A | Est: 4h"
+Reduce app size,Not Started,Low,"[Performance] Optimize assets and dependencies | File: All files | Est: 6h"

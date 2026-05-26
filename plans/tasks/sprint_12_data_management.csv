@@ -1,0 +1,5 @@
+Name,Status,Priority,Notes
+Implement database,Not Started,Low,"[Architecture] Consider using Hive or SQLite instead of SharedPreferences for complex data | File: lib/ | Est: 12h"
+Add data migration strategy,Not Started,Low,"[Architecture] Handle app updates that change data structure | File: lib/ | Est: 8h"
+Add data export/import,Not Started,Low,"[Feature] Allow users to backup and restore settings | File: lib/ | Est: 8h"
+Implement settings model,Not Started,Low,"[Architecture] Use a proper settings class instead of individual SharedPreferences entries | File: lib/models/ | Est: 6h"

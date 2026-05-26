@@ -1,0 +1,9 @@
+Name,Status,Priority,Notes
+Add unit tests for notification scheduling,Not Started,High,"[Testing] Test critical business logic for notification scheduling | File: test/ | Est: 8h"
+Add unit tests for event parsing,Not Started,High,"[Testing] Test event parsing logic and edge cases | File: test/ | Est: 6h"
+Add unit tests for date calculations,Not Started,High,"[Testing] Test date calculation functions including Hebrew dates | File: test/ | Est: 6h"
+Add widget tests for notification settings,Not Started,Medium,"[Testing] Test UI components for notification configuration | File: test/ | Est: 8h"
+Add widget tests for main screens,Not Started,Medium,"[Testing] Test main app screens and user interactions | File: test/ | Est: 10h"
+Add integration tests for notification flow,Not Started,Medium,"[Testing] Test complete user flow for setting up notifications | File: test/ | Est: 8h"
+Set up test coverage reporting,Not Started,Medium,"[Infrastructure] Track test coverage percentage and set minimum thresholds | File: test/ | Est: 3h"
+Add mock data for testing,Not Started,Medium,"[Testing] Create fixtures for API responses and test data | File: test/fixtures/ | Est: 5h"

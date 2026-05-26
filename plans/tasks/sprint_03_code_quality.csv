@@ -1,0 +1,13 @@
+Name,Status,Priority,Notes
+Break down large methods,Not Started,High,"[Refactoring] setReminders() is 263 lines getEventsItemsFromMap() is 99 lines. Refactor into smaller single-responsibility methods | File: lib/providers/reminders.dart:393-655 | Est: 8h"
+Replace print statements with logging,Not Started,High,"[Refactoring] Use proper logging framework (logger package) instead of print() in production code | File: Multiple files | Est: 3h"
+Remove commented code,Not Started,High,"[Refactoring] Delete commented debug code or move to proper tests | File: lib/providers/reminders.dart:422-439 | Est: 1h"
+Fix isYesterdayTodayOrTomorrow function,Not Started,High,"[Bug] Returns true for yesterday OR today doesn't actually check for tomorrow properly | File: lib/helpers/dates.dart:48-53 | Est: 2h"
+Remove magic strings,Not Started,Medium,"[Refactoring] Extract hardcoded strings like (CH''M) 00:00 into named constants | File: Multiple files | Est: 4h"
+Fix typo throughout codebase,Not Started,Medium,"[Refactoring] 'schedual' should be 'schedule' in multiple files and folder names | File: Multiple files | Est: 3h"
+Standardize naming conventions,Not Started,Medium,"[Refactoring] Inconsistent naming: nerot vs candles vs candleLighting sfirat vs sefira | File: Multiple files | Est: 5h"
+Reduce widget nesting depth,Not Started,Medium,"[Refactoring] Extract deeply nested widgets into separate widget classes for better readability | File: lib/widgets/ | Est: 6h"
+Improve type safety,Not Started,Medium,"[Refactoring] Replace dynamic types with proper typed models avoid force unwrapping (!) add null checks before 'as' casts | File: Multiple files | Est: 8h"
+Remove dead code,Not Started,Medium,"[Refactoring] Delete unused function getf() and onDidReceiveLocalNotification callback | File: Multiple files | Est: 2h"
+Fix TODO comments,Not Started,Medium,"[Bug] Resolve fix it to be synchronize with shabat and holidays | File: lib/widgets/schedual_notifications_widgets/choose_time_in_day_widget.dart:81 | Est: 4h"
+Run dart format,Not Started,Low,"[Refactoring] Standardize code formatting across entire codebase | File: All files | Est: 1h"

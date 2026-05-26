@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:kodesh_app/helpers/dates.dart';
 import 'package:kodesh_app/models/event.dart';
 import 'package:http/http.dart';
@@ -139,7 +139,7 @@ class Events with ChangeNotifier {
   }
 
   Future<bool> isThereInternetConnection() async =>
-      await InternetConnectionChecker().hasConnection;
+      await InternetConnection().hasInternetAccess;
 
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -452,5 +452,6 @@ class Events with ChangeNotifier {
     if (event is Holiday) return HolidayWidget(data: event);
     if (event is RoshChodesh) return RoshChodeshWidget(data: event);
     if (event is SfiratOmer) return SfiratOmerWidget(data: event);
+    return null;
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:kodesh_app/api/l10n/l10n.dart';
 import 'package:kodesh_app/api/l10n/reminders_translates.dart';
@@ -18,6 +17,13 @@ import 'package:kodesh_app/screens/tefilot/seder_anahat_tefilin.dart';
 import 'package:kodesh_app/screens/tefilot/sfirat_omer_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+class Time {
+  final int hour;
+  final int minute;
+
+  const Time(this.hour, this.minute);
+}
 
 class Reminders with ChangeNotifier {
   int id = 0;
@@ -650,7 +656,7 @@ class Reminders with ChangeNotifier {
 
   Future<List<DateTime>> setRemindersForTefilin(String lang) async {
     DateTime first =
-        NotificationApi.schedualeDailyDateTime(getTefilinTimeObject);
+        NotificationApi.schedualeDailyDateTime(getTefilinTimeObject.hour, getTefilinTimeObject.minute);
     final tzNow = DateTime.now();
 
     if (tzNow.isAfter(first)) {

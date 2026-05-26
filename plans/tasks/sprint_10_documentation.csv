@@ -1,0 +1,10 @@
+Name,Status,Priority,Notes
+Add dartdoc comments,Not Started,Medium,"[Documentation] Document all public APIs with dartdoc comments | File: lib/ | Est: 12h"
+Document complex logic,Not Started,Medium,"[Documentation] Add inline comments explaining Rosh Chodesh calculation Chol HaMoed detection notification scheduling | File: lib/ | Est: 6h"
+Create architecture documentation,Not Started,Low,"[Documentation] Document overall architecture data flow and design decisions | File: docs/ | Est: 8h"
+Add README with setup instructions,Not Started,Low,"[Documentation] Include how to run build and test the app | File: README.md | Est: 4h"
+API documentation,Not Started,Low,"[Documentation] Document Hebcal API integration and response structure | File: docs/ | Est: 6h"
+Architecture decision records (ADR),Not Started,Low,"[Documentation] Document why certain architectural decisions were made | File: docs/adr/ | Est: 8h"
+Contribution guidelines,Not Started,Low,"[Documentation] If open source add CONTRIBUTING.md | File: CONTRIBUTING.md | Est: 3h"
+Code of conduct,Not Started,Low,"[Documentation] If open source add CODE_OF_CONDUCT.md | File: CODE_OF_CONDUCT.md | Est: 2h"
+Change log,Not Started,Low,"[Documentation] Maintain CHANGELOG.md for version history | File: CHANGELOG.md | Est: 2h"

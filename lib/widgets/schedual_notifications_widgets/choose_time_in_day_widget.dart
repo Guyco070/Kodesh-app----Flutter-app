@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:kodesh_app/animations/expanded_section.dart';
 import 'package:kodesh_app/helpers/dates.dart';
+import 'package:kodesh_app/providers/reminders.dart';
 import 'package:kodesh_app/widgets/group_card.dart';
 import 'package:kodesh_app/widgets/swiches/cupertino_text_check_switch.dart';
 

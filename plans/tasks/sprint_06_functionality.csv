@@ -1,0 +1,13 @@
+Name,Status,Priority,Notes
+Implement offline mode with caching,Not Started,High,"[Feature] Cache last fetched data and allow app to function without internet | File: lib/ | Est: 12h"
+Add error messages,Not Started,High,"[Feature] Display user-friendly error messages when operations fail | File: lib/widgets/ | Est: 6h"
+Fix Hebrew date fetching range,Not Started,Medium,"[Bug] Hardcoded to now-1 to now+10 days doesn't account for users viewing future weeks | File: lib/providers/events.dart:368 | Est: 3h"
+Add error handling to Zmanim API,Not Started,Medium,"[Bug] No try-catch around tryFetchZmanim() would crash app if network fails | File: lib/providers/events.dart:336-351 | Est: 2h"
+Handle API response structure changes,Not Started,Medium,"[Bug] Event parsing logic is fragile with many assumptions add validation | File: lib/providers/events.dart:228-314 | Est: 6h"
+Validate timezone matches selected city,Not Started,Medium,"[Feature] Add warning if device timezone doesn't match selected city to prevent wrong times | File: lib/ | Est: 4h"
+Improve internet connection handling,Not Started,Medium,"[Feature] Add better error messages and offline mode instead of just failing silently | File: lib/ | Est: 5h"
+Add loading states,Not Started,Medium,"[Feature] Show loading indicators during API calls | File: lib/widgets/ | Est: 4h"
+Add retry buttons,Not Started,Medium,"[Feature] Allow users to retry failed operations | File: lib/widgets/ | Est: 3h"
+Handle language change without refetching,Not Started,Low,"[Feature] Changing language refetches all data and loses user state only refetch if necessary | File: lib/providers/events.dart:49-63 | Est: 5h"
+Preserve user state,Not Started,Low,"[Feature] Don't lose scroll position and selections when changing language | File: lib/ | Est: 4h"
+Add pull-to-refresh,Not Started,Low,"[Feature] Allow users to manually refresh events and zmanim | File: lib/widgets/ | Est: 3h"

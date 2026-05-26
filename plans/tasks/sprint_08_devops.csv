@@ -1,0 +1,11 @@
+Name,Status,Priority,Notes
+Add crash reporting,Not Started,Medium,"[Infrastructure] Implement Firebase Crashlytics or Sentry | File: lib/ | Est: 4h"
+Add analytics,Not Started,Medium,"[Infrastructure] Track user behavior (with privacy consideration) | File: lib/ | Est: 4h"
+Fix .gitignore,Not Started,Low,"[Infrastructure] Android and macOS build files are being tracked | File: .gitignore | Est: 1h"
+Clean up generated files,Not Started,Low,"[Infrastructure] Remove generated files from version control | File: Multiple files | Est: 2h"
+Set up CI/CD pipeline,Not Started,Low,"[Infrastructure] Automate testing and building | File: .github/workflows/ | Est: 12h"
+Set up beta testing,Not Started,Low,"[Infrastructure] Use TestFlight/Play Console for beta releases | File: N/A | Est: 4h"
+Version management,Not Started,Low,"[Infrastructure] Implement proper semantic versioning | File: pubspec.yaml | Est: 2h"
+Add release notes generation,Not Started,Low,"[Infrastructure] Automate changelog creation | File: N/A | Est: 3h"
+Standardize build configurations,Not Started,Low,"[Infrastructure] Ensure consistent build settings across platforms | File: android/ ios/ macos/ | Est: 6h"
+Add flavor support,Not Started,Low,"[Infrastructure] Set up dev/staging/production flavors | File: All platform dirs | Est: 8h"

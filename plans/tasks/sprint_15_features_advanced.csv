@@ -1,0 +1,9 @@
+Name,Status,Priority,Notes
+User accounts,Not Started,Low,"[Feature] Allow users to create accounts for settings backup | File: lib/ | Est: 20h"
+Cloud sync,Not Started,Low,"[Feature] Sync settings across devices | File: lib/ | Est: 16h"
+Community features,Not Started,Low,"[Feature] Share local Shabbat meals minyanim times | File: lib/ | Est: 24h"
+Shul finder,Not Started,Low,"[Feature] Integration with synagogue locator | File: lib/ | Est: 16h"
+Apple Watch/Wear OS app,Not Started,Low,"[Feature] Companion app for smartwatches | File: watch_app/ | Est: 40h"
+Siri/Google Assistant integration,Not Started,Low,"[Feature] Voice commands for zmanim | File: platform_channels/ | Est: 20h"
+Calendar integration,Not Started,Low,"[Feature] Export events to device calendar | File: lib/ | Est: 12h"
+Contact book integration,Not Started,Low,"[Feature] Share Shabbat times with contacts | File: lib/ | Est: 8h"
