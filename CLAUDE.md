@@ -128,6 +128,36 @@ These are existing patterns in the codebase to be aware of — do not replicate 
 3. Register the route in `main.dart`
 4. Add navigation to it from `lib/widgets/app_drawer.dart` or via a notification payload
 
+## Coding Conventions (for all new code)
+
+### File & Widget Structure
+- One widget per file. Every new widget gets its own `.dart` file in the appropriate directory.
+- Sub-widgets used exclusively by one parent widget go in a subdirectory named after that parent (e.g., `lib/widgets/compass/compass_button.dart` for a sub-widget of `CompassWidget`). Do not dump them in the global `lib/widgets/` folder.
+- Extract sub-widgets into separate `StatelessWidget`/`StatefulWidget` classes. Do not build them via private builder methods like `Widget _buildSection()` — that pattern is only acceptable for very small, highly repetitive elements within the same file.
+
+### Directionality & RTL
+The app supports both Hebrew (RTL) and English (LTR). The active direction is managed by `LanguageChangeProvider.isDirectionRTL()`.
+
+- **Never hardcode direction**: Do not set `textDirection`, `textAlign: TextAlign.left/right`, or `Directionality` explicitly.
+- **Use semantic positioning**: Use `CrossAxisAlignment.start`, `MainAxisAlignment.start`, `Alignment.centerLeft` → `Alignment.centerStart`, and `EdgeInsetsDirectional` instead of `EdgeInsets`.
+- **RTL `Row` order**: In Hebrew mode, `Row.children[0]` renders on the **right** of the screen. When reading a Hebrew design, walk it **right-to-left**: whatever appears rightmost is `children[0]`. Do not list children in visual left-to-right order.
+- Use `LanguageChangeProvider.isDirectionRTL()` only when you genuinely need conditional logic (e.g., swapping an icon). Don't use it as a workaround for incorrect layout code.
+
+### UI Text
+All hardcoded UI strings must go in ARB files (`lib/api/l10n/app_en.arb`, `app_he.arb`), not inlined in widgets. Run `flutter gen-l10n` after editing and access via `AppLocalizations.of(context)!.yourKey`. Notification strings go in `RemindersTranslates` instead (see Localization section above).
+
+### Logging
+Do not use `print()`. Use `debugPrint()` for temporary debug output, which is stripped in release builds. The existing `print()` calls in the codebase are known bugs (see Known Code Quirks).
+
+### Comments
+All code comments must be written in English.
+
+### Git Commits
+Commit one logical unit at a time — one feature, one bug fix, or one refactor per commit. Do not bundle unrelated changes. Keep messages short and imperative (e.g., `Fix tefillin reminder on Chol HaMoed`).
+
+### Context Window
+When context usage reaches ~50%, or after completing a distinct task, remind the developer to run `/compact` to prevent context rot and save tokens.
+
 ## Architecture Documentation
 
 Detailed architecture documents (data flow diagrams, recommended refactors, sprint plans) are in `plans/` on the `last_150526` branch:
