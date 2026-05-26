@@ -217,5 +217,8 @@ class NotificationApi {
   static void onDidReceiveBackgroundNotificationResponse(
       NotificationResponse details) {
     logger.d('onDidReceiveBackgroundNotificationResponse: id=${details.id}');
+    if (details.payload != null) {
+      onNotifications.add(details.payload);
+    }
   }
 }
