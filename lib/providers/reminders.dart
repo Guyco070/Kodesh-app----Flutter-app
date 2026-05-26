@@ -544,29 +544,27 @@ class Reminders with ChangeNotifier {
         }
 
         if (e is Holiday &&
+            !_isCholHaMoed(e) &&
             !(e.title.contains('Chanukah') ||
                 (e.titleOrig != null && e.titleOrig!.contains('Chanukah')))) {
-          // removing tefillin reminders from holidays
-          logger.d('Removing tefillin reminder for holiday: $e');
+          // Full Yom Tov: remove tefillin for every day within the holiday
           if (tefilinDates.isNotEmpty && e.releaseDate != null) {
-            tzToRemove.add(tefilinDates.indexOf(tefilinDates[0]));
-            for (DateTime dt in tefilinDates) {
-              if (dt.isAfter(e.entryDate!) &&
-                  dt.day == e.entryDate!.day &&
-                  dt.month == e.entryDate!.month &&
-                  dt.year == e.entryDate!.year) {
-                DateTime temp = dt.add(const Duration(days: 1));
-
-                while (temp.isBefore(e.releaseDate!)) {
-                  tzToRemove.add(tefilinDates.indexOf(temp));
-                  temp = temp.add(const Duration(days: 1));
-                }
+            final entryDay = DateTime(e.entryDate!.year, e.entryDate!.month, e.entryDate!.day);
+            final dayAfterRelease = DateTime(e.releaseDate!.year, e.releaseDate!.month, e.releaseDate!.day + 1);
+            for (int i = 0; i < tefilinDates.length; i++) {
+              if (!tefilinDates[i].isBefore(entryDay) && tefilinDates[i].isBefore(dayAfterRelease)) {
+                tzToRemove.add(i);
               }
             }
           }
-        }else if((e.titleOrig != null && e.titleOrig!.contains("(CH''M)")) || e.title.contains("(CH''M)")) { // Chole Mohed - no need for tefilin
-            tzToRemove.add(tefilinDates.indexOf(e.entryDate!));
-          } else if (roshChodesh && e is RoshChodesh) {
+        } else if (_isCholHaMoed(e)) {
+          // Chol HaMoed: remove tefillin only for that specific day
+          for (int i = 0; i < tefilinDates.length; i++) {
+            if (_isSameDay(tefilinDates[i], e.entryDate!)) {
+              tzToRemove.add(i);
+            }
+          }
+        } else if (roshChodesh && e is RoshChodesh) {
           // rosh chodesh
           DateTime dayBefore = DateTime(
                   e.entryDate!.year,
@@ -722,4 +720,11 @@ class Reminders with ChangeNotifier {
     int minutes = int.parse(sfiratOmerTime.split(':')[1]);
     return Time(hour, minutes);
   }
+
+  static bool _isSameDay(DateTime a, DateTime b) =>
+      a.year == b.year && a.month == b.month && a.day == b.day;
+
+  static bool _isCholHaMoed(Event e) =>
+      (e.titleOrig != null && e.titleOrig!.contains("(CH''M)")) ||
+      e.title.contains("(CH''M)");
 }
