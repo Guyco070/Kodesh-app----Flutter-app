@@ -11,7 +11,7 @@ class NotificationApi {
   static bool isFirstInit = true;
 
   static initialize() async {
-    initializeTimeZones(); // for showSchedualedNotification function
+    initializeTimeZones();
     String timeZone = await FlutterTimezone.getLocalTimezone();
     setLocalLocation(getLocation(timeZone));
 
@@ -25,8 +25,8 @@ class NotificationApi {
 
     const AndroidInitializationSettings androidInitializationSettings =
         AndroidInitializationSettings('mipmap/ic_launcher');
-    DarwinInitializationSettings iosinitializationSetting =
-        const DarwinInitializationSettings(
+    const DarwinInitializationSettings iosinitializationSetting =
+        DarwinInitializationSettings(
             requestAlertPermission: true,
             requestBadgePermission: true,
             requestSoundPermission: true);
@@ -41,6 +41,29 @@ class NotificationApi {
       onDidReceiveBackgroundNotificationResponse:
           onDidReceiveBackgroundNotificationResponse,
     );
+
+    await _requestPermissions();
+  }
+
+  static Future<void> _requestPermissions() async {
+    final android = _notifications.resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>();
+    final ios = _notifications.resolvePlatformSpecificImplementation<
+        IOSFlutterLocalNotificationsPlugin>();
+
+    if (android != null) {
+      final granted = await android.requestNotificationsPermission();
+      final exactAlarmGranted = await android.requestExactAlarmsPermission();
+      logger.i('Android notification permission: $granted, exact alarm: $exactAlarmGranted');
+    }
+    if (ios != null) {
+      final granted = await ios.requestPermissions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
+      logger.i('iOS notification permission: $granted');
+    }
   }
 
   static NotificationDetails _notificationDetails() {
