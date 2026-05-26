@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kodesh_app/api/l10n/l10n.dart';
+import 'package:kodesh_app/helpers/app_logger.dart';
 import 'package:kodesh_app/api/l10n/reminders_translates.dart';
 import 'package:kodesh_app/api/notification_api.dart';
 import 'package:kodesh_app/models/event.dart';
@@ -546,8 +547,7 @@ class Reminders with ChangeNotifier {
             !(e.title.contains('Chanukah') ||
                 (e.titleOrig != null && e.titleOrig!.contains('Chanukah')))) {
           // removing tefillin reminders from holidays
-          print("tzToRemove");
-          print(e);
+          logger.d('Removing tefillin reminder for holiday: $e');
           if (tefilinDates.isNotEmpty && e.releaseDate != null) {
             tzToRemove.add(tefilinDates.indexOf(tefilinDates[0]));
             for (DateTime dt in tefilinDates) {

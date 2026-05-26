@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:kodesh_app/helpers/app_logger.dart';
 import 'package:kodesh_app/helpers/dates.dart';
 import 'package:kodesh_app/models/event.dart';
 import 'package:http/http.dart';
@@ -177,7 +178,7 @@ class Events with ChangeNotifier {
       url = Uri.parse(isToday
           ? 'https://www.hebcal.com/shabbat?cfg=json&o=on&city=${cityToTake.split('|')[0]}&lg=${lang ?? _currentLocale.languageCode}'
           : 'https://www.hebcal.com/shabbat?cfg=json&o=on&gy=${startDate.year}&gm=${startDate.month}&gd=${startDate.day}&city=${cityToTake.split('|')[0]}&lg=${lang ?? _currentLocale.languageCode}');
-      print(url);
+      logger.d('Retrying with city name: $url');
       response = await get(url);
     }
     return jsonDecode(response.body) as Map<String, dynamic>;
