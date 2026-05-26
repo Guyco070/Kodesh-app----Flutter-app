@@ -579,11 +579,14 @@ class Reminders with ChangeNotifier {
                     e.entryDate!.day, 14, 0)
                 .subtract(const Duration(days: 1));
             if (dayBefore.isAfter(twoOc)) {
+              // After 14:00: Friday→Thursday, Saturday→Thursday
               dayBefore = dayBefore
                   .subtract(Duration(days: dayBefore.weekday == 5 ? 1 : 2));
-            } else {
+            } else if (dayBefore.weekday == 6) {
+              // Saturday before 14:00: move to Friday (same time, still before 14:00)
               dayBefore = dayBefore.subtract(const Duration(days: 1));
             }
+            // Friday before 14:00: valid, no change needed
           }
           if (now.isBefore(dayBefore)) {
             notValues.add({
