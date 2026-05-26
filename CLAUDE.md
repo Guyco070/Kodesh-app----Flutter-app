@@ -139,7 +139,16 @@ These are existing patterns in the codebase to be aware of — do not replicate 
 All hardcoded UI strings must go in ARB files (`lib/api/l10n/app_en.arb`, `app_he.arb`), not inlined in widgets. Run `flutter gen-l10n` after editing and access via `AppLocalizations.of(context)!.yourKey`. Notification strings go in `RemindersTranslates` instead (see Localization section above).
 
 ### Logging
-Do not use `print()`. Use `debugPrint()` for temporary debug output, which is stripped in release builds. The existing `print()` calls in the codebase are known bugs (see Known Code Quirks).
+Do not use `print()`. Use the global `logger` instance from `lib/helpers/app_logger.dart`:
+
+```dart
+import 'package:kodesh_app/helpers/app_logger.dart';
+
+logger.d('debug message');
+logger.i('info message');
+logger.w('warning message');
+logger.e('error message', error: e, stackTrace: st);
+```
 
 ### Comments
 All code comments must be written in English.
