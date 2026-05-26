@@ -38,7 +38,7 @@ class ChooseTimeBeforeWidget extends StatelessWidget {
                 ),
                 NumberPicker(
                   minValue: 00,
-                  maxValue: 24,
+                  maxValue: 23,
                   value: hoursValue,
                   onChanged: (newVal) {
                     setHours(newVal);
