@@ -95,3 +95,44 @@ Named routes are registered in `main.dart`. Each prayer/checklist screen exposes
 ### City Format
 
 Cities are stored as `"CC-CityName|geonamesId"` strings. The `lib/data/cities.dart` file contains the full city list with translations per language. City display names are keyed by language code (`en`, `he`, `ru`, `es`).
+
+## Known Code Quirks
+
+These are existing patterns in the codebase to be aware of — do not replicate them in new code:
+
+- **Providers instantiated in `build()`** (`main.dart:48-51`): `Reminders` and `Events` are created inside `MyApp.build()`, which is an anti-pattern since `build()` can be called multiple times. This also means `lang.getData()` is called as a side effect during widget construction.
+- **`Reminders` constructor takes `BuildContext`**: `Reminders(BuildContext context)` violates the principle that providers should be independent of the widget tree.
+- **Static methods without return types**: `getEventsItemsFromMap()` and `getZmanimItemsFromMap()` return `dynamic`. Treat their return values as `List<Event>` and `List<Zman>` respectively.
+- **`print()` in production code**: `lib/providers/events.dart` and `lib/providers/reminders.dart` contain `print()` calls left over from debugging.
+- **Inconsistent file casing**: Most files use `snake_case` but `lib/screens/Shabat_and_holidays_check_list.dart` uses non-standard capitalization. Use `snake_case` for all new files.
+
+## Common Developer Tasks
+
+### Adding a New Event Type
+1. Create a class extending `Event` in `lib/models/`
+2. Implement all abstract reminder methods, delegating to a new static map in `RemindersTranslates`
+3. Add parsing logic in `Events.getEventsItemsFromMap()`
+4. Create a display widget in `lib/widgets/events_widgets/`
+5. Add a case to `Events.eventsFactoryMethod()`
+
+### Adding a New Reminder Type
+1. Add a boolean toggle and optional time string to `Reminders` provider
+2. Add `SharedPreferences` load/save in `getData()` and `updateAll()`
+3. Add scheduling logic inside `Reminders.setReminders()`
+4. Add the UI controls in `lib/screens/schedual_notifications.dart`
+5. Add any new notification text to `RemindersTranslates` (all four language keys: `en`, `he`, `es`, `ru`)
+
+### Adding a New Screen
+1. Create the screen file in `lib/screens/` using `snake_case`
+2. Define `static const String routeName = '/your-route'`
+3. Register the route in `main.dart`
+4. Add navigation to it from `lib/widgets/app_drawer.dart` or via a notification payload
+
+## Architecture Documentation
+
+Detailed architecture documents (data flow diagrams, recommended refactors, sprint plans) are in `plans/` on the `last_150526` branch:
+
+- `plans/english/architecture_270125.md` — full layered architecture walkthrough
+- `plans/english/architecture_fixes_271225.md` — recommended improvements with code examples
+- `plans/english/project_summary_271225.md` — feature and technology overview
+- `plans/tasks/` — CSV sprint task files for planned development work
