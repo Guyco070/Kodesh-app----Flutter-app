@@ -57,8 +57,8 @@ class Reminders with ChangeNotifier {
 
   List<Map<String, Object>> notValues = [];
 
-  Reminders(BuildContext context) {
-    getData(context);
+  Reminders() {
+    getData();
   }
 
   List<String> allShabatAndHolidaysThingsToRemindList(BuildContext context) {
@@ -254,7 +254,7 @@ class Reminders with ChangeNotifier {
     notifyListeners();
   }
 
-  getData(BuildContext context) async {
+  getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Set<String> prefsKeys = prefs.getKeys();
 
@@ -295,9 +295,6 @@ class Reminders with ChangeNotifier {
     if (prefsKeys.contains('shabatAndHolidaysThingsToRemindList')) {
       shabatAndHolidaysThingsToRemindList =
           prefs.getStringList('shabatAndHolidaysThingsToRemindList')!;
-    } else {
-      shabatAndHolidaysThingsToRemindList =
-          shabatAndHolidaysThingsToRemindListCreate(context);
     }
 
     if (prefsKeys.contains('shabatAndHolidaysCandles')) {

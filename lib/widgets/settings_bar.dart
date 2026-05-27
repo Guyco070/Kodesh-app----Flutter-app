@@ -5,6 +5,7 @@ import 'package:kodesh_app/data/cities.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/screens/event_screen.dart';
+import 'package:kodesh_app/widgets/city_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -36,42 +37,6 @@ class SettingsBar extends StatefulWidget {
 
 class _SettingsBarState extends State<SettingsBar> {
   bool _isExpanded = true;
-
-  DropdownMenuItem<String> buildMenuItem(Map item, String lang) {
-    return DropdownMenuItem(
-        value: item['eNameAndCode'],
-        child: Text(
-          item[lang],
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
-        ));
-  }
-
-  buildSelectedMenuItem(String lang) {
-    return cities.map<Widget>((Map item) {
-      return Container(
-        // margin: const EdgeInsets.symmetric(horizontal: 6),
-        padding: const EdgeInsets.all(2),
-        alignment: Alignment.center,
-        child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 500),
-          transitionBuilder: ((child, animation) =>
-              ScaleTransition(scale: animation, child: child)),
-          child: Text(
-            item[lang],
-            key: ValueKey<String>(item[lang]),
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w500,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
-      );
-    }).toList();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,38 +82,54 @@ class _SettingsBarState extends State<SettingsBar> {
                                     borderRadius: BorderRadius.circular(10),
                                     color: Theme.of(context).primaryColor),
                                 width: MediaQuery.of(context).size.width / 2.3,
-                                child: DropdownButtonFormField<String>(
-                                    borderRadius: BorderRadius.circular(15),
-                                    icon: const Icon(
-                                      Icons.keyboard_arrow_down_outlined,
-                                      size: 21,
+                                child: InkWell(
+                                  borderRadius: BorderRadius.circular(10),
+                                  onTap: () async {
+                                    final langCode = lang.currentLocale.languageCode;
+                                    final selected = await showSearch<Map?>(
+                                      context: context,
+                                      delegate: CitySearchDelegate(
+                                        cities: cities,
+                                        lang: langCode,
+                                      ),
+                                    );
+                                    if (selected != null &&
+                                        selected['eNameAndCode'] != events.city) {
+                                      events.setCity(
+                                        selected['eNameAndCode'] as String,
+                                        setIsLoading: widget.setIsLoading,
+                                        setIsLoadingZmanim: widget.setIsLoadingZmanim,
+                                      );
+                                    }
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12, vertical: 8),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            cities.firstWhere(
+                                              (c) => c['eNameAndCode'] == events.city,
+                                              orElse: () => cities.first,
+                                            )[lang.currentLocale.languageCode] as String? ?? events.city,
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                        const Icon(
+                                          Icons.keyboard_arrow_down_outlined,
+                                          size: 21,
+                                          color: Colors.white,
+                                        ),
+                                      ],
                                     ),
-                                    isDense: false,
-                                    iconEnabledColor: Colors.white,
-                                    decoration: const InputDecoration(
-                                        isCollapsed: true,
-                                        enabledBorder: InputBorder.none),
-                                    selectedItemBuilder: (_) =>
-                                        buildSelectedMenuItem(
-                                            lang.currentLocale.languageCode),
-                                    value: events.city,
-                                    isExpanded: true,
-                                    alignment: AlignmentDirectional.center,
-                                    items: cities
-                                        .map<DropdownMenuItem<String>>(
-                                            (items) => buildMenuItem(
-                                                items,
-                                                lang.currentLocale
-                                                    .languageCode))
-                                        .toList(),
-                                    onChanged: (value) {
-                                      if (value != events.city) {
-                                        events.setCity(value ?? events.city,
-                                            setIsLoading: widget.setIsLoading,
-                                            setIsLoadingZmanim: widget.setIsLoadingZmanim,
-                                          );
-                                      }
-                                    }),
+                                  ),
+                                ),
                               ),
                               VerticalDivider(
                                 color: Theme.of(context).primaryColor,
