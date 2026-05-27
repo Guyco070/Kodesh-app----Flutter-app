@@ -10,7 +10,7 @@ import 'package:kodesh_app/models/rosh_chodesh.dart';
 import 'package:kodesh_app/models/sfirat_omer.dart';
 import 'package:kodesh_app/models/shabat.dart';
 import 'package:kodesh_app/providers/events.dart';
-import 'package:kodesh_app/screens/Shabat_and_holidays_check_list.dart';
+import 'package:kodesh_app/screens/shabat_and_holidays_check_list.dart';
 import 'package:kodesh_app/screens/tefilot/adlakat_nerot.dart';
 import 'package:kodesh_app/screens/tefilot/adlakat_nerot_chanukah.dart';
 import 'package:kodesh_app/screens/tefilot/havdalah.dart';
@@ -420,25 +420,6 @@ class Reminders with ChangeNotifier {
           cityToTake: reminderCity, isToday: true, lang: lang);
       List<Event> items = Events.getEventsItemsFromMap(extractData['items']);
       final DateTime now = DateTime.now();
-      // items.add(Shabat(
-      //     title: 'שבת',
-      //     parasha: 'פָּרָשַׁת וַיִּשְׁלַח',
-      //     entryDate: DateTime.now().add(const Duration(minutes: 3)),
-      //     releaseDate: DateTime.now().add(const Duration(minutes: 10))));
-
-      // items.add(Holiday(
-      //     title: 'חג',
-      //     entryDate: DateTime.now().add(const Duration(minutes: 2)),
-      //     releaseDate: DateTime.now().add(const Duration(minutes: 10)),
-      //     subcat: 'major',
-      //     titleOrig: 'Chanukah'));
-
-      // items.add(RoshChodesh(
-      //     title: 'ראש חודש',
-      //     entryDate: DateTime.now().add(const Duration(days: 1, seconds: 1)),
-      //     releaseDate: DateTime.now().add(const Duration(days: 1, minutes: 10)),
-      //     ));
-
       for (Event e in items) {
         if (shabatAndHolidays && e is! RoshChodesh && e is! SfiratOmer) {
           // if Shabat or Holiday
@@ -460,7 +441,7 @@ class Reminders with ChangeNotifier {
               (e.titleOrig != null && e.titleOrig!.contains('Chanukah'))) {
             // reminder to light Chanukah candles
             if (DateFormat('HH:mm').format(e.entryDate!) != '00:00') {
-              // at the last day (the day after the last night of lightning candles) time  is equal to 00:00 - skeep it
+              // at the last day (the day after the last night of lightning candles) time  is equal to 00:00 - skip it
               x = e.entryDate!.subtract(Duration(
                   hours: beforeNerotHanukkahHours,
                   minutes: beforeNerotHanukkahMinutes));
@@ -640,7 +621,7 @@ class Reminders with ChangeNotifier {
     }
 
     for (Map<String, Object> e in notValues) {
-      await NotificationApi.showSchedualedNotification(
+      await NotificationApi.showScheduledNotification(
         id: e['id'] as int,
         title: e['title'] as String,
         body: e['body'] as String,
@@ -657,7 +638,7 @@ class Reminders with ChangeNotifier {
 
   Future<List<DateTime>> setRemindersForTefilin(String lang) async {
     DateTime first =
-        NotificationApi.schedualeDailyDateTime(getTefilinTimeObject.hour, getTefilinTimeObject.minute);
+        NotificationApi.scheduleDailyDateTime(getTefilinTimeObject.hour, getTefilinTimeObject.minute);
     final tzNow = DateTime.now();
 
     if (tzNow.isAfter(first)) {
@@ -694,15 +675,6 @@ class Reminders with ChangeNotifier {
       });
       id++;
     }
-    // for (TZDateTime tz in tefilinDates) {
-    //   await NotificationApi.showSchedualedNotification(
-    //           id: id,
-    //           title: 'תפילין',
-    //           body: 'הגיע הזמן להניח תפילין!',
-    //           date: tz,
-    //           payload: SederAnahatTefilin.routeName)
-    //       .then((value) => id++);
-    // }
     return tefilinDates;
   }
 

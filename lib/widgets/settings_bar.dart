@@ -5,7 +5,6 @@ import 'package:kodesh_app/data/cities.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/screens/event_screen.dart';
-// import 'package:kodesh_app/widgets/swiches/cupertino_text_check_switch.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -193,14 +192,6 @@ class _SettingsBarState extends State<SettingsBar> {
                       ),
                     ),
                   ),
-                  // _isExpanded ? Padding(
-                  //   padding: const EdgeInsets.all(5.0),
-                  //   child: CuperinoTextCheckSwitch(
-                  //     value: widget.isOnlyShabat,
-                  //     onChanged: widget.updateIsOnlyShabat,
-                  //     text: appLocalizations.onlyShabat,
-                  //   ),
-                  // ) :
                   if (_isExpanded)
                     Align(
                       alignment: Alignment(
@@ -324,14 +315,6 @@ class _SettingsBarState extends State<SettingsBar> {
                                         ),
                                     },
   
-                              
-                              // IconButton( 
-                              //     onPressed: () {
-                              //       setState(() {
-                              //         _isExpanded = !_isExpanded;
-                              //       });
-                              //     },
-                              //     icon: Icon(_isExpanded ? Icons.keyboard_double_arrow_up : Icons.keyboard_double_arrow_down, size: _isExpanded ? 22 : 20,))
                             ],
                           ),
                           ),

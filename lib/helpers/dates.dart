@@ -59,12 +59,3 @@ DateTime getDateTimeSetToZero(DateTime date) {
     date.day,
   );
 }
-
-// getf() {
-//   Map x = {};
-//   DateTime date = DateTime.now().subtract(Duration(days: 2));
-//   for (int i = 0; i < 7; i++) {
-//     x[date.weekday] = DateFormat('EEEE').format(date);
-//     date = date.add(const Duration(days: 1));
-//   }
-// }

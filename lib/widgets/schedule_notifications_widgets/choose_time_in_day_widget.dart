@@ -55,9 +55,7 @@ class ChooseTimeInDayWidget extends StatelessWidget {
                             builder: (context, childWidget) {
                               return MediaQuery(
                                   data: MediaQuery.of(context).copyWith(
-                                      // Using 24-Hour format
                                       alwaysUse24HourFormat: true),
-                                  // If you want 12-Hour format, just change alwaysUse24HourFormat to false or remove all the builder argument
                                   child: childWidget!);
                             });
                         if (time != null) {
@@ -78,7 +76,7 @@ class ChooseTimeInDayWidget extends StatelessWidget {
                   style: TextStyle(color: Colors.grey[700], fontSize: 12),
                   textAlign: TextAlign.center,
                 ),
-              ), // todo: fix it to be syncronize with shabat and holidays
+              ),
           ],
         ),
         const SizedBox(

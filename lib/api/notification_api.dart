@@ -2,8 +2,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:kodesh_app/helpers/app_logger.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:timezone/data/latest.dart'; // for showSchedualedNotification function
-import 'package:timezone/timezone.dart'; // for showSchedualedNotification function
+import 'package:timezone/data/latest.dart'; // for showScheduledNotification function
+import 'package:timezone/timezone.dart'; // for showScheduledNotification function
 
 class NotificationApi {
   static final _notifications = FlutterLocalNotificationsPlugin();
@@ -95,7 +95,7 @@ class NotificationApi {
         payload: payload);
   }
 
-  static Future<void> showSchedualedNotification({
+  static Future<void> showScheduledNotification({
     int id = 0,
     String? title,
     String? body,
@@ -115,7 +115,7 @@ class NotificationApi {
     );
   }
 
-  static Future<void> showSchedualedWeeklyNotification(
+  static Future<void> showScheduledWeeklyNotification(
       {int id = 0,
       String? title,
       String? body,
@@ -135,7 +135,7 @@ class NotificationApi {
     );
   }
 
-  static Future<void> showSchedualeDailyNotification(
+  static Future<void> showScheduleDailyNotification(
       // set reminders evry day including sutterdays and holidays
       {
       //including shabat...
@@ -149,7 +149,7 @@ class NotificationApi {
       id,
       title,
       body,
-      schedualeDaily(hour, minute),
+      scheduleDaily(hour, minute),
       _notificationDetails(),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       uiLocalNotificationDateInterpretation:
@@ -177,24 +177,24 @@ class NotificationApi {
     return y; // if today is weekday
   }
 
-  static TZDateTime schedualeDaily(int hour, int minute) {
+  static TZDateTime scheduleDaily(int hour, int minute) {
     final now = TZDateTime.now(local);
-    final schedualedDate = TZDateTime(local, now.year, now.month, now.day,
+    final scheduledDate = TZDateTime(local, now.year, now.month, now.day,
         hour, minute, 0);
 
-    return schedualedDate.isBefore(now)
-        ? schedualedDate.add(const Duration(days: 1))
-        : schedualedDate;
+    return scheduledDate.isBefore(now)
+        ? scheduledDate.add(const Duration(days: 1))
+        : scheduledDate;
   }
 
-  static DateTime schedualeDailyDateTime(int hour, int minute) {
+  static DateTime scheduleDailyDateTime(int hour, int minute) {
     final now = DateTime.now();
-    final schedualedDate = DateTime(
+    final scheduledDate = DateTime(
         now.year, now.month, now.day, hour, minute, 0);
 
-    return schedualedDate.isBefore(now)
-        ? schedualedDate.add(const Duration(days: 1))
-        : schedualedDate;
+    return scheduledDate.isBefore(now)
+        ? scheduledDate.add(const Duration(days: 1))
+        : scheduledDate;
   }
 
   // actions

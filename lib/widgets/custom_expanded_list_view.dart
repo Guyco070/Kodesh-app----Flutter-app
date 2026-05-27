@@ -59,7 +59,7 @@ class _CutomExpandedListViewState extends State<CustomExpandedListView> {
                 Colors.black
                     .withOpacity(0.1), //This controls the darkness of the bar
               ],
-              // stops: [0, 1], if you want to adjust the gradiet this is where you would do it
+              // stops: [0, 1], if you want to adjust the gradient this is where you would do it
             ),
           ),
           child: !_isExpanded ? LimitedBox(
