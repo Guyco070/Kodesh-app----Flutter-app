@@ -235,16 +235,19 @@ class _EventScreenState extends State<EventScreen> {
             color: Colors.red,
             size: 25,
           ),
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 20),
           Text(
             localErrorMessage,
-            // 'מצטערים, נראה שאין חיבור לאינטרנט, אנה התחבר ולחץ על כפתור רענון.',
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 16,
-            ),
+            style: const TextStyle(fontSize: 16),
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton.icon(
+            onPressed: () {
+              getAllData();
+            },
+            icon: const Icon(Icons.refresh),
+            label: Text(AppLocalizations.of(context)!.retry),
           ),
         ],
       ),
@@ -259,7 +262,18 @@ class _EventScreenState extends State<EventScreen> {
     return DefaultScaffold(
         setIsLoading: setIsLoadingLang,
         title: AppLocalizations.of(context)!.main,
-        body: SingleChildScrollView(
+        body: RefreshIndicator(
+          onRefresh: () async {
+            String lang = Provider.of<LanguageChangeProvider>(context, listen: false)
+                .currentLocale
+                .languageCode;
+            await Provider.of<Events>(context, listen: false)
+                .fetchAndSetProducts(lang: lang);
+            await Provider.of<Events>(context, listen: false)
+                .fetchAndSetZmanimProducts(lang: lang);
+          },
+          child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
               SettingsBar(
@@ -303,6 +317,7 @@ class _EventScreenState extends State<EventScreen> {
               },
             ],
           ),
+        ),
         ));
   }
 }
