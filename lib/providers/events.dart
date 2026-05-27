@@ -372,8 +372,14 @@ class Events with ChangeNotifier {
     cityToTake ??= city;
     Response response;
     DateTime now = DateTime.now();
+    // Start from the earlier of today or startDate; end 14 days after startDate
+    // to cover the full displayed week even when viewing future weeks.
+    final rangeStart = now.isBefore(startDate)
+        ? now.subtract(const Duration(days: 1))
+        : startDate.subtract(const Duration(days: 1));
+    final rangeEnd = startDate.add(const Duration(days: 14));
     var url = Uri.parse(
-        'https://www.hebcal.com/converter?cfg=json&start=${getDushedFormatedDate(now.isBefore(startDate) ? now.subtract(const Duration(days: 1)) : startDate.subtract(const Duration(days: 1)))}&&end=${getDushedFormatedDate(now.add(const Duration(days: 10)))}');
+        'https://www.hebcal.com/converter?cfg=json&start=${getDushedFormatedDate(rangeStart)}&end=${getDushedFormatedDate(rangeEnd)}');
     response = await get(url);
 
     return jsonDecode(response.body) as Map<String, dynamic>;
