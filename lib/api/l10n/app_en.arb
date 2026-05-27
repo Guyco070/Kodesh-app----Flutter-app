@@ -176,6 +176,9 @@
     "apiErrorMessage": "Sorry, something went wrong while loading data. Please try again.",
     "@apiErrorMessage": { "description": "apiErrorMessage" },
 
+    "retry": "Retry",
+    "@retry": { "description": "retry button label" },
+
 
     "beforeShabatAndHolidaysSettengs": "Before shabat and holidays",
     "@beforeShabatAndHolidaysSettengs": { "description": "beforeShabatAndHolidaysSettengs" },

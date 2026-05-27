@@ -65,6 +65,9 @@
     "apiErrorMessage": "מצטערים, אירעה שגיאה בטעינת הנתונים. אנא נסה שוב.",
     "@apiErrorMessage": { "description": "apiErrorMessage" },
 
+    "retry": "נסה שוב",
+    "@retry": { "description": "retry button label" },
+
     "beforeShabatAndHolidaysSettengs": "לפני שבתות וחגים",
     "city": "עיר",   
     "minutes": "דקות",
