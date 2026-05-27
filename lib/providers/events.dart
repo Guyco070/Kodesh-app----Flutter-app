@@ -196,7 +196,9 @@ class Events with ChangeNotifier {
     if (await isThereInternetConnection()) {
       try {
         final extractData = await tryFetch();
-        _eventsItems = getEventsItemsFromMap(extractData['items'] as List);
+        final items = extractData['items'] as List;
+        _eventsItems = getEventsItemsFromMap(items);
+        _cacheEventsItems(items);
         notifyListeners();
         fetchAndSetHebrewDatesProducts();
         return _eventsItems;
@@ -208,10 +210,41 @@ class Events with ChangeNotifier {
         return null;
       }
     } else {
+      final cached = await _loadCachedEventsItems();
+      if (cached != null) {
+        _eventsItems = cached;
+        _zmanimItems = null;
+        _hebrewDates = null;
+        notifyListeners();
+        return _eventsItems;
+      }
       _eventsItems = null;
       _zmanimItems = null;
       _hebrewDates = null;
       notifyListeners();
+      return null;
+    }
+  }
+
+  Future<void> _cacheEventsItems(List items) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('cachedEventsJson_$city', jsonEncode(items));
+    } catch (e) {
+      logger.w('Failed to cache events', error: e);
+    }
+  }
+
+  Future<List<Event>?> _loadCachedEventsItems() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final cached = prefs.getString('cachedEventsJson_$city');
+      if (cached == null) return null;
+      final items = jsonDecode(cached) as List;
+      logger.i('Loaded ${items.length} events from cache');
+      return getEventsItemsFromMap(items) as List<Event>?;
+    } catch (e) {
+      logger.w('Failed to load cached events', error: e);
       return null;
     }
   }
