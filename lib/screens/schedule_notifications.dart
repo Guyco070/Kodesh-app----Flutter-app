@@ -5,23 +5,23 @@ import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/providers/reminders.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
 import 'package:kodesh_app/widgets/group_card.dart';
-import 'package:kodesh_app/widgets/schedual_notifications_widgets/choose_time_before_widget.dart';
-import 'package:kodesh_app/widgets/schedual_notifications_widgets/choose_time_in_day_widget.dart';
+import 'package:kodesh_app/widgets/schedule_notifications_widgets/choose_time_before_widget.dart';
+import 'package:kodesh_app/widgets/schedule_notifications_widgets/choose_time_in_day_widget.dart';
 import 'package:kodesh_app/widgets/swiches/cupertino_text_check_switch.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class SchedualNotficationsScreen extends StatefulWidget {
-  const SchedualNotficationsScreen({super.key});
-  static String routeName = '/schedual-notfications';
+class ScheduleNotificationsScreen extends StatefulWidget {
+  const ScheduleNotificationsScreen({super.key});
+  static String routeName = '/schedule-notifications';
 
   @override
-  State<SchedualNotficationsScreen> createState() =>
-      _SchedualNotficationsScreenState();
+  State<ScheduleNotificationsScreen> createState() =>
+      _ScheduleNotificationsScreenState();
 }
 
-class _SchedualNotficationsScreenState
-    extends State<SchedualNotficationsScreen> {
+class _ScheduleNotificationsScreenState
+    extends State<ScheduleNotificationsScreen> {
   bool tefilin = false;
   bool preys = false;
   bool roshChodesh = false;
@@ -109,7 +109,7 @@ class _SchedualNotficationsScreenState
           hoursValue: reminders.beforeNerotHanukkahHours,
           minutesValue: reminders.beforeNerotHanukkahMinutes,
           setHours: reminders.setNerotHanukkahHours,
-          setMinutess: reminders.setNerotHanukkahMinutes,
+          setMinutes: reminders.setNerotHanukkahMinutes,
           localizedHelpText:
               appLocalizations.remindMeXhoursAndYMinutesBeforeNerotHanukkah,
         ),
@@ -164,7 +164,7 @@ class _SchedualNotficationsScreenState
             hoursValue: reminders.beforeShabatHours,
             minutesValue: reminders.beforeShabatMinutes,
             setHours: reminders.setShabatAndHolidaysShabatHours,
-            setMinutess: reminders.setShabatAndHolidaysShabatMinutes,
+            setMinutes: reminders.setShabatAndHolidaysShabatMinutes,
             localizedHelpText: appLocalizations
                 .remindMeXhoursAndYMinutesBeforeShbatAndHolidays,
           ),
@@ -198,7 +198,7 @@ class _SchedualNotficationsScreenState
                 hoursValue: reminders.beforeShabatAndHolidaysCandlesHours,
                 minutesValue: reminders.beforeShabatAndHolidaysCandlesMinutes,
                 setHours: reminders.setShabatAndHolidaysCandlesHours,
-                setMinutess: reminders.setShabatAndHolidaysCandlesMinutes,
+                setMinutes: reminders.setShabatAndHolidaysCandlesMinutes,
                 localizedHelpText: appLocalizations
                     .remindMeXhoursAndYMinutesBeforeCandlesLighning,
               ),
@@ -226,7 +226,7 @@ class _SchedualNotficationsScreenState
                   hoursValue: reminders.afterShabatHavdalahHours,
                   minutesValue: reminders.afterShabatHavdalahMinutes,
                   setHours: reminders.setAfterShabatHavdalahHours,
-                  setMinutess: reminders.setAfterShabatHavdalahMinutes,
+                  setMinutes: reminders.setAfterShabatHavdalahMinutes,
                   localizedHelpText: (String hours, String minutes) =>
                       appLocalizations
                           .remindMeXhoursAndYMinutesAfterShabatForHavdalah(

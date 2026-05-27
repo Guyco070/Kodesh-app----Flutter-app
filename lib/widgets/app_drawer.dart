@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kodesh_app/screens/Shabat_and_holidays_check_list.dart';
+import 'package:kodesh_app/screens/shabat_and_holidays_check_list.dart';
 import 'package:kodesh_app/screens/about.dart';
 import 'package:kodesh_app/screens/compass_screen.dart';
-import 'package:kodesh_app/screens/schedual_notifications.dart';
+import 'package:kodesh_app/screens/schedule_notifications.dart';
 import 'package:kodesh_app/screens/tefilot/adlakat_nerot.dart';
 import 'package:kodesh_app/screens/tefilot/adlakat_nerot_chanukah.dart';
 import 'package:kodesh_app/screens/tefilot/havdalah.dart';
@@ -24,10 +24,6 @@ class AppDrawer extends StatelessWidget {
           children: [
             CustomAppBar(
               title: appLocalizations.menu,
-              // automaticallyImplyLeading: false, // No back button
-              // actions: [
-              //   IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.chevron_left_outlined))
-              // ],
             ),
 
             ...devidedTitle(appLocalizations.settings),
@@ -36,7 +32,7 @@ class AppDrawer extends StatelessWidget {
               leading: const Icon(Icons.watch_later_outlined),
               title: Text(appLocalizations.settingRemindersMenu),
               onTap: () => Navigator.pushNamed(
-                  context, SchedualNotficationsScreen.routeName),
+                  context, ScheduleNotificationsScreen.routeName),
             ),
 
             ...devidedTitle(appLocalizations.aids),

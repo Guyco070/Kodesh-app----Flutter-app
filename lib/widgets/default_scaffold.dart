@@ -148,43 +148,7 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
                 onPressed: () => Scaffold.of(context).openDrawer(),
                 icon: const Icon(Icons.drag_indicator_outlined));
           }),
-          trailing: getLangDropDown(lang)
-          //  Container(
-          //   height: 60,
-          //   width: 30,
-          //   child: DropdownButton2<String>(
-          //       hint: Text(lang.currentLocale.languageCode),
-          //       dropdownWidth: 150,
-          //       isDense: false,
-          //       // iconEnabledColor: Colors.white,
-          //       icon: const Icon(Icons.language_outlined),
-          //       underline: Container(),
-          //       selectedItemBuilder: (_) => buildSelectedMenuItem(),
-          //       value: lang.currentLocale.languageCode,
-          //       isExpanded: true,
-          //       alignment: AlignmentDirectional.center,
-          //       items: L10n.all
-          //           .map<DropdownMenuItem<String>>(buildMenuItem)
-          //           .toList(),
-          //       onChanged: (value) {
-          //         lang.changeLocale(
-          //           value ?? lang.currentLocale.languageCode,
-          //         );
-          //         Provider.of<Events>(context, listen: false).changeLocale(
-          //             value ?? lang.currentLocale.languageCode,
-          //             setIsLoading: setIsLoading);
-          //       }),
-          // ),
-          ),
-      //  IconButton(onPressed: () => Provider.of<LanguageChangeProvider>(context, listen: false).changeLocale(L10n.all[0].languageCode) ,icon: const Icon(Icons.language_outlined)),),
-      // AppBar(
-      //   title: Text(
-      //     title,
-      //     textDirection: TextDirection.rtl,
-      //   ),
-      //   centerTitle: true,
-      //   automaticallyImplyLeading: false,
-      // ),
+          trailing: getLangDropDown(lang)),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : widget.body,

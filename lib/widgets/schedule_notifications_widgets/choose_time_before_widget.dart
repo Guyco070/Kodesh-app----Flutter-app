@@ -6,7 +6,7 @@ class ChooseTimeBeforeWidget extends StatelessWidget {
   const ChooseTimeBeforeWidget({
     Key? key,
     required this.setHours,
-    required this.setMinutess,
+    required this.setMinutes,
     required this.hoursValue,
     required this.minutesValue, this.helpText, this.localizedHelpText,
   }) : super(key: key);
@@ -14,7 +14,7 @@ class ChooseTimeBeforeWidget extends StatelessWidget {
   final int hoursValue;
   final int minutesValue;
   final Function setHours;
-  final Function setMinutess;
+  final Function setMinutes;
   final Function? localizedHelpText;
 
   final String? helpText;
@@ -59,7 +59,7 @@ class ChooseTimeBeforeWidget extends StatelessWidget {
                   maxValue: 59,
                   value: minutesValue,
                   onChanged: (newVal) {
-                    setMinutess(newVal);
+                    setMinutes(newVal);
                   },
                   zeroPad: true,
                 ),

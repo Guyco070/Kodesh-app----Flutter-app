@@ -8,7 +8,7 @@ import 'package:kodesh_app/providers/tfilot.dart';
 import 'package:kodesh_app/screens/about.dart';
 import 'package:kodesh_app/screens/compass_screen.dart';
 import 'package:kodesh_app/screens/shabat_and_holidays_check_list.dart';
-import 'package:kodesh_app/screens/schedual_notifications.dart';
+import 'package:kodesh_app/screens/schedule_notifications.dart';
 import 'package:kodesh_app/screens/event_screen.dart';
 import 'package:kodesh_app/screens/tefilot/adlakat_nerot.dart';
 import 'package:kodesh_app/screens/tefilot/adlakat_nerot_chanukah.dart';
@@ -65,8 +65,8 @@ class MyApp extends StatelessWidget {
           supportedLocales: L10n.all,
           home: const EventScreen(),
           routes: {
-            SchedualNotficationsScreen.routeName: (_) =>
-                const SchedualNotficationsScreen(),
+            ScheduleNotificationsScreen.routeName: (_) =>
+                const ScheduleNotificationsScreen(),
             SederAnahatTefilin.routeName: (_) => SederAnahatTefilin(),
             AdlakatNerot.routeName: (_) => AdlakatNerot(),
             ShabatAndHolidaysCheckList.routeName: (_) =>
