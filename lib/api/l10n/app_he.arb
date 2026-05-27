@@ -62,6 +62,9 @@
 
     "noIntrnetMessage": "מצטערים, נראה כי אין חיבור לאינטרנט, בבקשה התחבר לאינטרנט ולחץ על כפתור רענון.",
 
+    "apiErrorMessage": "מצטערים, אירעה שגיאה בטעינת הנתונים. אנא נסה שוב.",
+    "@apiErrorMessage": { "description": "apiErrorMessage" },
+
     "beforeShabatAndHolidaysSettengs": "לפני שבתות וחגים",
     "city": "עיר",   
     "minutes": "דקות",

@@ -173,6 +173,9 @@
     "noIntrnetMessage": "Sorry, it appears that there is no internet connection, please connect to the internet and press the refresh button.",
     "@noIntrnetMessage": { "description": "noIntrnetMessage" },
 
+    "apiErrorMessage": "Sorry, something went wrong while loading data. Please try again.",
+    "@apiErrorMessage": { "description": "apiErrorMessage" },
+
 
     "beforeShabatAndHolidaysSettengs": "Before shabat and holidays",
     "@beforeShabatAndHolidaysSettengs": { "description": "beforeShabatAndHolidaysSettengs" },

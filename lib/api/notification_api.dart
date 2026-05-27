@@ -1,5 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
+import 'package:kodesh_app/helpers/app_logger.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest.dart'; // for showSchedualedNotification function
 import 'package:timezone/timezone.dart'; // for showSchedualedNotification function
@@ -10,7 +11,7 @@ class NotificationApi {
   static bool isFirstInit = true;
 
   static initialize() async {
-    initializeTimeZones(); // for showSchedualedNotification function
+    initializeTimeZones();
     String timeZone = await FlutterTimezone.getLocalTimezone();
     setLocalLocation(getLocation(timeZone));
 
@@ -24,8 +25,8 @@ class NotificationApi {
 
     const AndroidInitializationSettings androidInitializationSettings =
         AndroidInitializationSettings('mipmap/ic_launcher');
-    DarwinInitializationSettings iosinitializationSetting =
-        const DarwinInitializationSettings(
+    const DarwinInitializationSettings iosinitializationSetting =
+        DarwinInitializationSettings(
             requestAlertPermission: true,
             requestBadgePermission: true,
             requestSoundPermission: true);
@@ -40,6 +41,29 @@ class NotificationApi {
       onDidReceiveBackgroundNotificationResponse:
           onDidReceiveBackgroundNotificationResponse,
     );
+
+    await _requestPermissions();
+  }
+
+  static Future<void> _requestPermissions() async {
+    final android = _notifications.resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>();
+    final ios = _notifications.resolvePlatformSpecificImplementation<
+        IOSFlutterLocalNotificationsPlugin>();
+
+    if (android != null) {
+      final granted = await android.requestNotificationsPermission();
+      final exactAlarmGranted = await android.requestExactAlarmsPermission();
+      logger.i('Android notification permission: $granted, exact alarm: $exactAlarmGranted');
+    }
+    if (ios != null) {
+      final granted = await ios.requestPermissions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
+      logger.i('iOS notification permission: $granted');
+    }
   }
 
   static NotificationDetails _notificationDetails() {
@@ -180,12 +204,11 @@ class NotificationApi {
     String? body,
     String? payload,
   ) {
-    print('id $id');
+    logger.d('onDidReceiveLocalNotification: id=$id');
   }
 
   static void onDidReceiveNotificationResponse(NotificationResponse details) {
-    print('onDidReceiveNotificationResponse');
-    print('id ${details.id}'); // Preserving functionality from deprecated onDidReceiveLocalNotification
+    logger.d('onDidReceiveNotificationResponse: id=${details.id}');
     if (details.payload != null) {
       onNotifications.add(details.payload);
     }
@@ -193,6 +216,9 @@ class NotificationApi {
 
   static void onDidReceiveBackgroundNotificationResponse(
       NotificationResponse details) {
-    print('onDidReceiveBackgroundNotificationResponse');
+    logger.d('onDidReceiveBackgroundNotificationResponse: id=${details.id}');
+    if (details.payload != null) {
+      onNotifications.add(details.payload);
+    }
   }
 }

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:kodesh_app/helpers/app_logger.dart';
 import 'package:kodesh_app/helpers/dates.dart';
 import 'package:kodesh_app/models/event.dart';
 import 'package:http/http.dart';
@@ -18,11 +19,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Events with ChangeNotifier {
   List<Event>? _eventsItems = [];
-
-  /// [_eventsItems] : contains the asked week's events.
   List<Zman>? _zmanimItems = [];
+  String? _eventsError;
+  String? _zmanimError;
 
-  /// [_zmanimItems] : contains today's times.
   String city = 'IL-Jerusalem|281184';
 
   /// [city] : the city that the user chose for the events times.
@@ -70,13 +70,14 @@ class Events with ChangeNotifier {
     'roshchodesh',
   ];
 
-  List<Event>? get eventsItems {
-    return _eventsItems == null ? null : [..._eventsItems!];
-  }
+  List<Event>? get eventsItems =>
+      _eventsItems == null ? null : [..._eventsItems!];
 
-  List<Zman>? get zmanimItems {
-    return _zmanimItems == null ? null : [..._zmanimItems!];
-  }
+  List<Zman>? get zmanimItems =>
+      _zmanimItems == null ? null : [..._zmanimItems!];
+
+  String? get eventsError => _eventsError;
+  String? get zmanimError => _zmanimError;
 
   Map<DateTime, String>? get hebrewDates {
     return _hebrewDates == null ? null : {..._hebrewDates!};
@@ -177,7 +178,7 @@ class Events with ChangeNotifier {
       url = Uri.parse(isToday
           ? 'https://www.hebcal.com/shabbat?cfg=json&o=on&city=${cityToTake.split('|')[0]}&lg=${lang ?? _currentLocale.languageCode}'
           : 'https://www.hebcal.com/shabbat?cfg=json&o=on&gy=${startDate.year}&gm=${startDate.month}&gd=${startDate.day}&city=${cityToTake.split('|')[0]}&lg=${lang ?? _currentLocale.languageCode}');
-      print(url);
+      logger.d('Retrying with city name: $url');
       response = await get(url);
     }
     return jsonDecode(response.body) as Map<String, dynamic>;
@@ -190,25 +191,28 @@ class Events with ChangeNotifier {
       void Function(bool bool)? setIsThereInternetConnection}) async {
     if (getDataFirst) await getData();
 
+    _eventsError = null;
+
     if (await isThereInternetConnection()) {
       try {
         final extractData = await tryFetch();
-        _eventsItems = [];
         _eventsItems = getEventsItemsFromMap(extractData['items'] as List);
-
-        fetchAndSetHebrewDatesProducts();
         notifyListeners();
-
+        fetchAndSetHebrewDatesProducts();
         return _eventsItems;
-      } catch (error) {
-        rethrow;
+      } catch (error, st) {
+        logger.e('Failed to fetch events', error: error, stackTrace: st);
+        _eventsItems = null;
+        _eventsError = error.toString();
+        notifyListeners();
+        return null;
       }
     } else {
       _eventsItems = null;
       _zmanimItems = null;
       _hebrewDates = null;
       notifyListeners();
-      return _eventsItems;
+      return null;
     }
   }
 
@@ -338,15 +342,19 @@ class Events with ChangeNotifier {
       bool getDataFirst = false,
       String lang = 'en',
       void Function(bool bool)? setIsThereInternetConnection}) async {
+    _zmanimError = null;
     try {
       final extractData = await tryFetchZmanim();
-      _zmanimItems = [];
       _zmanimItems =
           getZmanimItemsFromMap(extractData['times'] as Map<String, dynamic>);
       notifyListeners();
       return _zmanimItems;
-    } catch (error) {
-      rethrow;
+    } catch (error, st) {
+      logger.e('Failed to fetch zmanim', error: error, stackTrace: st);
+      _zmanimItems = null;
+      _zmanimError = error.toString();
+      notifyListeners();
+      return null;
     }
   }
 
@@ -371,21 +379,14 @@ class Events with ChangeNotifier {
     return jsonDecode(response.body) as Map<String, dynamic>;
   }
 
-  Future<Map<DateTime, String>?> fetchAndSetHebrewDatesProducts(
-      {bool filterByUser = false,
-      bool getDataFirst = false,
-      void Function(bool bool)? setIsThereInternetConnection}) async {
+  Future<void> fetchAndSetHebrewDatesProducts() async {
     try {
-      tryFetchHebrewDates().then((extractData) {
-        _hebrewDates = {};
-        _hebrewDates = getHebrewDatesItemsFromMap(
-            extractData['hdates'] as Map<String, dynamic>);
-        notifyListeners();
-      });
-
-      return _hebrewDates;
-    } catch (error) {
-      rethrow;
+      final extractData = await tryFetchHebrewDates();
+      _hebrewDates =
+          getHebrewDatesItemsFromMap(extractData['hdates'] as Map<String, dynamic>);
+      notifyListeners();
+    } catch (error, st) {
+      logger.w('Failed to fetch Hebrew dates (non-critical)', error: error, stackTrace: st);
     }
   }
 

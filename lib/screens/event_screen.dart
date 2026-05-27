@@ -297,7 +297,9 @@ class _EventScreenState extends State<EventScreen> {
                   renderLoading(context)
                 else
                   renderNoInternetConnection(
-                      AppLocalizations.of(context)!.noIntrnetMessage),
+                      events.eventsError != null
+                          ? AppLocalizations.of(context)!.apiErrorMessage
+                          : AppLocalizations.of(context)!.noIntrnetMessage),
               },
             ],
           ),

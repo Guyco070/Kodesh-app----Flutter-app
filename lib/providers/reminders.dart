@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kodesh_app/api/l10n/l10n.dart';
+import 'package:kodesh_app/helpers/app_logger.dart';
 import 'package:kodesh_app/api/l10n/reminders_translates.dart';
 import 'package:kodesh_app/api/notification_api.dart';
 import 'package:kodesh_app/models/event.dart';
@@ -543,30 +544,27 @@ class Reminders with ChangeNotifier {
         }
 
         if (e is Holiday &&
+            !_isCholHaMoed(e) &&
             !(e.title.contains('Chanukah') ||
                 (e.titleOrig != null && e.titleOrig!.contains('Chanukah')))) {
-          // removing tefillin reminders from holidays
-          print("tzToRemove");
-          print(e);
+          // Full Yom Tov: remove tefillin for every day within the holiday
           if (tefilinDates.isNotEmpty && e.releaseDate != null) {
-            tzToRemove.add(tefilinDates.indexOf(tefilinDates[0]));
-            for (DateTime dt in tefilinDates) {
-              if (dt.isAfter(e.entryDate!) &&
-                  dt.day == e.entryDate!.day &&
-                  dt.month == e.entryDate!.month &&
-                  dt.year == e.entryDate!.year) {
-                DateTime temp = dt.add(const Duration(days: 1));
-
-                while (temp.isBefore(e.releaseDate!)) {
-                  tzToRemove.add(tefilinDates.indexOf(temp));
-                  temp = temp.add(const Duration(days: 1));
-                }
+            final entryDay = DateTime(e.entryDate!.year, e.entryDate!.month, e.entryDate!.day);
+            final dayAfterRelease = DateTime(e.releaseDate!.year, e.releaseDate!.month, e.releaseDate!.day + 1);
+            for (int i = 0; i < tefilinDates.length; i++) {
+              if (!tefilinDates[i].isBefore(entryDay) && tefilinDates[i].isBefore(dayAfterRelease)) {
+                tzToRemove.add(i);
               }
             }
           }
-        }else if((e.titleOrig != null && e.titleOrig!.contains("(CH''M)")) || e.title.contains("(CH''M)")) { // Chole Mohed - no need for tefilin
-            tzToRemove.add(tefilinDates.indexOf(e.entryDate!));
-          } else if (roshChodesh && e is RoshChodesh) {
+        } else if (_isCholHaMoed(e)) {
+          // Chol HaMoed: remove tefillin only for that specific day
+          for (int i = 0; i < tefilinDates.length; i++) {
+            if (_isSameDay(tefilinDates[i], e.entryDate!)) {
+              tzToRemove.add(i);
+            }
+          }
+        } else if (roshChodesh && e is RoshChodesh) {
           // rosh chodesh
           DateTime dayBefore = DateTime(
                   e.entryDate!.year,
@@ -581,11 +579,14 @@ class Reminders with ChangeNotifier {
                     e.entryDate!.day, 14, 0)
                 .subtract(const Duration(days: 1));
             if (dayBefore.isAfter(twoOc)) {
+              // After 14:00: Friday→Thursday, Saturday→Thursday
               dayBefore = dayBefore
                   .subtract(Duration(days: dayBefore.weekday == 5 ? 1 : 2));
-            } else {
+            } else if (dayBefore.weekday == 6) {
+              // Saturday before 14:00: move to Friday (same time, still before 14:00)
               dayBefore = dayBefore.subtract(const Duration(days: 1));
             }
+            // Friday before 14:00: valid, no change needed
           }
           if (now.isBefore(dayBefore)) {
             notValues.add({
@@ -722,4 +723,11 @@ class Reminders with ChangeNotifier {
     int minutes = int.parse(sfiratOmerTime.split(':')[1]);
     return Time(hour, minutes);
   }
+
+  static bool _isSameDay(DateTime a, DateTime b) =>
+      a.year == b.year && a.month == b.month && a.day == b.day;
+
+  static bool _isCholHaMoed(Event e) =>
+      (e.titleOrig != null && e.titleOrig!.contains("(CH''M)")) ||
+      e.title.contains("(CH''M)");
 }
