@@ -3,78 +3,147 @@
     "main": "Principal",
 
     "menu": "Menú",
+    "settings": "Ajustes",
+    "prayersAndBlessings": "Oraciones y bendiciones",
+    "aids": "Herramientas",
     "settingRemindersMenu": "Configuración de recordatorios",
-    "candleLightingOrderMenu": "Orden de encendido de velas",
+    "candleLightingOrderMenu": "Orden de encendido de velas de Shabat",
+    "hanukkahCandleLightingOrderMenu": "Encendido de velas de Janucá",
+    "sederSfiratOmer": "Cuenta del Omer",
     "tefilinOrderMenu": "Orden de colocación de filacterias",
+    "noTefilin": "No se ponen tefilín en este día",
+    "aboutMenu": "Acerca de",
     "choresBeforeShabbatMenu": "Tareas antes de Shabat",
-    "nextWeekEvants": "Eventos de la próxima semana",
+    "havdalah": "Havdalá",
 
+    "ashkenazVirsion": "Versión Ashkenaz",
+    "mizrahVirsion": "Versión Mizrají",
+    "sfaradVirsion": "Versión Sfaradí",
+
+    "nextWeekEvants": "Eventos de la próxima semana",
     "weekEvents": "Eventos de la semana",
-    "todayTimes": "Tiempos de hoy", 
+    "todayTimes": "Tiempos de hoy",
 
     "shabat": "Shabat",
     "loading": "Cargando...",
-    "onlyShabat": "Ver solo shabat",
+
+    "onlyShabat": "Ver solo Shabat",
+    "viewAllEvents": "Ver todos los eventos",
+    "viewForeignDates": "Ver fechas del calendario civil",
+    "viewHebrewDates": "Ver fechas hebreas",
 
     "noLaterTimesToShow": "No hay horas posteriores para mostrar esta fecha.",
     "fromNowOn": "De aquí en adelante",
 
     "currentDate": "Fecha actual",
-    "entryAndLightingCandles": "Entrada y encendido de velas.",
-    "departureAndHavdalah": "Salida y havdalá",
+    "entryAndLightingCandles": "Entrada y encendido de velas",
+    "departureAndHavdalah": "Salida y Havdalá",
+    "eventDay": "Día del evento",
     "startDate": "Fecha de inicio",
     "endDate": "Fecha final",
+    "eventStartDate": "Fecha de inicio del evento",
+    "eventEndDate": "Fecha de finalización del evento",
+    "parasha": "Porción semanal de la Torá",
 
-    "monday": "Lunes",    
-    "tuesday": "Martes",    
+    "monday": "Lunes",
+    "tuesday": "Martes",
     "wednesday": "Miércoles",
     "thursday": "Jueves",
     "friday": "Viernes",
     "saturday": "Sábado",
     "sunday": "Domingo",
 
-    "eventStartDate": "Fecha de inicio del evento",
-    "eventEndDate": "Fecha de finalización del evento",
-    "eventDay": "día del evento",
-    "parasha": "Porción semanal de la Torá",
-    "today": "Este Dia",
+    "today": "Hoy",
     "yesterday": "Ayer",
     "tomorrow": "Mañana",
     "inXDays": "En {days} días",
-    "xDaysAgo": "hace {days} días",
-    "noIntrnetMessage":
-        "Lo sentimos, parece que no hay conexión a Internet, conéctese a Internet y presione el botón Actualizar.",
-    "beforeShabatAndHolidaysSettengs": "Antes del shabat y festivos",
-    "city": "ciudad",
+    "@inXDays": {
+        "description": "inXDays",
+        "placeholders": {
+            "days": { "type": "String" }
+        }
+    },
+    "xDaysAgo": "Hace {days} días",
+    "@xDaysAgo": {
+        "description": "xDaysAgo",
+        "placeholders": {
+            "days": { "type": "String" }
+        }
+    },
+
+    "noIntrnetMessage": "Lo sentimos, parece que no hay conexión a Internet. Por favor conéctese y presione el botón de actualizar.",
+    "apiErrorMessage": "Lo sentimos, ocurrió un error al cargar los datos. Por favor intente de nuevo.",
+    "retry": "Reintentar",
+
+    "beforeShabatAndHolidaysSettengs": "Antes del Shabat y festivos",
+    "city": "Ciudad",
     "minutes": "minutos",
     "hours": "horas",
-    "remindMeXhoursAndYMinutesBeforeShbatAndHolidays":
-        "Recordarme {hours} horas y {minutes} minutos antes del shabat o festivo",
+
+    "remindMeXhoursAndYMinutesBeforeShbatAndHolidays": "Recordarme {hours} horas y {minutes} minutos antes del Shabat o festivo",
+    "@remindMeXhoursAndYMinutesBeforeShbatAndHolidays": {
+        "description": "remindMeXhoursAndYMinutesBeforeShbatAndHolidays",
+        "placeholders": {
+            "hours": { "type": "String" },
+            "minutes": { "type": "String" }
+        }
+    },
+
+    "remindMeXhoursAndYMinutesBeforeNerotHanukkah": "Recordarme {hours} horas y {minutes} minutos antes del encendido de velas de Janucá",
+    "@remindMeXhoursAndYMinutesBeforeNerotHanukkah": {
+        "description": "remindMeXhoursAndYMinutesBeforeNerotHanukkah",
+        "placeholders": {
+            "hours": { "type": "String" },
+            "minutes": { "type": "String" }
+        }
+    },
+
     "whatToRemindSettings": "¿Qué te gustaría que te recordáramos?",
-    "plata": "blanqueamiento de Shabat",
-    "plataAction": "Conectar blej de Shabat",
+    "plata": "Blech de Shabat",
+    "plataAction": "Conectar Blech de Shabat",
     "miham": "Samovar",
-    "mihamAction": "conectar samovar",
-    "shabbatClock": "reloj de shabat",
-    "shabbatClockAction": "Enciende el reloj de Shabat",
-    "candleLighting": "encendido de velas",
-    "candleLightingAction": "luz de las velas",
+    "mihamAction": "Conectar samovar",
+    "shabbatClock": "Reloj de Shabat",
+    "shabbatClockAction": "Encender el reloj de Shabat",
+    "candleLighting": "Encendido de velas",
+    "hanukkahCandleLighting": "Encendido de velas de Janucá",
+    "candleLightingAction": "Encender las velas",
     "airConditioner": "Aire acondicionado",
-    "airConditionerAction": "Enciende el aire acondicionado",
-    "remindCandleLightningSeperateSettings":
-        "Recuérdame encender las velas por separado",
-    "remindMeXhoursAndYMinutesBeforeCandlesLighning":
-        "Recuérdame encender las velas {hours} horas y {minutes} minutos antes del shabat o festivo",
+    "airConditionerAction": "Encender el aire acondicionado",
+    "phone": "Teléfono celular",
+    "phoneAction": "Apagar el teléfono celular",
+
+    "remindCandleLightningSeperateSettings": "Recordarme encender las velas por separado",
+    "remindMeXhoursAndYMinutesBeforeCandlesLighning": "Recordarme encender las velas {hours} horas y {minutes} minutos antes del Shabat o festivo",
+    "@remindMeXhoursAndYMinutesBeforeCandlesLighning": {
+        "description": "remindMeXhoursAndYMinutesBeforeCandlesLighning",
+        "placeholders": {
+            "hours": { "type": "String" },
+            "minutes": { "type": "String" }
+        }
+    },
+
+    "remindMeXhoursAndYMinutesAfterShabatForHavdalah": "Recordarme hacer Havdalá {hours} horas y {minutes} minutos después del Shabat o festivo",
+    "@remindMeXhoursAndYMinutesAfterShabatForHavdalah": {
+        "description": "remindMeXhoursAndYMinutesAfterShabatForHavdalah",
+        "placeholders": {
+            "hours": { "type": "String" },
+            "minutes": { "type": "String" }
+        }
+    },
+
     "tefillin": "Tefilín",
-    "remindTeffilinSettingsAt":
-        "Recuérdame leer sobre tefilín todos los días a las",
+    "remindTeffilinSettingsAt": "Recordarme poner tefilín todos los días a las",
     "roshHodesh": "Rosh Jodesh",
-    "remindRoshHodeshSettingsAt": "Recuérdame el día antes de Rosh Jodesh en",
-    "roshHodeshReminderWillBeAdvanced":
-        "Este recordatorio se adelantará a los días laborables hasta las dos de la tarde.",
+    "remindRoshHodeshSettingsAt": "Recordarme el día antes de Rosh Jodesh a las",
+    "sfiratOmer": "Cuenta del Omer",
+    "remindSfiratOmerSettingsAt": "Recordarme contar el Omer a las",
+    "roshHodeshReminderWillBeAdvanced": "Este recordatorio se adelantará a los días laborables antes de las dos de la tarde del viernes.",
     "updateRemindersTitle": "Actualizar recordatorios",
+
     "all": "Todos",
-    "my": "Mi",
-    "noChroesMessage":
-        "No hay tareas que nos haya pedido que le recordemos, esto se puede cambiar en la página de configuración de recordatorios."
+    "my": "Mis",
+    "noChroesMessage": "No hay tareas que nos haya pedido que le recordemos. Puede cambiarlo en la página de configuración de recordatorios.",
+
+    "compass": "Brújula"
 }

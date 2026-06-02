@@ -3,18 +3,34 @@
     "main": "главный",
 
     "menu": "Меню",
+    "settings": "Настройки",
+    "prayersAndBlessings": "Молитвы и благословения",
+    "aids": "Инструменты",
     "settingRemindersMenu": "Настройка напоминаний",
     "candleLightingOrderMenu": "Порядок зажжения свечей",
+    "hanukkahCandleLightingOrderMenu": "Зажжение свечей Хануки",
+    "sederSfiratOmer": "Счёт Омера",
     "tefilinOrderMenu": "Порядок закладки филактерий",
+    "noTefilin": "В этот день тфилин не надевают",
+    "aboutMenu": "О приложении",
     "choresBeforeShabbatMenu": "Дела перед Шаббатом",
-    "nextWeekEvants": "События следующей недели",
+    "havdalah": "Авдала",
 
+    "ashkenazVirsion": "Ашкеназская версия",
+    "mizrahVirsion": "Мизрахская версия",
+    "sfaradVirsion": "Сефардская версия",
+
+    "nextWeekEvants": "События следующей недели",
     "weekEvents": "События недели",
-    "todayTimes": "Сегодняшнее время", 
+    "todayTimes": "Сегодняшнее время",
 
     "shabat": "Шаббат",
     "loading": "Загрузка...",
+
     "onlyShabat": "Смотреть только Шаббат",
+    "viewAllEvents": "Смотреть все события",
+    "viewForeignDates": "Смотреть даты гражданского календаря",
+    "viewHebrewDates": "Смотреть еврейские даты",
 
     "noLaterTimesToShow": "Более поздние времена для этой даты отсутствуют.",
     "fromNowOn": "Впредь",
@@ -22,54 +38,112 @@
     "currentDate": "Текущая дата",
     "entryAndLightingCandles": "Вход и зажигание свечей",
     "departureAndHavdalah": "Отъезд и авдала",
+    "eventDay": "День события",
     "startDate": "Дата начала",
     "endDate": "Дата окончания",
     "eventStartDate": "Дата начала мероприятия",
     "eventEndDate": "Дата окончания мероприятия",
-    "eventDay": "День события",
     "parasha": "Недельная глава Торы",
 
-    "monday": "Понедельник",    
-    "tuesday": "Вторник",    
-    "wednesday": "среда",
+    "monday": "Понедельник",
+    "tuesday": "Вторник",
+    "wednesday": "Среда",
     "thursday": "Четверг",
-    "friday": "пятница",
-    "saturday": "суббота",
+    "friday": "Пятница",
+    "saturday": "Суббота",
     "sunday": "Воскресенье",
 
-    "yesterday": "Вчерашний день",
     "today": "Сегодня",
+    "yesterday": "Вчера",
     "tomorrow": "Завтра",
     "inXDays": "Через {days} дней",
+    "@inXDays": {
+        "description": "inXDays",
+        "placeholders": {
+            "days": { "type": "String" }
+        }
+    },
     "xDaysAgo": "{days} дней назад",
+    "@xDaysAgo": {
+        "description": "xDaysAgo",
+        "placeholders": {
+            "days": { "type": "String" }
+        }
+    },
+
     "noIntrnetMessage": "Извините, кажется, что нет подключения к Интернету. Пожалуйста, подключитесь к Интернету и нажмите кнопку обновления.",
+    "apiErrorMessage": "Извините, произошла ошибка при загрузке данных. Пожалуйста, попробуйте ещё раз.",
+    "retry": "Повторить",
+
     "beforeShabatAndHolidaysSettengs": "Перед Шаббатом и праздниками",
-    "city": "город",
+    "city": "Город",
     "minutes": "минуты",
     "hours": "часы",
-    "remindMeXhoursAndYMinutesBeforeShbatAndHolidays":"Напомнить мне {hours} часов и {minutes} минут до Шаббата или праздника",
+
+    "remindMeXhoursAndYMinutesBeforeShbatAndHolidays": "Напомнить мне {hours} часов и {minutes} минут до Шаббата или праздника",
+    "@remindMeXhoursAndYMinutesBeforeShbatAndHolidays": {
+        "description": "remindMeXhoursAndYMinutesBeforeShbatAndHolidays",
+        "placeholders": {
+            "hours": { "type": "String" },
+            "minutes": { "type": "String" }
+        }
+    },
+
+    "remindMeXhoursAndYMinutesBeforeNerotHanukkah": "Напомни мне {hours} часов и {minutes} минут до зажжения свечей Хануки",
+    "@remindMeXhoursAndYMinutesBeforeNerotHanukkah": {
+        "description": "remindMeXhoursAndYMinutesBeforeNerotHanukkah",
+        "placeholders": {
+            "hours": { "type": "String" },
+            "minutes": { "type": "String" }
+        }
+    },
+
     "whatToRemindSettings": "Что бы вы хотели, чтобы мы вам напомнили?",
-    "plata": "Шаббат отбеливать",
+    "plata": "Шаббат Блеч",
+    "plataAction": "Подключить Шаббат Блеч",
     "miham": "Самовар",
     "mihamAction": "Подключить самовар",
-    "shabbatClock": "Шаббат часы",
-    "shabbatClockAction": "Включите Шаббат часы",
-    "candleLighting": "Освещение свечей",
-    "candleLightingAction": "לзажечь свечи",
+    "shabbatClock": "Часы Шаббата",
+    "shabbatClockAction": "Включить часы Шаббата",
+    "candleLighting": "Зажжение свечей",
+    "hanukkahCandleLighting": "Зажжение свечей Хануки",
+    "candleLightingAction": "Зажечь свечи",
     "airConditioner": "Кондиционер",
-    "airConditionerAction": "Включите кондиционер",
-    "plataAction": "Подключить Шаббат Блеч",
+    "airConditionerAction": "Включить кондиционер",
+    "phone": "Мобильный телефон",
+    "phoneAction": "Выключить мобильный телефон",
+
     "remindCandleLightningSeperateSettings": "Напомни мне зажечь свечи отдельно",
-    "remindMeXhoursAndYMinutesBeforeCandlesLighning":
-        "Напомни мне зажечь свечи {hours} часа и {minutes} минут до Шаббата или праздника",
-    "tefillin": "тфилин",
+    "remindMeXhoursAndYMinutesBeforeCandlesLighning": "Напомни мне зажечь свечи {hours} часа и {minutes} минут до Шаббата или праздника",
+    "@remindMeXhoursAndYMinutesBeforeCandlesLighning": {
+        "description": "remindMeXhoursAndYMinutesBeforeCandlesLighning",
+        "placeholders": {
+            "hours": { "type": "String" },
+            "minutes": { "type": "String" }
+        }
+    },
+
+    "remindMeXhoursAndYMinutesAfterShabatForHavdalah": "Напомни мне совершить авдалу {hours} часов и {minutes} минут после Шаббата или праздника",
+    "@remindMeXhoursAndYMinutesAfterShabatForHavdalah": {
+        "description": "remindMeXhoursAndYMinutesAfterShabatForHavdalah",
+        "placeholders": {
+            "hours": { "type": "String" },
+            "minutes": { "type": "String" }
+        }
+    },
+
+    "tefillin": "Тфилин",
     "remindTeffilinSettingsAt": "Напомните мне возлагать тфилин каждый день в",
     "roshHodesh": "Рош Ходеш",
     "remindRoshHodeshSettingsAt": "Напомни мне за день до Рош Ходеш в",
-    "roshHodeshReminderWillBeAdvanced": "Это напоминание будет перенесено на будние дни до двух часов дня.",
+    "sfiratOmer": "Счёт Омера",
+    "remindSfiratOmerSettingsAt": "Напомни мне считать Омер в",
+    "roshHodeshReminderWillBeAdvanced": "Это напоминание будет перенесено на будние дни до двух часов дня пятницы.",
     "updateRemindersTitle": "Обновить напоминания",
 
     "all": "Все",
-    "my": "Мой",
-    "noChroesMessage": "Нет задач, о которых вы просили напомнить, это можно изменить на странице настроек напоминаний."
+    "my": "Мои",
+    "noChroesMessage": "Нет задач, о которых вы просили напомнить, это можно изменить на странице настроек напоминаний.",
+
+    "compass": "Компас"
 }
