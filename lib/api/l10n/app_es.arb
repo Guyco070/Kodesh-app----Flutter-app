@@ -145,5 +145,8 @@
     "my": "Mis",
     "noChroesMessage": "No hay tareas que nos haya pedido que le recordemos. Puede cambiarlo en la página de configuración de recordatorios.",
 
-    "compass": "Brújula"
+    "compass": "Brújula",
+
+    "darkMode": "Modo oscuro",
+    "lightMode": "Modo claro"
 }
