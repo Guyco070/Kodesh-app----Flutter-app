@@ -6,6 +6,8 @@ class L10n {
   static final all = [
     const Locale('en', 'English'),
     const Locale('he', 'עברית'),
+    const Locale('es', 'Español'),
+    const Locale('ru', 'Русский'),
   ];
 
   static final names = {
@@ -16,6 +18,14 @@ class L10n {
     'he': {
       'locale': 'עברית',
       'english': 'Hebrew',
+    },
+    'es': {
+      'locale': 'Español',
+      'english': 'Spanish',
+    },
+    'ru': {
+      'locale': 'Русский',
+      'english': 'Russian',
     },
   };
 }
