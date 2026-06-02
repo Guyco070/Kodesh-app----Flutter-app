@@ -16,7 +16,7 @@ import 'package:kodesh_app/widgets/zman_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/data/latest.dart';
 import '../api/notification_api.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
 enum ViewState {
   events,

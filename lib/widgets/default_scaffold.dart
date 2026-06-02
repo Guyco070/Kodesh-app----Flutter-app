@@ -7,7 +7,7 @@ import 'package:kodesh_app/providers/reminders.dart';
 import 'package:kodesh_app/widgets/app_drawer.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
 class DefaultScaffold extends StatefulWidget {
   const DefaultScaffold({super.key, required this.title, required this.body, this.setIsLoading});
@@ -22,8 +22,8 @@ class DefaultScaffold extends StatefulWidget {
 class _DefaultScaffoldState extends State<DefaultScaffold> {
   bool _isLoading = false;
 
-  DropdownMenuItem<String> buildMenuItem(Locale item) {
-    return DropdownMenuItem(
+  DropdownItem<String> buildMenuItem(Locale item) {
+    return DropdownItem(
         alignment: Alignment.center,
         value: item.languageCode,
         child: Text(
@@ -54,7 +54,7 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
 
   getLangDropDown(LanguageChangeProvider lang) {
     return DropdownButtonHideUnderline(
-      child: DropdownButton2(
+      child: DropdownButton2<String>(
         isExpanded: true,
         hint: Text(
           lang.currentLocale.languageCode,
@@ -64,17 +64,13 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
           ),
           textDirection: TextDirection.rtl,
         ),
-        items: L10n.all.map<DropdownMenuItem<String>>(buildMenuItem).toList(),
-        value: lang.currentLocale.languageCode,
-        onChanged: (value) {
-          if (value != lang.currentLocale.languageCode) {
-            lang.changeLocale(
-              value ?? lang.currentLocale.languageCode
-            );
+        items: L10n.all.map<DropdownItem<String>>(buildMenuItem).toList(),
+        valueListenable: ValueNotifier<String?>(lang.currentLocale.languageCode),
+        onChanged: (String? value) {
+          if (value != null && value != lang.currentLocale.languageCode) {
+            lang.changeLocale(value);
             Provider.of<Events>(context, listen: false)
-                .changeLocale(value ?? lang.currentLocale.languageCode,
-                    setIsLoading: widget.setIsLoading)
-                .then((_) => Reminders(context));
+                .changeLocale(value, setIsLoading: widget.setIsLoading);
           }
         },
         customButton: langIcon(lang),

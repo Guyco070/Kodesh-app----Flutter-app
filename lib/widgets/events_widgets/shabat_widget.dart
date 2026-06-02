@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:kodesh_app/models/event.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/widgets/date_with_time_left.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kodesh_app/api/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class ShabatWidget extends StatelessWidget {

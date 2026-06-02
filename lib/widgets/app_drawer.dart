@@ -7,7 +7,7 @@ import 'package:kodesh_app/screens/tefilot/adlakat_nerot.dart';
 import 'package:kodesh_app/screens/tefilot/adlakat_nerot_chanukah.dart';
 import 'package:kodesh_app/screens/tefilot/havdalah.dart';
 import 'package:kodesh_app/screens/tefilot/seder_anahat_tefilin.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kodesh_app/api/l10n/app_localizations.dart';
 import 'package:kodesh_app/screens/tefilot/sfirat_omer_screen.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
 import 'package:kodesh_app/widgets/custom_expanded_list_view.dart';

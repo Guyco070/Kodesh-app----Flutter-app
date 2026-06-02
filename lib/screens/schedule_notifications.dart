@@ -9,7 +9,7 @@ import 'package:kodesh_app/widgets/schedule_notifications_widgets/choose_time_be
 import 'package:kodesh_app/widgets/schedule_notifications_widgets/choose_time_in_day_widget.dart';
 import 'package:kodesh_app/widgets/swiches/cupertino_text_check_switch.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
 class ScheduleNotificationsScreen extends StatefulWidget {
   const ScheduleNotificationsScreen({super.key});

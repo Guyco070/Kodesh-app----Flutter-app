@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
 enum Nosah {
   mizrah,
