@@ -39,7 +39,6 @@ class Reminders with ChangeNotifier {
   int afterShabatHavdalahMinutes = 5;
   int afterShabatHavdalahHours = 0;
 
-  String reminderCity = 'IL-Jerusalem|281184';
   String city = 'IL-Jerusalem|281184';
   int beforeShabatMinutes = 0;
   int beforeShabatHours = 0;
@@ -122,11 +121,6 @@ class Reminders with ChangeNotifier {
       appLocalizations.plata,
       appLocalizations.miham,
     ];
-  }
-
-  setReminderCity(String newCity) {
-    reminderCity = newCity;
-    notifyListeners();
   }
 
   setRoshChodesh({bool? newRoshChodesh}) {
@@ -270,12 +264,6 @@ class Reminders with ChangeNotifier {
       city = prefs.getString('city')!;
     }
 
-    if (prefsKeys.contains('reminderCity')) {
-      reminderCity = prefs.getString('reminderCity')!;
-    } else {
-      reminderCity = city;
-    }
-
     if (prefsKeys.contains('beforeShabatHours')) {
       beforeShabatHours = prefs.getInt('beforeShabatHours')!;
     }
@@ -362,7 +350,7 @@ class Reminders with ChangeNotifier {
     prefs.setInt('afterShabatHavdalahHours', afterShabatHavdalahHours);
     prefs.setInt('afterShabatHavdalahMinutes', afterShabatHavdalahMinutes);
 
-    prefs.setString('reminderCity', reminderCity);
+
 
     prefs.setBool('tefilin', tefilin);
     prefs.setBool('roshChodesh', roshChodesh);
@@ -414,7 +402,7 @@ class Reminders with ChangeNotifier {
     Events events = Events();
     if (await events.isThereInternetConnection()) {
       Map<String, dynamic> extractData = await events.tryFetch(
-          cityToTake: reminderCity, isToday: true, lang: lang);
+          cityToTake: city, isToday: true, lang: lang);
       List<Event> items = Events.getEventsItemsFromMap(extractData['items']);
       final DateTime now = DateTime.now();
       for (Event e in items) {
