@@ -18,49 +18,49 @@ class AppLocalizationsEs extends AppLocalizations {
   String get menu => 'Menú';
 
   @override
-  String get settings => 'Settings';
+  String get settings => 'Ajustes';
 
   @override
-  String get prayersAndBlessings => 'Prayers and Blessings';
+  String get prayersAndBlessings => 'Oraciones y bendiciones';
 
   @override
-  String get aids => 'Aids';
+  String get aids => 'Herramientas';
 
   @override
   String get settingRemindersMenu => 'Configuración de recordatorios';
 
   @override
-  String get candleLightingOrderMenu => 'Orden de encendido de velas';
+  String get candleLightingOrderMenu => 'Orden de encendido de velas de Shabat';
 
   @override
-  String get hanukkahCandleLightingOrderMenu => 'Hanukkah candle lighting';
+  String get hanukkahCandleLightingOrderMenu => 'Encendido de velas de Janucá';
 
   @override
-  String get sederSfiratOmer => 'Counting of the Omer';
+  String get sederSfiratOmer => 'Cuenta del Omer';
 
   @override
   String get tefilinOrderMenu => 'Orden de colocación de filacterias';
 
   @override
-  String get noTefilin => 'Do not put on tefillin on this day';
+  String get noTefilin => 'No se ponen tefilín en este día';
 
   @override
-  String get aboutMenu => 'About';
+  String get aboutMenu => 'Acerca de';
 
   @override
   String get choresBeforeShabbatMenu => 'Tareas antes de Shabat';
 
   @override
-  String get havdalah => 'Havdalah';
+  String get havdalah => 'Havdalá';
 
   @override
-  String get ashkenazVirsion => 'Ashkenaz Virsion';
+  String get ashkenazVirsion => 'Versión Ashkenaz';
 
   @override
-  String get mizrahVirsion => 'Mizrah Virsion';
+  String get mizrahVirsion => 'Versión Mizrají';
 
   @override
-  String get sfaradVirsion => 'Sfarad Virsion';
+  String get sfaradVirsion => 'Versión Sfaradí';
 
   @override
   String get nextWeekEvants => 'Eventos de la próxima semana';
@@ -78,16 +78,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get loading => 'Cargando...';
 
   @override
-  String get onlyShabat => 'Ver solo shabat';
+  String get onlyShabat => 'Ver solo Shabat';
 
   @override
-  String get viewAllEvents => 'View all events';
+  String get viewAllEvents => 'Ver todos los eventos';
 
   @override
-  String get viewForeignDates => 'View foreign dates';
+  String get viewForeignDates => 'Ver fechas del calendario civil';
 
   @override
-  String get viewHebrewDates => 'View hebrew dates';
+  String get viewHebrewDates => 'Ver fechas hebreas';
 
   @override
   String get noLaterTimesToShow =>
@@ -100,10 +100,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get currentDate => 'Fecha actual';
 
   @override
-  String get entryAndLightingCandles => 'Entrada y encendido de velas.';
+  String get entryAndLightingCandles => 'Entrada y encendido de velas';
 
   @override
-  String get departureAndHavdalah => 'Salida y havdalá';
+  String get departureAndHavdalah => 'Salida y Havdalá';
 
   @override
   String get startDate => 'Fecha de inicio';
@@ -118,7 +118,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get eventEndDate => 'Fecha de finalización del evento';
 
   @override
-  String get eventDay => 'día del evento';
+  String get eventDay => 'Día del evento';
 
   @override
   String get parasha => 'Porción semanal de la Torá';
@@ -145,7 +145,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get sunday => 'Domingo';
 
   @override
-  String get today => 'Este Dia';
+  String get today => 'Hoy';
 
   @override
   String get yesterday => 'Ayer';
@@ -160,25 +160,25 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String xDaysAgo(String days) {
-    return 'hace $days días';
+    return 'Hace $days días';
   }
 
   @override
   String get noIntrnetMessage =>
-      'Lo sentimos, parece que no hay conexión a Internet, conéctese a Internet y presione el botón Actualizar.';
+      'Lo sentimos, parece que no hay conexión a Internet. Por favor conéctese y presione el botón de actualizar.';
 
   @override
   String get apiErrorMessage =>
-      'Sorry, something went wrong while loading data. Please try again.';
+      'Lo sentimos, ocurrió un error al cargar los datos. Por favor intente de nuevo.';
 
   @override
-  String get retry => 'Retry';
+  String get retry => 'Reintentar';
 
   @override
-  String get beforeShabatAndHolidaysSettengs => 'Antes del shabat y festivos';
+  String get beforeShabatAndHolidaysSettengs => 'Antes del Shabat y festivos';
 
   @override
-  String get city => 'ciudad';
+  String get city => 'Ciudad';
 
   @override
   String get minutes => 'minutos';
@@ -189,71 +189,71 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String remindMeXhoursAndYMinutesBeforeShbatAndHolidays(
       String hours, String minutes) {
-    return 'Recordarme $hours horas y $minutes minutos antes del shabat o festivo';
+    return 'Recordarme $hours horas y $minutes minutos antes del Shabat o festivo';
   }
 
   @override
   String remindMeXhoursAndYMinutesBeforeNerotHanukkah(
       String hours, String minutes) {
-    return 'Remind me $hours hours and $minutes minutes before lighting Hanukkah candles';
+    return 'Recordarme $hours horas y $minutes minutos antes del encendido de velas de Janucá';
   }
 
   @override
   String get whatToRemindSettings => '¿Qué te gustaría que te recordáramos?';
 
   @override
-  String get plata => 'blanqueamiento de Shabat';
+  String get plata => 'Blech de Shabat';
 
   @override
-  String get plataAction => 'Conectar blej de Shabat';
+  String get plataAction => 'Conectar Blech de Shabat';
 
   @override
   String get miham => 'Samovar';
 
   @override
-  String get mihamAction => 'conectar samovar';
+  String get mihamAction => 'Conectar samovar';
 
   @override
-  String get shabbatClock => 'reloj de shabat';
+  String get shabbatClock => 'Reloj de Shabat';
 
   @override
-  String get shabbatClockAction => 'Enciende el reloj de Shabat';
+  String get shabbatClockAction => 'Encender el reloj de Shabat';
 
   @override
-  String get candleLighting => 'encendido de velas';
+  String get candleLighting => 'Encendido de velas';
 
   @override
-  String get hanukkahCandleLighting => 'Hanukkah candle lighting';
+  String get hanukkahCandleLighting => 'Encendido de velas de Janucá';
 
   @override
-  String get candleLightingAction => 'luz de las velas';
+  String get candleLightingAction => 'Encender las velas';
 
   @override
   String get airConditioner => 'Aire acondicionado';
 
   @override
-  String get airConditionerAction => 'Enciende el aire acondicionado';
+  String get airConditionerAction => 'Encender el aire acondicionado';
 
   @override
-  String get phone => 'cell phone';
+  String get phone => 'Teléfono celular';
 
   @override
-  String get phoneAction => 'Turn off the cell phone';
+  String get phoneAction => 'Apagar el teléfono celular';
 
   @override
   String get remindCandleLightningSeperateSettings =>
-      'Recuérdame encender las velas por separado';
+      'Recordarme encender las velas por separado';
 
   @override
   String remindMeXhoursAndYMinutesBeforeCandlesLighning(
       String hours, String minutes) {
-    return 'Recuérdame encender las velas $hours horas y $minutes minutos antes del shabat o festivo';
+    return 'Recordarme encender las velas $hours horas y $minutes minutos antes del Shabat o festivo';
   }
 
   @override
   String remindMeXhoursAndYMinutesAfterShabatForHavdalah(
       String hours, String minutes) {
-    return 'Remind me to light candles $hours hours and $minutes minutes after shabat or holiday for Havdalh';
+    return 'Recordarme hacer Havdalá $hours horas y $minutes minutos después del Shabat o festivo';
   }
 
   @override
@@ -261,24 +261,24 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get remindTeffilinSettingsAt =>
-      'Recuérdame leer sobre tefilín todos los días a las';
+      'Recordarme poner tefilín todos los días a las';
 
   @override
   String get roshHodesh => 'Rosh Jodesh';
 
   @override
   String get remindRoshHodeshSettingsAt =>
-      'Recuérdame el día antes de Rosh Jodesh en';
+      'Recordarme el día antes de Rosh Jodesh a las';
 
   @override
   String get roshHodeshReminderWillBeAdvanced =>
-      'Este recordatorio se adelantará a los días laborables hasta las dos de la tarde.';
+      'Este recordatorio se adelantará a los días laborables antes de las dos de la tarde del viernes.';
 
   @override
-  String get sfiratOmer => 'Counting of the Omer';
+  String get sfiratOmer => 'Cuenta del Omer';
 
   @override
-  String get remindSfiratOmerSettingsAt => 'Remind counting of the Omer at';
+  String get remindSfiratOmerSettingsAt => 'Recordarme contar el Omer a las';
 
   @override
   String get updateRemindersTitle => 'Actualizar recordatorios';
@@ -287,12 +287,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get all => 'Todos';
 
   @override
-  String get my => 'Mi';
+  String get my => 'Mis';
 
   @override
   String get noChroesMessage =>
-      'No hay tareas que nos haya pedido que le recordemos, esto se puede cambiar en la página de configuración de recordatorios.';
+      'No hay tareas que nos haya pedido que le recordemos. Puede cambiarlo en la página de configuración de recordatorios.';
 
   @override
-  String get compass => 'Compass';
+  String get compass => 'Brújula';
 }

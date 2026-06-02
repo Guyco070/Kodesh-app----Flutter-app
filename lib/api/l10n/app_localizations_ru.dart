@@ -18,13 +18,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get menu => 'Меню';
 
   @override
-  String get settings => 'Settings';
+  String get settings => 'Настройки';
 
   @override
-  String get prayersAndBlessings => 'Prayers and Blessings';
+  String get prayersAndBlessings => 'Молитвы и благословения';
 
   @override
-  String get aids => 'Aids';
+  String get aids => 'Инструменты';
 
   @override
   String get settingRemindersMenu => 'Настройка напоминаний';
@@ -33,34 +33,34 @@ class AppLocalizationsRu extends AppLocalizations {
   String get candleLightingOrderMenu => 'Порядок зажжения свечей';
 
   @override
-  String get hanukkahCandleLightingOrderMenu => 'Hanukkah candle lighting';
+  String get hanukkahCandleLightingOrderMenu => 'Зажжение свечей Хануки';
 
   @override
-  String get sederSfiratOmer => 'Counting of the Omer';
+  String get sederSfiratOmer => 'Счёт Омера';
 
   @override
   String get tefilinOrderMenu => 'Порядок закладки филактерий';
 
   @override
-  String get noTefilin => 'Do not put on tefillin on this day';
+  String get noTefilin => 'В этот день тфилин не надевают';
 
   @override
-  String get aboutMenu => 'About';
+  String get aboutMenu => 'О приложении';
 
   @override
   String get choresBeforeShabbatMenu => 'Дела перед Шаббатом';
 
   @override
-  String get havdalah => 'Havdalah';
+  String get havdalah => 'Авдала';
 
   @override
-  String get ashkenazVirsion => 'Ashkenaz Virsion';
+  String get ashkenazVirsion => 'Ашкеназская версия';
 
   @override
-  String get mizrahVirsion => 'Mizrah Virsion';
+  String get mizrahVirsion => 'Мизрахская версия';
 
   @override
-  String get sfaradVirsion => 'Sfarad Virsion';
+  String get sfaradVirsion => 'Сефардская версия';
 
   @override
   String get nextWeekEvants => 'События следующей недели';
@@ -81,13 +81,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get onlyShabat => 'Смотреть только Шаббат';
 
   @override
-  String get viewAllEvents => 'View all events';
+  String get viewAllEvents => 'Смотреть все события';
 
   @override
-  String get viewForeignDates => 'View foreign dates';
+  String get viewForeignDates => 'Смотреть даты гражданского календаря';
 
   @override
-  String get viewHebrewDates => 'View hebrew dates';
+  String get viewHebrewDates => 'Смотреть еврейские даты';
 
   @override
   String get noLaterTimesToShow =>
@@ -130,16 +130,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get tuesday => 'Вторник';
 
   @override
-  String get wednesday => 'среда';
+  String get wednesday => 'Среда';
 
   @override
   String get thursday => 'Четверг';
 
   @override
-  String get friday => 'пятница';
+  String get friday => 'Пятница';
 
   @override
-  String get saturday => 'суббота';
+  String get saturday => 'Суббота';
 
   @override
   String get sunday => 'Воскресенье';
@@ -148,7 +148,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get today => 'Сегодня';
 
   @override
-  String get yesterday => 'Вчерашний день';
+  String get yesterday => 'Вчера';
 
   @override
   String get tomorrow => 'Завтра';
@@ -169,16 +169,16 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get apiErrorMessage =>
-      'Sorry, something went wrong while loading data. Please try again.';
+      'Извините, произошла ошибка при загрузке данных. Пожалуйста, попробуйте ещё раз.';
 
   @override
-  String get retry => 'Retry';
+  String get retry => 'Повторить';
 
   @override
   String get beforeShabatAndHolidaysSettengs => 'Перед Шаббатом и праздниками';
 
   @override
-  String get city => 'город';
+  String get city => 'Город';
 
   @override
   String get minutes => 'минуты';
@@ -195,7 +195,7 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String remindMeXhoursAndYMinutesBeforeNerotHanukkah(
       String hours, String minutes) {
-    return 'Remind me $hours hours and $minutes minutes before lighting Hanukkah candles';
+    return 'Напомни мне $hours часов и $minutes минут до зажжения свечей Хануки';
   }
 
   @override
@@ -203,7 +203,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Что бы вы хотели, чтобы мы вам напомнили?';
 
   @override
-  String get plata => 'Шаббат отбеливать';
+  String get plata => 'Шаббат Блеч';
 
   @override
   String get plataAction => 'Подключить Шаббат Блеч';
@@ -215,31 +215,31 @@ class AppLocalizationsRu extends AppLocalizations {
   String get mihamAction => 'Подключить самовар';
 
   @override
-  String get shabbatClock => 'Шаббат часы';
+  String get shabbatClock => 'Часы Шаббата';
 
   @override
-  String get shabbatClockAction => 'Включите Шаббат часы';
+  String get shabbatClockAction => 'Включить часы Шаббата';
 
   @override
-  String get candleLighting => 'Освещение свечей';
+  String get candleLighting => 'Зажжение свечей';
 
   @override
-  String get hanukkahCandleLighting => 'Hanukkah candle lighting';
+  String get hanukkahCandleLighting => 'Зажжение свечей Хануки';
 
   @override
-  String get candleLightingAction => 'לзажечь свечи';
+  String get candleLightingAction => 'Зажечь свечи';
 
   @override
   String get airConditioner => 'Кондиционер';
 
   @override
-  String get airConditionerAction => 'Включите кондиционер';
+  String get airConditionerAction => 'Включить кондиционер';
 
   @override
-  String get phone => 'cell phone';
+  String get phone => 'Мобильный телефон';
 
   @override
-  String get phoneAction => 'Turn off the cell phone';
+  String get phoneAction => 'Выключить мобильный телефон';
 
   @override
   String get remindCandleLightningSeperateSettings =>
@@ -254,11 +254,11 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String remindMeXhoursAndYMinutesAfterShabatForHavdalah(
       String hours, String minutes) {
-    return 'Remind me to light candles $hours hours and $minutes minutes after shabat or holiday for Havdalh';
+    return 'Напомни мне совершить авдалу $hours часов и $minutes минут после Шаббата или праздника';
   }
 
   @override
-  String get tefillin => 'тфилин';
+  String get tefillin => 'Тфилин';
 
   @override
   String get remindTeffilinSettingsAt =>
@@ -272,13 +272,13 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get roshHodeshReminderWillBeAdvanced =>
-      'Это напоминание будет перенесено на будние дни до двух часов дня.';
+      'Это напоминание будет перенесено на будние дни до двух часов дня пятницы.';
 
   @override
-  String get sfiratOmer => 'Counting of the Omer';
+  String get sfiratOmer => 'Счёт Омера';
 
   @override
-  String get remindSfiratOmerSettingsAt => 'Remind counting of the Omer at';
+  String get remindSfiratOmerSettingsAt => 'Напомни мне считать Омер в';
 
   @override
   String get updateRemindersTitle => 'Обновить напоминания';
@@ -287,12 +287,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get all => 'Все';
 
   @override
-  String get my => 'Мой';
+  String get my => 'Мои';
 
   @override
   String get noChroesMessage =>
       'Нет задач, о которых вы просили напомнить, это можно изменить на странице настроек напоминаний.';
 
   @override
-  String get compass => 'Compass';
+  String get compass => 'Компас';
 }
