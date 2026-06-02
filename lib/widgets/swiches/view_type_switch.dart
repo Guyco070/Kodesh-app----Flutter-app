@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/screens/event_screen.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
 class ViewTypeSwitch extends StatelessWidget {
-  ViewTypeSwitch(
+  const ViewTypeSwitch(
       {super.key,
       required this.appLocalizations,
       required this.viewState,
       required this.setViewState});
-  AppLocalizations appLocalizations;
-  ViewState viewState;
-  Function setViewState;
+  final AppLocalizations appLocalizations;
+  final ViewState viewState;
+  final Function setViewState;
 
   @override
   Widget build(BuildContext context) {

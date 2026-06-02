@@ -15,23 +15,15 @@ class ZmanWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     bool isNotYTT = !isYesterdayTodayOrTomorrow(data.date);
     Events events = Provider.of<Events>(context);
+    final langCode = LanguageChangeProvider.getCurrentLocale.languageCode;
+    final langMap = types[langCode] ?? types['en']!;
+    final labels = langMap[data.title] ?? {data.title, ''};
     return Card(
       child: ListTile(
-          // isThreeLine: true,
-          // dense: true,
-          title: Text(
-            types[LanguageChangeProvider.getCurrentLocale.languageCode]![
-                    data.title]!
-                .elementAt(0),
-          ),
-          subtitle: AnimatedLongText(
-            types[LanguageChangeProvider.getCurrentLocale.languageCode]![
-                    data.title]!
-                .elementAt(1),
-          ),
+          title: Text(labels.elementAt(0)),
+          subtitle: AnimatedLongText(labels.elementAt(1)),
           trailing: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [

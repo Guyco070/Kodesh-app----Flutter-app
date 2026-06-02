@@ -13,8 +13,8 @@ enum CompassIndicatorIcon {
 }
 
 class CompassWidget extends StatefulWidget {
-  CompassWidget({super.key, this.indicatorType = CompassIndicatorIcon.center});
-  CompassIndicatorIcon indicatorType;
+  const CompassWidget({super.key, this.indicatorType = CompassIndicatorIcon.center});
+  final CompassIndicatorIcon indicatorType;
 
   @override
   State<CompassWidget> createState() => _CompassScreenState();

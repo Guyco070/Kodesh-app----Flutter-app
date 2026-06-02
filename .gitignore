@@ -5,9 +5,11 @@
 *.swp
 .DS_Store
 .atom/
+.build/
 .buildlog/
 .history
 .svn/
+.swiftpm/
 migrate_working_dir/
 
 # IntelliJ related
@@ -42,3 +44,28 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Android Gradle generated files
+android/.gradle/
+android/captures/
+android/local.properties
+android/**/*.iml
+
+# iOS CocoaPods
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/flutter_export_environment.sh
+**/ios/Flutter/Generated.xcconfig
+
+# macOS
+macos/Pods/
+macos/.symlinks/
+macos/Flutter/GeneratedPluginRegistrant.swift
+**/macos/Flutter/Flutter-Debug.xcconfig
+**/macos/Flutter/Flutter-Release.xcconfig
+
+# Generated localization files (rebuilt by flutter gen-l10n)
+lib/l10n/
+
+# Coverage reports
+coverage/

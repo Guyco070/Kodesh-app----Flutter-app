@@ -1,5 +1,5 @@
 name: kodesh_app
-description: A new Flutter project.
+description: Jewish calendar app with Shabbat/holiday times, zmanim, reminders, and prayers.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -17,7 +17,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+version: 1.1.0+2
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -39,15 +39,15 @@ dependencies:
   cupertino_icons: ^1.0.8
   http: ^1.2.2
   provider: ^6.1.2
-  intl: ^0.18.1
-  flutter_local_notifications: ^18.0.1
-  timezone: ^0.9.4
+  intl: ^0.20.2
+  flutter_local_notifications: ^21.0.0
+  timezone: ^0.11.0
   numberpicker: ^2.1.2
   shared_preferences: ^2.2.3
   rxdart: ^0.28.0
-  internet_connection_checker_plus: ^2.5.2
-  dropdown_button2: ^2.3.9
-  flutter_timezone: ^1.0.8
+  internet_connection_checker_plus: ^3.0.1
+  dropdown_button2: ^3.1.0
+  flutter_timezone: ^5.1.0
   flutter_compass: ^0.8.0
   logger: ^2.5.0
 
