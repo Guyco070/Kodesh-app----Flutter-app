@@ -18,6 +18,18 @@ import 'package:timezone/data/latest.dart';
 import '../api/notification_api.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+const Set<String> _kValidNotificationRoutes = {
+  '/schedule-notifications',
+  '/seder_anahat_tefilin',
+  '/adlakat_nerot',
+  '/shabat_and_holidays_check_list',
+  '/compass_screen',
+  '/adlakat_nerot_chanuca',
+  '/sfirat_omer_screen',
+  '/havdalah',
+  '/about',
+};
+
 enum ViewState {
   events,
   zmanim,
@@ -62,18 +74,17 @@ class _EventScreenState extends State<EventScreen> {
   }
 
   void onClickNotification(String? payload) async {
-    if (payload != '') {
-      bool isNeedToNavigate = true;
+    if (payload == null || payload.isEmpty) return;
+    if (!_kValidNotificationRoutes.contains(payload)) return;
 
-      Navigator.of(context).popUntil((route) {
-        isNeedToNavigate = !(route.settings.name == payload);
-        return (route.isFirst && route.isCurrent) ||
-            route.settings.name == payload;
-      }); // pop until route is equal to the payload route or route is the route of first page
-      if (isNeedToNavigate) {
-        // only if route is not equal to the payload
-        Navigator.pushNamed(context, payload!);
-      }
+    bool isNeedToNavigate = true;
+    Navigator.of(context).popUntil((route) {
+      isNeedToNavigate = !(route.settings.name == payload);
+      return (route.isFirst && route.isCurrent) ||
+          route.settings.name == payload;
+    });
+    if (isNeedToNavigate) {
+      Navigator.pushNamed(context, payload);
     }
   }
 
