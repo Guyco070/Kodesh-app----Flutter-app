@@ -12,8 +12,8 @@ class NotificationApi {
 
   static initialize() async {
     initializeTimeZones();
-    String timeZone = await FlutterTimezone.getLocalTimezone();
-    setLocalLocation(getLocation(timeZone));
+    final timeZone = await FlutterTimezone.getLocalTimezone();
+    setLocalLocation(getLocation(timeZone.identifier));
 
     // when the app is closed
     final details = await _notifications.getNotificationAppLaunchDetails();
@@ -36,7 +36,7 @@ class NotificationApi {
     );
 
     await _notifications.initialize(
-      settings,
+      settings: settings,
       onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
       onDidReceiveBackgroundNotificationResponse:
           onDidReceiveBackgroundNotificationResponse,
@@ -81,7 +81,7 @@ class NotificationApi {
     );
   }
 
-  static void cancel(int id) => _notifications.cancel(id);
+  static void cancel(int id) => _notifications.cancel(id: id);
   static void cancelAll() => _notifications.cancelAll();
 
   // instant notifications
@@ -91,7 +91,11 @@ class NotificationApi {
     String? body,
     String? payload,
   }) async {
-    return _notifications.show(id, title, body, _notificationDetails(),
+    return _notifications.show(
+        id: id,
+        title: title,
+        body: body,
+        notificationDetails: _notificationDetails(),
         payload: payload);
   }
 
@@ -103,14 +107,12 @@ class NotificationApi {
     required DateTime date,
   }) async {
     return _notifications.zonedSchedule(
-      id,
-      title,
-      body,
-      TZDateTime.from(date, local),
-      _notificationDetails(),
+      id: id,
+      title: title,
+      body: body,
+      scheduledDate: TZDateTime.from(date, local),
+      notificationDetails: _notificationDetails(),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
       payload: payload,
     );
   }
@@ -122,14 +124,12 @@ class NotificationApi {
       String? payload,
       int weekday = DateTime.friday}) async {
     return _notifications.zonedSchedule(
-      id,
-      title,
-      body,
-      TZDateTime.from(_nextTimeWeekday(weekday), local),
-      _notificationDetails(),
+      id: id,
+      title: title,
+      body: body,
+      scheduledDate: TZDateTime.from(_nextTimeWeekday(weekday), local),
+      notificationDetails: _notificationDetails(),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
       payload: payload,
     );
@@ -146,14 +146,12 @@ class NotificationApi {
       required int hour,
       required int minute}) async {
     return _notifications.zonedSchedule(
-      id,
-      title,
-      body,
-      scheduleDaily(hour, minute),
-      _notificationDetails(),
+      id: id,
+      title: title,
+      body: body,
+      scheduledDate: scheduleDaily(hour, minute),
+      notificationDetails: _notificationDetails(),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time,
       payload: payload,
     );

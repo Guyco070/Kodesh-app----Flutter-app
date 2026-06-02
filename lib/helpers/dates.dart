@@ -1,4 +1,4 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
 String getDayName(AppLocalizations appLocalizations, weekDay) {
   return {

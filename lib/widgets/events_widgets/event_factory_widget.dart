@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kodesh_app/models/event.dart';
 import 'package:kodesh_app/models/shabat.dart';
 import 'package:kodesh_app/providers/events.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
 class EventFactoryWidget extends StatelessWidget {
   const EventFactoryWidget({super.key, required this.data});
