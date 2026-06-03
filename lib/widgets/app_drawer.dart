@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/screens/shabat_and_holidays_check_list.dart';
+import 'package:provider/provider.dart';
 import 'package:kodesh_app/screens/about.dart';
 import 'package:kodesh_app/screens/compass_screen.dart';
 import 'package:kodesh_app/screens/schedule_notifications.dart';
@@ -18,6 +20,7 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+    final langProvider = Provider.of<LanguageChangeProvider>(context);
     return Drawer(
       child: SingleChildScrollView(
         child: Column(
@@ -33,6 +36,19 @@ class AppDrawer extends StatelessWidget {
               title: Text(appLocalizations.settingRemindersMenu),
               onTap: () => Navigator.pushNamed(
                   context, ScheduleNotificationsScreen.routeName),
+            ),
+            ListTile(
+              leading: Icon(langProvider.themeMode == ThemeMode.dark
+                  ? Icons.light_mode_outlined
+                  : Icons.dark_mode_outlined),
+              title: Text(langProvider.themeMode == ThemeMode.dark
+                  ? appLocalizations.lightMode
+                  : appLocalizations.darkMode),
+              onTap: () => langProvider.changeThemeMode(
+                langProvider.themeMode == ThemeMode.dark
+                    ? ThemeMode.light
+                    : ThemeMode.dark,
+              ),
             ),
 
             ...devidedTitle(appLocalizations.aids),

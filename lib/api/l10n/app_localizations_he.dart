@@ -292,4 +292,10 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get compass => 'מצפן';
+
+  @override
+  String get darkMode => 'מצב לילה';
+
+  @override
+  String get lightMode => 'מצב יום';
 }

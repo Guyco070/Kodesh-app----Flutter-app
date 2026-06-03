@@ -633,6 +633,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Compass'**
   String get compass;
+
+  /// darkMode
+  ///
+  /// In en, this message translates to:
+  /// **'Dark mode'**
+  String get darkMode;
+
+  /// lightMode
+  ///
+  /// In en, this message translates to:
+  /// **'Light mode'**
+  String get lightMode;
 }
 
 class _AppLocalizationsDelegate

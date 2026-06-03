@@ -167,18 +167,25 @@ class Events with ChangeNotifier {
 
   tryFetch({String? cityToTake, String? lang, bool isToday = false}) async {
     cityToTake ??= city;
-    Response response;
-    var url = Uri.parse(isToday
-        ? 'https://www.hebcal.com/shabbat?cfg=json&o=on&zip=${cityToTake.split('|')[1]}&lg=${lang ?? _currentLocale.languageCode}'
-        : 'https://www.hebcal.com/shabbat?cfg=json&o=on&gy=${startDate.year}&gm=${startDate.month}&gd=${startDate.day}&zip=${cityToTake.split('|')[1]}&lg=${lang ?? _currentLocale.languageCode}');
-    response = await get(url);
-    if ((jsonDecode(response.body) as Map<String, dynamic>)
-        .keys
-        .contains('error')) {
-      url = Uri.parse(isToday
-          ? 'https://www.hebcal.com/shabbat?cfg=json&o=on&city=${cityToTake.split('|')[0]}&lg=${lang ?? _currentLocale.languageCode}'
-          : 'https://www.hebcal.com/shabbat?cfg=json&o=on&gy=${startDate.year}&gm=${startDate.month}&gd=${startDate.day}&city=${cityToTake.split('|')[0]}&lg=${lang ?? _currentLocale.languageCode}');
-      logger.d('Retrying with city name: $url');
+    final parts = cityToTake.split('|');
+    final geoId = parts.length > 1 ? parts[1] : '';
+    final cityName = parts[0];
+    final lg = lang ?? _currentLocale.languageCode;
+
+    Map<String, String> base = {'cfg': 'json', 'o': 'on', 'lg': lg};
+    if (!isToday) {
+      base.addAll({
+        'gy': startDate.year.toString(),
+        'gm': startDate.month.toString(),
+        'gd': startDate.day.toString(),
+      });
+    }
+
+    var url = Uri.https('www.hebcal.com', '/shabbat', {...base, 'zip': geoId});
+    var response = await get(url);
+    if ((jsonDecode(response.body) as Map<String, dynamic>).keys.contains('error')) {
+      url = Uri.https('www.hebcal.com', '/shabbat', {...base, 'city': cityName});
+      logger.d('Retrying shabbat fetch with city name');
       response = await get(url);
     }
     return jsonDecode(response.body) as Map<String, dynamic>;
@@ -354,17 +361,18 @@ class Events with ChangeNotifier {
   tryFetchZmanim(
       {String? cityToTake, String? lang, bool isToday = false}) async {
     cityToTake ??= city;
-    Response response;
-    var url = Uri.parse(isToday
-        ? 'https://www.hebcal.com/zmanim?cfg=json&zip=${cityToTake.split('|')[1]}&lg=${lang ?? _currentLocale.languageCode}'
-        : 'https://www.hebcal.com/zmanim?cfg=json&date=${getDushedFormatedDate(startDate)}&zip=${cityToTake.split('|')[1]}&lg=${lang ?? _currentLocale.languageCode}');
-    response = await get(url);
-    if ((jsonDecode(response.body) as Map<String, dynamic>)
-        .keys
-        .contains('error')) {
-      url = Uri.parse(isToday
-          ? 'https://www.hebcal.com/zmanim?cfg=json&city=${cityToTake.split('|')[0]}&lg=${lang ?? _currentLocale.languageCode}'
-          : 'https://www.hebcal.com/zmanim?cfg=json&date=${getDushedFormatedDate(startDate)}&city=${cityToTake.split('|')[0]}&lg=${lang ?? _currentLocale.languageCode}');
+    final parts = cityToTake.split('|');
+    final geoId = parts.length > 1 ? parts[1] : '';
+    final cityName = parts[0];
+    final lg = lang ?? _currentLocale.languageCode;
+
+    Map<String, String> base = {'cfg': 'json', 'lg': lg};
+    if (!isToday) base['date'] = getDushedFormatedDate(startDate);
+
+    var url = Uri.https('www.hebcal.com', '/zmanim', {...base, 'zip': geoId});
+    var response = await get(url);
+    if ((jsonDecode(response.body) as Map<String, dynamic>).keys.contains('error')) {
+      url = Uri.https('www.hebcal.com', '/zmanim', {...base, 'city': cityName});
       response = await get(url);
     }
     return jsonDecode(response.body) as Map<String, dynamic>;
@@ -411,8 +419,11 @@ class Events with ChangeNotifier {
         ? now.subtract(const Duration(days: 1))
         : startDate.subtract(const Duration(days: 1));
     final rangeEnd = startDate.add(const Duration(days: 14));
-    var url = Uri.parse(
-        'https://www.hebcal.com/converter?cfg=json&start=${getDushedFormatedDate(rangeStart)}&end=${getDushedFormatedDate(rangeEnd)}');
+    var url = Uri.https('www.hebcal.com', '/converter', {
+      'cfg': 'json',
+      'start': getDushedFormatedDate(rangeStart),
+      'end': getDushedFormatedDate(rangeEnd),
+    });
     response = await get(url);
 
     return jsonDecode(response.body) as Map<String, dynamic>;

@@ -295,4 +295,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get compass => 'Brújula';
+
+  @override
+  String get darkMode => 'Modo oscuro';
+
+  @override
+  String get lightMode => 'Modo claro';
 }

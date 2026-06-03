@@ -22,7 +22,8 @@ import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
 void main() {
   FlutterError.onError = (FlutterErrorDetails details) {
-    logger.e('Flutter error', error: details.exception, stackTrace: details.stack);
+    logger.e('Flutter error',
+        error: details.exception, stackTrace: details.stack);
     FlutterError.presentError(details);
   };
 
@@ -36,7 +37,8 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => Events()),
         ChangeNotifierProvider(create: (_) => Reminders()),
-        ChangeNotifierProvider(create: (_) => LanguageChangeProvider()..getData()),
+        ChangeNotifierProvider(
+            create: (_) => LanguageChangeProvider()..getData()),
         ChangeNotifierProvider(create: (_) => Tfilot()),
       ],
       child: const MyApp(),
@@ -63,13 +65,35 @@ class MyApp extends StatelessWidget {
     },
   );
 
+  static final ThemeData _lightTheme = ThemeData(
+    primarySwatch: _primaryColor,
+    brightness: Brightness.light,
+  );
+
+  static final ThemeData _darkTheme = ThemeData(
+    primarySwatch: _primaryColor,
+    brightness: Brightness.dark,
+    scaffoldBackgroundColor: const Color(0xFF1A1A2E),
+    cardColor: const Color(0xFF16213E),
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Color(0xFF0F3460),
+      foregroundColor: Colors.white,
+    ),
+    drawerTheme: const DrawerThemeData(
+      backgroundColor: Color(0xFF16213E),
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
+    final langProvider = Provider.of<LanguageChangeProvider>(context);
     return MaterialApp(
-      locale: Provider.of<LanguageChangeProvider>(context).currentLocale,
+      locale: langProvider.currentLocale,
       title: 'Kodesh',
-      theme: ThemeData(primarySwatch: _primaryColor),
-      localizationsDelegates: [
+      theme: _lightTheme,
+      darkTheme: _darkTheme,
+      themeMode: langProvider.themeMode,
+      localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

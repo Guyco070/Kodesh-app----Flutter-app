@@ -295,4 +295,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get compass => 'Компас';
+
+  @override
+  String get darkMode => 'Тёмный режим';
+
+  @override
+  String get lightMode => 'Светлый режим';
 }

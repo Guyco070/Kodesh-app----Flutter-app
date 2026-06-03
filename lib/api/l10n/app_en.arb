@@ -323,5 +323,11 @@
     "@noChroesMessage": { "description": "noChroesMessage" },
 
     "compass": "Compass",
-    "@compass": { "description": "compass" }
+    "@compass": { "description": "compass" },
+
+    "darkMode": "Dark mode",
+    "@darkMode": { "description": "darkMode" },
+
+    "lightMode": "Light mode",
+    "@lightMode": { "description": "lightMode" }
 }

@@ -295,4 +295,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get compass => 'Compass';
+
+  @override
+  String get darkMode => 'Dark mode';
+
+  @override
+  String get lightMode => 'Light mode';
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kodesh_app/animations/expanded_section.dart';
-import 'package:kodesh_app/data/cities.dart';
 import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/providers/reminders.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
@@ -30,33 +29,6 @@ class _ScheduleNotificationsScreenState
   bool _isLoading = false;
 
   // TextEditingController? tefilinController;
-
-  DropdownMenuItem<String> buildMenuItem(Map item, String lang) {
-    return DropdownMenuItem(
-        value: item['eNameAndCode'],
-        child: Text(
-          item[lang],
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
-        ));
-  }
-
-  buildSelectedMenuItem(String lang) {
-    return cities.map<Widget>((Map item) {
-      return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 6),
-        alignment: Alignment.center,
-        child: Text(
-          item[lang],
-          style: const TextStyle(
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      );
-    }).toList();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,47 +91,6 @@ class _ScheduleNotificationsScreenState
     shabatAndHolidaysElements() {
       return [
         GroupCard(children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                appLocalizations.city,
-                style: TextStyle(
-                    color: Theme.of(context).primaryColor, fontSize: 16),
-              ),
-              Container(
-                // remider city drop down button - start
-                margin: const EdgeInsets.symmetric(horizontal: 7),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                width: MediaQuery.of(context).size.width / 2.3,
-                child: DropdownButtonFormField<String>(
-                    isDense: false,
-                    decoration: const InputDecoration(
-                        isCollapsed: true, enabledBorder: InputBorder.none),
-                    selectedItemBuilder: (_) =>
-                        buildSelectedMenuItem(lang.currentLocale.languageCode),
-                    value: reminders.reminderCity,
-                    isExpanded: true,
-                    alignment: AlignmentDirectional.center,
-                    items: cities
-                        .map<DropdownMenuItem<String>>((items) => buildMenuItem(
-                            items, lang.currentLocale.languageCode))
-                        .toList(),
-                    onChanged: (value) {
-                      reminders
-                          .setReminderCity(value ?? reminders.reminderCity);
-                    }),
-              ), // remider city drop down button - end
-            ],
-          ),
-          const Divider(
-            height: 30,
-            thickness: 1.5,
-            indent: 60,
-            endIndent: 60,
-          ),
           ChooseTimeBeforeWidget(
             hoursValue: reminders.beforeShabatHours,
             minutesValue: reminders.beforeShabatMinutes,
