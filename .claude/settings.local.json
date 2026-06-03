@@ -6,7 +6,22 @@
       "Bash(flutter analyze:*)",
       "Bash(flutter clean:*)",
       "Bash(./gradlew clean:*)",
-      "Bash(test:*)"
+      "Bash(test:*)",
+      "Bash(flutter gen-l10n *)",
+      "Bash(grep -r \"class FlutterLocalNotificationsPlugin\" ~/.pub-cache/hosted/pub.dev/flutter_local_notifications-21.*/lib/ 2>/dev/null | head -3 && grep -n \"Future.*zonedSchedule\\\\|Future.*initialize\\\\|Future.*show\\\\b\\\\|Future.*cancel\" ~/.pub-cache/hosted/pub.dev/flutter_local_notifications-21.*/lib/src/flutter_local_notifications_plugin.dart 2>/dev/null | head -30)",
+      "Read(//Users/guy/.pub-cache/hosted/pub.dev/**)",
+      "Bash(sed -n '115,160p' ~/.pub-cache/hosted/pub.dev/flutter_local_notifications-21.0.0/lib/src/flutter_local_notifications_plugin.dart)",
+      "Bash(sed -n '249,340p' ~/.pub-cache/hosted/pub.dev/flutter_local_notifications-21.0.0/lib/src/flutter_local_notifications_plugin.dart)",
+      "Bash(sed -n '394,460p' ~/.pub-cache/hosted/pub.dev/flutter_local_notifications-21.0.0/lib/src/flutter_local_notifications_plugin.dart)",
+      "Bash(flutter pub *)",
+      "Bash(dart run *)",
+      "Bash(echo \"Exit: $?\")",
+      "Bash(flutter --version)",
+      "Bash(xargs sed -i '' 's|package:flutter_gen/gen_l10n/app_localizations.dart|package:kodesh_app/api/l10n/app_localizations.dart|g')",
+      "Bash(pod install *)",
+      "Bash(plutil -lint /Users/guy/projects/Kodesh-app----Flutter-app/ios/Runner/Info.plist)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }
