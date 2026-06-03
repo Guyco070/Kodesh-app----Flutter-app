@@ -18,11 +18,12 @@ import 'package:kodesh_app/screens/tefilot/seder_anahat_tefilin.dart';
 import 'package:kodesh_app/screens/tefilot/sfirat_omer_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
 void main() {
   FlutterError.onError = (FlutterErrorDetails details) {
-    logger.e('Flutter error', error: details.exception, stackTrace: details.stack);
+    logger.e('Flutter error',
+        error: details.exception, stackTrace: details.stack);
     FlutterError.presentError(details);
   };
 
@@ -36,7 +37,8 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => Events()),
         ChangeNotifierProvider(create: (_) => Reminders()),
-        ChangeNotifierProvider(create: (_) => LanguageChangeProvider()..getData()),
+        ChangeNotifierProvider(
+            create: (_) => LanguageChangeProvider()..getData()),
         ChangeNotifierProvider(create: (_) => Tfilot()),
       ],
       child: const MyApp(),

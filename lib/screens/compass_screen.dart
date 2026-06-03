@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 import 'package:kodesh_app/widgets/compass/compass_widget.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
 class CompassScreen extends StatefulWidget {
   const CompassScreen({super.key});

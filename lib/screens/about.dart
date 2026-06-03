@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kodesh_app/providers/tfilot.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
 class AboutScreen extends StatelessWidget {
   static String routeName = '/about';
