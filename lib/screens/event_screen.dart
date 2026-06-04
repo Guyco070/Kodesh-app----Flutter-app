@@ -15,6 +15,7 @@ import 'package:kodesh_app/widgets/swiches/view_type_switch.dart';
 import 'package:kodesh_app/widgets/zman_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/data/latest.dart';
+import 'package:flutter/foundation.dart';
 import '../api/notification_api.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
@@ -58,14 +59,15 @@ class _EventScreenState extends State<EventScreen> {
 
   @override
   void initState() {
-    initializeTimeZones();
-
     super.initState();
-    if (NotificationApi.isFirstInit) {
-      NotificationApi.initialize();
-      NotificationApi.onNotifications.distinct();
-      listenNotifictions();
-      NotificationApi.isFirstInit = false;
+    if (!kIsWeb) {
+      initializeTimeZones();
+      if (NotificationApi.isFirstInit) {
+        NotificationApi.initialize();
+        NotificationApi.onNotifications.distinct();
+        listenNotifictions();
+        NotificationApi.isFirstInit = false;
+      }
     }
   }
 

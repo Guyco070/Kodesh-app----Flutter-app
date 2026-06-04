@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:kodesh_app/helpers/app_logger.dart';
@@ -11,6 +12,7 @@ class NotificationApi {
   static bool isFirstInit = true;
 
   static initialize() async {
+    if (kIsWeb) return;
     initializeTimeZones();
     final timeZone = await FlutterTimezone.getLocalTimezone();
     setLocalLocation(getLocation(timeZone.identifier));
@@ -81,8 +83,8 @@ class NotificationApi {
     );
   }
 
-  static void cancel(int id) => _notifications.cancel(id: id);
-  static void cancelAll() => _notifications.cancelAll();
+  static void cancel(int id) { if (!kIsWeb) _notifications.cancel(id: id); }
+  static void cancelAll() { if (!kIsWeb) _notifications.cancelAll(); }
 
   // instant notifications
   static Future<void> showNotification({
@@ -91,6 +93,7 @@ class NotificationApi {
     String? body,
     String? payload,
   }) async {
+    if (kIsWeb) return;
     return _notifications.show(
         id: id,
         title: title,
@@ -106,6 +109,7 @@ class NotificationApi {
     String? payload,
     required DateTime date,
   }) async {
+    if (kIsWeb) return;
     return _notifications.zonedSchedule(
       id: id,
       title: title,
@@ -123,6 +127,7 @@ class NotificationApi {
       String? body,
       String? payload,
       int weekday = DateTime.friday}) async {
+    if (kIsWeb) return;
     return _notifications.zonedSchedule(
       id: id,
       title: title,
@@ -136,15 +141,13 @@ class NotificationApi {
   }
 
   static Future<void> showScheduleDailyNotification(
-      // set reminders evry day including sutterdays and holidays
-      {
-      //including shabat...
-      int id = 0,
+      {int id = 0,
       String? title,
       String? body,
       String? payload,
       required int hour,
       required int minute}) async {
+    if (kIsWeb) return;
     return _notifications.zonedSchedule(
       id: id,
       title: title,
