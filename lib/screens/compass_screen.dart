@@ -15,22 +15,24 @@ class CompassScreen extends StatefulWidget {
 }
 
 class _CompassScreenState extends State<CompassScreen> {
-  late StreamSubscription<CompassEvent> stream;
+  StreamSubscription<CompassEvent>? stream;
   double? heading = 0;
 
   @override
   void initState() {
     super.initState();
-    stream = FlutterCompass.events!.listen((event) {
-      setState(() {
-        heading = event.heading;
+    if (FlutterCompass.events != null) {
+      stream = FlutterCompass.events!.listen((event) {
+        setState(() {
+          heading = event.heading;
+        });
       });
-    });
+    }
   }
 
   @override
   void dispose() {
-    stream.cancel();
+    stream?.cancel();
     super.dispose();
   }
 
