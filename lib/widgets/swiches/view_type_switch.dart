@@ -31,9 +31,9 @@ class ViewTypeSwitch extends StatelessWidget {
                                   : const BorderRadius.only(
                                       topRight: Radius.circular(50)))),
                   backgroundColor: viewState == ViewState.events
-                      ? MaterialStatePropertyAll<Color>(
-                          Theme.of(context).primaryColor)
-                      : MaterialStatePropertyAll<Color>(Colors.blue.shade800),
+                      ? const MaterialStatePropertyAll<Color>(
+                          Color(0xFF003080))
+                      : MaterialStatePropertyAll<Color>(Colors.blue.shade700),
                 ),
                 onPressed: viewState != ViewState.events
                     ? () => setViewState(ViewState.events)
@@ -61,9 +61,9 @@ class ViewTypeSwitch extends StatelessWidget {
                                   : const BorderRadius.only(
                                       topRight: Radius.circular(50)))),
                   backgroundColor: viewState == ViewState.zmanim
-                      ? MaterialStatePropertyAll<Color>(
-                          Theme.of(context).primaryColor)
-                      : MaterialStatePropertyAll<Color>(Colors.blue.shade800),
+                      ? const MaterialStatePropertyAll<Color>(
+                          Color(0xFF003080))
+                      : MaterialStatePropertyAll<Color>(Colors.blue.shade700),
                 ),
                 onPressed: viewState != ViewState.zmanim
                     ? () => setViewState(ViewState.zmanim)

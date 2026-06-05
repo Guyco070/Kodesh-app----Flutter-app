@@ -281,9 +281,9 @@ class _EventScreenState extends State<EventScreen> {
                 .currentLocale
                 .languageCode;
             await Provider.of<Events>(context, listen: false)
-                .fetchAndSetProducts(lang: lang);
+                .fetchAndSetProducts(lang: lang, forceRefresh: true);
             await Provider.of<Events>(context, listen: false)
-                .fetchAndSetZmanimProducts(lang: lang);
+                .fetchAndSetZmanimProducts(lang: lang, forceRefresh: true);
           },
           child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
