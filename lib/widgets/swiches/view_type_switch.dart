@@ -22,6 +22,7 @@ class ViewTypeSwitch extends StatelessWidget {
           Expanded(
             child: ElevatedButton(
                 style: ButtonStyle(
+                  elevation: MaterialStateProperty.all(0),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                           borderRadius:
@@ -52,6 +53,7 @@ class ViewTypeSwitch extends StatelessWidget {
           Expanded(
             child: ElevatedButton(
                 style: ButtonStyle(
+                  elevation: MaterialStateProperty.all(0),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                           borderRadius:
