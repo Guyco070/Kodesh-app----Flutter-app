@@ -72,6 +72,10 @@ class ZmanWidget extends StatelessWidget {
 const Map<String, Map<String, Set<String>>> types = {
   'en': {
     'chatzotNight': {'Midnight', 'Sunset plus 6 halachic hours'},
+    'alosBaalHatanya': {
+      'Dawn (Baal HaTanya)',
+      'Sun is 16° below the horizon in the morning, according to Baal HaTanya'
+    },
     'alotHaShachar': {'Dawn', 'Sun is 16.1° below the horizon in the morning'},
     'misheyakir': {
       'Earliest talis & tefillin',
@@ -86,17 +90,41 @@ const Map<String, Map<String, Set<String>>> types = {
       'Sunrise',
       'Upper edge of the Sun appears over the eastern horizon in the morning (0.833° above horizon)'
     },
+    'sofZmanShmaMGA19Point8': {
+      'Latest Shema (MGA 19.8°)',
+      'Sunrise plus 3 halachic hours, according to Magen Avraham (19.8°)'
+    },
+    'sofZmanShmaMGA16Point1': {
+      'Latest Shema (MGA 16.1°)',
+      'Sunrise plus 3 halachic hours, according to Magen Avraham (16.1°)'
+    },
     'sofZmanShmaMGA': {
       'Latest Shema (MGA)',
       'Sunrise plus 3 halachic hours, according to Magen Avraham'
+    },
+    'sofZmanShmaBaalHatanya': {
+      'Latest Shema (Baal HaTanya)',
+      'Sunrise plus 3 halachic hours, according to Baal HaTanya'
     },
     'sofZmanShma': {
       'Latest Shema (Gra)',
       'Sunrise plus 3 halachic hours, according to the Gra'
     },
+    'sofZmanTfillaMGA19Point8': {
+      'Latest Shacharit (MGA 19.8°)',
+      'Sunrise plus 4 halachic hours, according to Magen Avraham (19.8°)'
+    },
+    'sofZmanTfillaMGA16Point1': {
+      'Latest Shacharit (MGA 16.1°)',
+      'Sunrise plus 4 halachic hours, according to Magen Avraham (16.1°)'
+    },
     'sofZmanTfillaMGA': {
       'Latest Shacharit (MGA)',
       'Sunrise plus 4 halachic hours, according to Magen Avraham'
+    },
+    'sofZmanTfilaBaalHatanya': {
+      'Latest Shacharit (Baal HaTanya)',
+      'Sunrise plus 4 halachic hours, according to Baal HaTanya'
     },
     'sofZmanTfilla': {
       'Latest Shacharit (Gra)',
@@ -107,16 +135,44 @@ const Map<String, Map<String, Set<String>>> types = {
       'Earliest Mincha – Mincha Gedola',
       'Sunrise plus 6.5 halachic hours'
     },
+    'minchaGedolaBaalHatanya': {
+      'Earliest Mincha – Mincha Gedola (Baal HaTanya)',
+      'Sunrise plus 6.5 halachic hours, according to Baal HaTanya'
+    },
+    'minchaGedolaMGA': {
+      'Earliest Mincha – Mincha Gedola (MGA)',
+      'Sunrise plus 6.5 halachic hours, according to Magen Avraham'
+    },
     'minchaKetana': {
       'Preferable earliest time to recite Minchah – Mincha Ketana',
       'Sunrise plus 9.5 halachic hours'
     },
+    'minchaKetanaBaalHatanya': {
+      'Mincha Ketana (Baal HaTanya)',
+      'Sunrise plus 9.5 halachic hours, according to Baal HaTanya'
+    },
+    'minchaKetanaMGA': {
+      'Mincha Ketana (MGA)',
+      'Sunrise plus 9.5 halachic hours, according to Magen Avraham'
+    },
     'plagHaMincha': {'Plag haMincha', 'Sunrise plus 10.75 halachic hours'},
+    'plagHaminchaBaalHatanya': {
+      'Plag haMincha (Baal HaTanya)',
+      'Sunrise plus 10.75 halachic hours, according to Baal HaTanya'
+    },
     'sunset': {
       'Sunset',
       'When the upper edge of the Sun disappears below the horizon (0.833° below horizon)'
     },
+    'beinHaShmashos': {
+      'Twilight (Bein HaShmashos)',
+      'Twilight period between sunset and nightfall'
+    },
     'dusk': {'Civil dusk', 'Sun is 6° below the horizon in the evening'},
+    'tzaisBaalHatanya': {
+      'Nightfall (Baal HaTanya)',
+      'Stars appear according to Baal HaTanya'
+    },
     'tzeit7083deg': {
       'Nightfall (3 medium stars) – Tzeit 7.083°',
       'When 3 medium stars are observable in the night sky with the naked eye (sun 7.083° below the horizon)'
@@ -140,6 +196,10 @@ const Map<String, Map<String, Set<String>>> types = {
   },
   'he': {
     'chatzotNight': {'חצות', 'שקיעה ועוד 6 שעות הלכתיות'},
+    'alosBaalHatanya': {
+      'עלות השחר (בעל התניא)',
+      'השמש נמצאת 16 מעלות מתחת לאופק בבוקר ע"פ בעל התניא'
+    },
     'alotHaShachar': {'שחר', ' שמש נמצאת 16.1 מעלות מתחת לאופק בבוקר'},
     'misheyakir': {
       'טלית ותפילין המוקדמים ביותר',
@@ -154,14 +214,38 @@ const Map<String, Map<String, Set<String>>> types = {
       'זריחה',
       ' הקצה העליון של השמש מופיע מעל האופק המזרחי בבוקר (0.833 מעלות מעל האופק)'
     },
+    'sofZmanShmaMGA19Point8': {
+      'שמע אחרון (מג"א 19.8°)',
+      ' זריחה ועוד 3 שעות הלכתיות לפי מגן אברהם (19.8°)'
+    },
+    'sofZmanShmaMGA16Point1': {
+      'שמע אחרון (מג"א 16.1°)',
+      ' זריחה ועוד 3 שעות הלכתיות לפי מגן אברהם (16.1°)'
+    },
     'sofZmanShmaMGA': {
       'שמע אחרון (מג"א)',
       ' זריחה ועוד 3 שעות הלכתיות לפי מגן אברהם'
     },
+    'sofZmanShmaBaalHatanya': {
+      'שמע אחרון (בעל התניא)',
+      ' זריחה ועוד 3 שעות הלכתיות ע"פ בעל התניא'
+    },
     'sofZmanShma': {'שמע אחרון (גר"א)', ' זריחה ועוד 3 שעות הלכתיות ע"פ הגר"א'},
+    'sofZmanTfillaMGA19Point8': {
+      'שחרית אחרונה (מג"א 19.8°)',
+      ' זריחה ועוד 4 שעות הלכתיות לפי מגן אברהם (19.8°)'
+    },
+    'sofZmanTfillaMGA16Point1': {
+      'שחרית אחרונה (מג"א 16.1°)',
+      ' זריחה ועוד 4 שעות הלכתיות לפי מגן אברהם (16.1°)'
+    },
     'sofZmanTfillaMGA': {
       'שחרית אחרונה (מג"א)',
       ' זריחה פלוס 4 שעות הלכתיות לפי מגן אברהם'
+    },
+    'sofZmanTfilaBaalHatanya': {
+      'שחרית אחרונה (בעל התניא)',
+      ' זריחה ועוד 4 שעות הלכתיות ע"פ בעל התניא'
     },
     'sofZmanTfilla': {
       'אחרון שחרית (גר"א)',
@@ -169,16 +253,44 @@ const Map<String, Map<String, Set<String>>> types = {
     },
     'chatzot': {'צהריים', ' זריחה ועוד 6 שעות הלכתיות'},
     'minchaGedola': {'מנחה מוקדמת – מנחה גדולה', ' זריחה פלוס 6.5 שעות הלכה'},
+    'minchaGedolaBaalHatanya': {
+      'מנחה גדולה (בעל התניא)',
+      ' זריחה פלוס 6.5 שעות הלכה ע"פ בעל התניא'
+    },
+    'minchaGedolaMGA': {
+      'מנחה גדולה (מג"א)',
+      ' זריחה פלוס 6.5 שעות הלכה לפי מגן אברהם'
+    },
     'minchaKetana': {
       'מועד מוקדם יותר לאמירת מנחה – מנחה קטנה',
       ' זריחה ועוד 9.5 שעות הלכתיות'
     },
+    'minchaKetanaBaalHatanya': {
+      'מנחה קטנה (בעל התניא)',
+      ' זריחה ועוד 9.5 שעות הלכתיות ע"פ בעל התניא'
+    },
+    'minchaKetanaMGA': {
+      'מנחה קטנה (מג"א)',
+      ' זריחה ועוד 9.5 שעות הלכתיות לפי מגן אברהם'
+    },
     'plagHaMincha': {'פלג המנחה', ' זריחה פלוס 10.75 שעות הלכתיות'},
+    'plagHaminchaBaalHatanya': {
+      'פלג המנחה (בעל התניא)',
+      ' זריחה פלוס 10.75 שעות הלכתיות ע"פ בעל התניא'
+    },
     'sunset': {
       'שקיעה',
       ' כאשר הקצה העליון של השמש נעלם מתחת לאופק (0.833° מתחת לאופק)'
     },
+    'beinHaShmashos': {
+      'בין השמשות',
+      ' תקופת הדמדומים שבין השקיעה לצאת הכוכבים'
+    },
     'dusk': {'דמדומים אזרחיים', ' השמש נמצאת 6° מתחת לאופק בערב'},
+    'tzaisBaalHatanya': {
+      'צאת הכוכבים (בעל התניא)',
+      ' כאשר הכוכבים מופיעים ע"פ בעל התניא'
+    },
     'tzeit7083deg': {
       'לילה (3 כוכבים בינוניים) – Tzeit 7.083°',
       ' כאשר 3 כוכבים בינוניים נראים בשמי הלילה בעין בלתי מזוינת (שמש 7.083° מתחת לאופק)'

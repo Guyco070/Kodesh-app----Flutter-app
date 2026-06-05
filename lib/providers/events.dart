@@ -23,6 +23,10 @@ class Events with ChangeNotifier {
   String? _eventsError;
   String? _zmanimError;
 
+  DateTime? _lastEventsFetch;
+  DateTime? _lastZmanimFetch;
+  static const Duration _fetchTtl = Duration(minutes: 30);
+
   String city = 'IL-Jerusalem|281184';
 
   /// [city] : the city that the user chose for the events times.
@@ -89,13 +93,13 @@ class Events with ChangeNotifier {
     city = newCity;
     if (setIsLoading != null) setIsLoading(true);
 
-    fetchAndSetProducts().then((value) {
+    fetchAndSetProducts(forceRefresh: true).then((value) {
       if (setIsLoading != null) setIsLoading(false);
     });
 
     if (setIsLoadingZmanim != null) setIsLoadingZmanim(true);
 
-    fetchAndSetZmanimProducts().then((value) {
+    fetchAndSetZmanimProducts(forceRefresh: true).then((value) {
       if (setIsLoadingZmanim != null) setIsLoadingZmanim(false);
     });
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -128,13 +132,13 @@ class Events with ChangeNotifier {
     startDate = newDate;
     if (setIsLoading != null) setIsLoading(true);
 
-    fetchAndSetProducts().then((value) {
+    fetchAndSetProducts(forceRefresh: true).then((value) {
       if (setIsLoading != null) setIsLoading(false);
     });
 
     if (setIsLoadingZmanim != null) setIsLoadingZmanim(true);
 
-    fetchAndSetZmanimProducts().then((value) {
+    fetchAndSetZmanimProducts(forceRefresh: true).then((value) {
       if (setIsLoadingZmanim != null) setIsLoadingZmanim(false);
     });
   }
@@ -194,9 +198,18 @@ class Events with ChangeNotifier {
   Future<List<Event>?> fetchAndSetProducts(
       {bool filterByUser = false,
       bool getDataFirst = false,
+      bool forceRefresh = false,
       String lang = 'en',
       void Function(bool bool)? setIsThereInternetConnection}) async {
     if (getDataFirst) await getData();
+
+    if (!forceRefresh &&
+        _eventsItems != null &&
+        _eventsItems!.isNotEmpty &&
+        _lastEventsFetch != null &&
+        DateTime.now().difference(_lastEventsFetch!) < _fetchTtl) {
+      return _eventsItems;
+    }
 
     _eventsError = null;
 
@@ -205,6 +218,7 @@ class Events with ChangeNotifier {
         final extractData = await tryFetch();
         final items = extractData['items'] as List;
         _eventsItems = getEventsItemsFromMap(items);
+        _lastEventsFetch = DateTime.now();
         _cacheEventsItems(items);
         notifyListeners();
         fetchAndSetHebrewDatesProducts();
@@ -381,13 +395,23 @@ class Events with ChangeNotifier {
   Future<List<Zman>?> fetchAndSetZmanimProducts(
       {bool filterByUser = false,
       bool getDataFirst = false,
+      bool forceRefresh = false,
       String lang = 'en',
       void Function(bool bool)? setIsThereInternetConnection}) async {
+    if (!forceRefresh &&
+        _zmanimItems != null &&
+        _zmanimItems!.isNotEmpty &&
+        _lastZmanimFetch != null &&
+        DateTime.now().difference(_lastZmanimFetch!) < _fetchTtl) {
+      return _zmanimItems;
+    }
+
     _zmanimError = null;
     try {
       final extractData = await tryFetchZmanim();
       _zmanimItems =
           getZmanimItemsFromMap(extractData['times'] as Map<String, dynamic>);
+      _lastZmanimFetch = DateTime.now();
       notifyListeners();
       return _zmanimItems;
     } catch (error, st) {
