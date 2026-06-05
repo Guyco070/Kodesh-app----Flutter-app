@@ -49,32 +49,23 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  static const MaterialColor _primaryColor = MaterialColor(
-    0xFF0047AE,
-    <int, Color>{
-      50: Color(0xFF0047AE),
-      100: Color(0xFF0047AE),
-      200: Color(0xFF0047AE),
-      300: Color(0xFF0047AE),
-      400: Color(0xFF0047AE),
-      500: Color(0xFF0047AE),
-      600: Color(0xFF0047AE),
-      700: Color(0xFF0047AE),
-      800: Color(0xFF0047AE),
-      900: Color(0xFF0047AE),
-    },
-  );
+  static const Color _seedColor = Color(0xFF0047AE);
 
   static final ThemeData _lightTheme = ThemeData(
-    primarySwatch: _primaryColor,
-    brightness: Brightness.light,
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: _seedColor,
+      brightness: Brightness.light,
+    ),
   );
 
   static final ThemeData _darkTheme = ThemeData(
-    primarySwatch: _primaryColor,
-    brightness: Brightness.dark,
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: _seedColor,
+      brightness: Brightness.dark,
+    ).copyWith(
+      surface: const Color(0xFF1A1A2E),
+    ),
     scaffoldBackgroundColor: const Color(0xFF1A1A2E),
-    cardColor: const Color(0xFF16213E),
     appBarTheme: const AppBarTheme(
       backgroundColor: Color(0xFF0F3460),
       foregroundColor: Colors.white,
