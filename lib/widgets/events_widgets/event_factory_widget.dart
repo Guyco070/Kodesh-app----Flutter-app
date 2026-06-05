@@ -25,15 +25,7 @@ class EventFactoryWidget extends StatelessWidget {
             height: 40,
           ),
         } else ...{
-          const Divider(
-            thickness: 2,
-            indent: 10,
-            endIndent: 10,
-            height: 5,
-          ),
-          const SizedBox(
-            height: 15,
-          )
+          const SizedBox(height: 15),
         },
         Text(
           data.title == 'Shabat'

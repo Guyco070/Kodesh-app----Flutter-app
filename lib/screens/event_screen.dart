@@ -18,6 +18,7 @@ import 'package:timezone/data/latest.dart';
 import 'package:flutter/foundation.dart';
 import '../api/notification_api.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
+import 'package:kodesh_app/helpers/geolocation_helper.dart';
 
 const Set<String> _kValidNotificationRoutes = {
   '/schedule-notifications',
@@ -68,6 +69,16 @@ class _EventScreenState extends State<EventScreen> {
         listenNotifictions();
         NotificationApi.isFirstInit = false;
       }
+    } else {
+      _requestWebGeolocation();
+    }
+  }
+
+  void _requestWebGeolocation() async {
+    final location = await requestGeolocation();
+    if (location != null && mounted) {
+      Provider.of<Events>(context, listen: false)
+          .setWebLocation(location.lat, location.lng);
     }
   }
 
