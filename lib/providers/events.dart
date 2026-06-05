@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:kodesh_app/data/cities.dart';
 import 'package:kodesh_app/helpers/app_logger.dart';
 import 'package:kodesh_app/helpers/dates.dart';
 import 'package:kodesh_app/models/event.dart';
@@ -30,6 +31,7 @@ class Events with ChangeNotifier {
 
   double? _webLat;
   double? _webLng;
+  String? _webTzid;
 
   String city = 'IL-Jerusalem|281184';
 
@@ -91,13 +93,77 @@ class Events with ChangeNotifier {
     return _hebrewDates == null ? null : {..._hebrewDates!};
   }
 
-  void setWebLocation(double lat, double lng) {
+  void setWebLocation(double lat, double lng, String tzid) {
     _webLat = lat;
     _webLng = lng;
+    _webTzid = tzid;
     _lastEventsFetch = null;
     _lastZmanimFetch = null;
+    _detectCityFromCoords(lat, lng);
     fetchAndSetProducts(forceRefresh: true);
     fetchAndSetZmanimProducts(forceRefresh: true);
+  }
+
+  Future<void> _detectCityFromCoords(double lat, double lng) async {
+    try {
+      final url = Uri.https('nominatim.openstreetmap.org', '/reverse', {
+        'lat': lat.toStringAsFixed(6),
+        'lon': lng.toStringAsFixed(6),
+        'format': 'json',
+        'zoom': '10',
+      });
+      final response = await get(url, headers: {
+        'User-Agent': 'KodeshApp/1.0 (gaico070@gmail.com)',
+      });
+      if (response.statusCode != 200) return;
+
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      final address = data['address'] as Map<String, dynamic>?;
+      if (address == null) return;
+
+      final countryCode =
+          (address['country_code'] as String?)?.toUpperCase();
+      final cityName = (address['city'] ??
+          address['town'] ??
+          address['municipality'] ??
+          address['village'] ??
+          address['county']) as String?;
+
+      if (countryCode == null || cityName == null) return;
+
+      final prefix = '$countryCode-';
+      Map<String, dynamic>? bestMatch;
+      int bestScore = -1;
+
+      for (final c in cities) {
+        final enName = c['en'] as String? ?? '';
+        if (!enName.startsWith(prefix)) continue;
+        final namePart = enName.substring(prefix.length).toLowerCase();
+        final target = cityName.toLowerCase();
+
+        int score = 0;
+        if (namePart == target) {
+          score = 100;
+        } else if (target.contains(namePart) || namePart.contains(target)) {
+          score = 70;
+        } else if (target.startsWith(namePart) || namePart.startsWith(target)) {
+          score = 50;
+        }
+        if (score > bestScore) {
+          bestScore = score;
+          bestMatch = c;
+        }
+      }
+
+      if (bestMatch != null && bestScore > 0) {
+        city = bestMatch['eNameAndCode'] as String;
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('city', city);
+        notifyListeners();
+      }
+    } catch (e) {
+      logger.w('Reverse geocoding failed', error: e);
+    }
   }
 
   /// Changing the [city] and adjusting the events and times to the selected city
@@ -204,7 +270,7 @@ class Events with ChangeNotifier {
         ...base,
         'latitude': _webLat!.toString(),
         'longitude': _webLng!.toString(),
-        'tzid': 'Asia/Jerusalem',
+        'tzid': _webTzid ?? 'UTC',
       });
     } else {
       url = Uri.https('www.hebcal.com', '/shabbat', {...base, 'zip': geoId});
@@ -412,7 +478,7 @@ class Events with ChangeNotifier {
         ...base,
         'latitude': _webLat!.toString(),
         'longitude': _webLng!.toString(),
-        'tzid': 'Asia/Jerusalem',
+        'tzid': _webTzid ?? 'UTC',
       });
     } else {
       url = Uri.https('www.hebcal.com', '/zmanim', {...base, 'zip': geoId});

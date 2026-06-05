@@ -1,1 +1,2 @@
-Future<({double lat, double lng})?> requestGeolocation() async => null;
+Future<({double lat, double lng, String tzid})?> requestGeolocation() async =>
+    null;

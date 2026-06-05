@@ -78,7 +78,7 @@ class _EventScreenState extends State<EventScreen> {
     final location = await requestGeolocation();
     if (location != null && mounted) {
       Provider.of<Events>(context, listen: false)
-          .setWebLocation(location.lat, location.lng);
+          .setWebLocation(location.lat, location.lng, location.tzid);
     }
   }
 
