@@ -5,6 +5,7 @@ import 'package:internet_connection_checker_plus/internet_connection_checker_plu
 import 'package:kodesh_app/helpers/app_logger.dart';
 import 'package:kodesh_app/helpers/dates.dart';
 import 'package:kodesh_app/models/event.dart';
+import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:http/http.dart';
 import 'package:kodesh_app/models/holiday.dart';
 import 'package:kodesh_app/models/rosh_chodesh.dart';
@@ -26,6 +27,9 @@ class Events with ChangeNotifier {
   DateTime? _lastEventsFetch;
   DateTime? _lastZmanimFetch;
   static const Duration _fetchTtl = Duration(minutes: 30);
+
+  double? _webLat;
+  double? _webLng;
 
   String city = 'IL-Jerusalem|281184';
 
@@ -85,6 +89,15 @@ class Events with ChangeNotifier {
 
   Map<DateTime, String>? get hebrewDates {
     return _hebrewDates == null ? null : {..._hebrewDates!};
+  }
+
+  void setWebLocation(double lat, double lng) {
+    _webLat = lat;
+    _webLng = lng;
+    _lastEventsFetch = null;
+    _lastZmanimFetch = null;
+    fetchAndSetProducts(forceRefresh: true);
+    fetchAndSetZmanimProducts(forceRefresh: true);
   }
 
   /// Changing the [city] and adjusting the events and times to the selected city
@@ -185,7 +198,17 @@ class Events with ChangeNotifier {
       });
     }
 
-    var url = Uri.https('www.hebcal.com', '/shabbat', {...base, 'zip': geoId});
+    Uri url;
+    if (_webLat != null && _webLng != null) {
+      url = Uri.https('www.hebcal.com', '/shabbat', {
+        ...base,
+        'latitude': _webLat!.toString(),
+        'longitude': _webLng!.toString(),
+        'tzid': 'Asia/Jerusalem',
+      });
+    } else {
+      url = Uri.https('www.hebcal.com', '/shabbat', {...base, 'zip': geoId});
+    }
     var response = await get(url);
     if ((jsonDecode(response.body) as Map<String, dynamic>).keys.contains('error')) {
       url = Uri.https('www.hebcal.com', '/shabbat', {...base, 'city': cityName});
@@ -383,7 +406,17 @@ class Events with ChangeNotifier {
     Map<String, String> base = {'cfg': 'json', 'lg': lg};
     if (!isToday) base['date'] = getDushedFormatedDate(startDate);
 
-    var url = Uri.https('www.hebcal.com', '/zmanim', {...base, 'zip': geoId});
+    Uri url;
+    if (_webLat != null && _webLng != null) {
+      url = Uri.https('www.hebcal.com', '/zmanim', {
+        ...base,
+        'latitude': _webLat!.toString(),
+        'longitude': _webLng!.toString(),
+        'tzid': 'Asia/Jerusalem',
+      });
+    } else {
+      url = Uri.https('www.hebcal.com', '/zmanim', {...base, 'zip': geoId});
+    }
     var response = await get(url);
     if ((jsonDecode(response.body) as Map<String, dynamic>).keys.contains('error')) {
       url = Uri.https('www.hebcal.com', '/zmanim', {...base, 'city': cityName});
@@ -468,34 +501,34 @@ class Events with ChangeNotifier {
     Map<DateTime, String> tempItems = {};
     DateTime? now = DateTime.now();
 
-    if (_currentLocale.languageCode == 'he') {
+    if (LanguageChangeProvider.getCurrentLocale.languageCode == 'he') {
       tempItems[getDateTimeSetToZero(now)] =
           items[getDushedFormatedDate(now)]['hebrew'];
     } else {
       String dushedDate = getDushedFormatedDate(now);
       tempItems[getDateTimeSetToZero(now)] =
-          '${items[dushedDate]['hd']} ${items[dushedDate]['hm']} ${items[dushedDate]['hy']}';
+          '‎${items[dushedDate]['hd']} ${items[dushedDate]['hm']} ${items[dushedDate]['hy']}';
     }
     if (_eventsItems != null) {
       for (Event e in _eventsItems!) {
         if (e.entryDate != null) {
           String dushedDate = getDushedFormatedDate(e.entryDate!);
-          if (_currentLocale.languageCode == 'he') {
+          if (LanguageChangeProvider.getCurrentLocale.languageCode == 'he') {
             tempItems[e.entryDate!] = items[dushedDate]['hebrew'];
           } else {
             tempItems[e.entryDate!] =
-                '${items[dushedDate]['hd']} ${items[dushedDate]['hm']} ${items[dushedDate]['hy']}';
+                '‎${items[dushedDate]['hd']} ${items[dushedDate]['hm']} ${items[dushedDate]['hy']}';
           }
           e.setEntryHebrewDate(tempItems[e.entryDate!]);
         }
 
         if (e.releaseDate != null) {
           String dushedDate = getDushedFormatedDate(e.releaseDate!);
-          if (_currentLocale.languageCode == 'he') {
+          if (LanguageChangeProvider.getCurrentLocale.languageCode == 'he') {
             tempItems[e.releaseDate!] = items[dushedDate]['hebrew'];
           } else {
             tempItems[e.releaseDate!] =
-                '${items[dushedDate]['hd']} ${items[dushedDate]['hm']} ${items[dushedDate]['hy']}';
+                '‎${items[dushedDate]['hd']} ${items[dushedDate]['hm']} ${items[dushedDate]['hy']}';
           }
           e.setReleaseHebrewDate(tempItems[e.releaseDate!]);
         }
@@ -504,11 +537,11 @@ class Events with ChangeNotifier {
     if (_zmanimItems != null) {
       for (Zman e in _zmanimItems!) {
         String dushedDate = getDushedFormatedDate(e.date);
-        if (_currentLocale.languageCode == 'he') {
+        if (LanguageChangeProvider.getCurrentLocale.languageCode == 'he') {
           tempItems[e.date] = items[dushedDate]['hebrew'];
         } else {
           tempItems[e.date] =
-              '${items[dushedDate]['hd']} ${items[dushedDate]['hm']} ${items[dushedDate]['hy']}';
+              '‎${items[dushedDate]['hd']} ${items[dushedDate]['hm']} ${items[dushedDate]['hy']}';
         }
       }
     }
