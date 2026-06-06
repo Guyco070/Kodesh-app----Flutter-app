@@ -59,7 +59,7 @@ class _SettingsBarState extends State<SettingsBar> {
                     color: Colors.blueGrey,
                   ),
                   borderRadius: BorderRadius.circular(20),
-                  color: Colors.grey[200]),
+                  color: Theme.of(context).cardColor),
               child: Column(
                 children: [
                   if (!_isExpanded)

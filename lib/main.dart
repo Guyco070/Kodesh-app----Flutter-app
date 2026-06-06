@@ -68,6 +68,12 @@ class MyApp extends StatelessWidget {
   static final ThemeData _lightTheme = ThemeData(
     primarySwatch: _primaryColor,
     brightness: Brightness.light,
+    scaffoldBackgroundColor: Colors.white,
+    cardColor: Colors.grey.shade200,
+    colorScheme: const ColorScheme.light(
+      primary: Color(0xFF0047AE),
+      surface: Colors.white,
+    ),
   );
 
   static final ThemeData _darkTheme = ThemeData(
@@ -75,6 +81,12 @@ class MyApp extends StatelessWidget {
     brightness: Brightness.dark,
     scaffoldBackgroundColor: const Color(0xFF1A1A2E),
     cardColor: const Color(0xFF16213E),
+    colorScheme: const ColorScheme.dark(
+      primary: Color(0xFF4B7BF5),
+      surface: Color(0xFF1A1A2E),
+      surfaceContainer: Color(0xFF16213E),
+      onSurface: Colors.white,
+    ),
     appBarTheme: const AppBarTheme(
       backgroundColor: Color(0xFF0F3460),
       foregroundColor: Colors.white,

@@ -43,7 +43,7 @@ class _ScheduleNotificationsScreenState
               top: BorderSide(width: 1, color: Colors.grey),
               bottom: BorderSide(width: 1, color: Colors.grey),
             ),
-            color: Colors.grey[200]));
+            color: Theme.of(context).cardColor));
 
     shabatAndHolidaysThingsToRemindList() {
       return reminders.allShabatAndHolidaysThingsToRemindList(context).map((e) {
