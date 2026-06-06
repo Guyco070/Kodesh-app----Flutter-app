@@ -115,12 +115,39 @@ class Reminders with ChangeNotifier {
     'Samovar'
   ];
 
+  List<String> customChecklistItems = [];
+
   List<String> shabatAndHolidaysThingsToRemindListCreate(context) {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     return [
       appLocalizations.plata,
       appLocalizations.miham,
     ];
+  }
+
+  void addCustomChecklistItem(String name) {
+    customChecklistItems.add(name);
+    _saveCustomChecklistItems();
+    notifyListeners();
+  }
+
+  void removeCustomChecklistItem(int index) {
+    customChecklistItems.removeAt(index);
+    _saveCustomChecklistItems();
+    notifyListeners();
+  }
+
+  void reorderCustomChecklistItem(int oldIndex, int newIndex) {
+    if (newIndex > oldIndex) newIndex -= 1;
+    final item = customChecklistItems.removeAt(oldIndex);
+    customChecklistItems.insert(newIndex, item);
+    _saveCustomChecklistItems();
+    notifyListeners();
+  }
+
+  Future<void> _saveCustomChecklistItems() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList('customChecklistItems', customChecklistItems);
   }
 
   setRoshChodesh({bool? newRoshChodesh}) {
@@ -333,6 +360,10 @@ class Reminders with ChangeNotifier {
 
     if (prefsKeys.contains('beforeNerotHanukkahMinutes')) {
       beforeNerotHanukkahMinutes = prefs.getInt('beforeNerotHanukkahMinutes')!;
+    }
+
+    if (prefsKeys.contains('customChecklistItems')) {
+      customChecklistItems = prefs.getStringList('customChecklistItems') ?? [];
     }
 
     notifyListeners();

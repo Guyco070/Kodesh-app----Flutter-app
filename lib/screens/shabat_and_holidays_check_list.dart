@@ -9,53 +9,180 @@ class ShabatAndHolidaysCheckList extends StatefulWidget {
   const ShabatAndHolidaysCheckList({super.key});
 
   @override
-  State<ShabatAndHolidaysCheckList> createState() => _ShabatAndHolidaysCheckListState();
+  State<ShabatAndHolidaysCheckList> createState() =>
+      _ShabatAndHolidaysCheckListState();
 
   static const routeName = '/shabat_and_holidays_check_list';
 }
 
-class _ShabatAndHolidaysCheckListState extends State<ShabatAndHolidaysCheckList> {
-    bool _isAll = false;
+class _ShabatAndHolidaysCheckListState
+    extends State<ShabatAndHolidaysCheckList> {
+  bool _isAll = false;
+
+  void _showAddTaskDialog(BuildContext context, Reminders reminders,
+      AppLocalizations l10n) {
+    final controller = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l10n.addCustomTask),
+        content: TextField(
+          controller: controller,
+          autofocus: true,
+          decoration: InputDecoration(labelText: l10n.taskName),
+          textCapitalization: TextCapitalization.sentences,
+          onSubmitted: (value) {
+            if (value.trim().isNotEmpty) {
+              reminders.addCustomChecklistItem(value.trim());
+              Navigator.of(ctx).pop();
+            }
+          },
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: Text(l10n.cancel),
+          ),
+          TextButton(
+            onPressed: () {
+              if (controller.text.trim().isNotEmpty) {
+                reminders.addCustomChecklistItem(controller.text.trim());
+                Navigator.of(ctx).pop();
+              }
+            },
+            child: Text(l10n.add),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showDeleteDialog(BuildContext context, Reminders reminders,
+      AppLocalizations l10n, int index) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l10n.deleteTaskTitle),
+        content: Text(reminders.customChecklistItems[index]),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: Text(l10n.cancel),
+          ),
+          TextButton(
+            onPressed: () {
+              reminders.removeCustomChecklistItem(index);
+              Navigator.of(ctx).pop();
+            },
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: Text(l10n.delete),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    Reminders reminders = Provider.of<Reminders>(context);
-    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+    final reminders = Provider.of<Reminders>(context);
+    final l10n = AppLocalizations.of(context)!;
+
+    final selectedPredefined = _isAll
+        ? reminders.allShabatAndHolidaysThingsToRemindMap(context).keys.toList()
+        : reminders.shabatAndHolidaysThingsToRemindList;
+
+    final hasContent = selectedPredefined.isNotEmpty ||
+        reminders.customChecklistItems.isNotEmpty;
+
     return Scaffold(
       appBar: CustomAppBar(
-        title: appLocalizations.choresBeforeShabbatMenu,
+        title: l10n.choresBeforeShabbatMenu,
         trailing: TextButton(
-          onPressed: () {
-            setState(() {
-              _isAll = !_isAll;
-            });
-          },
+          onPressed: () => setState(() => _isAll = !_isAll),
           child: Text(
-            _isAll ? appLocalizations.all : appLocalizations.my,
-            style: TextStyle(
-              color: Colors.grey.shade700,
-            ),
+            _isAll ? l10n.all : l10n.my,
+            style: TextStyle(color: Colors.grey.shade700),
           ),
         ),
       ),
-      body: _isAll || reminders.shabatAndHolidaysThingsToRemindList.isNotEmpty ? GridView.count(
-        crossAxisCount: 2,
-        shrinkWrap: true,
-        padding: const EdgeInsets.all(25),
-        childAspectRatio: 0.8,
-        children: (_isAll ? reminders.allShabatAndHolidaysThingsToRemindMap(context).keys : reminders.shabatAndHolidaysThingsToRemindList).map((e) {
-          Map<String, Object> rElement =
-              reminders.allShabatAndHolidaysThingsToRemindMap(context)[e]!;
-          return ThingToRemind(
-            title: rElement['action'] as String,
-            icon: rElement['icon'] as IconData,
-          );
-        }).toList(),
-      ) : 
-      Center(child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(appLocalizations.noChroesMessage, textAlign: TextAlign.center,),
-      )),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _showAddTaskDialog(context, reminders, l10n),
+        child: const Icon(Icons.add),
+      ),
+      body: !hasContent
+          ? Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(l10n.noChroesMessage, textAlign: TextAlign.center),
+              ),
+            )
+          : CustomScrollView(
+              slivers: [
+                if (selectedPredefined.isNotEmpty)
+                  SliverGrid(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.8,
+                    ),
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        final key = selectedPredefined.toList()[index];
+                        final element = reminders
+                            .allShabatAndHolidaysThingsToRemindMap(context)[key]!;
+                        return Padding(
+                          padding: const EdgeInsets.all(25 / 2),
+                          child: ThingToRemind(
+                            title: element['action'] as String,
+                            icon: element['icon'] as IconData,
+                          ),
+                        );
+                      },
+                      childCount: selectedPredefined.length,
+                    ),
+                  ),
+                if (reminders.customChecklistItems.isNotEmpty) ...[
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
+                      child: Text(
+                        l10n.customTasksSection,
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: ReorderableListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: reminders.customChecklistItems.length,
+                      onReorder: reminders.reorderCustomChecklistItem,
+                      itemBuilder: (context, index) {
+                        final task = reminders.customChecklistItems[index];
+                        return ListTile(
+                          key: ValueKey(task + index.toString()),
+                          leading: const Icon(Icons.drag_handle),
+                          title: Text(task),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.delete_outline,
+                                color: Colors.red),
+                            onPressed: () => _showDeleteDialog(
+                                context, reminders, l10n, index),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+                const SliverToBoxAdapter(
+                  child: SizedBox(height: 80),
+                ),
+              ],
+            ),
     );
   }
 }

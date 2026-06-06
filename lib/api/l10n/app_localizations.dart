@@ -645,6 +645,16 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Light mode'**
   String get lightMode;
+
+  String get birkatHamazonMenu;
+  String get kriyatShemaAlHamitaMenu;
+  String get addCustomTask;
+  String get taskName;
+  String get add;
+  String get cancel;
+  String get delete;
+  String get customTasksSection;
+  String get deleteTaskTitle;
 }
 
 class _AppLocalizationsDelegate

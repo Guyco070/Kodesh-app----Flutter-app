@@ -301,4 +301,31 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lightMode => 'Modo claro';
+
+  @override
+  String get birkatHamazonMenu => 'Birkat Hamazón';
+
+  @override
+  String get kriyatShemaAlHamitaMenu => 'Shemá antes de dormir';
+
+  @override
+  String get addCustomTask => 'Agregar tarea';
+
+  @override
+  String get taskName => 'Nombre de la tarea';
+
+  @override
+  String get add => 'Agregar';
+
+  @override
+  String get cancel => 'Cancelar';
+
+  @override
+  String get delete => 'Eliminar';
+
+  @override
+  String get customTasksSection => 'Mis tareas personales';
+
+  @override
+  String get deleteTaskTitle => '¿Eliminar tarea?';
 }

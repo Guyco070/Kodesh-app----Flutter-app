@@ -301,4 +301,31 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get lightMode => 'Светлый режим';
+
+  @override
+  String get birkatHamazonMenu => 'Биркат Хамазон';
+
+  @override
+  String get kriyatShemaAlHamitaMenu => 'Шма перед сном';
+
+  @override
+  String get addCustomTask => 'Добавить задачу';
+
+  @override
+  String get taskName => 'Название задачи';
+
+  @override
+  String get add => 'Добавить';
+
+  @override
+  String get cancel => 'Отмена';
+
+  @override
+  String get delete => 'Удалить';
+
+  @override
+  String get customTasksSection => 'Мои задачи';
+
+  @override
+  String get deleteTaskTitle => 'Удалить задачу?';
 }

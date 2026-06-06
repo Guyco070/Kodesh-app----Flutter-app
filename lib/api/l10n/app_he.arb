@@ -108,5 +108,16 @@
     "compass": "מצפן",
 
     "darkMode": "מצב לילה",
-    "lightMode": "מצב יום"
+    "lightMode": "מצב יום",
+
+    "birkatHamazonMenu": "ברכת המזון",
+    "kriyatShemaAlHamitaMenu": "קריאת שמע על המיטה",
+
+    "addCustomTask": "הוסף מטלה",
+    "taskName": "שם המטלה",
+    "add": "הוסף",
+    "cancel": "ביטול",
+    "delete": "מחק",
+    "customTasksSection": "המטלות שלי",
+    "deleteTaskTitle": "למחוק את המטלה?"
 }

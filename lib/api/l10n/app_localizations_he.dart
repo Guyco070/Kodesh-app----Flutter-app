@@ -298,4 +298,31 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get lightMode => 'מצב יום';
+
+  @override
+  String get birkatHamazonMenu => 'ברכת המזון';
+
+  @override
+  String get kriyatShemaAlHamitaMenu => 'קריאת שמע על המיטה';
+
+  @override
+  String get addCustomTask => 'הוסף מטלה';
+
+  @override
+  String get taskName => 'שם המטלה';
+
+  @override
+  String get add => 'הוסף';
+
+  @override
+  String get cancel => 'ביטול';
+
+  @override
+  String get delete => 'מחק';
+
+  @override
+  String get customTasksSection => 'המטלות שלי';
+
+  @override
+  String get deleteTaskTitle => 'למחוק את המטלה?';
 }

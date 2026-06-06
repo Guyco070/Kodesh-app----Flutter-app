@@ -301,4 +301,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lightMode => 'Light mode';
+
+  @override
+  String get birkatHamazonMenu => 'Birkat Hamazon';
+
+  @override
+  String get kriyatShemaAlHamitaMenu => 'Bedtime Shema';
+
+  @override
+  String get addCustomTask => 'Add task';
+
+  @override
+  String get taskName => 'Task name';
+
+  @override
+  String get add => 'Add';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get customTasksSection => 'My custom tasks';
+
+  @override
+  String get deleteTaskTitle => 'Delete task?';
 }

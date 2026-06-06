@@ -11,6 +11,8 @@ import 'package:kodesh_app/screens/tefilot/havdalah.dart';
 import 'package:kodesh_app/screens/tefilot/seder_anahat_tefilin.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
 import 'package:kodesh_app/screens/tefilot/sfirat_omer_screen.dart';
+import 'package:kodesh_app/screens/tefilot/birkat_hamazon.dart';
+import 'package:kodesh_app/screens/tefilot/kriyat_shema_al_hamita.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
 import 'package:kodesh_app/widgets/custom_expanded_list_view.dart';
 
@@ -103,6 +105,18 @@ class AppDrawer extends StatelessWidget {
                   title: Text(appLocalizations.sederSfiratOmer),
                   onTap: () =>
                       Navigator.pushNamed(context, SfiratOmerScreen.routeName),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.restaurant_outlined),
+                  title: Text(appLocalizations.birkatHamazonMenu),
+                  onTap: () =>
+                      Navigator.pushNamed(context, BirkatHamazon.routeName),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.bedtime_outlined),
+                  title: Text(appLocalizations.kriyatShemaAlHamitaMenu),
+                  onTap: () => Navigator.pushNamed(
+                      context, KriyatShemaAlHamita.routeName),
                 ),
               ],
             ),
