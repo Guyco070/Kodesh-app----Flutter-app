@@ -18,12 +18,7 @@ class EventFactoryWidget extends StatelessWidget {
     return Column(
       children: [
         if (data is! Shabat) ...{
-          const Divider(
-            thickness: 2,
-            indent: 10,
-            endIndent: 10,
-            height: 40,
-          ),
+          const Divider(thickness: 2, indent: 10, endIndent: 10, height: 40),
         } else ...{
           const SizedBox(height: 15),
         },
@@ -31,16 +26,9 @@ class EventFactoryWidget extends StatelessWidget {
           data.title == 'Shabat'
               ? AppLocalizations.of(context)!.shabat
               : data.title,
-          style: const TextStyle(
-            fontWeight: FontWeight.w600,
-          ),
+          style: const TextStyle(fontWeight: FontWeight.w600),
         ),
-        const Divider(
-          thickness: 0.5,
-          indent: 35,
-          endIndent: 35,
-          height: 40,
-        ),
+        const Divider(thickness: 0.5, indent: 35, endIndent: 35, height: 40),
         Events.eventsFactoryMethod(data)!,
       ],
     );

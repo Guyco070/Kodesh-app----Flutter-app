@@ -32,10 +32,7 @@ const Set<String> _kValidNotificationRoutes = {
   '/about',
 };
 
-enum ViewState {
-  events,
-  zmanim,
-}
+enum ViewState { events, zmanim }
 
 class EventScreen extends StatefulWidget {
   const EventScreen({super.key});
@@ -77,8 +74,10 @@ class _EventScreenState extends State<EventScreen> {
   void _requestWebGeolocation() async {
     final location = await requestGeolocation();
     if (location != null && mounted) {
-      Provider.of<Events>(context, listen: false)
-          .setWebLocation(location.lat, location.lng, location.tzid);
+      Provider.of<Events>(
+        context,
+        listen: false,
+      ).setWebLocation(location.lat, location.lng, location.tzid);
     }
   }
 
@@ -102,8 +101,8 @@ class _EventScreenState extends State<EventScreen> {
   }
 
   void setIsThereInternetConnection(bool bool) => setState(() {
-        _isThereInternetConnection = bool;
-      });
+    _isThereInternetConnection = bool;
+  });
 
   @override
   void didChangeDependencies() {
@@ -120,11 +119,13 @@ class _EventScreenState extends State<EventScreen> {
 
   getAllData() {
     _isLoading = true;
-    String lang =
-        Provider.of<LanguageChangeProvider>(context).currentLocale.languageCode;
-    Provider.of<Events>(context, listen: false)
-        .fetchAndSetProducts(getDataFirst: true, lang: lang)
-        .then((items) {
+    String lang = Provider.of<LanguageChangeProvider>(
+      context,
+    ).currentLocale.languageCode;
+    Provider.of<Events>(
+      context,
+      listen: false,
+    ).fetchAndSetProducts(getDataFirst: true, lang: lang).then((items) {
       setIsThereInternetConnection(items != null);
       setIsLoading(false);
       getZmanim(lang: lang);
@@ -169,8 +170,8 @@ class _EventScreenState extends State<EventScreen> {
         e.title = e.title == 'Shabat'
             ? AppLocalizations.of(context)!.shabat
             : e.title = !e.title.contains(AppLocalizations.of(context)!.shabat)
-                ? '${AppLocalizations.of(context)!.shabat} - ${e.title}'
-                : e.title;
+                  ? '${AppLocalizations.of(context)!.shabat} - ${e.title}'
+                  : e.title;
       }
       if (isOnlyShabat && (e is Shabat || e.entryDate?.hour != 0)) {
         widgets.add(EventFactoryWidget(data: e));
@@ -178,18 +179,17 @@ class _EventScreenState extends State<EventScreen> {
         widgets.add(EventFactoryWidget(data: e));
       }
     }
-    widgets.add(const SizedBox(
-      height: 10,
-    ));
+    widgets.add(const SizedBox(height: 10));
     if (isOnlyShabat) return AnimatedOnlyShabatListView(widgets: widgets);
     return AnimatedEventsListView(widgets: widgets);
   }
 
   void getZmanim({required String lang}) {
     setIsLoadingZmanim(true);
-    Provider.of<Events>(context, listen: false)
-        .fetchAndSetZmanimProducts(lang: lang)
-        .then((items) {
+    Provider.of<Events>(
+      context,
+      listen: false,
+    ).fetchAndSetZmanimProducts(lang: lang).then((items) {
       setIsLoadingZmanim(false);
     });
   }
@@ -211,14 +211,16 @@ class _EventScreenState extends State<EventScreen> {
     }
 
     if (widgets.isEmpty) {
-      widgets.add(SizedBox(
+      widgets.add(
+        SizedBox(
           height: MediaQuery.of(context).size.height / 2,
           child: Center(
-              child: Text(AppLocalizations.of(context)!.noLaterTimesToShow))));
+            child: Text(AppLocalizations.of(context)!.noLaterTimesToShow),
+          ),
+        ),
+      );
     } else {
-      widgets.add(const SizedBox(
-        height: 10,
-      ));
+      widgets.add(const SizedBox(height: 10));
     }
     if (_isTodayTimesFromNow) {
       return AnimatedFromNowOnTimesListView(widgets: widgets);
@@ -284,19 +286,24 @@ class _EventScreenState extends State<EventScreen> {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
 
     return DefaultScaffold(
-        setIsLoading: setIsLoadingLang,
-        title: AppLocalizations.of(context)!.main,
-        body: RefreshIndicator(
-          onRefresh: () async {
-            String lang = Provider.of<LanguageChangeProvider>(context, listen: false)
-                .currentLocale
-                .languageCode;
-            await Provider.of<Events>(context, listen: false)
-                .fetchAndSetProducts(lang: lang, forceRefresh: true);
-            await Provider.of<Events>(context, listen: false)
-                .fetchAndSetZmanimProducts(lang: lang, forceRefresh: true);
-          },
-          child: SingleChildScrollView(
+      setIsLoading: setIsLoadingLang,
+      title: AppLocalizations.of(context)!.main,
+      body: RefreshIndicator(
+        onRefresh: () async {
+          String lang = Provider.of<LanguageChangeProvider>(
+            context,
+            listen: false,
+          ).currentLocale.languageCode;
+          await Provider.of<Events>(
+            context,
+            listen: false,
+          ).fetchAndSetProducts(lang: lang, forceRefresh: true);
+          await Provider.of<Events>(
+            context,
+            listen: false,
+          ).fetchAndSetZmanimProducts(lang: lang, forceRefresh: true);
+        },
+        child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
@@ -315,33 +322,38 @@ class _EventScreenState extends State<EventScreen> {
               ),
               if (LanguageChangeProvider.isInitialized && !_isLoadingLang)
                 ViewTypeSwitch(
-                    appLocalizations: appLocalizations,
-                    viewState: _viewState,
-                    setViewState: setViewState),
+                  appLocalizations: appLocalizations,
+                  viewState: _viewState,
+                  setViewState: setViewState,
+                ),
               if (events.eventsItems != null &&
                   _viewState == ViewState.events) ...{
                 if (_isLoading || _isLoadingLang)
                   renderLoading(context)
                 else ...{
-                  _getEventwidgets(events.eventsItems!, events.isOnlyShabat)
+                  _getEventwidgets(events.eventsItems!, events.isOnlyShabat),
                 },
               } else if (events.zmanimItems != null &&
                   _viewState == ViewState.zmanim) ...{
                 if (_isLoadingZmanim || _isLoadingLang)
                   renderLoading(context)
-                else ...{_getZmanimWidgets(events.zmanimItems)},
+                else ...{
+                  _getZmanimWidgets(events.zmanimItems),
+                },
               } else ...{
                 if (_isLoading || _isLoadingLang)
                   renderLoading(context)
                 else
                   renderNoInternetConnection(
-                      events.eventsError != null
-                          ? AppLocalizations.of(context)!.apiErrorMessage
-                          : AppLocalizations.of(context)!.noIntrnetMessage),
+                    events.eventsError != null
+                        ? AppLocalizations.of(context)!.apiErrorMessage
+                        : AppLocalizations.of(context)!.noIntrnetMessage,
+                  ),
               },
             ],
           ),
         ),
-        ));
+      ),
+    );
   }
 }

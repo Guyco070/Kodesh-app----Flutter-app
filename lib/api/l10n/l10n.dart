@@ -11,21 +11,9 @@ class L10n {
   ];
 
   static final names = {
-    'en': {
-      'locale': 'English',
-      'english': 'English',
-    },
-    'he': {
-      'locale': 'עברית',
-      'english': 'Hebrew',
-    },
-    'es': {
-      'locale': 'Español',
-      'english': 'Spanish',
-    },
-    'ru': {
-      'locale': 'Русский',
-      'english': 'Russian',
-    },
+    'en': {'locale': 'English', 'english': 'English'},
+    'he': {'locale': 'עברית', 'english': 'Hebrew'},
+    'es': {'locale': 'Español', 'english': 'Spanish'},
+    'ru': {'locale': 'Русский', 'english': 'Russian'},
   };
 }

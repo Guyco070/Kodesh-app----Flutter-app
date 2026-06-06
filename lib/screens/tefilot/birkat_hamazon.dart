@@ -14,10 +14,7 @@ class BirkatHamazon extends StatelessWidget {
       appBar: CustomAppBar(
         title: AppLocalizations.of(context)!.birkatHamazonMenu,
       ),
-      body: TefilaWidget(
-        getBracha: getBracha,
-        isWithNosah: true,
-      ),
+      body: TefilaWidget(getBracha: getBracha, isWithNosah: true),
     );
   }
 

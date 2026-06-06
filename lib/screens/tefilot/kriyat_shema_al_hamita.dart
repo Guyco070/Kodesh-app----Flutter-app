@@ -14,10 +14,7 @@ class KriyatShemaAlHamita extends StatelessWidget {
       appBar: CustomAppBar(
         title: AppLocalizations.of(context)!.kriyatShemaAlHamitaMenu,
       ),
-      body: TefilaWidget(
-        getBracha: getBracha,
-        isWithNosah: false,
-      ),
+      body: TefilaWidget(getBracha: getBracha, isWithNosah: false),
     );
   }
 

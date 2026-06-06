@@ -11,10 +11,16 @@ class AdlakatNerotChanukah extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(
-            title:
-                AppLocalizations.of(context)!.hanukkahCandleLightingOrderMenu),
-        body: TefilaWidget(getBracha: getBracha, imagePath: 'assets/hanu.jpg', imageExtaLine: '* יש להניח את הנרות מימין לשמאל ולהדליקן משמאל לימין.\n',));
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.hanukkahCandleLightingOrderMenu,
+      ),
+      body: TefilaWidget(
+        getBracha: getBracha,
+        imagePath: 'assets/hanu.jpg',
+        imageExtaLine:
+            '* יש להניח את הנרות מימין לשמאל ולהדליקן משמאל לימין.\n',
+      ),
+    );
   }
 
   late final Map<String, Map<Nosah, List<String>>> getBracha = {
@@ -116,7 +122,7 @@ class AdlakatNerotChanukah extends StatelessWidget {
       'חֲשׂוֹף זְרוֹעַ קָדְשֶׁךָ וְקָרֵב קֵץ הַיְשׁוּעָה.',
       'נְקֹם נִקְמַת דַּם עֲבָדֶיךָ מֵאֻמָּה הָרְשָׁעָה.',
       'כִּי אָרְכָה לָנוּ הַשָּׁעָה וְאֵין קֵץ לִימֵי הָרָעָה.',
-      'דְּחֵה אַדְמוֹן בְּצֵל צַלְמוֹן, הָקֵם לָנוּ רוֹעֶה שִׁבְעָה.'
+      'דְּחֵה אַדְמוֹן בְּצֵל צַלְמוֹן, הָקֵם לָנוּ רוֹעֶה שִׁבְעָה.',
     ],
   };
 
@@ -214,7 +220,7 @@ class AdlakatNerotChanukah extends StatelessWidget {
       'חֲשׂוֹף זְרוֹעַ קָדְשֶׁךָ וְקָרֵב קֵץ הַיְשׁוּעָה.',
       'נְקֹם נִקְמַת דַּם עֲבָדֶיךָ מֵאֻמָּה הָרְשָׁעָה.',
       'כִּי אָרְכָה לָנוּ הַשָּׁעָה וְאֵין קֵץ לִימֵי הָרָעָה.',
-      'דְּחֵה אַדְמוֹן בְּצֵל צַלְמוֹן, הָקֵם לָנוּ רוֹעֶה שִׁבְעָה.'
+      'דְּחֵה אַדְמוֹן בְּצֵל צַלְמוֹן, הָקֵם לָנוּ רוֹעֶה שִׁבְעָה.',
     ],
   };
 }

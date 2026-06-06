@@ -33,17 +33,22 @@ class SfiratOmer extends Event {
   }
 
   @override
-  String getReminderBody(String lang) => (RemindersTranslates
-      .roshHodeshReminderTranslated[lang]!['body']!)(entryDate!, title);
+  String getReminderBody(String lang) =>
+      (RemindersTranslates.roshHodeshReminderTranslated[lang]!['body']!)(
+        entryDate!,
+        title,
+      );
 
   @override
   String getReminderTitle(String lang) =>
       '$title - ${DateFormat('dd/MM/yy').format(entryDate!)}';
 
   @override
-  String getReminderCandlesBody(int beforeShabatAndHolidaysCandlesHours,
-          int beforeShabatAndHolidaysCandlesMinutes, String lang) =>
-      'No need';
+  String getReminderCandlesBody(
+    int beforeShabatAndHolidaysCandlesHours,
+    int beforeShabatAndHolidaysCandlesMinutes,
+    String lang,
+  ) => 'No need';
 
   @override
   String getReminderCandlesTitle(String lang) => 'No need';
@@ -52,5 +57,9 @@ class SfiratOmer extends Event {
   String getReminderHavdalahTitle(String lang) => 'No need';
 
   @override
-  String getReminderHavdalahBody(int afterShabatAndHolidaysCandlesHours, int afterShabatAndHolidaysCandlesMinutes, String lang) => 'No need';
+  String getReminderHavdalahBody(
+    int afterShabatAndHolidaysCandlesHours,
+    int afterShabatAndHolidaysCandlesMinutes,
+    String lang,
+  ) => 'No need';
 }

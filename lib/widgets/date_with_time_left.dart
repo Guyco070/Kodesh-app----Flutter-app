@@ -7,7 +7,12 @@ import 'package:kodesh_app/api/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class DateWithTimeLeft extends StatelessWidget {
-  const DateWithTimeLeft({super.key, required this.date, this.isWithDate = true, this.hebrewDate});
+  const DateWithTimeLeft({
+    super.key,
+    required this.date,
+    this.isWithDate = true,
+    this.hebrewDate,
+  });
   final DateTime date;
   final bool isWithDate;
   final String? hebrewDate;
@@ -25,19 +30,34 @@ class DateWithTimeLeft extends StatelessWidget {
               duration: const Duration(milliseconds: 400),
               transitionBuilder: ((child, animation) =>
                   ScaleTransition(scale: animation, child: child)),
-              child: isWithDate && Provider.of<Events>(context, listen: false).isHebrewDate && hebrewDate == null ? CupertinoActivityIndicator(key: ValueKey<bool>(isWithDate && Provider.of<Events>(context, listen: false).isHebrewDate && hebrewDate == null), radius: 9,) : 
-              Text(
-                key: ValueKey<bool>(isWithDate && hebrewDate != null),
-                isWithDate && hebrewDate != null ?
-                 hebrewDate! :
-                 DateFormat('dd/MM/yyyy').format(date)),
+              child:
+                  isWithDate &&
+                      Provider.of<Events>(
+                        context,
+                        listen: false,
+                      ).isHebrewDate &&
+                      hebrewDate == null
+                  ? CupertinoActivityIndicator(
+                      key: ValueKey<bool>(
+                        isWithDate &&
+                            Provider.of<Events>(
+                              context,
+                              listen: false,
+                            ).isHebrewDate &&
+                            hebrewDate == null,
+                      ),
+                      radius: 9,
+                    )
+                  : Text(
+                      key: ValueKey<bool>(isWithDate && hebrewDate != null),
+                      isWithDate && hebrewDate != null
+                          ? hebrewDate!
+                          : DateFormat('dd/MM/yyyy').format(date),
+                    ),
             ),
           ),
           Text(getDayName(AppLocalizations.of(context)!, date.weekday)),
-          TimeLeft(
-            date: date,
-            fontSize: 12,
-          ),
+          TimeLeft(date: date, fontSize: 12),
         ],
       ),
     );

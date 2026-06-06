@@ -29,9 +29,10 @@ class NotificationApi {
         AndroidInitializationSettings('mipmap/ic_launcher');
     const DarwinInitializationSettings iosinitializationSetting =
         DarwinInitializationSettings(
-            requestAlertPermission: true,
-            requestBadgePermission: true,
-            requestSoundPermission: true);
+          requestAlertPermission: true,
+          requestBadgePermission: true,
+          requestSoundPermission: true,
+        );
     final InitializationSettings settings = InitializationSettings(
       android: androidInitializationSettings,
       iOS: iosinitializationSetting,
@@ -48,15 +49,21 @@ class NotificationApi {
   }
 
   static Future<void> _requestPermissions() async {
-    final android = _notifications.resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>();
-    final ios = _notifications.resolvePlatformSpecificImplementation<
-        IOSFlutterLocalNotificationsPlugin>();
+    final android = _notifications
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >();
+    final ios = _notifications
+        .resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin
+        >();
 
     if (android != null) {
       final granted = await android.requestNotificationsPermission();
       final exactAlarmGranted = await android.requestExactAlarmsPermission();
-      logger.i('Android notification permission: $granted, exact alarm: $exactAlarmGranted');
+      logger.i(
+        'Android notification permission: $granted, exact alarm: $exactAlarmGranted',
+      );
     }
     if (ios != null) {
       final granted = await ios.requestPermissions(
@@ -83,8 +90,13 @@ class NotificationApi {
     );
   }
 
-  static void cancel(int id) { if (!kIsWeb) _notifications.cancel(id: id); }
-  static void cancelAll() { if (!kIsWeb) _notifications.cancelAll(); }
+  static void cancel(int id) {
+    if (!kIsWeb) _notifications.cancel(id: id);
+  }
+
+  static void cancelAll() {
+    if (!kIsWeb) _notifications.cancelAll();
+  }
 
   // instant notifications
   static Future<void> showNotification({
@@ -95,11 +107,12 @@ class NotificationApi {
   }) async {
     if (kIsWeb) return;
     return _notifications.show(
-        id: id,
-        title: title,
-        body: body,
-        notificationDetails: _notificationDetails(),
-        payload: payload);
+      id: id,
+      title: title,
+      body: body,
+      notificationDetails: _notificationDetails(),
+      payload: payload,
+    );
   }
 
   static Future<void> showScheduledNotification({
@@ -121,12 +134,13 @@ class NotificationApi {
     );
   }
 
-  static Future<void> showScheduledWeeklyNotification(
-      {int id = 0,
-      String? title,
-      String? body,
-      String? payload,
-      int weekday = DateTime.friday}) async {
+  static Future<void> showScheduledWeeklyNotification({
+    int id = 0,
+    String? title,
+    String? body,
+    String? payload,
+    int weekday = DateTime.friday,
+  }) async {
     if (kIsWeb) return;
     return _notifications.zonedSchedule(
       id: id,
@@ -140,13 +154,14 @@ class NotificationApi {
     );
   }
 
-  static Future<void> showScheduleDailyNotification(
-      {int id = 0,
-      String? title,
-      String? body,
-      String? payload,
-      required int hour,
-      required int minute}) async {
+  static Future<void> showScheduleDailyNotification({
+    int id = 0,
+    String? title,
+    String? body,
+    String? payload,
+    required int hour,
+    required int minute,
+  }) async {
     if (kIsWeb) return;
     return _notifications.zonedSchedule(
       id: id,
@@ -161,7 +176,7 @@ class NotificationApi {
   }
 
   static Future<List<PendingNotificationRequest>>
-      get getPendingNotificationRequests async {
+  get getPendingNotificationRequests async {
     return (await _notifications.pendingNotificationRequests());
   }
 
@@ -180,8 +195,15 @@ class NotificationApi {
 
   static TZDateTime scheduleDaily(int hour, int minute) {
     final now = TZDateTime.now(local);
-    final scheduledDate = TZDateTime(local, now.year, now.month, now.day,
-        hour, minute, 0);
+    final scheduledDate = TZDateTime(
+      local,
+      now.year,
+      now.month,
+      now.day,
+      hour,
+      minute,
+      0,
+    );
 
     return scheduledDate.isBefore(now)
         ? scheduledDate.add(const Duration(days: 1))
@@ -191,7 +213,13 @@ class NotificationApi {
   static DateTime scheduleDailyDateTime(int hour, int minute) {
     final now = DateTime.now();
     final scheduledDate = DateTime(
-        now.year, now.month, now.day, hour, minute, 0);
+      now.year,
+      now.month,
+      now.day,
+      hour,
+      minute,
+      0,
+    );
 
     return scheduledDate.isBefore(now)
         ? scheduledDate.add(const Duration(days: 1))
@@ -216,7 +244,8 @@ class NotificationApi {
   }
 
   static void onDidReceiveBackgroundNotificationResponse(
-      NotificationResponse details) {
+    NotificationResponse details,
+  ) {
     logger.d('onDidReceiveBackgroundNotificationResponse: id=${details.id}');
     if (details.payload != null) {
       onNotifications.add(details.payload);

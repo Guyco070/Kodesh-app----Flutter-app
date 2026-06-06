@@ -19,8 +19,11 @@ class _ShabatAndHolidaysCheckListState
     extends State<ShabatAndHolidaysCheckList> {
   bool _isAll = false;
 
-  void _showAddTaskDialog(BuildContext context, Reminders reminders,
-      AppLocalizations l10n) {
+  void _showAddTaskDialog(
+    BuildContext context,
+    Reminders reminders,
+    AppLocalizations l10n,
+  ) {
     final controller = TextEditingController();
     showDialog(
       context: context,
@@ -57,8 +60,12 @@ class _ShabatAndHolidaysCheckListState
     );
   }
 
-  void _showDeleteDialog(BuildContext context, Reminders reminders,
-      AppLocalizations l10n, int index) {
+  void _showDeleteDialog(
+    BuildContext context,
+    Reminders reminders,
+    AppLocalizations l10n,
+    int index,
+  ) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -91,7 +98,8 @@ class _ShabatAndHolidaysCheckListState
         ? reminders.allShabatAndHolidaysThingsToRemindMap(context).keys.toList()
         : reminders.shabatAndHolidaysThingsToRemindList;
 
-    final hasContent = selectedPredefined.isNotEmpty ||
+    final hasContent =
+        selectedPredefined.isNotEmpty ||
         reminders.customChecklistItems.isNotEmpty;
 
     return Scaffold(
@@ -122,24 +130,21 @@ class _ShabatAndHolidaysCheckListState
                   SliverGrid(
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.8,
-                    ),
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        final key = selectedPredefined.toList()[index];
-                        final element = reminders
-                            .allShabatAndHolidaysThingsToRemindMap(context)[key]!;
-                        return Padding(
-                          padding: const EdgeInsets.all(25 / 2),
-                          child: ThingToRemind(
-                            title: element['action'] as String,
-                            icon: element['icon'] as IconData,
-                          ),
-                        );
-                      },
-                      childCount: selectedPredefined.length,
-                    ),
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.8,
+                        ),
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      final key = selectedPredefined.toList()[index];
+                      final element = reminders
+                          .allShabatAndHolidaysThingsToRemindMap(context)[key]!;
+                      return Padding(
+                        padding: const EdgeInsets.all(25 / 2),
+                        child: ThingToRemind(
+                          title: element['action'] as String,
+                          icon: element['icon'] as IconData,
+                        ),
+                      );
+                    }, childCount: selectedPredefined.length),
                   ),
                 if (reminders.customChecklistItems.isNotEmpty) ...[
                   SliverToBoxAdapter(
@@ -168,19 +173,23 @@ class _ShabatAndHolidaysCheckListState
                           leading: const Icon(Icons.drag_handle),
                           title: Text(task),
                           trailing: IconButton(
-                            icon: const Icon(Icons.delete_outline,
-                                color: Colors.red),
+                            icon: const Icon(
+                              Icons.delete_outline,
+                              color: Colors.red,
+                            ),
                             onPressed: () => _showDeleteDialog(
-                                context, reminders, l10n, index),
+                              context,
+                              reminders,
+                              l10n,
+                              index,
+                            ),
                           ),
                         );
                       },
                     ),
                   ),
                 ],
-                const SliverToBoxAdapter(
-                  child: SizedBox(height: 80),
-                ),
+                const SliverToBoxAdapter(child: SizedBox(height: 80)),
               ],
             ),
     );

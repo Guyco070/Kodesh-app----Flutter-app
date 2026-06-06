@@ -3,11 +3,7 @@ import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
-enum Nosah {
-  mizrah,
-  ashkenaz,
-  sfarad,
-}
+enum Nosah { mizrah, ashkenaz, sfarad }
 
 nosahTranslate(BuildContext context) {
   AppLocalizations appLocalizations = AppLocalizations.of(context)!;
@@ -69,18 +65,21 @@ class Tfilot with ChangeNotifier {
                     updateNosah(i);
                   },
             style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    const RoundedRectangleBorder()),
-                backgroundColor: i == _nosah
-                    ? MaterialStatePropertyAll<Color>(
-                        Theme.of(context).primaryColor)
-                    : MaterialStatePropertyAll<Color>(Colors.blue.shade800)),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                const RoundedRectangleBorder(),
+              ),
+              backgroundColor: i == _nosah
+                  ? MaterialStatePropertyAll<Color>(
+                      Theme.of(context).primaryColor,
+                    )
+                  : MaterialStatePropertyAll<Color>(Colors.blue.shade800),
+            ),
             child: Text(
               nosahTranslate(context)[i],
               style: TextStyle(
-                  color: Colors.white,
-                  fontWeight:
-                      _nosah == i ? FontWeight.bold : FontWeight.normal),
+                color: Colors.white,
+                fontWeight: _nosah == i ? FontWeight.bold : FontWeight.normal,
+              ),
             ),
           ),
         ),
@@ -89,21 +88,27 @@ class Tfilot with ChangeNotifier {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ClipRRect(
-          borderRadius: const BorderRadius.all(Radius.circular(50)),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.center, children: widgets)),
+        borderRadius: const BorderRadius.all(Radius.circular(50)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: widgets,
+        ),
+      ),
     );
   }
 
-  List<TextSpan> getSederWidgets(
-      {Map getBracha = const {},
-      bool isWithNosah = false,
-      Map<String, List<String>>? textList,
-      double fontSizeScale = 0}) {
+  List<TextSpan> getSederWidgets({
+    Map getBracha = const {},
+    bool isWithNosah = false,
+    Map<String, List<String>>? textList,
+    double fontSizeScale = 0,
+  }) {
     final List<String> seder = textList != null
         ? textList[LanguageChangeProvider.getCurrentLocale.languageCode]!
-        : (getBracha[LanguageChangeProvider.getCurrentLocale.languageCode])![
-            isWithNosah ? _nosah : Nosah.mizrah] as List<String>;
+        : (getBracha[LanguageChangeProvider
+                  .getCurrentLocale
+                  .languageCode])![isWithNosah ? _nosah : Nosah.mizrah]
+              as List<String>;
     TextStyle font;
     List<TextSpan> widgets = [];
     final double titleFontSize = 15 + fontSizeScale;
@@ -123,11 +128,13 @@ class Tfilot with ChangeNotifier {
         // S = Start of a sentens
         text = seder[i].substring(1, seder[i].length);
         if (seder[i][seder[i].length - 1] == '.' ||
-            seder[i][seder[i].length - 1] == ':') text += '\n\n';
+            seder[i][seder[i].length - 1] == ':')
+          text += '\n\n';
         font = TextStyle(
-            fontWeight: FontWeight.w400,
-            fontSize: titleFontSize,
-            color: Colors.blueAccent);
+          fontWeight: FontWeight.w400,
+          fontSize: titleFontSize,
+          color: Colors.blueAccent,
+        );
       } else if (seder[i][seder[i].length - 1] == '.') {
         // end of line
         text = '${seder[i]}\n';
@@ -140,10 +147,7 @@ class Tfilot with ChangeNotifier {
         font = TextStyle(fontWeight: FontWeight.w300, fontSize: bodyFontSize);
       }
 
-      widgets.add(TextSpan(
-        text: text ?? seder[i],
-        style: font,
-      ));
+      widgets.add(TextSpan(text: text ?? seder[i], style: font));
     }
 
     return widgets;

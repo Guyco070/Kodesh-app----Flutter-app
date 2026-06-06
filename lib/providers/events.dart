@@ -112,22 +112,24 @@ class Events with ChangeNotifier {
         'format': 'json',
         'zoom': '10',
       });
-      final response = await get(url, headers: {
-        'User-Agent': 'KodeshApp/1.0 (gaico070@gmail.com)',
-      });
+      final response = await get(
+        url,
+        headers: {'User-Agent': 'KodeshApp/1.0 (gaico070@gmail.com)'},
+      );
       if (response.statusCode != 200) return;
 
       final data = jsonDecode(response.body) as Map<String, dynamic>;
       final address = data['address'] as Map<String, dynamic>?;
       if (address == null) return;
 
-      final countryCode =
-          (address['country_code'] as String?)?.toUpperCase();
-      final cityName = (address['city'] ??
-          address['town'] ??
-          address['municipality'] ??
-          address['village'] ??
-          address['county']) as String?;
+      final countryCode = (address['country_code'] as String?)?.toUpperCase();
+      final cityName =
+          (address['city'] ??
+                  address['town'] ??
+                  address['municipality'] ??
+                  address['village'] ??
+                  address['county'])
+              as String?;
 
       if (countryCode == null || cityName == null) return;
 
@@ -167,8 +169,11 @@ class Events with ChangeNotifier {
   }
 
   /// Changing the [city] and adjusting the events and times to the selected city
-  setCity(String newCity,
-      {Function? setIsLoading, Function? setIsLoadingZmanim}) async {
+  setCity(
+    String newCity, {
+    Function? setIsLoading,
+    Function? setIsLoadingZmanim,
+  }) async {
     city = newCity;
     if (setIsLoading != null) setIsLoading(true);
 
@@ -205,9 +210,11 @@ class Events with ChangeNotifier {
     prefs.setBool('isHebrewDate', isHebrewDate);
   }
 
-  setStartDate(DateTime newDate,
-      {required Function? setIsLoading,
-      required Function? setIsLoadingZmanim}) {
+  setStartDate(
+    DateTime newDate, {
+    required Function? setIsLoading,
+    required Function? setIsLoadingZmanim,
+  }) {
     startDate = newDate;
     if (setIsLoading != null) setIsLoading(true);
 
@@ -276,20 +283,26 @@ class Events with ChangeNotifier {
       url = Uri.https('www.hebcal.com', '/shabbat', {...base, 'zip': geoId});
     }
     var response = await get(url);
-    if ((jsonDecode(response.body) as Map<String, dynamic>).keys.contains('error')) {
-      url = Uri.https('www.hebcal.com', '/shabbat', {...base, 'city': cityName});
+    if ((jsonDecode(response.body) as Map<String, dynamic>).keys.contains(
+      'error',
+    )) {
+      url = Uri.https('www.hebcal.com', '/shabbat', {
+        ...base,
+        'city': cityName,
+      });
       logger.d('Retrying shabbat fetch with city name');
       response = await get(url);
     }
     return jsonDecode(response.body) as Map<String, dynamic>;
   }
 
-  Future<List<Event>?> fetchAndSetProducts(
-      {bool filterByUser = false,
-      bool getDataFirst = false,
-      bool forceRefresh = false,
-      String lang = 'en',
-      void Function(bool bool)? setIsThereInternetConnection}) async {
+  Future<List<Event>?> fetchAndSetProducts({
+    bool filterByUser = false,
+    bool getDataFirst = false,
+    bool forceRefresh = false,
+    String lang = 'en',
+    void Function(bool bool)? setIsThereInternetConnection,
+  }) async {
     if (getDataFirst) await getData();
 
     if (!forceRefresh &&
@@ -374,52 +387,71 @@ class Events with ChangeNotifier {
     List<Event> tempItems = [];
     for (int i = 0; i < items.length; i++) {
       if (items[i]['category'] == 'parashat') {
-
         int tempI = i - 1;
-        while (tempI != -1 && items[tempI]['category'] != 'candles') { // go back and search for shaabat candles lightning time
+        while (tempI != -1 && items[tempI]['category'] != 'candles') {
+          // go back and search for shaabat candles lightning time
           tempI--;
         }
         Shabat newS = Shabat.createShabat(
-            title: items[tempI + 1]['title'] != items[i]['title']
-                ? items[tempI + 1]['title']
-                : null,
-            candles: items[tempI],
-            parashat: items[i],
-            havdalah: searchHavdalah(items, i));
+          title: items[tempI + 1]['title'] != items[i]['title']
+              ? items[tempI + 1]['title']
+              : null,
+          candles: items[tempI],
+          parashat: items[i],
+          havdalah: searchHavdalah(items, i),
+        );
 
         tempItems.add(newS);
       } else if (items[i]['category'] == 'holiday') {
         if (i == 0) {
-          tempItems.add(Holiday.createHoliday(
+          tempItems.add(
+            Holiday.createHoliday(
               candles: null,
               parashat: items[i],
               havdalah: items[i + 1]['category'] == 'havdalah'
                   ? items[i + 1]
-                  : null));
+                  : null,
+            ),
+          );
         } else if (i == items.length - 1) {
-          tempItems.add(Holiday.createHoliday(
-              candles: null, parashat: items[i], havdalah: null));
+          tempItems.add(
+            Holiday.createHoliday(
+              candles: null,
+              parashat: items[i],
+              havdalah: null,
+            ),
+          );
         } else {
           if (items[i + 1]['category'] == 'havdalah') {
-            tempItems.add(Holiday.createHoliday(
-                candles:
-                    items[i - 1]['category'] == 'candles' ? items[i - 1] : null,
+            tempItems.add(
+              Holiday.createHoliday(
+                candles: items[i - 1]['category'] == 'candles'
+                    ? items[i - 1]
+                    : null,
                 parashat: items[i],
                 havdalah: items[i + 1]['category'] == 'havdalah'
                     ? items[i + 1]
-                    : null));
+                    : null,
+              ),
+            );
           } else {
-            tempItems.add(Holiday.createHoliday(
+            tempItems.add(
+              Holiday.createHoliday(
                 candles: null,
                 parashat: items[i],
                 havdalah: items[i + 1]['category'] == 'havdalah'
                     ? items[i + 1]
-                    : null));
+                    : null,
+              ),
+            );
           }
         }
       } else if (items[i]['category'] == 'roshchodesh') {
         RoshChodesh newRs = RoshChodesh.createRoshChodesh(
-            candles: null, parashat: items[i], havdalah: null);
+          candles: null,
+          parashat: items[i],
+          havdalah: null,
+        );
         int? index;
 
         for (Event e in tempItems) {
@@ -431,10 +463,9 @@ class Events with ChangeNotifier {
         if (index != null) tempItems.removeAt(index);
         tempItems.add(newRs);
       } else if (items[i]['category'] == 'omer') {
-        tempItems.add(SfiratOmer.createSfiratOmer(
-          candles: null,
-          parashat: items[i],
-        ));
+        tempItems.add(
+          SfiratOmer.createSfiratOmer(candles: null, parashat: items[i]),
+        );
       }
     }
     List<int> toRemove = [];
@@ -461,8 +492,11 @@ class Events with ChangeNotifier {
     return aftetrFiltering;
   }
 
-  tryFetchZmanim(
-      {String? cityToTake, String? lang, bool isToday = false}) async {
+  tryFetchZmanim({
+    String? cityToTake,
+    String? lang,
+    bool isToday = false,
+  }) async {
     cityToTake ??= city;
     final parts = cityToTake.split('|');
     final geoId = parts.length > 1 ? parts[1] : '';
@@ -484,19 +518,22 @@ class Events with ChangeNotifier {
       url = Uri.https('www.hebcal.com', '/zmanim', {...base, 'zip': geoId});
     }
     var response = await get(url);
-    if ((jsonDecode(response.body) as Map<String, dynamic>).keys.contains('error')) {
+    if ((jsonDecode(response.body) as Map<String, dynamic>).keys.contains(
+      'error',
+    )) {
       url = Uri.https('www.hebcal.com', '/zmanim', {...base, 'city': cityName});
       response = await get(url);
     }
     return jsonDecode(response.body) as Map<String, dynamic>;
   }
 
-  Future<List<Zman>?> fetchAndSetZmanimProducts(
-      {bool filterByUser = false,
-      bool getDataFirst = false,
-      bool forceRefresh = false,
-      String lang = 'en',
-      void Function(bool bool)? setIsThereInternetConnection}) async {
+  Future<List<Zman>?> fetchAndSetZmanimProducts({
+    bool filterByUser = false,
+    bool getDataFirst = false,
+    bool forceRefresh = false,
+    String lang = 'en',
+    void Function(bool bool)? setIsThereInternetConnection,
+  }) async {
     if (!forceRefresh &&
         _zmanimItems != null &&
         _zmanimItems!.isNotEmpty &&
@@ -508,8 +545,9 @@ class Events with ChangeNotifier {
     _zmanimError = null;
     try {
       final extractData = await tryFetchZmanim();
-      _zmanimItems =
-          getZmanimItemsFromMap(extractData['times'] as Map<String, dynamic>);
+      _zmanimItems = getZmanimItemsFromMap(
+        extractData['times'] as Map<String, dynamic>,
+      );
       _lastZmanimFetch = DateTime.now();
       notifyListeners();
       return _zmanimItems;
@@ -531,8 +569,11 @@ class Events with ChangeNotifier {
     return tempItems.isEmpty ? null : tempItems;
   }
 
-  Future<dynamic> tryFetchHebrewDates(
-      {String? cityToTake, String? lang, bool isToday = false}) async {
+  Future<dynamic> tryFetchHebrewDates({
+    String? cityToTake,
+    String? lang,
+    bool isToday = false,
+  }) async {
     cityToTake ??= city;
     Response response;
     DateTime now = DateTime.now();
@@ -555,11 +596,16 @@ class Events with ChangeNotifier {
   Future<void> fetchAndSetHebrewDatesProducts() async {
     try {
       final extractData = await tryFetchHebrewDates();
-      _hebrewDates =
-          getHebrewDatesItemsFromMap(extractData['hdates'] as Map<String, dynamic>);
+      _hebrewDates = getHebrewDatesItemsFromMap(
+        extractData['hdates'] as Map<String, dynamic>,
+      );
       notifyListeners();
     } catch (error, st) {
-      logger.w('Failed to fetch Hebrew dates (non-critical)', error: error, stackTrace: st);
+      logger.w(
+        'Failed to fetch Hebrew dates (non-critical)',
+        error: error,
+        stackTrace: st,
+      );
     }
   }
 

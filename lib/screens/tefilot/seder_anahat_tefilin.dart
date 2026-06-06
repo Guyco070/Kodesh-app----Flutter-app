@@ -12,18 +12,17 @@ class SederAnahatTefilin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(
-          title: AppLocalizations.of(context)!.tefilinOrderMenu,
-          trailing: const CompassButton(
-            heading: 0,
-          ),
-        ),
-        body: TefilaWidget(
-          getBracha: getBracha,
-          imagePath: 'assets/tefillin.jpg',
-          // imageExtaLine:
-          //     '* יש להניח את הנרות מימין לשמאל ולהדליקן משמאל לימין.\n',
-        ));
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.tefilinOrderMenu,
+        trailing: const CompassButton(heading: 0),
+      ),
+      body: TefilaWidget(
+        getBracha: getBracha,
+        imagePath: 'assets/tefillin.jpg',
+        // imageExtaLine:
+        //     '* יש להניח את הנרות מימין לשמאל ולהדליקן משמאל לימין.\n',
+      ),
+    );
   }
 
   late final Map<String, Map<Nosah, List<String>>> getBracha = {

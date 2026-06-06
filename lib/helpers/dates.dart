@@ -8,7 +8,7 @@ String getDayName(AppLocalizations appLocalizations, weekDay) {
     4: appLocalizations.thursday,
     5: appLocalizations.friday,
     6: appLocalizations.saturday,
-    7: appLocalizations.sunday
+    7: appLocalizations.sunday,
   }[weekDay]!;
 }
 
@@ -53,9 +53,5 @@ bool isYesterdayTodayOrTomorrow(DateTime date) {
 }
 
 DateTime getDateTimeSetToZero(DateTime date) {
-  return DateTime(
-    date.year,
-    date.month,
-    date.day,
-  );
+  return DateTime(date.year, date.month, date.day);
 }

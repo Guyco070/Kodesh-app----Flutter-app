@@ -10,7 +10,12 @@ import 'package:provider/provider.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
 class DefaultScaffold extends StatefulWidget {
-  const DefaultScaffold({super.key, required this.title, required this.body, this.setIsLoading});
+  const DefaultScaffold({
+    super.key,
+    required this.title,
+    required this.body,
+    this.setIsLoading,
+  });
   final String title;
   final Widget body;
   final Function? setIsLoading;
@@ -24,16 +29,14 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
 
   DropdownItem<String> buildMenuItem(Locale item) {
     return DropdownItem(
-        alignment: Alignment.center,
-        value: item.languageCode,
-        child: Text(
-          '${item.languageCode} - ${L10n.names[item.languageCode]!['locale']}',
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
-          textDirection: TextDirection.ltr,
-        ));
+      alignment: Alignment.center,
+      value: item.languageCode,
+      child: Text(
+        '${item.languageCode} - ${L10n.names[item.languageCode]!['locale']}',
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        textDirection: TextDirection.ltr,
+      ),
+    );
   }
 
   buildSelectedMenuItem() {
@@ -58,19 +61,20 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
         isExpanded: true,
         hint: Text(
           lang.currentLocale.languageCode,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-          ),
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
           textDirection: TextDirection.rtl,
         ),
         items: L10n.all.map<DropdownItem<String>>(buildMenuItem).toList(),
-        valueListenable: ValueNotifier<String?>(lang.currentLocale.languageCode),
+        valueListenable: ValueNotifier<String?>(
+          lang.currentLocale.languageCode,
+        ),
         onChanged: (String? value) {
           if (value != null && value != lang.currentLocale.languageCode) {
             lang.changeLocale(value);
-            Provider.of<Events>(context, listen: false)
-                .changeLocale(value, setIsLoading: widget.setIsLoading);
+            Provider.of<Events>(
+              context,
+              listen: false,
+            ).changeLocale(value, setIsLoading: widget.setIsLoading);
           }
         },
         customButton: langIcon(lang),
@@ -78,73 +82,67 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
           padding: const EdgeInsets.only(left: 14, right: 14),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14),
-            border: Border.all(
-              color: Colors.black26,
-            ),
+            border: Border.all(color: Colors.black26),
           ),
           elevation: 2,
         ),
-        iconStyleData: const IconStyleData(
-          iconEnabledColor: Colors.white,
-        ),
+        iconStyleData: const IconStyleData(iconEnabledColor: Colors.white),
         dropdownStyleData: DropdownStyleData(
           maxHeight: 200,
           width: 200,
           padding: null,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14),
-          ),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(14)),
           elevation: 8,
           offset: const Offset(-20, 0),
           scrollbarTheme: ScrollbarThemeData(
             radius: const Radius.circular(40),
             thickness: MaterialStateProperty.all<double>(6),
-            thumbVisibility: MaterialStateProperty.all<bool>(true)
-          )
+            thumbVisibility: MaterialStateProperty.all<bool>(true),
+          ),
         ),
         menuItemStyleData: const MenuItemStyleData(
-          padding: EdgeInsets.only(left: 14, right: 14)
-        )
-      )
+          padding: EdgeInsets.only(left: 14, right: 14),
+        ),
+      ),
     );
   }
 
   FittedBox langIcon(lang) => FittedBox(
-      child: Row(
-        children: [
-          const Icon(
-            Icons.language_outlined
-          ),
-          const SizedBox(
-            width: 3
-          ),
-          Text(
-            lang.currentLocale.languageCode,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold
-            ),
-            textDirection: TextDirection.rtl
-          )
-        ]
-      )
-    );
+    child: Row(
+      children: [
+        const Icon(Icons.language_outlined),
+        const SizedBox(width: 3),
+        Text(
+          lang.currentLocale.languageCode,
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          textDirection: TextDirection.rtl,
+        ),
+      ],
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
-    LanguageChangeProvider lang =
-        Provider.of<LanguageChangeProvider>(context, listen: false);
+    LanguageChangeProvider lang = Provider.of<LanguageChangeProvider>(
+      context,
+      listen: false,
+    );
     return Scaffold(
       drawer: const AppDrawer(),
       appBar: CustomAppBar(
-          title:
-              _isLoading ? AppLocalizations.of(context)!.loading : widget.title,
-          leading: Builder(builder: (context) {
+        title: _isLoading
+            ? AppLocalizations.of(context)!.loading
+            : widget.title,
+        leading: Builder(
+          builder: (context) {
             return IconButton(
-                onPressed: () => Scaffold.of(context).openDrawer(),
-                icon: const Icon(Icons.drag_indicator_outlined));
-          }),
-          trailing: getLangDropDown(lang)),
+              onPressed: () => Scaffold.of(context).openDrawer(),
+              icon: const Icon(Icons.drag_indicator_outlined),
+            );
+          },
+        ),
+        trailing: getLangDropDown(lang),
+      ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : widget.body,

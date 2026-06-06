@@ -27,9 +27,7 @@ class AppDrawer extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            CustomAppBar(
-              title: appLocalizations.menu,
-            ),
+            CustomAppBar(title: appLocalizations.menu),
 
             ...devidedTitle(appLocalizations.settings),
 
@@ -37,15 +35,21 @@ class AppDrawer extends StatelessWidget {
               leading: const Icon(Icons.watch_later_outlined),
               title: Text(appLocalizations.settingRemindersMenu),
               onTap: () => Navigator.pushNamed(
-                  context, ScheduleNotificationsScreen.routeName),
+                context,
+                ScheduleNotificationsScreen.routeName,
+              ),
             ),
             ListTile(
-              leading: Icon(langProvider.themeMode == ThemeMode.dark
-                  ? Icons.light_mode_outlined
-                  : Icons.dark_mode_outlined),
-              title: Text(langProvider.themeMode == ThemeMode.dark
-                  ? appLocalizations.lightMode
-                  : appLocalizations.darkMode),
+              leading: Icon(
+                langProvider.themeMode == ThemeMode.dark
+                    ? Icons.light_mode_outlined
+                    : Icons.dark_mode_outlined,
+              ),
+              title: Text(
+                langProvider.themeMode == ThemeMode.dark
+                    ? appLocalizations.lightMode
+                    : appLocalizations.darkMode,
+              ),
               onTap: () => langProvider.changeThemeMode(
                 langProvider.themeMode == ThemeMode.dark
                     ? ThemeMode.light
@@ -59,7 +63,9 @@ class AppDrawer extends StatelessWidget {
               leading: const Icon(Icons.checklist_rtl),
               title: Text(appLocalizations.choresBeforeShabbatMenu),
               onTap: () => Navigator.pushNamed(
-                  context, ShabatAndHolidaysCheckList.routeName),
+                context,
+                ShabatAndHolidaysCheckList.routeName,
+              ),
             ),
             ListTile(
               leading: const Icon(Icons.compass_calibration_outlined),
@@ -72,17 +78,13 @@ class AppDrawer extends StatelessWidget {
               titledExpandIcon: title(appLocalizations.prayersAndBlessings),
               children: [
                 ListTile(
-                  leading: const Icon(
-                    Icons.fireplace_outlined,
-                  ),
+                  leading: const Icon(Icons.fireplace_outlined),
                   title: Text(appLocalizations.candleLightingOrderMenu),
                   onTap: () =>
                       Navigator.pushNamed(context, AdlakatNerot.routeName),
                 ),
                 ListTile(
-                  leading: const Icon(
-                    Icons.wine_bar,
-                  ),
+                  leading: const Icon(Icons.wine_bar),
                   title: Text(appLocalizations.havdalah),
                   onTap: () => Navigator.pushNamed(context, Havdalah.routeName),
                 ),
@@ -90,15 +92,17 @@ class AppDrawer extends StatelessWidget {
                   leading: const Icon(Icons.add_reaction_outlined),
                   title: Text(appLocalizations.tefilinOrderMenu),
                   onTap: () => Navigator.pushNamed(
-                      context, SederAnahatTefilin.routeName),
+                    context,
+                    SederAnahatTefilin.routeName,
+                  ),
                 ),
                 ListTile(
                   leading: const Icon(Icons.fireplace),
-                  title: Text(
-                    appLocalizations.hanukkahCandleLightingOrderMenu,
-                  ),
+                  title: Text(appLocalizations.hanukkahCandleLightingOrderMenu),
                   onTap: () => Navigator.pushNamed(
-                      context, AdlakatNerotChanukah.routeName),
+                    context,
+                    AdlakatNerotChanukah.routeName,
+                  ),
                 ),
                 ListTile(
                   leading: const Icon(Icons.content_cut),
@@ -116,22 +120,22 @@ class AppDrawer extends StatelessWidget {
                   leading: const Icon(Icons.bedtime_outlined),
                   title: Text(appLocalizations.kriyatShemaAlHamitaMenu),
                   onTap: () => Navigator.pushNamed(
-                      context, KriyatShemaAlHamita.routeName),
+                    context,
+                    KriyatShemaAlHamita.routeName,
+                  ),
                 ),
               ],
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height > 650 ? MediaQuery.of(context).size.height - 650 : 30,
+              height: MediaQuery.of(context).size.height > 650
+                  ? MediaQuery.of(context).size.height - 650
+                  : 30,
             ),
-            const Divider(
-              indent: 18,
-              endIndent: 18,
-            ),
+            const Divider(indent: 18, endIndent: 18),
             ListTile(
               leading: const Icon(Icons.info_outline),
               title: Text(appLocalizations.aboutMenu),
-              onTap: () =>
-                  Navigator.pushNamed(context, AboutScreen.routeName),
+              onTap: () => Navigator.pushNamed(context, AboutScreen.routeName),
             ),
           ],
         ),
@@ -139,20 +143,12 @@ class AppDrawer extends StatelessWidget {
     );
   }
 
-  Text title(String title) => Text(
-        title,
-        style: TextStyle(color: Colors.grey[600], fontSize: 12),
-      );
+  Text title(String title) =>
+      Text(title, style: TextStyle(color: Colors.grey[600], fontSize: 12));
 
   List<Widget> devidedTitle(String title) => [
-        const Divider(),
-        Text(
-          title,
-          style: TextStyle(color: Colors.grey[600], fontSize: 12),
-        ),
-        const Divider(
-          indent: 18,
-          endIndent: 18,
-        ),
-      ];
+    const Divider(),
+    Text(title, style: TextStyle(color: Colors.grey[600], fontSize: 12)),
+    const Divider(indent: 18, endIndent: 18),
+  ];
 }

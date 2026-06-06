@@ -38,27 +38,25 @@ class RoshChodeshWidget extends StatelessWidget {
     String subtitle = type == 'oe'
         ? appLocalizations.eventEndDate
         : type == 'e'
-            ? appLocalizations.startDate
-            : appLocalizations.endDate;
+        ? appLocalizations.startDate
+        : appLocalizations.endDate;
     IconData icon = type == 'oe'
         ? Icons.calendar_month_outlined
         : type == 'e'
-            ? Icons.first_page
-            : Icons.last_page;
+        ? Icons.first_page
+        : Icons.last_page;
     return ListTile(
-      title: isHebrewDate ? date != null ?
-      Text(date,) : const CupertinoActivityIndicator(radius: 9,)
-      : Text(
-        DateFormat('dd/MM/yyyy').format(date),
-      ),
+      title: isHebrewDate
+          ? date != null
+                ? Text(date)
+                : const CupertinoActivityIndicator(radius: 9)
+          : Text(DateFormat('dd/MM/yyyy').format(date)),
       trailing: DateWithTimeLeft(
         date: data.entryDate!,
         isWithDate: false,
         hebrewDate: isHebrewDate ? data.entryHebrewDate : null,
       ),
-      subtitle: Text(
-        subtitle,
-      ),
+      subtitle: Text(subtitle),
       leading: Icon(icon),
     );
   }

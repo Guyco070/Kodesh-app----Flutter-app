@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HeroDialogRoute<T> extends PageRoute<T> {
-  HeroDialogRoute(
-      {required WidgetBuilder builder,
+  HeroDialogRoute({
+    required WidgetBuilder builder,
     RouteSettings? settings,
     bool fullscreenDialog = false,
-  })  : _builder = builder,
-        super(settings: settings, fullscreenDialog: fullscreenDialog);
+  }) : _builder = builder,
+       super(settings: settings, fullscreenDialog: fullscreenDialog);
 
   final WidgetBuilder _builder;
 
@@ -27,14 +27,21 @@ class HeroDialogRoute<T> extends PageRoute<T> {
   Color get barrierColor => Colors.black54;
 
   @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
     return child;
   }
 
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
+  Widget buildPage(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+  ) {
     return _builder(context);
   }
 

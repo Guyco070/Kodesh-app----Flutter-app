@@ -188,13 +188,17 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String remindMeXhoursAndYMinutesBeforeShbatAndHolidays(
-      String hours, String minutes) {
+    String hours,
+    String minutes,
+  ) {
     return 'Напомнить мне $hours часов и $minutes минут до Шаббата или праздника';
   }
 
   @override
   String remindMeXhoursAndYMinutesBeforeNerotHanukkah(
-      String hours, String minutes) {
+    String hours,
+    String minutes,
+  ) {
     return 'Напомни мне $hours часов и $minutes минут до зажжения свечей Хануки';
   }
 
@@ -247,13 +251,17 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String remindMeXhoursAndYMinutesBeforeCandlesLighning(
-      String hours, String minutes) {
+    String hours,
+    String minutes,
+  ) {
     return 'Напомни мне зажечь свечи $hours часа и $minutes минут до Шаббата или праздника';
   }
 
   @override
   String remindMeXhoursAndYMinutesAfterShabatForHavdalah(
-      String hours, String minutes) {
+    String hours,
+    String minutes,
+  ) {
     return 'Напомни мне совершить авдалу $hours часов и $minutes минут после Шаббата или праздника';
   }
 

@@ -8,9 +8,11 @@ Future<({double lat, double lng, String tzid})?> requestGeolocation() async {
     final pos = await html.window.navigator.geolocation.getCurrentPosition();
     final lat = (pos.coords!.latitude as num).toDouble();
     final lng = (pos.coords!.longitude as num).toDouble();
-    final tzid = js.context.callMethod(
-            'eval', ['Intl.DateTimeFormat().resolvedOptions().timeZone'])
-        as String? ??
+    final tzid =
+        js.context.callMethod('eval', [
+              'Intl.DateTimeFormat().resolvedOptions().timeZone',
+            ])
+            as String? ??
         'UTC';
     return (lat: lat, lng: lng, tzid: tzid);
   } catch (_) {
