@@ -56,7 +56,7 @@ class _SettingsBarState extends State<SettingsBar> {
             decoration: BoxDecoration(
               border: Border.all(width: 2, color: Colors.blueGrey),
               borderRadius: BorderRadius.circular(20),
-              color: Colors.grey[200],
+              color: Theme.of(context).colorScheme.surfaceContainerHigh,
             ),
             child: Column(
               children: [
