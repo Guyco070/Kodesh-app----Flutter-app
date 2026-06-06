@@ -356,5 +356,14 @@
     "@customTasksSection": { "description": "customTasksSection" },
 
     "deleteTaskTitle": "Delete task?",
-    "@deleteTaskTitle": { "description": "deleteTaskTitle" }
+    "@deleteTaskTitle": { "description": "deleteTaskTitle" },
+
+    "useMyLocation": "Use my location",
+    "@useMyLocation": { "description": "Tooltip for the GPS location detection button" },
+
+    "locationNotAvailable": "Could not detect location. Please check location permissions.",
+    "@locationNotAvailable": { "description": "Shown when location detection fails" },
+
+    "detectingLocation": "Detecting location...",
+    "@detectingLocation": { "description": "Shown while GPS location is being detected" }
 }

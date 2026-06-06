@@ -119,5 +119,9 @@
     "cancel": "ביטול",
     "delete": "מחק",
     "customTasksSection": "המטלות שלי",
-    "deleteTaskTitle": "למחוק את המטלה?"
+    "deleteTaskTitle": "למחוק את המטלה?",
+
+    "useMyLocation": "השתמש במיקום שלי",
+    "locationNotAvailable": "לא ניתן לזהות מיקום. אנא בדוק את הרשאות המיקום.",
+    "detectingLocation": "מזהה מיקום..."
 }

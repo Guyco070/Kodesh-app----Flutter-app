@@ -336,4 +336,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deleteTaskTitle => 'Delete task?';
+
+  @override
+  String get useMyLocation => 'Use my location';
+
+  @override
+  String get locationNotAvailable => 'Could not detect location. Please check location permissions.';
+
+  @override
+  String get detectingLocation => 'Detecting location...';
 }
