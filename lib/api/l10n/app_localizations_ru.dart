@@ -301,4 +301,13 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get lightMode => 'Светлый режим';
+
+  @override
+  String get useMyLocation => 'Использовать моё местоположение';
+
+  @override
+  String get locationNotAvailable => 'Не удалось определить местоположение. Проверьте разрешения.';
+
+  @override
+  String get detectingLocation => 'Определение местоположения...';
 }

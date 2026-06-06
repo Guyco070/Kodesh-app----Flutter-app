@@ -5,6 +5,7 @@ import 'package:kodesh_app/data/cities.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/screens/event_screen.dart';
+import 'package:kodesh_app/services/location_service.dart';
 import 'package:kodesh_app/widgets/city_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
@@ -37,6 +38,33 @@ class SettingsBar extends StatefulWidget {
 
 class _SettingsBarState extends State<SettingsBar> {
   bool _isExpanded = true;
+  bool _isDetectingLocation = false;
+
+  Future<void> _detectAndSetLocation() async {
+    setState(() => _isDetectingLocation = true);
+    try {
+      final cityCode = await LocationService.detectNearestCity();
+      if (!mounted) return;
+      if (cityCode != null) {
+        final events = Provider.of<Events>(context, listen: false);
+        if (cityCode != events.city) {
+          events.setCity(
+            cityCode,
+            setIsLoading: widget.setIsLoading,
+            setIsLoadingZmanim: widget.setIsLoadingZmanim,
+          );
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.locationNotAvailable),
+          ),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isDetectingLocation = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,59 +105,85 @@ class _SettingsBarState extends State<SettingsBar> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Theme.of(context).primaryColor),
-                                width: MediaQuery.of(context).size.width / 2.3,
-                                child: InkWell(
-                                  borderRadius: BorderRadius.circular(10),
-                                  onTap: () async {
-                                    final langCode = lang.currentLocale.languageCode;
-                                    final selected = await showSearch<Map?>(
-                                      context: context,
-                                      delegate: CitySearchDelegate(
-                                        cities: cities,
-                                        lang: langCode,
-                                      ),
-                                    );
-                                    if (selected != null &&
-                                        selected['eNameAndCode'] != events.city) {
-                                      events.setCity(
-                                        selected['eNameAndCode'] as String,
-                                        setIsLoading: widget.setIsLoading,
-                                        setIsLoadingZmanim: widget.setIsLoadingZmanim,
-                                      );
-                                    }
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 12, vertical: 8),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            cities.firstWhere(
-                                              (c) => c['eNameAndCode'] == events.city,
-                                              orElse: () => cities.first,
-                                            )[lang.currentLocale.languageCode] as String? ?? events.city,
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.center,
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Theme.of(context).primaryColor),
+                                    width: MediaQuery.of(context).size.width / 2.3,
+                                    child: InkWell(
+                                      borderRadius: BorderRadius.circular(10),
+                                      onTap: () async {
+                                        final langCode = lang.currentLocale.languageCode;
+                                        final selected = await showSearch<Map?>(
+                                          context: context,
+                                          delegate: CitySearchDelegate(
+                                            cities: cities,
+                                            lang: langCode,
                                           ),
+                                        );
+                                        if (selected != null &&
+                                            selected['eNameAndCode'] != events.city) {
+                                          events.setCity(
+                                            selected['eNameAndCode'] as String,
+                                            setIsLoading: widget.setIsLoading,
+                                            setIsLoadingZmanim: widget.setIsLoadingZmanim,
+                                          );
+                                        }
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 12, vertical: 8),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                cities.firstWhere(
+                                                  (c) => c['eNameAndCode'] == events.city,
+                                                  orElse: () => cities.first,
+                                                )[lang.currentLocale.languageCode] as String? ?? events.city,
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            const Icon(
+                                              Icons.keyboard_arrow_down_outlined,
+                                              size: 21,
+                                              color: Colors.white,
+                                            ),
+                                          ],
                                         ),
-                                        const Icon(
-                                          Icons.keyboard_arrow_down_outlined,
-                                          size: 21,
-                                          color: Colors.white,
-                                        ),
-                                      ],
+                                      ),
                                     ),
                                   ),
-                                ),
+                                  const SizedBox(width: 2),
+                                  _isDetectingLocation
+                                      ? const SizedBox(
+                                          width: 24,
+                                          height: 24,
+                                          child: CupertinoActivityIndicator(),
+                                        )
+                                      : IconButton(
+                                          icon: Icon(
+                                            Icons.my_location,
+                                            size: 20,
+                                            color: Theme.of(context).primaryColor,
+                                          ),
+                                          constraints: const BoxConstraints(
+                                            minWidth: 32,
+                                            minHeight: 32,
+                                          ),
+                                          padding: EdgeInsets.zero,
+                                          onPressed: _detectAndSetLocation,
+                                          tooltip: AppLocalizations.of(context)!.useMyLocation,
+                                        ),
+                                ],
                               ),
                               VerticalDivider(
                                 color: Theme.of(context).primaryColor,

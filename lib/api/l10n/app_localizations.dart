@@ -645,6 +645,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Light mode'**
   String get lightMode;
+
+  /// useMyLocation
+  ///
+  /// In en, this message translates to:
+  /// **'Use my location'**
+  String get useMyLocation;
+
+  /// locationNotAvailable
+  ///
+  /// In en, this message translates to:
+  /// **'Could not detect location. Please check location permissions.'**
+  String get locationNotAvailable;
+
+  /// detectingLocation
+  ///
+  /// In en, this message translates to:
+  /// **'Detecting location...'**
+  String get detectingLocation;
 }
 
 class _AppLocalizationsDelegate
