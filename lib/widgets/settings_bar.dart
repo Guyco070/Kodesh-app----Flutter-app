@@ -166,8 +166,8 @@ class _SettingsBarState extends State<SettingsBar> {
                               icon: const Icon(Icons.calendar_month_outlined),
                               label: AnimatedSwitcher(
                                 duration: const Duration(milliseconds: 500),
-                                transitionBuilder: ((child, animation) =>
-                                    ScaleTransition(
+                                transitionBuilder:
+                                    ((child, animation) => ScaleTransition(
                                       scale: animation,
                                       child: child,
                                     )),
@@ -206,21 +206,23 @@ class _SettingsBarState extends State<SettingsBar> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           IconButton(
-                            onPressed: () => events.setStartDate(
-                              events.startDate.subtract(
-                                const Duration(days: 1),
-                              ),
-                              setIsLoading: widget.setIsLoading,
-                              setIsLoadingZmanim: widget.setIsLoadingZmanim,
-                            ),
+                            onPressed:
+                                () => events.setStartDate(
+                                  events.startDate.subtract(
+                                    const Duration(days: 1),
+                                  ),
+                                  setIsLoading: widget.setIsLoading,
+                                  setIsLoadingZmanim: widget.setIsLoadingZmanim,
+                                ),
                             icon: const Icon(Icons.remove, size: 20),
                           ),
                           IconButton(
-                            onPressed: () => events.setStartDate(
-                              events.startDate.add(const Duration(days: 1)),
-                              setIsLoading: widget.setIsLoading,
-                              setIsLoadingZmanim: widget.setIsLoadingZmanim,
-                            ),
+                            onPressed:
+                                () => events.setStartDate(
+                                  events.startDate.add(const Duration(days: 1)),
+                                  setIsLoading: widget.setIsLoading,
+                                  setIsLoadingZmanim: widget.setIsLoadingZmanim,
+                                ),
                             icon: const Icon(Icons.add, size: 20),
                           ),
                         ],
@@ -240,13 +242,14 @@ class _SettingsBarState extends State<SettingsBar> {
                           child: Text(
                             widget.viewState == ViewState.events
                                 ? widget.isOnlyShabat
-                                      ? appLocalizations.onlyShabat
-                                      : appLocalizations.viewAllEvents
+                                    ? appLocalizations.onlyShabat
+                                    : appLocalizations.viewAllEvents
                                 : appLocalizations.fromNowOn,
                             style: TextStyle(
-                              color: widget.isOnlyShabat
-                                  ? Colors.blue
-                                  : Colors.grey,
+                              color:
+                                  widget.isOnlyShabat
+                                      ? Colors.blue
+                                      : Colors.grey,
                               fontSize: 12,
                             ),
                           ),
@@ -260,9 +263,10 @@ class _SettingsBarState extends State<SettingsBar> {
                                 ? appLocalizations.viewForeignDates
                                 : appLocalizations.viewHebrewDates,
                             style: TextStyle(
-                              color: widget.isHebrewDate
-                                  ? Colors.blue
-                                  : Colors.grey,
+                              color:
+                                  widget.isHebrewDate
+                                      ? Colors.blue
+                                      : Colors.grey,
                               fontSize: 12,
                             ),
                           ),
@@ -306,21 +310,24 @@ class _SettingsBarState extends State<SettingsBar> {
                         width: 130,
                         child: AnimatedSwitcher(
                           duration: const Duration(milliseconds: 400),
-                          transitionBuilder: ((child, animation) =>
-                              ScaleTransition(scale: animation, child: child)),
+                          transitionBuilder:
+                              ((child, animation) => ScaleTransition(
+                                scale: animation,
+                                child: child,
+                              )),
                           child: Row(
                             key: ValueKey<String>(
                               events.isHebrewDate
                                   ? events.hebrewDates == null ||
-                                            events.hebrewDates!.isEmpty
-                                        ? '  '
-                                        : events
-                                              .hebrewDates![getDateTimeSetToZero(
-                                            DateTime.now(),
-                                          )]!
+                                          events.hebrewDates!.isEmpty
+                                      ? '  '
+                                      : events
+                                          .hebrewDates![getDateTimeSetToZero(
+                                        DateTime.now(),
+                                      )]!
                                   : df.DateFormat(
-                                      'dd/MM/yyyy',
-                                    ).format(DateTime.now()),
+                                    'dd/MM/yyyy',
+                                  ).format(DateTime.now()),
                             ),
                             children: [
                               if (events.isHebrewDate &&
@@ -329,15 +336,15 @@ class _SettingsBarState extends State<SettingsBar> {
                                 Text(
                                   events.isHebrewDate
                                       ? events.hebrewDates == null ||
-                                                events.hebrewDates!.isEmpty
-                                            ? '  '
-                                            : events
-                                                  .hebrewDates![getDateTimeSetToZero(
-                                                DateTime.now(),
-                                              )]!
+                                              events.hebrewDates!.isEmpty
+                                          ? '  '
+                                          : events
+                                              .hebrewDates![getDateTimeSetToZero(
+                                            DateTime.now(),
+                                          )]!
                                       : df.DateFormat(
-                                          'dd/MM/yyyy',
-                                        ).format(DateTime.now()),
+                                        'dd/MM/yyyy',
+                                      ).format(DateTime.now()),
                                   style: const TextStyle(fontSize: 12),
                                 ),
                                 const CupertinoActivityIndicator(),
@@ -347,12 +354,12 @@ class _SettingsBarState extends State<SettingsBar> {
                                           events.hebrewDates != null &&
                                           events.hebrewDates!.isNotEmpty
                                       ? events
-                                            .hebrewDates![getDateTimeSetToZero(
-                                          DateTime.now(),
-                                        )]!
+                                          .hebrewDates![getDateTimeSetToZero(
+                                        DateTime.now(),
+                                      )]!
                                       : df.DateFormat(
-                                          'dd/MM/yyyy',
-                                        ).format(DateTime.now()),
+                                        'dd/MM/yyyy',
+                                      ).format(DateTime.now()),
                                   style: const TextStyle(fontSize: 12),
                                 ),
                               },

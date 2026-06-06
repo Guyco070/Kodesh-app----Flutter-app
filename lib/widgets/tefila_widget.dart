@@ -96,12 +96,14 @@ class _TefilaWidgetState extends State<TefilaWidget> {
                 textDirection: TextDirection.rtl,
                 textAlign: TextAlign.center,
                 TextSpan(
-                  children: Provider.of<Tfilot>(context, listen: false)
-                      .getSederWidgets(
-                        getBracha: widget.getBracha,
-                        isWithNosah: widget.isWithNosah,
-                        fontSizeScale: fontSizeScale,
-                      ),
+                  children: Provider.of<Tfilot>(
+                    context,
+                    listen: false,
+                  ).getSederWidgets(
+                    getBracha: widget.getBracha,
+                    isWithNosah: widget.isWithNosah,
+                    fontSizeScale: fontSizeScale,
+                  ),
                 ),
               ),
             ),

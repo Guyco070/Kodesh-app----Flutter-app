@@ -13,9 +13,10 @@ class TimeLeft extends StatelessWidget {
   Widget build(BuildContext context) {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
 
-    int timeLeft = DateTime.now()
-        .difference(DateTime(date.year, date.month, date.day))
-        .inDays;
+    int timeLeft =
+        DateTime.now()
+            .difference(DateTime(date.year, date.month, date.day))
+            .inDays;
     String text;
     if (timeLeft == 1) {
       text = appLocalizations.yesterday;

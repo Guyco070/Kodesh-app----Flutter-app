@@ -35,34 +35,36 @@ class ZmanWidget extends StatelessWidget {
               width: 110,
               child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 400),
-                transitionBuilder: ((child, animation) =>
-                    ScaleTransition(scale: animation, child: child)),
-                child: isNotYTT
-                    ? events.isHebrewDate
-                          ? (events.hebrewDates != null &&
+                transitionBuilder:
+                    ((child, animation) =>
+                        ScaleTransition(scale: animation, child: child)),
+                child:
+                    isNotYTT
+                        ? events.isHebrewDate
+                            ? (events.hebrewDates != null &&
                                     events.hebrewDates!.isNotEmpty &&
                                     events.hebrewDates!.containsKey(data.date)
                                 ? Text(
-                                    key: ValueKey<bool>(events.isHebrewDate),
-                                    events.hebrewDates![data.date]!,
-                                    style: TextStyle(
-                                      color: Colors.grey.shade600,
-                                      fontSize:
-                                          events
-                                                  .hebrewDates![data.date]!
-                                                  .length <=
-                                              17
-                                          ? 11
-                                          : 10,
-                                    ),
-                                  )
+                                  key: ValueKey<bool>(events.isHebrewDate),
+                                  events.hebrewDates![data.date]!,
+                                  style: TextStyle(
+                                    color: Colors.grey.shade600,
+                                    fontSize:
+                                        events
+                                                    .hebrewDates![data.date]!
+                                                    .length <=
+                                                17
+                                            ? 11
+                                            : 10,
+                                  ),
+                                )
                                 : const CupertinoActivityIndicator(
-                                    key: ValueKey<String>(
-                                      'CupertinoActivityIndicator',
-                                    ),
-                                    radius: 9,
-                                  ))
-                          : Text(
+                                  key: ValueKey<String>(
+                                    'CupertinoActivityIndicator',
+                                  ),
+                                  radius: 9,
+                                ))
+                            : Text(
                               key: ValueKey<bool>(events.isHebrewDate),
                               DateFormat('dd/MM/yy').format(data.date),
                               style: TextStyle(
@@ -70,7 +72,7 @@ class ZmanWidget extends StatelessWidget {
                                 fontSize: 12,
                               ),
                             )
-                    : Container(),
+                        : Container(),
               ),
             ),
             TimeLeft(date: data.date, fontSize: isNotYTT ? 11 : null),

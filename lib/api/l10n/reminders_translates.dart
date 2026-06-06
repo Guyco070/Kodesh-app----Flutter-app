@@ -239,23 +239,27 @@ class RemindersTranslates {
   static final roshHodeshReminderTranslated = {
     'en': {
       // 'title': 'English',
-      'body': (DateTime entryDate, String title) =>
-          'On the date ${DateFormat('dd/MM/yy').format(entryDate)} - $title',
+      'body':
+          (DateTime entryDate, String title) =>
+              'On the date ${DateFormat('dd/MM/yy').format(entryDate)} - $title',
     },
     'he': {
       // 'title': 'עברית',
-      'body': (DateTime entryDate, String title) =>
-          'בתאריך ${DateFormat('dd/MM/yy').format(entryDate)} - $title',
+      'body':
+          (DateTime entryDate, String title) =>
+              'בתאריך ${DateFormat('dd/MM/yy').format(entryDate)} - $title',
     },
     'es': {
       // 'title': 'español',
-      'body': (DateTime entryDate, String title) =>
-          'En la cita ${DateFormat('dd/MM/yy').format(entryDate)} - $title',
+      'body':
+          (DateTime entryDate, String title) =>
+              'En la cita ${DateFormat('dd/MM/yy').format(entryDate)} - $title',
     },
     'ru': {
       // 'title': 'ру́сский язы́к',
-      'body': (DateTime entryDate, String title) =>
-          'В день ${DateFormat('dd/MM/yy').format(entryDate)} - $title',
+      'body':
+          (DateTime entryDate, String title) =>
+              'В день ${DateFormat('dd/MM/yy').format(entryDate)} - $title',
     },
   };
 

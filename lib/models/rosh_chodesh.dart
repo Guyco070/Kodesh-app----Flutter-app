@@ -46,11 +46,8 @@ class RoshChodesh extends Event {
   }
 
   @override
-  String getReminderBody(String lang) =>
-      (RemindersTranslates.roshHodeshReminderTranslated[lang]!['body']!)(
-        entryDate!,
-        title,
-      );
+  String getReminderBody(String lang) => (RemindersTranslates
+      .roshHodeshReminderTranslated[lang]!['body']!)(entryDate!, title);
 
   @override
   String getReminderTitle(String lang) =>

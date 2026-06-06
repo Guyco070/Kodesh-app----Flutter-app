@@ -25,11 +25,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             leading ??
             (!noBackBotton
                 ? IconButton(
-                    onPressed: () {
-                      Navigator.maybePop(context);
-                    },
-                    icon: const Icon(Icons.chevron_left_outlined),
-                  )
+                  onPressed: () {
+                    Navigator.maybePop(context);
+                  },
+                  icon: const Icon(Icons.chevron_left_outlined),
+                )
                 : null),
         title: Column(
           mainAxisAlignment: MainAxisAlignment.center,

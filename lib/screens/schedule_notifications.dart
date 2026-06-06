@@ -49,14 +49,15 @@ class _ScheduleNotificationsScreenState
 
     shabatAndHolidaysThingsToRemindList() {
       return reminders.allShabatAndHolidaysThingsToRemindList(context).map((e) {
-        Map<String, Object> element = reminders
-            .allShabatAndHolidaysThingsToRemindMap(context)[e]!;
+        Map<String, Object> element =
+            reminders.allShabatAndHolidaysThingsToRemindMap(context)[e]!;
         return TextCheckBox(
           value: reminders.shabatAndHolidaysThingsToRemindList.contains(e),
           text: element['text'] as String,
-          subText: (element['text'] as String) != (element['action'] as String)
-              ? element['action'] as String
-              : null,
+          subText:
+              (element['text'] as String) != (element['action'] as String)
+                  ? element['action'] as String
+                  : null,
           onChanged: (isCheked) {
             isCheked
                 ? reminders.shabatAndHolidaysThingsToRemindList.add(e)
@@ -95,8 +96,9 @@ class _ScheduleNotificationsScreenState
               minutesValue: reminders.beforeShabatMinutes,
               setHours: reminders.setShabatAndHolidaysShabatHours,
               setMinutes: reminders.setShabatAndHolidaysShabatMinutes,
-              localizedHelpText: appLocalizations
-                  .remindMeXhoursAndYMinutesBeforeShbatAndHolidays,
+              localizedHelpText:
+                  appLocalizations
+                      .remindMeXhoursAndYMinutesBeforeShbatAndHolidays,
             ),
             const Divider(
               height: 32,
@@ -125,8 +127,9 @@ class _ScheduleNotificationsScreenState
                 minutesValue: reminders.beforeShabatAndHolidaysCandlesMinutes,
                 setHours: reminders.setShabatAndHolidaysCandlesHours,
                 setMinutes: reminders.setShabatAndHolidaysCandlesMinutes,
-                localizedHelpText: appLocalizations
-                    .remindMeXhoursAndYMinutesBeforeCandlesLighning,
+                localizedHelpText:
+                    appLocalizations
+                        .remindMeXhoursAndYMinutesBeforeCandlesLighning,
               ),
             ),
           ],
@@ -148,8 +151,8 @@ class _ScheduleNotificationsScreenState
                 minutesValue: reminders.afterShabatHavdalahMinutes,
                 setHours: reminders.setAfterShabatHavdalahHours,
                 setMinutes: reminders.setAfterShabatHavdalahMinutes,
-                localizedHelpText: (String hours, String minutes) =>
-                    appLocalizations
+                localizedHelpText:
+                    (String hours, String minutes) => appLocalizations
                         .remindMeXhoursAndYMinutesAfterShabatForHavdalah(
                           hours,
                           minutes,
@@ -184,92 +187,96 @@ class _ScheduleNotificationsScreenState
 
     return Scaffold(
       appBar: CustomAppBar(title: appLocalizations.settingRemindersMenu),
-      body: _isLoading
-          ? SizedBox(
-              height: MediaQuery.of(context).size.height / 2,
-              child: const Center(child: CircularProgressIndicator()),
-            )
-          : SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  children: [
-                    GroupCard(
-                      children: [
-                        CuperinoTextCheckSwitch(
-                          value: reminders.shabatAndHolidays,
-                          onChanged: () => reminders.setShabatAndHolidays(),
-                          text:
-                              appLocalizations.beforeShabatAndHolidaysSettengs,
-                        ),
-                        ExpandedSection(
-                          expand: reminders.shabatAndHolidays,
-                          child: Column(children: shabatAndHolidaysElements()),
-                        ),
-                      ],
-                    ),
+      body:
+          _isLoading
+              ? SizedBox(
+                height: MediaQuery.of(context).size.height / 2,
+                child: const Center(child: CircularProgressIndicator()),
+              )
+              : SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    children: [
+                      GroupCard(
+                        children: [
+                          CuperinoTextCheckSwitch(
+                            value: reminders.shabatAndHolidays,
+                            onChanged: () => reminders.setShabatAndHolidays(),
+                            text:
+                                appLocalizations
+                                    .beforeShabatAndHolidaysSettengs,
+                          ),
+                          ExpandedSection(
+                            expand: reminders.shabatAndHolidays,
+                            child: Column(
+                              children: shabatAndHolidaysElements(),
+                            ),
+                          ),
+                        ],
+                      ),
 
-                    if (!reminders.shabatAndHolidays) ...{
-                      const Divider(height: 32, thickness: 1.5),
-                    },
-                    // tefillin - start
-                    ChooseTimeInDayWidget(
-                      title: appLocalizations.tefillin,
-                      subtitle: appLocalizations.remindTeffilinSettingsAt,
-                      isExpanded: reminders.tefilin,
-                      setIsExpanded: reminders.setTefilin,
-                      timeObject: reminders.getTefilinTimeObject,
-                      setTime: reminders.setTefilinTime,
-                      timeString: reminders.tefilinTime,
-                    ),
-                    // tefillin - end
-
-                    // rosh hodesh - start
-                    ChooseTimeInDayWidget(
-                      title: appLocalizations.roshHodesh,
-                      subtitle: appLocalizations.remindRoshHodeshSettingsAt,
-                      isExpanded: reminders.roshChodesh,
-                      setIsExpanded: reminders.setRoshChodesh,
-                      timeObject: reminders.getRoshChodeshTimeObject,
-                      setTime: reminders.setRoshChodeshTime,
-                      timeString: reminders.roshChodeshTime,
-                      noteText:
-                          appLocalizations.roshHodeshReminderWillBeAdvanced,
-                    ),
-                    // rosh hodesh - end
-
-                    // sfirat omer - start
-                    ChooseTimeInDayWidget(
-                      title: appLocalizations.sfiratOmer,
-                      subtitle: appLocalizations.remindSfiratOmerSettingsAt,
-                      isExpanded: reminders.sfiratOmer,
-                      setIsExpanded: reminders.setSfiratOmer,
-                      timeObject: reminders.getSfiratOmerTimeObject,
-                      setTime: reminders.setSfiratOmerTime,
-                      timeString: reminders.sfiratOmerTime,
-                    ),
-
-                    // sfirat omer - end
-                    ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          _isLoading = true;
-                        });
-                        reminders
-                            .setReminders(update: true)
-                            .then(
-                              (value) => setState(() {
-                                _isLoading = false;
-                              }),
-                            );
-                        Navigator.pushNamed(context, '/');
+                      if (!reminders.shabatAndHolidays) ...{
+                        const Divider(height: 32, thickness: 1.5),
                       },
-                      child: Text(appLocalizations.updateRemindersTitle),
-                    ),
-                  ],
+                      // tefillin - start
+                      ChooseTimeInDayWidget(
+                        title: appLocalizations.tefillin,
+                        subtitle: appLocalizations.remindTeffilinSettingsAt,
+                        isExpanded: reminders.tefilin,
+                        setIsExpanded: reminders.setTefilin,
+                        timeObject: reminders.getTefilinTimeObject,
+                        setTime: reminders.setTefilinTime,
+                        timeString: reminders.tefilinTime,
+                      ),
+                      // tefillin - end
+
+                      // rosh hodesh - start
+                      ChooseTimeInDayWidget(
+                        title: appLocalizations.roshHodesh,
+                        subtitle: appLocalizations.remindRoshHodeshSettingsAt,
+                        isExpanded: reminders.roshChodesh,
+                        setIsExpanded: reminders.setRoshChodesh,
+                        timeObject: reminders.getRoshChodeshTimeObject,
+                        setTime: reminders.setRoshChodeshTime,
+                        timeString: reminders.roshChodeshTime,
+                        noteText:
+                            appLocalizations.roshHodeshReminderWillBeAdvanced,
+                      ),
+                      // rosh hodesh - end
+
+                      // sfirat omer - start
+                      ChooseTimeInDayWidget(
+                        title: appLocalizations.sfiratOmer,
+                        subtitle: appLocalizations.remindSfiratOmerSettingsAt,
+                        isExpanded: reminders.sfiratOmer,
+                        setIsExpanded: reminders.setSfiratOmer,
+                        timeObject: reminders.getSfiratOmerTimeObject,
+                        setTime: reminders.setSfiratOmerTime,
+                        timeString: reminders.sfiratOmerTime,
+                      ),
+
+                      // sfirat omer - end
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            _isLoading = true;
+                          });
+                          reminders
+                              .setReminders(update: true)
+                              .then(
+                                (value) => setState(() {
+                                  _isLoading = false;
+                                }),
+                              );
+                          Navigator.pushNamed(context, '/');
+                        },
+                        child: Text(appLocalizations.updateRemindersTitle),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
     );
   }
 }

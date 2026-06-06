@@ -119,9 +119,8 @@ class _EventScreenState extends State<EventScreen> {
 
   getAllData() {
     _isLoading = true;
-    String lang = Provider.of<LanguageChangeProvider>(
-      context,
-    ).currentLocale.languageCode;
+    String lang =
+        Provider.of<LanguageChangeProvider>(context).currentLocale.languageCode;
     Provider.of<Events>(
       context,
       listen: false,
@@ -167,11 +166,13 @@ class _EventScreenState extends State<EventScreen> {
     });
     for (var e in events) {
       if (e is Shabat) {
-        e.title = e.title == 'Shabat'
-            ? AppLocalizations.of(context)!.shabat
-            : e.title = !e.title.contains(AppLocalizations.of(context)!.shabat)
-                  ? '${AppLocalizations.of(context)!.shabat} - ${e.title}'
-                  : e.title;
+        e.title =
+            e.title == 'Shabat'
+                ? AppLocalizations.of(context)!.shabat
+                : e.title =
+                    !e.title.contains(AppLocalizations.of(context)!.shabat)
+                        ? '${AppLocalizations.of(context)!.shabat} - ${e.title}'
+                        : e.title;
       }
       if (isOnlyShabat && (e is Shabat || e.entryDate?.hour != 0)) {
         widgets.add(EventFactoryWidget(data: e));
@@ -290,10 +291,11 @@ class _EventScreenState extends State<EventScreen> {
       title: AppLocalizations.of(context)!.main,
       body: RefreshIndicator(
         onRefresh: () async {
-          String lang = Provider.of<LanguageChangeProvider>(
-            context,
-            listen: false,
-          ).currentLocale.languageCode;
+          String lang =
+              Provider.of<LanguageChangeProvider>(
+                context,
+                listen: false,
+              ).currentLocale.languageCode;
           await Provider.of<Events>(
             context,
             listen: false,
@@ -308,12 +310,14 @@ class _EventScreenState extends State<EventScreen> {
           child: Column(
             children: [
               SettingsBar(
-                isOnlyShabat: _viewState == ViewState.events
-                    ? _isOnlyShabat
-                    : _isTodayTimesFromNow,
-                updateIsOnlyShabat: _viewState == ViewState.events
-                    ? setIsOnlyShabat
-                    : setIsTodayTimesFromNow,
+                isOnlyShabat:
+                    _viewState == ViewState.events
+                        ? _isOnlyShabat
+                        : _isTodayTimesFromNow,
+                updateIsOnlyShabat:
+                    _viewState == ViewState.events
+                        ? setIsOnlyShabat
+                        : setIsTodayTimesFromNow,
                 setIsLoading: setIsLoading,
                 setIsLoadingZmanim: setIsLoadingZmanim,
                 viewState: _viewState,

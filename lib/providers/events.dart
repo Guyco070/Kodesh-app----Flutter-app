@@ -393,9 +393,10 @@ class Events with ChangeNotifier {
           tempI--;
         }
         Shabat newS = Shabat.createShabat(
-          title: items[tempI + 1]['title'] != items[i]['title']
-              ? items[tempI + 1]['title']
-              : null,
+          title:
+              items[tempI + 1]['title'] != items[i]['title']
+                  ? items[tempI + 1]['title']
+                  : null,
           candles: items[tempI],
           parashat: items[i],
           havdalah: searchHavdalah(items, i),
@@ -408,9 +409,8 @@ class Events with ChangeNotifier {
             Holiday.createHoliday(
               candles: null,
               parashat: items[i],
-              havdalah: items[i + 1]['category'] == 'havdalah'
-                  ? items[i + 1]
-                  : null,
+              havdalah:
+                  items[i + 1]['category'] == 'havdalah' ? items[i + 1] : null,
             ),
           );
         } else if (i == items.length - 1) {
@@ -425,13 +425,13 @@ class Events with ChangeNotifier {
           if (items[i + 1]['category'] == 'havdalah') {
             tempItems.add(
               Holiday.createHoliday(
-                candles: items[i - 1]['category'] == 'candles'
-                    ? items[i - 1]
-                    : null,
+                candles:
+                    items[i - 1]['category'] == 'candles' ? items[i - 1] : null,
                 parashat: items[i],
-                havdalah: items[i + 1]['category'] == 'havdalah'
-                    ? items[i + 1]
-                    : null,
+                havdalah:
+                    items[i + 1]['category'] == 'havdalah'
+                        ? items[i + 1]
+                        : null,
               ),
             );
           } else {
@@ -439,9 +439,10 @@ class Events with ChangeNotifier {
               Holiday.createHoliday(
                 candles: null,
                 parashat: items[i],
-                havdalah: items[i + 1]['category'] == 'havdalah'
-                    ? items[i + 1]
-                    : null,
+                havdalah:
+                    items[i + 1]['category'] == 'havdalah'
+                        ? items[i + 1]
+                        : null,
               ),
             );
           }
@@ -579,9 +580,10 @@ class Events with ChangeNotifier {
     DateTime now = DateTime.now();
     // Start from the earlier of today or startDate; end 14 days after startDate
     // to cover the full displayed week even when viewing future weeks.
-    final rangeStart = now.isBefore(startDate)
-        ? now.subtract(const Duration(days: 1))
-        : startDate.subtract(const Duration(days: 1));
+    final rangeStart =
+        now.isBefore(startDate)
+            ? now.subtract(const Duration(days: 1))
+            : startDate.subtract(const Duration(days: 1));
     final rangeEnd = startDate.add(const Duration(days: 14));
     var url = Uri.https('www.hebcal.com', '/converter', {
       'cfg': 'json',

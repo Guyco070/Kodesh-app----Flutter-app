@@ -59,20 +59,22 @@ class Tfilot with ChangeNotifier {
       widgets.add(
         Expanded(
           child: ElevatedButton(
-            onPressed: i == _nosah
-                ? null
-                : () {
-                    updateNosah(i);
-                  },
+            onPressed:
+                i == _nosah
+                    ? null
+                    : () {
+                      updateNosah(i);
+                    },
             style: ButtonStyle(
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 const RoundedRectangleBorder(),
               ),
-              backgroundColor: i == _nosah
-                  ? MaterialStatePropertyAll<Color>(
-                      Theme.of(context).primaryColor,
-                    )
-                  : MaterialStatePropertyAll<Color>(Colors.blue.shade800),
+              backgroundColor:
+                  i == _nosah
+                      ? MaterialStatePropertyAll<Color>(
+                        Theme.of(context).primaryColor,
+                      )
+                      : MaterialStatePropertyAll<Color>(Colors.blue.shade800),
             ),
             child: Text(
               nosahTranslate(context)[i],
@@ -103,12 +105,13 @@ class Tfilot with ChangeNotifier {
     Map<String, List<String>>? textList,
     double fontSizeScale = 0,
   }) {
-    final List<String> seder = textList != null
-        ? textList[LanguageChangeProvider.getCurrentLocale.languageCode]!
-        : (getBracha[LanguageChangeProvider
-                  .getCurrentLocale
-                  .languageCode])![isWithNosah ? _nosah : Nosah.mizrah]
-              as List<String>;
+    final List<String> seder =
+        textList != null
+            ? textList[LanguageChangeProvider.getCurrentLocale.languageCode]!
+            : (getBracha[LanguageChangeProvider
+                    .getCurrentLocale
+                    .languageCode])![isWithNosah ? _nosah : Nosah.mizrah]
+                as List<String>;
     TextStyle font;
     List<TextSpan> widgets = [];
     final double titleFontSize = 15 + fontSizeScale;

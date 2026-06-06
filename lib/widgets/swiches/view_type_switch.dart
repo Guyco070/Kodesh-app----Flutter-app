@@ -26,28 +26,36 @@ class ViewTypeSwitch extends StatelessWidget {
                 elevation: MaterialStateProperty.all(0),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
-                    borderRadius: !LanguageChangeProvider.isDirectionRTL(null)
-                        ? const BorderRadius.only(topLeft: Radius.circular(50))
-                        : const BorderRadius.only(
-                            topRight: Radius.circular(50),
-                          ),
+                    borderRadius:
+                        !LanguageChangeProvider.isDirectionRTL(null)
+                            ? const BorderRadius.only(
+                              topLeft: Radius.circular(50),
+                            )
+                            : const BorderRadius.only(
+                              topRight: Radius.circular(50),
+                            ),
                   ),
                 ),
-                backgroundColor: viewState == ViewState.events
-                    ? const MaterialStatePropertyAll<Color>(Color(0xFF003080))
-                    : MaterialStatePropertyAll<Color>(Colors.blue.shade700),
+                backgroundColor:
+                    viewState == ViewState.events
+                        ? const MaterialStatePropertyAll<Color>(
+                          Color(0xFF003080),
+                        )
+                        : MaterialStatePropertyAll<Color>(Colors.blue.shade700),
               ),
-              onPressed: viewState != ViewState.events
-                  ? () => setViewState(ViewState.events)
-                  : null,
+              onPressed:
+                  viewState != ViewState.events
+                      ? () => setViewState(ViewState.events)
+                      : null,
               child: FittedBox(
                 child: Text(
                   appLocalizations.weekEvents,
                   style: TextStyle(
                     color: Colors.white,
-                    fontWeight: viewState == ViewState.events
-                        ? FontWeight.bold
-                        : FontWeight.normal,
+                    fontWeight:
+                        viewState == ViewState.events
+                            ? FontWeight.bold
+                            : FontWeight.normal,
                   ),
                 ),
               ),
@@ -59,28 +67,36 @@ class ViewTypeSwitch extends StatelessWidget {
                 elevation: MaterialStateProperty.all(0),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
-                    borderRadius: LanguageChangeProvider.isDirectionRTL(null)
-                        ? const BorderRadius.only(topLeft: Radius.circular(50))
-                        : const BorderRadius.only(
-                            topRight: Radius.circular(50),
-                          ),
+                    borderRadius:
+                        LanguageChangeProvider.isDirectionRTL(null)
+                            ? const BorderRadius.only(
+                              topLeft: Radius.circular(50),
+                            )
+                            : const BorderRadius.only(
+                              topRight: Radius.circular(50),
+                            ),
                   ),
                 ),
-                backgroundColor: viewState == ViewState.zmanim
-                    ? const MaterialStatePropertyAll<Color>(Color(0xFF003080))
-                    : MaterialStatePropertyAll<Color>(Colors.blue.shade700),
+                backgroundColor:
+                    viewState == ViewState.zmanim
+                        ? const MaterialStatePropertyAll<Color>(
+                          Color(0xFF003080),
+                        )
+                        : MaterialStatePropertyAll<Color>(Colors.blue.shade700),
               ),
-              onPressed: viewState != ViewState.zmanim
-                  ? () => setViewState(ViewState.zmanim)
-                  : () {},
+              onPressed:
+                  viewState != ViewState.zmanim
+                      ? () => setViewState(ViewState.zmanim)
+                      : () {},
               child: FittedBox(
                 child: Text(
                   appLocalizations.todayTimes,
                   style: TextStyle(
                     color: Colors.white,
-                    fontWeight: viewState == ViewState.zmanim
-                        ? FontWeight.bold
-                        : FontWeight.normal,
+                    fontWeight:
+                        viewState == ViewState.zmanim
+                            ? FontWeight.bold
+                            : FontWeight.normal,
                   ),
                 ),
               ),

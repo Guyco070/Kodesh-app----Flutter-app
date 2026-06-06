@@ -46,9 +46,10 @@ bool isToday(DateTime date) {
 }
 
 bool isYesterdayTodayOrTomorrow(DateTime date) {
-  int timeLeft = DateTime.now()
-      .difference(DateTime(date.year, date.month, date.day))
-      .inDays;
+  int timeLeft =
+      DateTime.now()
+          .difference(DateTime(date.year, date.month, date.day))
+          .inDays;
   return timeLeft == 0 || timeLeft == 1;
 }
 

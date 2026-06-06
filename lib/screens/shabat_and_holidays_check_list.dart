@@ -27,36 +27,37 @@ class _ShabatAndHolidaysCheckListState
     final controller = TextEditingController();
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.addCustomTask),
-        content: TextField(
-          controller: controller,
-          autofocus: true,
-          decoration: InputDecoration(labelText: l10n.taskName),
-          textCapitalization: TextCapitalization.sentences,
-          onSubmitted: (value) {
-            if (value.trim().isNotEmpty) {
-              reminders.addCustomChecklistItem(value.trim());
-              Navigator.of(ctx).pop();
-            }
-          },
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(),
-            child: Text(l10n.cancel),
+      builder:
+          (ctx) => AlertDialog(
+            title: Text(l10n.addCustomTask),
+            content: TextField(
+              controller: controller,
+              autofocus: true,
+              decoration: InputDecoration(labelText: l10n.taskName),
+              textCapitalization: TextCapitalization.sentences,
+              onSubmitted: (value) {
+                if (value.trim().isNotEmpty) {
+                  reminders.addCustomChecklistItem(value.trim());
+                  Navigator.of(ctx).pop();
+                }
+              },
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(),
+                child: Text(l10n.cancel),
+              ),
+              TextButton(
+                onPressed: () {
+                  if (controller.text.trim().isNotEmpty) {
+                    reminders.addCustomChecklistItem(controller.text.trim());
+                    Navigator.of(ctx).pop();
+                  }
+                },
+                child: Text(l10n.add),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () {
-              if (controller.text.trim().isNotEmpty) {
-                reminders.addCustomChecklistItem(controller.text.trim());
-                Navigator.of(ctx).pop();
-              }
-            },
-            child: Text(l10n.add),
-          ),
-        ],
-      ),
     );
   }
 
@@ -68,24 +69,25 @@ class _ShabatAndHolidaysCheckListState
   ) {
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.deleteTaskTitle),
-        content: Text(reminders.customChecklistItems[index]),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(),
-            child: Text(l10n.cancel),
+      builder:
+          (ctx) => AlertDialog(
+            title: Text(l10n.deleteTaskTitle),
+            content: Text(reminders.customChecklistItems[index]),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(),
+                child: Text(l10n.cancel),
+              ),
+              TextButton(
+                onPressed: () {
+                  reminders.removeCustomChecklistItem(index);
+                  Navigator.of(ctx).pop();
+                },
+                style: TextButton.styleFrom(foregroundColor: Colors.red),
+                child: Text(l10n.delete),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () {
-              reminders.removeCustomChecklistItem(index);
-              Navigator.of(ctx).pop();
-            },
-            style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: Text(l10n.delete),
-          ),
-        ],
-      ),
     );
   }
 
@@ -94,9 +96,13 @@ class _ShabatAndHolidaysCheckListState
     final reminders = Provider.of<Reminders>(context);
     final l10n = AppLocalizations.of(context)!;
 
-    final selectedPredefined = _isAll
-        ? reminders.allShabatAndHolidaysThingsToRemindMap(context).keys.toList()
-        : reminders.shabatAndHolidaysThingsToRemindList;
+    final selectedPredefined =
+        _isAll
+            ? reminders
+                .allShabatAndHolidaysThingsToRemindMap(context)
+                .keys
+                .toList()
+            : reminders.shabatAndHolidaysThingsToRemindList;
 
     final hasContent =
         selectedPredefined.isNotEmpty ||
@@ -117,81 +123,88 @@ class _ShabatAndHolidaysCheckListState
         onPressed: () => _showAddTaskDialog(context, reminders, l10n),
         child: const Icon(Icons.add),
       ),
-      body: !hasContent
-          ? Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(l10n.noChroesMessage, textAlign: TextAlign.center),
-              ),
-            )
-          : CustomScrollView(
-              slivers: [
-                if (selectedPredefined.isNotEmpty)
-                  SliverGrid(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 0.8,
-                        ),
-                    delegate: SliverChildBuilderDelegate((context, index) {
-                      final key = selectedPredefined.toList()[index];
-                      final element = reminders
-                          .allShabatAndHolidaysThingsToRemindMap(context)[key]!;
-                      return Padding(
-                        padding: const EdgeInsets.all(25 / 2),
-                        child: ThingToRemind(
-                          title: element['action'] as String,
-                          icon: element['icon'] as IconData,
-                        ),
-                      );
-                    }, childCount: selectedPredefined.length),
+      body:
+          !hasContent
+              ? Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    l10n.noChroesMessage,
+                    textAlign: TextAlign.center,
                   ),
-                if (reminders.customChecklistItems.isNotEmpty) ...[
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
-                      child: Text(
-                        l10n.customTasksSection,
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
+                ),
+              )
+              : CustomScrollView(
+                slivers: [
+                  if (selectedPredefined.isNotEmpty)
+                    SliverGrid(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.8,
+                          ),
+                      delegate: SliverChildBuilderDelegate((context, index) {
+                        final key = selectedPredefined.toList()[index];
+                        final element =
+                            reminders.allShabatAndHolidaysThingsToRemindMap(
+                              context,
+                            )[key]!;
+                        return Padding(
+                          padding: const EdgeInsets.all(25 / 2),
+                          child: ThingToRemind(
+                            title: element['action'] as String,
+                            icon: element['icon'] as IconData,
+                          ),
+                        );
+                      }, childCount: selectedPredefined.length),
+                    ),
+                  if (reminders.customChecklistItems.isNotEmpty) ...[
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
+                        child: Text(
+                          l10n.customTasksSection,
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: ReorderableListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: reminders.customChecklistItems.length,
-                      onReorder: reminders.reorderCustomChecklistItem,
-                      itemBuilder: (context, index) {
-                        final task = reminders.customChecklistItems[index];
-                        return ListTile(
-                          key: ValueKey(task + index.toString()),
-                          leading: const Icon(Icons.drag_handle),
-                          title: Text(task),
-                          trailing: IconButton(
-                            icon: const Icon(
-                              Icons.delete_outline,
-                              color: Colors.red,
+                    SliverToBoxAdapter(
+                      child: ReorderableListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: reminders.customChecklistItems.length,
+                        onReorder: reminders.reorderCustomChecklistItem,
+                        itemBuilder: (context, index) {
+                          final task = reminders.customChecklistItems[index];
+                          return ListTile(
+                            key: ValueKey(task + index.toString()),
+                            leading: const Icon(Icons.drag_handle),
+                            title: Text(task),
+                            trailing: IconButton(
+                              icon: const Icon(
+                                Icons.delete_outline,
+                                color: Colors.red,
+                              ),
+                              onPressed:
+                                  () => _showDeleteDialog(
+                                    context,
+                                    reminders,
+                                    l10n,
+                                    index,
+                                  ),
                             ),
-                            onPressed: () => _showDeleteDialog(
-                              context,
-                              reminders,
-                              l10n,
-                              index,
-                            ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
-                  ),
+                  ],
+                  const SliverToBoxAdapter(child: SizedBox(height: 80)),
                 ],
-                const SliverToBoxAdapter(child: SizedBox(height: 80)),
-              ],
-            ),
+              ),
     );
   }
 }

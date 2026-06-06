@@ -34,10 +34,11 @@ class AppDrawer extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.watch_later_outlined),
               title: Text(appLocalizations.settingRemindersMenu),
-              onTap: () => Navigator.pushNamed(
-                context,
-                ScheduleNotificationsScreen.routeName,
-              ),
+              onTap:
+                  () => Navigator.pushNamed(
+                    context,
+                    ScheduleNotificationsScreen.routeName,
+                  ),
             ),
             ListTile(
               leading: Icon(
@@ -50,11 +51,12 @@ class AppDrawer extends StatelessWidget {
                     ? appLocalizations.lightMode
                     : appLocalizations.darkMode,
               ),
-              onTap: () => langProvider.changeThemeMode(
-                langProvider.themeMode == ThemeMode.dark
-                    ? ThemeMode.light
-                    : ThemeMode.dark,
-              ),
+              onTap:
+                  () => langProvider.changeThemeMode(
+                    langProvider.themeMode == ThemeMode.dark
+                        ? ThemeMode.light
+                        : ThemeMode.dark,
+                  ),
             ),
 
             ...devidedTitle(appLocalizations.aids),
@@ -62,16 +64,17 @@ class AppDrawer extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.checklist_rtl),
               title: Text(appLocalizations.choresBeforeShabbatMenu),
-              onTap: () => Navigator.pushNamed(
-                context,
-                ShabatAndHolidaysCheckList.routeName,
-              ),
+              onTap:
+                  () => Navigator.pushNamed(
+                    context,
+                    ShabatAndHolidaysCheckList.routeName,
+                  ),
             ),
             ListTile(
               leading: const Icon(Icons.compass_calibration_outlined),
               title: Text(appLocalizations.compass),
-              onTap: () =>
-                  Navigator.pushNamed(context, CompassScreen.routeName),
+              onTap:
+                  () => Navigator.pushNamed(context, CompassScreen.routeName),
             ),
 
             CustomExpandedListView(
@@ -80,8 +83,9 @@ class AppDrawer extends StatelessWidget {
                 ListTile(
                   leading: const Icon(Icons.fireplace_outlined),
                   title: Text(appLocalizations.candleLightingOrderMenu),
-                  onTap: () =>
-                      Navigator.pushNamed(context, AdlakatNerot.routeName),
+                  onTap:
+                      () =>
+                          Navigator.pushNamed(context, AdlakatNerot.routeName),
                 ),
                 ListTile(
                   leading: const Icon(Icons.wine_bar),
@@ -91,45 +95,53 @@ class AppDrawer extends StatelessWidget {
                 ListTile(
                   leading: const Icon(Icons.add_reaction_outlined),
                   title: Text(appLocalizations.tefilinOrderMenu),
-                  onTap: () => Navigator.pushNamed(
-                    context,
-                    SederAnahatTefilin.routeName,
-                  ),
+                  onTap:
+                      () => Navigator.pushNamed(
+                        context,
+                        SederAnahatTefilin.routeName,
+                      ),
                 ),
                 ListTile(
                   leading: const Icon(Icons.fireplace),
                   title: Text(appLocalizations.hanukkahCandleLightingOrderMenu),
-                  onTap: () => Navigator.pushNamed(
-                    context,
-                    AdlakatNerotChanukah.routeName,
-                  ),
+                  onTap:
+                      () => Navigator.pushNamed(
+                        context,
+                        AdlakatNerotChanukah.routeName,
+                      ),
                 ),
                 ListTile(
                   leading: const Icon(Icons.content_cut),
                   title: Text(appLocalizations.sederSfiratOmer),
-                  onTap: () =>
-                      Navigator.pushNamed(context, SfiratOmerScreen.routeName),
+                  onTap:
+                      () => Navigator.pushNamed(
+                        context,
+                        SfiratOmerScreen.routeName,
+                      ),
                 ),
                 ListTile(
                   leading: const Icon(Icons.restaurant_outlined),
                   title: Text(appLocalizations.birkatHamazonMenu),
-                  onTap: () =>
-                      Navigator.pushNamed(context, BirkatHamazon.routeName),
+                  onTap:
+                      () =>
+                          Navigator.pushNamed(context, BirkatHamazon.routeName),
                 ),
                 ListTile(
                   leading: const Icon(Icons.bedtime_outlined),
                   title: Text(appLocalizations.kriyatShemaAlHamitaMenu),
-                  onTap: () => Navigator.pushNamed(
-                    context,
-                    KriyatShemaAlHamita.routeName,
-                  ),
+                  onTap:
+                      () => Navigator.pushNamed(
+                        context,
+                        KriyatShemaAlHamita.routeName,
+                      ),
                 ),
               ],
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height > 650
-                  ? MediaQuery.of(context).size.height - 650
-                  : 30,
+              height:
+                  MediaQuery.of(context).size.height > 650
+                      ? MediaQuery.of(context).size.height - 650
+                      : 30,
             ),
             const Divider(indent: 18, endIndent: 18),
             ListTile(

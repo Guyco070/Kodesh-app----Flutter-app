@@ -130,9 +130,8 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
     return Scaffold(
       drawer: const AppDrawer(),
       appBar: CustomAppBar(
-        title: _isLoading
-            ? AppLocalizations.of(context)!.loading
-            : widget.title,
+        title:
+            _isLoading ? AppLocalizations.of(context)!.loading : widget.title,
         leading: Builder(
           builder: (context) {
             return IconButton(
@@ -143,9 +142,10 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
         ),
         trailing: getLangDropDown(lang),
       ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : widget.body,
+      body:
+          _isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : widget.body,
       persistentFooterAlignment: AlignmentDirectional.topCenter,
     );
   }

@@ -29,28 +29,32 @@ class RoshChodeshWidget extends StatelessWidget {
     final bool isHebrewDate = Provider.of<Events>(context).isHebrewDate;
     var date;
     if (isHebrewDate) {
-      date = type == 'oe' || type == 'e'
-          ? data.entryHebrewDate
-          : data.releaseHebrewDate;
+      date =
+          type == 'oe' || type == 'e'
+              ? data.entryHebrewDate
+              : data.releaseHebrewDate;
     } else {
       date = type == 'oe' || type == 'e' ? data.entryDate! : data.releaseDate!;
     }
-    String subtitle = type == 'oe'
-        ? appLocalizations.eventEndDate
-        : type == 'e'
-        ? appLocalizations.startDate
-        : appLocalizations.endDate;
-    IconData icon = type == 'oe'
-        ? Icons.calendar_month_outlined
-        : type == 'e'
-        ? Icons.first_page
-        : Icons.last_page;
+    String subtitle =
+        type == 'oe'
+            ? appLocalizations.eventEndDate
+            : type == 'e'
+            ? appLocalizations.startDate
+            : appLocalizations.endDate;
+    IconData icon =
+        type == 'oe'
+            ? Icons.calendar_month_outlined
+            : type == 'e'
+            ? Icons.first_page
+            : Icons.last_page;
     return ListTile(
-      title: isHebrewDate
-          ? date != null
-                ? Text(date)
-                : const CupertinoActivityIndicator(radius: 9)
-          : Text(DateFormat('dd/MM/yyyy').format(date)),
+      title:
+          isHebrewDate
+              ? date != null
+                  ? Text(date)
+                  : const CupertinoActivityIndicator(radius: 9)
+              : Text(DateFormat('dd/MM/yyyy').format(date)),
       trailing: DateWithTimeLeft(
         date: data.entryDate!,
         isWithDate: false,

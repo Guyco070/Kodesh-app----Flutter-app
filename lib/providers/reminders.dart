@@ -307,9 +307,8 @@ class Reminders with ChangeNotifier {
     }
 
     if (prefsKeys.contains('shabatAndHolidaysThingsToRemindList')) {
-      shabatAndHolidaysThingsToRemindList = prefs.getStringList(
-        'shabatAndHolidaysThingsToRemindList',
-      )!;
+      shabatAndHolidaysThingsToRemindList =
+          prefs.getStringList('shabatAndHolidaysThingsToRemindList')!;
     }
 
     if (prefsKeys.contains('shabatAndHolidaysCandles')) {
@@ -317,15 +316,13 @@ class Reminders with ChangeNotifier {
     }
 
     if (prefsKeys.contains('beforeShabatAndHolidaysCandlesHours')) {
-      beforeShabatAndHolidaysCandlesHours = prefs.getInt(
-        'beforeShabatAndHolidaysCandlesHours',
-      )!;
+      beforeShabatAndHolidaysCandlesHours =
+          prefs.getInt('beforeShabatAndHolidaysCandlesHours')!;
     }
 
     if (prefsKeys.contains('beforeShabatAndHolidaysCandlesMinutes')) {
-      beforeShabatAndHolidaysCandlesMinutes = prefs.getInt(
-        'beforeShabatAndHolidaysCandlesMinutes',
-      )!;
+      beforeShabatAndHolidaysCandlesMinutes =
+          prefs.getInt('beforeShabatAndHolidaysCandlesMinutes')!;
     }
 
     if (prefsKeys.contains('tefilin')) {

@@ -47,8 +47,9 @@ void main() {
       });
 
       test('[$lang] havdalahTitle is non-empty string', () {
-        final t = RemindersTranslates
-            .shabatReminderTranslated[lang]!['havdalahTitle'];
+        final t =
+            RemindersTranslates
+                .shabatReminderTranslated[lang]!['havdalahTitle'];
         if (t != null) expect((t as String).isNotEmpty, isTrue);
       });
 
@@ -97,14 +98,16 @@ void main() {
       });
 
       test('[$lang] havdalahTitle is non-empty string', () {
-        final t = RemindersTranslates
-            .holidayReminderTranslated[lang]!['havdalahTitle'];
+        final t =
+            RemindersTranslates
+                .holidayReminderTranslated[lang]!['havdalahTitle'];
         if (t != null) expect((t as String).isNotEmpty, isTrue);
       });
 
       test('[$lang] havdalahBody closure returns non-empty string', () {
-        final fn = RemindersTranslates
-            .holidayReminderTranslated[lang]!['havdalahBody'];
+        final fn =
+            RemindersTranslates
+                .holidayReminderTranslated[lang]!['havdalahBody'];
         if (fn != null) {
           expect(((fn as Function)(0, 10) as String).isNotEmpty, isTrue);
         }

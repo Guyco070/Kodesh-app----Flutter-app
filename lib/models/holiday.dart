@@ -32,9 +32,10 @@ class Holiday extends Event {
     return Holiday(
       title: parashat['title'],
       entryDate: date,
-      releaseDate: havdalah != null
-          ? DateTime.tryParse(Events.getDateWithoutTime(havdalah['date']))
-          : null,
+      releaseDate:
+          havdalah != null
+              ? DateTime.tryParse(Events.getDateWithoutTime(havdalah['date']))
+              : null,
       subcat: parashat['subcat'], // major, minor, modern, shabat, fast
       titleOrig: parashat['title_orig'],
     );

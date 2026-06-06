@@ -28,32 +28,33 @@ class DateWithTimeLeft extends StatelessWidget {
             height: 20,
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 400),
-              transitionBuilder: ((child, animation) =>
-                  ScaleTransition(scale: animation, child: child)),
+              transitionBuilder:
+                  ((child, animation) =>
+                      ScaleTransition(scale: animation, child: child)),
               child:
                   isWithDate &&
-                      Provider.of<Events>(
-                        context,
-                        listen: false,
-                      ).isHebrewDate &&
-                      hebrewDate == null
-                  ? CupertinoActivityIndicator(
-                      key: ValueKey<bool>(
-                        isWithDate &&
-                            Provider.of<Events>(
-                              context,
-                              listen: false,
-                            ).isHebrewDate &&
-                            hebrewDate == null,
+                          Provider.of<Events>(
+                            context,
+                            listen: false,
+                          ).isHebrewDate &&
+                          hebrewDate == null
+                      ? CupertinoActivityIndicator(
+                        key: ValueKey<bool>(
+                          isWithDate &&
+                              Provider.of<Events>(
+                                context,
+                                listen: false,
+                              ).isHebrewDate &&
+                              hebrewDate == null,
+                        ),
+                        radius: 9,
+                      )
+                      : Text(
+                        key: ValueKey<bool>(isWithDate && hebrewDate != null),
+                        isWithDate && hebrewDate != null
+                            ? hebrewDate!
+                            : DateFormat('dd/MM/yyyy').format(date),
                       ),
-                      radius: 9,
-                    )
-                  : Text(
-                      key: ValueKey<bool>(isWithDate && hebrewDate != null),
-                      isWithDate && hebrewDate != null
-                          ? hebrewDate!
-                          : DateFormat('dd/MM/yyyy').format(date),
-                    ),
             ),
           ),
           Text(getDayName(AppLocalizations.of(context)!, date.weekday)),

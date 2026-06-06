@@ -26,12 +26,13 @@ class CitySearchDelegate extends SearchDelegate<Map?> {
 
   Widget _buildList() {
     final q = query.toLowerCase();
-    final filtered = q.isEmpty
-        ? cities
-        : cities.where((c) {
-            final name = ((c[lang] ?? c['en'] ?? '') as String).toLowerCase();
-            return name.contains(q);
-          }).toList();
+    final filtered =
+        q.isEmpty
+            ? cities
+            : cities.where((c) {
+              final name = ((c[lang] ?? c['en'] ?? '') as String).toLowerCase();
+              return name.contains(q);
+            }).toList();
 
     return ListView.builder(
       itemCount: filtered.length,

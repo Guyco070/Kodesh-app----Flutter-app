@@ -58,41 +58,39 @@ class MyApp extends StatelessWidget {
   static const Color _seed = Color(0xFF0047AE);
 
   static final ThemeData _lightTheme = ThemeData(
-    colorScheme:
-        ColorScheme.fromSeed(
-          seedColor: _seed,
-          primary: _seed,
-          brightness: Brightness.light,
-        ).copyWith(
-          secondary: const Color(0xFF1565C0),
-          secondaryContainer: const Color(0xFFD6E4FF),
-          onSecondary: Colors.white,
-          onSecondaryContainer: const Color(0xFF001E6C),
-          tertiary: const Color(0xFF0D47A1),
-          tertiaryContainer: const Color(0xFFBBDEFB),
-          onTertiary: Colors.white,
-          onTertiaryContainer: const Color(0xFF001E6C),
-        ),
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: _seed,
+      primary: _seed,
+      brightness: Brightness.light,
+    ).copyWith(
+      secondary: const Color(0xFF1565C0),
+      secondaryContainer: const Color(0xFFD6E4FF),
+      onSecondary: Colors.white,
+      onSecondaryContainer: const Color(0xFF001E6C),
+      tertiary: const Color(0xFF0D47A1),
+      tertiaryContainer: const Color(0xFFBBDEFB),
+      onTertiary: Colors.white,
+      onTertiaryContainer: const Color(0xFF001E6C),
+    ),
     useMaterial3: true,
   );
 
   static final ThemeData _darkTheme = ThemeData(
-    colorScheme:
-        ColorScheme.fromSeed(
-          seedColor: _seed,
-          primary: _seed,
-          brightness: Brightness.dark,
-        ).copyWith(
-          surface: const Color(0xFF1A1A2E),
-          secondary: const Color(0xFF90CAF9),
-          secondaryContainer: const Color(0xFF0D47A1),
-          onSecondary: const Color(0xFF003065),
-          onSecondaryContainer: const Color(0xFFD6E4FF),
-          tertiary: const Color(0xFFBBDEFB),
-          tertiaryContainer: const Color(0xFF1565C0),
-          onTertiary: const Color(0xFF003065),
-          onTertiaryContainer: const Color(0xFFD6E4FF),
-        ),
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: _seed,
+      primary: _seed,
+      brightness: Brightness.dark,
+    ).copyWith(
+      surface: const Color(0xFF1A1A2E),
+      secondary: const Color(0xFF90CAF9),
+      secondaryContainer: const Color(0xFF0D47A1),
+      onSecondary: const Color(0xFF003065),
+      onSecondaryContainer: const Color(0xFFD6E4FF),
+      tertiary: const Color(0xFFBBDEFB),
+      tertiaryContainer: const Color(0xFF1565C0),
+      onTertiary: const Color(0xFF003065),
+      onTertiaryContainer: const Color(0xFFD6E4FF),
+    ),
     useMaterial3: true,
     scaffoldBackgroundColor: const Color(0xFF1A1A2E),
     appBarTheme: const AppBarTheme(
@@ -120,12 +118,12 @@ class MyApp extends StatelessWidget {
       supportedLocales: L10n.all,
       home: const EventScreen(),
       routes: {
-        ScheduleNotificationsScreen.routeName: (_) =>
-            const ScheduleNotificationsScreen(),
+        ScheduleNotificationsScreen.routeName:
+            (_) => const ScheduleNotificationsScreen(),
         SederAnahatTefilin.routeName: (_) => SederAnahatTefilin(),
         AdlakatNerot.routeName: (_) => AdlakatNerot(),
-        ShabatAndHolidaysCheckList.routeName: (_) =>
-            const ShabatAndHolidaysCheckList(),
+        ShabatAndHolidaysCheckList.routeName:
+            (_) => const ShabatAndHolidaysCheckList(),
         CompassScreen.routeName: (_) => const CompassScreen(),
         AdlakatNerotChanukah.routeName: (_) => AdlakatNerotChanukah(),
         SfiratOmerScreen.routeName: (_) => SfiratOmerScreen(),

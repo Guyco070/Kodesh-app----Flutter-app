@@ -17,16 +17,12 @@ class _SlideInAnimationState extends State<SlideInAnimation>
   void initState() {
     super.initState();
     _animationController = AnimationController(vsync: this);
-    _offsetAnimation =
-        Tween<Offset>(
-          begin: const Offset(1, 0),
-          end: const Offset(0, 0),
-        ).animate(
-          CurvedAnimation(
-            parent: _animationController,
-            curve: Curves.elasticIn,
-          ),
-        );
+    _offsetAnimation = Tween<Offset>(
+      begin: const Offset(1, 0),
+      end: const Offset(0, 0),
+    ).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.elasticIn),
+    );
   }
 
   @override
@@ -34,8 +30,11 @@ class _SlideInAnimationState extends State<SlideInAnimation>
     return TweenAnimationBuilder(
       tween: Tween(begin: const Offset(1, 0), end: const Offset(0, 0)),
       duration: const Duration(seconds: 3),
-      builder: ((context, value, child) =>
-          SlideTransition(position: _offsetAnimation, child: widget.widget)),
+      builder:
+          ((context, value, child) => SlideTransition(
+            position: _offsetAnimation,
+            child: widget.widget,
+          )),
     );
   }
 }

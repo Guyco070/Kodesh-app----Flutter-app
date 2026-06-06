@@ -47,10 +47,11 @@ class _AnimatedFromNowOnTimesListViewState
       shrinkWrap: true,
       key: _listKey,
       initialItemCount: _list.length,
-      itemBuilder: ((context, index, animation) => SlideTransition(
-        position: animation.drive(_offset),
-        child: _list[index],
-      )),
+      itemBuilder:
+          ((context, index, animation) => SlideTransition(
+            position: animation.drive(_offset),
+            child: _list[index],
+          )),
     );
   }
 }
