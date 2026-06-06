@@ -108,14 +108,13 @@ class _SettingsBarState extends State<SettingsBar> {
                                       Expanded(
                                         child: Text(
                                           cities.firstWhere(
-                                                    (c) =>
-                                                        c['eNameAndCode'] ==
-                                                        events.city,
-                                                    orElse: () => cities.first,
-                                                  )[lang
-                                                      .currentLocale
-                                                      .languageCode]
-                                                  as String? ??
+                                                (c) =>
+                                                    c['eNameAndCode'] ==
+                                                    events.city,
+                                                orElse: () => cities.first,
+                                              )[lang
+                                                  .currentLocale
+                                                  .languageCode] ??
                                               events.city,
                                           style: const TextStyle(
                                             color: Colors.white,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kodesh_app/api/l10n/l10n.dart';
-import 'package:kodesh_app/helpers/app_logger.dart';
 import 'package:kodesh_app/api/l10n/reminders_translates.dart';
 import 'package:kodesh_app/api/notification_api.dart';
 import 'package:kodesh_app/models/event.dart';
@@ -61,7 +60,6 @@ class Reminders with ChangeNotifier {
   }
 
   List<String> allShabatAndHolidaysThingsToRemindList(BuildContext context) {
-    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     return [
       'Shabbat blech',
       'Samovar',

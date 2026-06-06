@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:kodesh_app/providers/language_change_provider.dart';
 
 class AnimatedEventsListView extends StatefulWidget {
-  AnimatedEventsListView({super.key, required this.widgets});
-  List<Widget> widgets = [];
+  const AnimatedEventsListView({super.key, required this.widgets});
+  final List<Widget> widgets;
 
   @override
   State<AnimatedEventsListView> createState() => _AnimatedEventsListViewState();

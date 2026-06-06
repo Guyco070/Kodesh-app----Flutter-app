@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kodesh_app/animations/expanded_section.dart';
-import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/providers/reminders.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
 import 'package:kodesh_app/widgets/group_card.dart';
@@ -33,19 +32,7 @@ class _ScheduleNotificationsScreenState
   @override
   Widget build(BuildContext context) {
     var reminders = Provider.of<Reminders>(context);
-    var lang = Provider.of<LanguageChangeProvider>(context);
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
-    var devider = Container(
-      margin: const EdgeInsets.symmetric(vertical: 7),
-      height: 7,
-      decoration: BoxDecoration(
-        border: const Border(
-          top: BorderSide(width: 1, color: Colors.grey),
-          bottom: BorderSide(width: 1, color: Colors.grey),
-        ),
-        color: Colors.grey[200],
-      ),
-    );
 
     shabatAndHolidaysThingsToRemindList() {
       return reminders.allShabatAndHolidaysThingsToRemindList(context).map((e) {

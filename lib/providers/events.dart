@@ -138,7 +138,7 @@ class Events with ChangeNotifier {
       int bestScore = -1;
 
       for (final c in cities) {
-        final enName = c['en'] as String? ?? '';
+        final enName = c['en'] ?? '';
         if (!enName.startsWith(prefix)) continue;
         final namePart = enName.substring(prefix.length).toLowerCase();
         final target = cityName.toLowerCase();

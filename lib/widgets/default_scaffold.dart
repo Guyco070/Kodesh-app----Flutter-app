@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:kodesh_app/api/l10n/l10n.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/providers/language_change_provider.dart';
-import 'package:kodesh_app/providers/reminders.dart';
 import 'package:kodesh_app/widgets/app_drawer.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
 import 'package:provider/provider.dart';

@@ -51,8 +51,6 @@ class _EventScreenState extends State<EventScreen> {
 
   String? title;
 
-  bool _isThereInternetConnection = false;
-
   ViewState _viewState = ViewState.events;
 
   @override
