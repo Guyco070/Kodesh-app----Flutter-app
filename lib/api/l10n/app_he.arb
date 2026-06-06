@@ -108,5 +108,9 @@
     "compass": "מצפן",
 
     "darkMode": "מצב לילה",
-    "lightMode": "מצב יום"
+    "lightMode": "מצב יום",
+
+    "useMyLocation": "השתמש במיקום שלי",
+    "locationNotAvailable": "לא ניתן לזהות מיקום. אנא בדוק את הרשאות המיקום.",
+    "detectingLocation": "מזהה מיקום..."
 }

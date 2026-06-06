@@ -298,4 +298,13 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get lightMode => 'מצב יום';
+
+  @override
+  String get useMyLocation => 'השתמש במיקום שלי';
+
+  @override
+  String get locationNotAvailable => 'לא ניתן לזהות מיקום. אנא בדוק את הרשאות המיקום.';
+
+  @override
+  String get detectingLocation => 'מזהה מיקום...';
 }
