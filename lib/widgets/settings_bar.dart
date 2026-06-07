@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart' as df;
 import 'package:kodesh_app/data/cities.dart';
 import 'package:kodesh_app/providers/events.dart';
@@ -40,7 +41,21 @@ class _SettingsBarState extends State<SettingsBar> {
   bool _isExpanded = true;
   bool _isDetectingLocation = false;
 
-  Future<void> _detectAndSetLocation() async {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _autoDetectIfPermitted());
+  }
+
+  Future<void> _autoDetectIfPermitted() async {
+    final permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.whileInUse ||
+        permission == LocationPermission.always) {
+      await _detectAndSetLocation(showErrorSnackBar: false);
+    }
+  }
+
+  Future<void> _detectAndSetLocation({bool showErrorSnackBar = true}) async {
     setState(() => _isDetectingLocation = true);
     try {
       final cityCode = await LocationService.detectNearestCity();
@@ -54,7 +69,7 @@ class _SettingsBarState extends State<SettingsBar> {
             setIsLoadingZmanim: widget.setIsLoadingZmanim,
           );
         }
-      } else {
+      } else if (showErrorSnackBar) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(AppLocalizations.of(context)!.locationNotAvailable),
