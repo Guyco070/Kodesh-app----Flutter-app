@@ -91,7 +91,7 @@ class _SettingsBarState extends State<SettingsBar> {
                 if (!_isExpanded) const SizedBox(height: 15),
                 IntrinsicHeight(
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
+                    padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
                     child: Wrap(
                       direction: Axis.vertical,
                       children: [
