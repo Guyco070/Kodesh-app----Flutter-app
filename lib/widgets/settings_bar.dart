@@ -193,13 +193,7 @@ class _SettingsBarState extends State<SettingsBar> {
                                     ),
                               ],
                             ),
-                            VerticalDivider(
-                              color: Theme.of(context).primaryColor,
-                              indent: 10,
-                              endIndent: 10,
-                              width: 40,
-                              thickness: 2,
-                            ),
+                            const SizedBox(width: 12),
                             ElevatedButton.icon(
                               onPressed: () async {
                                 DateTime? newDate = await showDatePicker(
