@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:kodesh_app/data/cities.dart';
 import 'package:kodesh_app/data/city_coordinates.dart';
@@ -10,11 +9,6 @@ class LocationService {
   /// Returns the [eNameAndCode] of the nearest city to the user's current
   /// position, or null if location is unavailable or permission is denied.
   static Future<String?> detectNearestCity() async {
-    if (kIsWeb) {
-      logger.i('Location detection skipped on web');
-      return null;
-    }
-
     final position = await _getPosition();
     if (position == null) return null;
 
