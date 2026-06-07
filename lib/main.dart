@@ -64,6 +64,11 @@ class MyApp extends StatelessWidget {
       brightness: Brightness.light,
     ).copyWith(
       surface: Colors.white,
+      surfaceContainerLowest: Colors.white,
+      surfaceContainerLow: const Color(0xFFF5F5F5),
+      surfaceContainer: const Color(0xFFEEEEEE),
+      surfaceContainerHigh: const Color(0xFFE8E8E8),
+      surfaceContainerHighest: const Color(0xFFE0E0E0),
       secondary: const Color(0xFF1565C0),
       secondaryContainer: const Color(0xFFD6E4FF),
       onSecondary: Colors.white,
@@ -74,6 +79,7 @@ class MyApp extends StatelessWidget {
       onTertiaryContainer: const Color(0xFF001E6C),
     ),
     scaffoldBackgroundColor: Colors.white,
+    drawerTheme: const DrawerThemeData(backgroundColor: Colors.white),
     useMaterial3: true,
   );
 

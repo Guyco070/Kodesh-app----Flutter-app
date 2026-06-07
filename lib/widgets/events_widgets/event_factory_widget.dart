@@ -5,8 +5,9 @@ import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
 class EventFactoryWidget extends StatelessWidget {
-  const EventFactoryWidget({super.key, required this.data});
+  const EventFactoryWidget({super.key, required this.data, this.isFirst = false});
   final Event data;
+  final bool isFirst;
 
   @override
   String toStringShort() {
@@ -17,7 +18,7 @@ class EventFactoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if (data is! Shabat) ...{
+        if (!isFirst) ...{
           const Divider(thickness: 2, indent: 10, endIndent: 10, height: 40),
         } else ...{
           const SizedBox(height: 15),

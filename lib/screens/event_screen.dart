@@ -157,6 +157,7 @@ class _EventScreenState extends State<EventScreen> {
       }
       return 0;
     });
+    bool isFirst = true;
     for (var e in events) {
       if (e is Shabat) {
         e.title =
@@ -168,9 +169,11 @@ class _EventScreenState extends State<EventScreen> {
                         : e.title;
       }
       if (isOnlyShabat && (e is Shabat || e.entryDate?.hour != 0)) {
-        widgets.add(EventFactoryWidget(data: e));
+        widgets.add(EventFactoryWidget(data: e, isFirst: isFirst));
+        isFirst = false;
       } else if (!isOnlyShabat) {
-        widgets.add(EventFactoryWidget(data: e));
+        widgets.add(EventFactoryWidget(data: e, isFirst: isFirst));
+        isFirst = false;
       }
     }
     widgets.add(const SizedBox(height: 10));
