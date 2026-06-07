@@ -23,30 +23,38 @@ class Shabat extends Event {
     required Map<String, dynamic> havdalah,
   }) {
     return Shabat(
-        title: title ?? 'Shabat',
-        parasha: parashat['title'],
-        entryDate:
-            DateTime.tryParse(Events.getDateWithoutTime(candles['date'])),
-        releaseDate:
-            DateTime.tryParse(Events.getDateWithoutTime(havdalah['date'])),
-        titleOrig: parashat['title_orig']);
+      title: title ?? 'Shabat',
+      parasha: parashat['title'],
+      entryDate: DateTime.tryParse(Events.getDateWithoutTime(candles['date'])),
+      releaseDate: DateTime.tryParse(
+        Events.getDateWithoutTime(havdalah['date']),
+      ),
+      titleOrig: parashat['title_orig'],
+    );
   }
 
   @override
   String getReminderBody(String lang) =>
       (RemindersTranslates.shabatReminderTranslated[lang]!['body']!
-          as Function)(entryDate, releaseDate) as String;
+              as Function)(entryDate, releaseDate)
+          as String;
 
   @override
   String getReminderTitle(String lang) =>
       RemindersTranslates.shabatReminderTranslated[lang]!['title']! as String;
 
   @override
-  String getReminderCandlesBody(int beforeShabatAndHolidaysCandlesHours,
-          int beforeShabatAndHolidaysCandlesMinutes, String lang) =>
+  String getReminderCandlesBody(
+    int beforeShabatAndHolidaysCandlesHours,
+    int beforeShabatAndHolidaysCandlesMinutes,
+    String lang,
+  ) =>
       (RemindersTranslates.shabatReminderTranslated[lang]!['candlesBody']!
-              as Function)(beforeShabatAndHolidaysCandlesHours,
-          beforeShabatAndHolidaysCandlesMinutes) as String;
+              as Function)(
+            beforeShabatAndHolidaysCandlesHours,
+            beforeShabatAndHolidaysCandlesMinutes,
+          )
+          as String;
 
   @override
   String getReminderCandlesTitle(String lang) =>
@@ -59,9 +67,15 @@ class Shabat extends Event {
           as String;
 
   @override
-  String getReminderHavdalahBody(int afterShabatAndHolidaysCandlesHours,
-          int afterShabatAndHolidaysCandlesMinutes, String lang) =>
+  String getReminderHavdalahBody(
+    int afterShabatAndHolidaysCandlesHours,
+    int afterShabatAndHolidaysCandlesMinutes,
+    String lang,
+  ) =>
       (RemindersTranslates.shabatReminderTranslated[lang]!['havdalahBody']!
-              as Function)(afterShabatAndHolidaysCandlesHours,
-          afterShabatAndHolidaysCandlesMinutes) as String;
+              as Function)(
+            afterShabatAndHolidaysCandlesHours,
+            afterShabatAndHolidaysCandlesMinutes,
+          )
+          as String;
 }

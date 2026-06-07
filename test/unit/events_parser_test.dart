@@ -9,8 +9,10 @@ import 'package:kodesh_app/providers/events.dart';
 void main() {
   group('Events.getDateWithoutTime', () {
     test('strips timezone offset from ISO 8601 string', () {
-      expect(Events.getDateWithoutTime('2024-06-14T18:00:00+03:00'),
-          '2024-06-14T18:00:00');
+      expect(
+        Events.getDateWithoutTime('2024-06-14T18:00:00+03:00'),
+        '2024-06-14T18:00:00',
+      );
     });
 
     test('returns plain date string unchanged', () {
@@ -204,13 +206,15 @@ void main() {
   group('RoshChodesh.marge', () {
     test('earlier date becomes entryDate', () {
       final rc1 = RoshChodesh(
-          title: 'Rosh Chodesh',
-          entryDate: DateTime(2024, 11, 2),
-          titleOrig: null);
+        title: 'Rosh Chodesh',
+        entryDate: DateTime(2024, 11, 2),
+        titleOrig: null,
+      );
       final rc2 = RoshChodesh(
-          title: 'Rosh Chodesh',
-          entryDate: DateTime(2024, 11, 1),
-          titleOrig: null);
+        title: 'Rosh Chodesh',
+        entryDate: DateTime(2024, 11, 1),
+        titleOrig: null,
+      );
 
       final merged = RoshChodesh.marge(rc1, rc2);
       expect(merged.entryDate, DateTime(2024, 11, 1));

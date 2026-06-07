@@ -35,9 +35,10 @@ class ChooseTimeInDayWidget extends StatelessWidget {
         GroupCard(
           children: [
             CuperinoTextCheckSwitch(
-                text: title,
-                value: isExpanded,
-                onChanged: () => setIsExpanded()),
+              text: title,
+              value: isExpanded,
+              onChanged: () => setIsExpanded(),
+            ),
             ExpandedSection(
               expand: isExpanded,
               child: FittedBox(
@@ -48,19 +49,28 @@ class ChooseTimeInDayWidget extends StatelessWidget {
                     TextButton(
                       onPressed: () async {
                         TimeOfDay? time = await showTimePicker(
-                            context: context,
-                            initialTime: TimeOfDay(
-                                hour: timeObject.hour,
-                                minute: timeObject.minute),
-                            builder: (context, childWidget) {
-                              return MediaQuery(
-                                  data: MediaQuery.of(context).copyWith(
-                                      alwaysUse24HourFormat: true),
-                                  child: childWidget!);
-                            });
+                          context: context,
+                          initialTime: TimeOfDay(
+                            hour: timeObject.hour,
+                            minute: timeObject.minute,
+                          ),
+                          builder: (context, childWidget) {
+                            return MediaQuery(
+                              data: MediaQuery.of(
+                                context,
+                              ).copyWith(alwaysUse24HourFormat: true),
+                              child: childWidget!,
+                            );
+                          },
+                        );
                         if (time != null) {
-                          setTime(getTime(null, time.minute.toString(),
-                              time.hour.toString()));
+                          setTime(
+                            getTime(
+                              null,
+                              time.minute.toString(),
+                              time.hour.toString(),
+                            ),
+                          );
                         }
                       },
                       child: Text(timeString),
@@ -79,13 +89,9 @@ class ChooseTimeInDayWidget extends StatelessWidget {
               ),
           ],
         ),
-        const SizedBox(
-          height: 7,
-        ),
+        const SizedBox(height: 7),
         const Divider(height: 15, thickness: 1.5),
-        const SizedBox(
-          height: 7,
-        ),
+        const SizedBox(height: 7),
       ],
     );
   }

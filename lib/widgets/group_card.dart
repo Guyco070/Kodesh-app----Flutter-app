@@ -11,9 +11,7 @@ class GroupCard extends StatelessWidget {
       elevation: elevation,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-        child: Column(
-          children: children,
-        ),
+        child: Column(children: children),
       ),
     );
   }

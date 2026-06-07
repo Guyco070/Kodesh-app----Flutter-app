@@ -16,19 +16,16 @@ class CuperinoTextCheckSwitch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-        children: [
-          CupertinoSwitch(
-            activeColor: Theme.of(context).primaryColor,
-            value: value,
-            onChanged: (_) => onChanged(),
-          ),
-          Flexible(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(text),
-            ),
-          ),
-        ],
+      children: [
+        CupertinoSwitch(
+          activeColor: Theme.of(context).primaryColor,
+          value: value,
+          onChanged: (_) => onChanged(),
+        ),
+        Flexible(
+          child: Padding(padding: const EdgeInsets.all(8.0), child: Text(text)),
+        ),
+      ],
     );
   }
 }
