@@ -63,6 +63,7 @@ class MyApp extends StatelessWidget {
       primary: _seed,
       brightness: Brightness.light,
     ).copyWith(
+      surface: Colors.white,
       secondary: const Color(0xFF1565C0),
       secondaryContainer: const Color(0xFFD6E4FF),
       onSecondary: Colors.white,
@@ -72,6 +73,7 @@ class MyApp extends StatelessWidget {
       onTertiary: Colors.white,
       onTertiaryContainer: const Color(0xFF001E6C),
     ),
+    scaffoldBackgroundColor: Colors.white,
     useMaterial3: true,
   );
 

@@ -27,9 +27,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>LocationAlwaysAndWhenInUseUsageDescription</string>
+	<string>Kodesh uses your location to automatically select the nearest city for accurate Shabbat and zmanim times.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>LocationWhenInUseUsageDescription</string>
+	<string>Kodesh uses your location to automatically select the nearest city for accurate Shabbat and zmanim times.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
