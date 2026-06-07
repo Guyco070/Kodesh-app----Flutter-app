@@ -167,7 +167,7 @@ class _SettingsBarState extends State<SettingsBar> {
                                     ),
                                   ),
                                 ),
-                                const SizedBox(width: 2),
+                                const SizedBox(width: 12),
                                 _isDetectingLocation
                                     ? const SizedBox(
                                       width: 24,
