@@ -98,10 +98,6 @@ class _EventScreenState extends State<EventScreen> {
     }
   }
 
-  void setIsThereInternetConnection(bool bool) => setState(() {
-    _isThereInternetConnection = bool;
-  });
-
   @override
   void didChangeDependencies() {
     if (_isInit) {
@@ -123,7 +119,6 @@ class _EventScreenState extends State<EventScreen> {
       context,
       listen: false,
     ).fetchAndSetProducts(getDataFirst: true, lang: lang).then((items) {
-      setIsThereInternetConnection(items != null);
       setIsLoading(false);
       getZmanim(lang: lang);
     });
