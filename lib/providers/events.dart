@@ -692,15 +692,17 @@ class Events with ChangeNotifier {
 
   Future<void> fetchDafYomi() async {
     final now = DateTime.now();
+    final year = now.year;
     final todayStr =
         '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
-    // Use gy/gm to fetch the whole current month (Hebcal may not support single-day ranges reliably)
+    // Use full-year start/end range (same format that works for fetchAnnualHolidays)
+    // Single-day range is unreliable; filter client-side by today's date
     final url = Uri.https('www.hebcal.com', '/hebcal', {
       'cfg': 'json',
       'v': '1',
       'dafyomi': 'on',
-      'gy': now.year.toString(),
-      'gm': now.month.toString(),
+      'start': '$year-01-01',
+      'end': '$year-12-31',
     });
     try {
       final response = await get(url);

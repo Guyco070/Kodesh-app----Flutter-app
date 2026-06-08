@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
@@ -18,38 +19,52 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: ListTile(
-        horizontalTitleGap: 2,
-        leading:
-            leading ??
-            (!noBackBotton
-                ? IconButton(
-                  onPressed: () {
-                    Navigator.maybePop(context);
-                  },
-                  icon: const Icon(Icons.chevron_left_outlined),
-                )
-                : null),
-        title: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FittedBox(
-              child: Center(
-                child:
-                    titleWidget ??
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-              ),
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: isDark
+          ? const SystemUiOverlayStyle(
+              statusBarColor: Colors.transparent,
+              statusBarIconBrightness: Brightness.light,
+              statusBarBrightness: Brightness.dark,
+            )
+          : const SystemUiOverlayStyle(
+              statusBarColor: Colors.transparent,
+              statusBarIconBrightness: Brightness.dark,
+              statusBarBrightness: Brightness.light,
             ),
-          ],
+      child: SafeArea(
+        child: ListTile(
+          horizontalTitleGap: 2,
+          leading:
+              leading ??
+              (!noBackBotton
+                  ? IconButton(
+                    onPressed: () {
+                      Navigator.maybePop(context);
+                    },
+                    icon: const Icon(Icons.chevron_left_outlined),
+                  )
+                  : null),
+          title: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FittedBox(
+                child: Center(
+                  child:
+                      titleWidget ??
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                ),
+              ),
+            ],
+          ),
+          trailing: trailing ?? const LimitedBox(), // if no traili
         ),
-        trailing: trailing ?? const LimitedBox(), // if no traili
       ),
     );
   }
@@ -57,3 +72,4 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size(double.maxFinite, 50);
 }
+
