@@ -79,7 +79,6 @@ class _HolidayCalendarScreenState extends State<HolidayCalendarScreen> {
           ),
           title: Text(
             holiday.hebrew,
-            textDirection: TextDirection.rtl,
             textAlign: TextAlign.right,
           ),
           subtitle: Text(
