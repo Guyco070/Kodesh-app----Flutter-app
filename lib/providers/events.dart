@@ -692,19 +692,17 @@ class Events with ChangeNotifier {
 
   Future<void> fetchDafYomi() async {
     final now = DateTime.now();
+    final dateStr =
+        '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
     final url = Uri.https('www.hebcal.com', '/hebcal', {
       'cfg': 'json',
       'v': '1',
       'dafyomi': 'on',
-      'year': now.year.toString(),
-      'month': now.month.toString(),
-      'day': now.day.toString(),
+      'start': dateStr,
+      'end': dateStr,
     });
     try {
-      final response = await get(
-        url,
-        headers: {'User-Agent': 'KodeshApp/1.0 (gaico070@gmail.com)'},
-      );
+      final response = await get(url);
       if (response.statusCode != 200) {
         _dafYomiError = 'HTTP ${response.statusCode}';
         notifyListeners();
@@ -712,17 +710,23 @@ class Events with ChangeNotifier {
       }
       final data = jsonDecode(response.body) as Map<String, dynamic>;
       final items = data['items'] as List<dynamic>? ?? [];
+      DafYomi? found;
       for (final item in items) {
         if (item['category'] == 'dafyomi') {
-          _dafYomiItem = DafYomi(
+          found = DafYomi(
             title: item['title'] as String? ?? '',
             hebrew: item['hebrew'] as String? ?? '',
             date: item['date'] as String? ?? '',
             link: item['link'] as String?,
           );
-          _dafYomiError = null;
           break;
         }
+      }
+      if (found != null) {
+        _dafYomiItem = found;
+        _dafYomiError = null;
+      } else {
+        _dafYomiError = 'not_found';
       }
     } catch (e) {
       _dafYomiError = e.toString();
@@ -738,13 +742,11 @@ class Events with ChangeNotifier {
       'v': '1',
       'maj': 'on',
       'min': 'on',
-      'year': year.toString(),
+      'start': '$year-01-01',
+      'end': '$year-12-31',
     });
     try {
-      final response = await get(
-        url,
-        headers: {'User-Agent': 'KodeshApp/1.0 (gaico070@gmail.com)'},
-      );
+      final response = await get(url);
       if (response.statusCode != 200) {
         _annualHolidaysError = 'HTTP ${response.statusCode}';
         notifyListeners();

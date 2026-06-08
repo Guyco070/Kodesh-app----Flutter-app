@@ -62,7 +62,7 @@ class _DafYomiScreenState extends State<DafYomiScreen> {
 
     final daf = events.dafYomiItem;
     if (daf == null) {
-      return Center(child: Text(appLocalizations.loading));
+      return Center(child: Text(appLocalizations.apiErrorMessage));
     }
 
     return Padding(
