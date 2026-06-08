@@ -681,6 +681,11 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Detecting location...'**
   String get detectingLocation;
+
+  String get dafYomiMenu;
+  String get holidayCalendarMenu;
+  String get todaysDaf;
+  String get noHolidaysFound;
 }
 
 class _AppLocalizationsDelegate
