@@ -1,104 +1,98 @@
 import 'package:flutter/material.dart';
 import 'package:kodesh_app/animations/expanded_section.dart';
-import 'package:kodesh_app/providers/language_change_provider.dart';
 
 class CustomExpandedListView extends StatefulWidget {
   const CustomExpandedListView({
     super.key,
     required this.children,
-    this.maxHeight = 300,
-    this.minHeight = 140,
-    this.titledExpandIcon,
+    required this.title,
+    this.initiallyExpanded = true,
   });
+
   final List<Widget> children;
-  final double minHeight;
-  final double maxHeight;
-  final Widget? titledExpandIcon;
+  final String title;
+  final bool initiallyExpanded;
+
   @override
-  State<CustomExpandedListView> createState() => _CutomExpandedListViewState();
+  State<CustomExpandedListView> createState() => _CustomExpandedListViewState();
 }
 
-class _CutomExpandedListViewState extends State<CustomExpandedListView> {
-  bool _isExpanded = false;
+class _CustomExpandedListViewState extends State<CustomExpandedListView>
+    with SingleTickerProviderStateMixin {
+  late bool _isExpanded;
+  late final AnimationController _iconController;
+  late final Animation<double> _iconTurns;
+
+  @override
+  void initState() {
+    super.initState();
+    _isExpanded = widget.initiallyExpanded;
+    _iconController = AnimationController(
+      duration: const Duration(milliseconds: 200),
+      vsync: this,
+    );
+    _iconTurns = Tween<double>(begin: 0.0, end: 0.5).animate(
+      CurvedAnimation(parent: _iconController, curve: Curves.easeIn),
+    );
+    if (_isExpanded) {
+      _iconController.value = 1.0;
+    }
+  }
+
+  @override
+  void dispose() {
+    _iconController.dispose();
+    super.dispose();
+  }
+
+  void _toggle() {
+    setState(() {
+      _isExpanded = !_isExpanded;
+      if (_isExpanded) {
+        _iconController.forward();
+      } else {
+        _iconController.reverse();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    var iconButton = ExpandIcon(
-      isExpanded: _isExpanded,
-      onPressed: (isExp) {
-        setState(() {
-          _isExpanded = !isExp;
-        });
-      },
-    );
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (widget.titledExpandIcon != null) ...{
-          const Divider(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Align(
-                alignment:
-                    !LanguageChangeProvider.isDirectionRTL(null)
-                        ? Alignment.centerLeft
-                        : Alignment.centerRight,
-                child: const SizedBox(width: 40),
-              ), // set title centered
-              Align(
-                alignment: Alignment.center,
-                child: widget.titledExpandIcon!,
-              ),
-              Align(
-                alignment:
-                    LanguageChangeProvider.isDirectionRTL(null)
-                        ? Alignment.centerLeft
-                        : Alignment.centerRight,
-                child: iconButton,
-              ),
-            ],
-          ),
-          const Divider(indent: 18, endIndent: 18),
-        },
-        Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.white.withOpacity(0),
-                Colors.white.withOpacity(0),
-                Colors.white.withOpacity(0),
-                Colors.white.withOpacity(0),
-                Colors.black.withOpacity(
-                  0.1,
-                ), //This controls the darkness of the bar
+        const Divider(),
+        InkWell(
+          onTap: _toggle,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    widget.title,
+                    style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                  ),
+                ),
+                RotationTransition(
+                  turns: _iconTurns,
+                  child: Icon(
+                    Icons.expand_more,
+                    color: Colors.grey[600],
+                    size: 16,
+                  ),
+                ),
               ],
-              // stops: [0, 1], if you want to adjust the gradient this is where you would do it
             ),
           ),
-          child:
-              !_isExpanded
-                  ? LimitedBox(
-                    maxHeight:
-                        _isExpanded ? widget.maxHeight : widget.minHeight,
-                    child: ListView(
-                      padding: const EdgeInsets.all(0),
-                      children: widget.children,
-                    ),
-                  )
-                  : ExpandedSection(
-                    expand: _isExpanded,
-                    child: LimitedBox(
-                      maxHeight:
-                          _isExpanded ? widget.maxHeight : widget.minHeight,
-                      child: ListView(
-                        padding: const EdgeInsets.all(0),
-                        children: widget.children,
-                      ),
-                    ),
-                  ),
         ),
-        if (widget.titledExpandIcon == null) iconButton,
+        const Divider(indent: 18, endIndent: 18),
+        ExpandedSection(
+          expand: _isExpanded,
+          child: Column(
+            children: widget.children,
+          ),
+        ),
       ],
     );
   }
