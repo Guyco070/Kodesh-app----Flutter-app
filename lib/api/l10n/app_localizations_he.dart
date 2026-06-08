@@ -338,8 +338,21 @@ class AppLocalizationsHe extends AppLocalizations {
   String get useMyLocation => 'השתמש במיקום שלי';
 
   @override
-  String get locationNotAvailable => 'לא ניתן לזהות מיקום. אנא בדוק את הרשאות המיקום.';
+  String get locationNotAvailable =>
+      'לא ניתן לזהות מיקום. אנא בדוק את הרשאות המיקום.';
 
   @override
   String get detectingLocation => 'מזהה מיקום...';
+
+  @override
+  String get dafYomiMenu => 'דף יומי';
+
+  @override
+  String get holidayCalendarMenu => 'לוח חגים יהודי';
+
+  @override
+  String get todaysDaf => 'הדף היומי';
+
+  @override
+  String get noHolidaysFound => 'לא נמצאו חגים.';
 }

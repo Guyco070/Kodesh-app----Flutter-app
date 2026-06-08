@@ -123,5 +123,10 @@
 
     "useMyLocation": "השתמש במיקום שלי",
     "locationNotAvailable": "לא ניתן לזהות מיקום. אנא בדוק את הרשאות המיקום.",
-    "detectingLocation": "מזהה מיקום..."
+    "detectingLocation": "מזהה מיקום...",
+
+    "dafYomiMenu": "דף יומי",
+    "holidayCalendarMenu": "לוח חגים יהודי",
+    "todaysDaf": "הדף היומי",
+    "noHolidaysFound": "לא נמצאו חגים."
 }

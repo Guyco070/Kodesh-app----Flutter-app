@@ -18,6 +18,8 @@ import 'package:kodesh_app/screens/tefilot/seder_anahat_tefilin.dart';
 import 'package:kodesh_app/screens/tefilot/sfirat_omer_screen.dart';
 import 'package:kodesh_app/screens/tefilot/birkat_hamazon.dart';
 import 'package:kodesh_app/screens/tefilot/kriyat_shema_al_hamita.dart';
+import 'package:kodesh_app/screens/daf_yomi_screen.dart';
+import 'package:kodesh_app/screens/holiday_calendar_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
@@ -132,6 +134,8 @@ class MyApp extends StatelessWidget {
         Havdalah.routeName: (_) => Havdalah(),
         BirkatHamazon.routeName: (_) => BirkatHamazon(),
         KriyatShemaAlHamita.routeName: (_) => KriyatShemaAlHamita(),
+        DafYomiScreen.routeName: (_) => const DafYomiScreen(),
+        HolidayCalendarScreen.routeName: (_) => const HolidayCalendarScreen(),
         AboutScreen.routeName: (_) => const AboutScreen(),
       },
     );
