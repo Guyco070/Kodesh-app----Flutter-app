@@ -692,14 +692,15 @@ class Events with ChangeNotifier {
 
   Future<void> fetchDafYomi() async {
     final now = DateTime.now();
-    final dateStr =
+    final todayStr =
         '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
+    // Use gy/gm to fetch the whole current month (Hebcal may not support single-day ranges reliably)
     final url = Uri.https('www.hebcal.com', '/hebcal', {
       'cfg': 'json',
       'v': '1',
       'dafyomi': 'on',
-      'start': dateStr,
-      'end': dateStr,
+      'gy': now.year.toString(),
+      'gm': now.month.toString(),
     });
     try {
       final response = await get(url);
@@ -713,13 +714,17 @@ class Events with ChangeNotifier {
       DafYomi? found;
       for (final item in items) {
         if (item['category'] == 'dafyomi') {
-          found = DafYomi(
-            title: item['title'] as String? ?? '',
-            hebrew: item['hebrew'] as String? ?? '',
-            date: item['date'] as String? ?? '',
-            link: item['link'] as String?,
-          );
-          break;
+          final rawDate = item['date'] as String? ?? '';
+          final itemDate = rawDate.length >= 10 ? rawDate.substring(0, 10) : rawDate;
+          if (itemDate == todayStr) {
+            found = DafYomi(
+              title: item['title'] as String? ?? '',
+              hebrew: item['hebrew'] as String? ?? '',
+              date: item['date'] as String? ?? '',
+              link: item['link'] as String?,
+            );
+            break;
+          }
         }
       }
       if (found != null) {
