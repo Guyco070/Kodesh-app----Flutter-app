@@ -18,8 +18,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: ListTile(
+    final bgColor =
+        Theme.of(context).appBarTheme.backgroundColor ??
+        Theme.of(context).colorScheme.surface;
+    return ColoredBox(
+      color: bgColor,
+      child: SafeArea(
+        child: SizedBox(
+          height: preferredSize.height,
+          child: ListTile(
         horizontalTitleGap: 2,
         leading:
             leading ??
@@ -49,7 +56,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ],
         ),
-        trailing: trailing ?? const LimitedBox(), // if no traili
+        trailing: trailing ?? const LimitedBox(),
+          ),
+        ),
       ),
     );
   }

@@ -62,7 +62,7 @@ class Events with ChangeNotifier {
 
       if (setIsLoading != null) setIsLoading(true);
 
-      fetchAndSetProducts().then((value) {
+      fetchAndSetProducts(forceRefresh: true).then((value) {
         if (setIsLoading != null) setIsLoading(false);
       });
       notifyListeners();

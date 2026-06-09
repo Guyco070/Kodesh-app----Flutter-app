@@ -26,35 +26,38 @@ class DefaultScaffold extends StatefulWidget {
 class _DefaultScaffoldState extends State<DefaultScaffold> {
   bool _isLoading = false;
 
-  DropdownItem<String> buildMenuItem(Locale item) {
+  DropdownItem<String> _buildMenuItem(Locale item, String currentLang) {
+    final isSelected = item.languageCode == currentLang;
     return DropdownItem(
-      alignment: Alignment.center,
+      alignment: Alignment.centerLeft,
       value: item.languageCode,
-      child: Text(
-        '${item.languageCode} - ${L10n.names[item.languageCode]!['locale']}',
-        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-        textDirection: TextDirection.ltr,
+      child: Row(
+        children: [
+          Icon(
+            Icons.check,
+            size: 18,
+            color:
+                isSelected
+                    ? Theme.of(context).colorScheme.primary
+                    : Colors.transparent,
+          ),
+          const SizedBox(width: 8),
+          Text(
+            '${item.languageCode} - ${L10n.names[item.languageCode]!['locale']}',
+            style: TextStyle(
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.w400,
+              fontSize: 16,
+              color: isSelected ? Theme.of(context).colorScheme.primary : null,
+            ),
+            textDirection: TextDirection.ltr,
+          ),
+        ],
       ),
     );
   }
 
-  buildSelectedMenuItem() {
-    return L10n.all.map<Widget>((Locale item) {
-      return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 6),
-        alignment: Alignment.center,
-        child: Text(
-          item.languageCode,
-          style: const TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      );
-    }).toList();
-  }
-
   getLangDropDown(LanguageChangeProvider lang) {
+    final currentLang = lang.currentLocale.languageCode;
     return DropdownButtonHideUnderline(
       child: DropdownButton2<String>(
         isExpanded: true,
@@ -63,7 +66,12 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
           style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
           textDirection: TextDirection.rtl,
         ),
-        items: L10n.all.map<DropdownItem<String>>(buildMenuItem).toList(),
+        items:
+            L10n.all
+                .map<DropdownItem<String>>(
+                  (item) => _buildMenuItem(item, currentLang),
+                )
+                .toList(),
         valueListenable: ValueNotifier<String?>(
           lang.currentLocale.languageCode,
         ),
