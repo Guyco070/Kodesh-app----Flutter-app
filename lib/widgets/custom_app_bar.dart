@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
@@ -21,9 +22,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final bgColor =
         Theme.of(context).appBarTheme.backgroundColor ??
         Theme.of(context).colorScheme.surface;
-    return ColoredBox(
-      color: bgColor,
-      child: SafeArea(
+    final isDark =
+        ThemeData.estimateBrightnessForColor(bgColor) == Brightness.dark;
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness:
+            isDark ? Brightness.light : Brightness.dark,
+        statusBarBrightness:
+            isDark ? Brightness.dark : Brightness.light,
+      ),
+      child: ColoredBox(
+        color: bgColor,
+        child: SafeArea(
         child: SizedBox(
           height: preferredSize.height,
           child: ListTile(
@@ -59,6 +70,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         trailing: trailing ?? const LimitedBox(),
           ),
         ),
+      ),
       ),
     );
   }

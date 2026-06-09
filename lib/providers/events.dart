@@ -260,7 +260,7 @@ class Events with ChangeNotifier {
     final parts = cityToTake.split('|');
     final geoId = parts.length > 1 ? parts[1] : '';
     final cityName = parts[0];
-    final lg = lang ?? _currentLocale.languageCode;
+    final lg = lang ?? LanguageChangeProvider.getCurrentLocale.languageCode;
 
     Map<String, String> base = {'cfg': 'json', 'o': 'on', 'lg': lg};
     if (!isToday) {
@@ -502,7 +502,7 @@ class Events with ChangeNotifier {
     final parts = cityToTake.split('|');
     final geoId = parts.length > 1 ? parts[1] : '';
     final cityName = parts[0];
-    final lg = lang ?? _currentLocale.languageCode;
+    final lg = lang ?? LanguageChangeProvider.getCurrentLocale.languageCode;
 
     Map<String, String> base = {'cfg': 'json', 'lg': lg};
     if (!isToday) base['date'] = getDushedFormatedDate(startDate);

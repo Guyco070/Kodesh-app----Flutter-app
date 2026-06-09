@@ -28,30 +28,37 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
 
   DropdownItem<String> _buildMenuItem(Locale item, String currentLang) {
     final isSelected = item.languageCode == currentLang;
+    final primaryColor = Theme.of(context).colorScheme.primary;
     return DropdownItem(
       alignment: Alignment.centerLeft,
       value: item.languageCode,
-      child: Row(
-        children: [
-          Icon(
-            Icons.check,
-            size: 18,
-            color:
-                isSelected
-                    ? Theme.of(context).colorScheme.primary
-                    : Colors.transparent,
-          ),
-          const SizedBox(width: 8),
-          Text(
-            '${item.languageCode} - ${L10n.names[item.languageCode]!['locale']}',
-            style: TextStyle(
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.w400,
-              fontSize: 16,
-              color: isSelected ? Theme.of(context).colorScheme.primary : null,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 6),
+        decoration: isSelected
+            ? BoxDecoration(
+                color: primaryColor.withAlpha(30),
+                borderRadius: BorderRadius.circular(8),
+              )
+            : null,
+        child: Row(
+          children: [
+            Icon(
+              Icons.check,
+              size: 18,
+              color: isSelected ? primaryColor : Colors.transparent,
             ),
-            textDirection: TextDirection.ltr,
-          ),
-        ],
+            const SizedBox(width: 8),
+            Text(
+              '${item.languageCode} - ${L10n.names[item.languageCode]!['locale']}',
+              style: TextStyle(
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.w400,
+                fontSize: 16,
+                color: isSelected ? primaryColor : null,
+              ),
+              textDirection: TextDirection.ltr,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -114,19 +121,23 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
     );
   }
 
-  FittedBox langIcon(lang) => FittedBox(
-    child: Row(
-      children: [
-        const Icon(Icons.language_outlined),
-        const SizedBox(width: 3),
-        Text(
-          lang.currentLocale.languageCode,
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-          textDirection: TextDirection.rtl,
-        ),
-      ],
-    ),
-  );
+  FittedBox langIcon(LanguageChangeProvider lang) {
+    final code = lang.currentLocale.languageCode;
+    final localeName = L10n.names[code]!['locale']!;
+    return FittedBox(
+      child: Row(
+        children: [
+          const Icon(Icons.language_outlined),
+          const SizedBox(width: 4),
+          Text(
+            localeName,
+            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+            textDirection: TextDirection.ltr,
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
