@@ -694,10 +694,11 @@ class Events with ChangeNotifier {
     final now = DateTime.now();
     final todayStr =
         '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
-    // Calendar mode (year+gy+month) is required for dafyomi; start/end range mode does not return dafyomi items
+    // maj=on is required alongside dafyomi=on; without a base category Hebcal returns empty items
     final url = Uri.https('www.hebcal.com', '/hebcal', {
       'cfg': 'json',
       'v': '1',
+      'maj': 'on',
       'dafyomi': 'on',
       'year': now.year.toString(),
       'gy': '1',
@@ -711,7 +712,8 @@ class Events with ChangeNotifier {
         return;
       }
       final data = jsonDecode(response.body) as Map<String, dynamic>;
-      final items = data['items'] as List<dynamic>? ?? [];
+      final rawItems = data['items'];
+      final items = rawItems is List ? rawItems : <dynamic>[];
       DafYomi? found;
       for (final item in items) {
         if (item['category'] == 'dafyomi') {
