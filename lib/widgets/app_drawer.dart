@@ -13,13 +13,24 @@ import 'package:kodesh_app/api/l10n/app_localizations.dart';
 import 'package:kodesh_app/screens/tefilot/sfirat_omer_screen.dart';
 import 'package:kodesh_app/screens/tefilot/birkat_hamazon.dart';
 import 'package:kodesh_app/screens/tefilot/kriyat_shema_al_hamita.dart';
-import 'package:kodesh_app/screens/daf_yomi_screen.dart';
-import 'package:kodesh_app/screens/holiday_calendar_screen.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
 import 'package:kodesh_app/widgets/custom_expanded_list_view.dart';
 
-class AppDrawer extends StatelessWidget {
+class AppDrawer extends StatefulWidget {
   const AppDrawer({Key? key}) : super(key: key);
+
+  @override
+  State<AppDrawer> createState() => _AppDrawerState();
+}
+
+class _AppDrawerState extends State<AppDrawer> {
+  int? _openSection;
+
+  void _toggle(int index) {
+    setState(() {
+      _openSection = _openSection == index ? null : index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +47,8 @@ class AppDrawer extends StatelessWidget {
                 children: [
                   CustomExpandedListView(
                     title: appLocalizations.prayersAndBlessings,
+                    isExpanded: _openSection == 0,
+                    onToggle: () => _toggle(0),
                     children: [
                       ListTile(
                         leading: const Icon(Icons.fireplace_outlined),
@@ -79,6 +92,8 @@ class AppDrawer extends StatelessWidget {
                   ),
                   CustomExpandedListView(
                     title: appLocalizations.aids,
+                    isExpanded: _openSection == 1,
+                    onToggle: () => _toggle(1),
                     children: [
                       ListTile(
                         leading: const Icon(Icons.checklist_rtl),
@@ -93,23 +108,12 @@ class AppDrawer extends StatelessWidget {
                         title: Text(appLocalizations.compass),
                         onTap: () => Navigator.pushNamed(context, CompassScreen.routeName),
                       ),
-                      ListTile(
-                        leading: const Icon(Icons.menu_book_outlined),
-                        title: Text(appLocalizations.dafYomiMenu),
-                        onTap: () => Navigator.pushNamed(context, DafYomiScreen.routeName),
-                      ),
-                      ListTile(
-                        leading: const Icon(Icons.calendar_month_outlined),
-                        title: Text(appLocalizations.holidayCalendarMenu),
-                        onTap: () => Navigator.pushNamed(
-                          context,
-                          HolidayCalendarScreen.routeName,
-                        ),
-                      ),
                     ],
                   ),
                   CustomExpandedListView(
                     title: appLocalizations.settings,
+                    isExpanded: _openSection == 2,
+                    onToggle: () => _toggle(2),
                     children: [
                       ListTile(
                         leading: const Icon(Icons.watch_later_outlined),
