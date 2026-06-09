@@ -25,8 +25,14 @@ abstract class Event {
   String getReminderCandlesTitle(String lang);
   String getReminderHavdalahTitle(String lang);
 
-  String getReminderCandlesBody(int beforeShabatAndHolidaysCandlesHours,
-      int beforeShabatAndHolidaysCandlesMinutes, String lang);
-  String getReminderHavdalahBody(int afterShabatAndHolidaysCandlesHours,
-      int afterShabatAndHolidaysCandlesMinutes, String lang);
+  String getReminderCandlesBody(
+    int beforeShabatAndHolidaysCandlesHours,
+    int beforeShabatAndHolidaysCandlesMinutes,
+    String lang,
+  );
+  String getReminderHavdalahBody(
+    int afterShabatAndHolidaysCandlesHours,
+    int afterShabatAndHolidaysCandlesMinutes,
+    String lang,
+  );
 }

@@ -40,9 +40,8 @@ class _CompassScreenState extends State<CompassScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        appBar: CustomAppBar(
-          title: AppLocalizations.of(context)!.compass,
-        ),
-        body: CompassWidget(indicatorType: CompassIndicatorIcon.top,));
+      appBar: CustomAppBar(title: AppLocalizations.of(context)!.compass),
+      body: CompassWidget(indicatorType: CompassIndicatorIcon.top),
+    );
   }
 }

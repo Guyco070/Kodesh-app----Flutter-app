@@ -110,6 +110,17 @@
     "darkMode": "מצב לילה",
     "lightMode": "מצב יום",
 
+    "birkatHamazonMenu": "ברכת המזון",
+    "kriyatShemaAlHamitaMenu": "קריאת שמע על המיטה",
+
+    "addCustomTask": "הוסף מטלה",
+    "taskName": "שם המטלה",
+    "add": "הוסף",
+    "cancel": "ביטול",
+    "delete": "מחק",
+    "customTasksSection": "המטלות שלי",
+    "deleteTaskTitle": "למחוק את המטלה?",
+
     "useMyLocation": "השתמש במיקום שלי",
     "locationNotAvailable": "לא ניתן לזהות מיקום. אנא בדוק את הרשאות המיקום.",
     "detectingLocation": "מזהה מיקום..."

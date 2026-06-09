@@ -16,32 +16,31 @@ class CompassButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Hero(
-          tag: CompassScreen.routeName,
-          createRectTween: (begin, end) {
-            return CustomRectTween(begin: begin!, end: end!);
-          },
-          child: GestureDetector(
-        onTap: () {
-          Navigator.of(context).push(
-              HeroDialogRoute(builder: ((context) => CompassWidget())));
+        tag: CompassScreen.routeName,
+        createRectTween: (begin, end) {
+          return CustomRectTween(begin: begin!, end: end!);
         },
+        child: GestureDetector(
+          onTap: () {
+            Navigator.of(
+              context,
+            ).push(HeroDialogRoute(builder: ((context) => CompassWidget())));
+          },
           child: Container(
             padding: const EdgeInsets.all(5.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(200),
               color: Colors.black,
-              border: Border.all(color: Colors.grey)
+              border: Border.all(color: Colors.grey),
             ),
             child: Stack(
               alignment: Alignment.center,
               children: [
                 Image.asset('assets/cadrant.png'),
                 Transform.rotate(
-                    angle: ((heading ?? 0) - 50) * (pi / 180) * -1,
-                    child: Image.asset(
-                      'assets/compass.png',
-                      scale: 1.1,
-                    )),
+                  angle: ((heading ?? 0) - 50) * (pi / 180) * -1,
+                  child: Image.asset('assets/compass.png', scale: 1.1),
+                ),
               ],
             ),
           ),

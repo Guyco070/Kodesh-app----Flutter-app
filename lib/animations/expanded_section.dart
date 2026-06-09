@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
 class ExpandedSection extends StatefulWidget {
-
   final Widget child;
   final bool expand;
   const ExpandedSection({super.key, this.expand = false, required this.child});
@@ -10,9 +9,10 @@ class ExpandedSection extends StatefulWidget {
   _ExpandedSectionState createState() => _ExpandedSectionState();
 }
 
-class _ExpandedSectionState extends State<ExpandedSection> with SingleTickerProviderStateMixin {
+class _ExpandedSectionState extends State<ExpandedSection>
+    with SingleTickerProviderStateMixin {
   late AnimationController expandController;
-  late Animation<double> animation; 
+  late Animation<double> animation;
 
   @override
   void initState() {
@@ -25,7 +25,7 @@ class _ExpandedSectionState extends State<ExpandedSection> with SingleTickerProv
   void prepareAnimations() {
     expandController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500)
+      duration: const Duration(milliseconds: 500),
     );
     animation = CurvedAnimation(
       parent: expandController,
@@ -34,10 +34,9 @@ class _ExpandedSectionState extends State<ExpandedSection> with SingleTickerProv
   }
 
   void _runExpandCheck() {
-    if(widget.expand) {
+    if (widget.expand) {
       expandController.forward();
-    }
-    else {
+    } else {
       expandController.reverse();
     }
   }
@@ -59,7 +58,7 @@ class _ExpandedSectionState extends State<ExpandedSection> with SingleTickerProv
     return SizeTransition(
       axisAlignment: 1.0,
       sizeFactor: animation,
-      child: widget.child
+      child: widget.child,
     );
   }
 }
