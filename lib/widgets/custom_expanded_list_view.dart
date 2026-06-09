@@ -6,7 +6,7 @@ class CustomExpandedListView extends StatefulWidget {
     super.key,
     required this.children,
     required this.title,
-    this.initiallyExpanded = true,
+    this.initiallyExpanded = false,
   });
 
   final List<Widget> children;
@@ -22,6 +22,7 @@ class _CustomExpandedListViewState extends State<CustomExpandedListView>
   late bool _isExpanded;
   late final AnimationController _iconController;
   late final Animation<double> _iconTurns;
+  final _headerKey = GlobalKey();
 
   @override
   void initState() {
@@ -50,6 +51,16 @@ class _CustomExpandedListViewState extends State<CustomExpandedListView>
       _isExpanded = !_isExpanded;
       if (_isExpanded) {
         _iconController.forward();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (_headerKey.currentContext != null) {
+            Scrollable.ensureVisible(
+              _headerKey.currentContext!,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              alignment: 0.0,
+            );
+          }
+        });
       } else {
         _iconController.reverse();
       }
@@ -63,6 +74,7 @@ class _CustomExpandedListViewState extends State<CustomExpandedListView>
       children: [
         const Divider(),
         InkWell(
+          key: _headerKey,
           onTap: _toggle,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
@@ -86,7 +98,7 @@ class _CustomExpandedListViewState extends State<CustomExpandedListView>
             ),
           ),
         ),
-        const Divider(indent: 18, endIndent: 18),
+        if (_isExpanded) const Divider(indent: 18, endIndent: 18),
         ExpandedSection(
           expand: _isExpanded,
           child: Column(
