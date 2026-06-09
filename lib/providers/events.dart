@@ -692,17 +692,12 @@ class Events with ChangeNotifier {
 
   Future<void> fetchDafYomi() async {
     final now = DateTime.now();
-    final todayStr =
+    final dateStr =
         '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
-    // maj=on is required alongside dafyomi=on; without a base category Hebcal returns empty items
-    final url = Uri.https('www.hebcal.com', '/hebcal', {
-      'cfg': 'json',
-      'v': '1',
-      'maj': 'on',
-      'dafyomi': 'on',
-      'year': now.year.toString(),
-      'gy': '1',
-      'month': now.month.toString(),
+    // Sefaria's /api/calendars returns today's Jewish learning schedule including Daf Yomi
+    final url = Uri.https('www.sefaria.org', '/api/calendars', {
+      'timezone': 'UTC',
+      'diaspora': '1',
     });
     try {
       final response = await get(url);
@@ -712,22 +707,21 @@ class Events with ChangeNotifier {
         return;
       }
       final data = jsonDecode(response.body) as Map<String, dynamic>;
-      final rawItems = data['items'];
+      final rawItems = data['calendar_items'];
       final items = rawItems is List ? rawItems : <dynamic>[];
       DafYomi? found;
       for (final item in items) {
-        if (item['category'] == 'dafyomi') {
-          final rawDate = item['date'] as String? ?? '';
-          final itemDate = rawDate.length >= 10 ? rawDate.substring(0, 10) : rawDate;
-          if (itemDate == todayStr) {
-            found = DafYomi(
-              title: item['title'] as String? ?? '',
-              hebrew: item['hebrew'] as String? ?? '',
-              date: item['date'] as String? ?? '',
-              link: item['link'] as String?,
-            );
-            break;
-          }
+        final titleMap = item['title'] as Map<String, dynamic>?;
+        if (titleMap?['en'] == 'Daf Yomi') {
+          final displayValue = item['displayValue'] as Map<String, dynamic>?;
+          final ref = item['url'] as String? ?? '';
+          found = DafYomi(
+            title: displayValue?['en'] as String? ?? '',
+            hebrew: displayValue?['he'] as String? ?? '',
+            date: dateStr,
+            link: ref.isNotEmpty ? 'https://www.sefaria.org/$ref' : null,
+          );
+          break;
         }
       }
       if (found != null) {
