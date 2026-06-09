@@ -141,15 +141,12 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
 
   @override
   Widget build(BuildContext context) {
-    LanguageChangeProvider lang = Provider.of<LanguageChangeProvider>(
-      context,
-      listen: false,
-    );
+    final lang = Provider.of<LanguageChangeProvider>(context);
+    final appLocalizations = AppLocalizations.of(context)!;
     return Scaffold(
       drawer: const AppDrawer(),
       appBar: CustomAppBar(
-        title:
-            _isLoading ? AppLocalizations.of(context)!.loading : widget.title,
+        title: _isLoading ? appLocalizations.loading : widget.title,
         leading: Builder(
           builder: (context) {
             return IconButton(
