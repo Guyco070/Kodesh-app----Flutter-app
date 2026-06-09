@@ -341,8 +341,21 @@ class AppLocalizationsEs extends AppLocalizations {
   String get useMyLocation => 'Usar mi ubicación';
 
   @override
-  String get locationNotAvailable => 'No se pudo detectar la ubicación. Verifica los permisos de ubicación.';
+  String get locationNotAvailable =>
+      'No se pudo detectar la ubicación. Verifica los permisos de ubicación.';
 
   @override
   String get detectingLocation => 'Detectando ubicación...';
+
+  @override
+  String get dafYomiMenu => 'Daf Yomi';
+
+  @override
+  String get holidayCalendarMenu => 'Jewish Holiday Calendar';
+
+  @override
+  String get todaysDaf => "Today's Daf";
+
+  @override
+  String get noHolidaysFound => 'No holidays found.';
 }
