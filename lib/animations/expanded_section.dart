@@ -18,33 +18,31 @@ class _ExpandedSectionState extends State<ExpandedSection>
   void initState() {
     super.initState();
     prepareAnimations();
-    _runExpandCheck();
+    // Jump to initial state immediately, no animation on first render
+    expandController.value = widget.expand ? 1.0 : 0.0;
   }
 
-  ///Setting up the animation
   void prepareAnimations() {
     expandController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 300),
     );
     animation = CurvedAnimation(
       parent: expandController,
-      curve: Curves.fastOutSlowIn,
+      curve: Curves.easeInOut,
     );
-  }
-
-  void _runExpandCheck() {
-    if (widget.expand) {
-      expandController.forward();
-    } else {
-      expandController.reverse();
-    }
   }
 
   @override
   void didUpdateWidget(ExpandedSection oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _runExpandCheck();
+    if (oldWidget.expand != widget.expand) {
+      if (widget.expand) {
+        expandController.forward();
+      } else {
+        expandController.reverse();
+      }
+    }
   }
 
   @override
