@@ -6,12 +6,14 @@ class CustomExpandedListView extends StatefulWidget {
     super.key,
     required this.children,
     required this.title,
-    this.initiallyExpanded = false,
+    required this.isExpanded,
+    required this.onToggle,
   });
 
   final List<Widget> children;
   final String title;
-  final bool initiallyExpanded;
+  final bool isExpanded;
+  final VoidCallback onToggle;
 
   @override
   State<CustomExpandedListView> createState() => _CustomExpandedListViewState();
@@ -19,15 +21,12 @@ class CustomExpandedListView extends StatefulWidget {
 
 class _CustomExpandedListViewState extends State<CustomExpandedListView>
     with SingleTickerProviderStateMixin {
-  late bool _isExpanded;
   late final AnimationController _iconController;
   late final Animation<double> _iconTurns;
-  final _headerKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
-    _isExpanded = widget.initiallyExpanded;
     _iconController = AnimationController(
       duration: const Duration(milliseconds: 200),
       vsync: this,
@@ -35,8 +34,18 @@ class _CustomExpandedListViewState extends State<CustomExpandedListView>
     _iconTurns = Tween<double>(begin: 0.0, end: 0.5).animate(
       CurvedAnimation(parent: _iconController, curve: Curves.easeIn),
     );
-    if (_isExpanded) {
-      _iconController.value = 1.0;
+    _iconController.value = widget.isExpanded ? 1.0 : 0.0;
+  }
+
+  @override
+  void didUpdateWidget(CustomExpandedListView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.isExpanded != widget.isExpanded) {
+      if (widget.isExpanded) {
+        _iconController.forward();
+      } else {
+        _iconController.reverse();
+      }
     }
   }
 
@@ -46,27 +55,6 @@ class _CustomExpandedListViewState extends State<CustomExpandedListView>
     super.dispose();
   }
 
-  void _toggle() {
-    setState(() {
-      _isExpanded = !_isExpanded;
-      if (_isExpanded) {
-        _iconController.forward();
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (_headerKey.currentContext != null) {
-            Scrollable.ensureVisible(
-              _headerKey.currentContext!,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-              alignment: 0.0,
-            );
-          }
-        });
-      } else {
-        _iconController.reverse();
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -74,8 +62,7 @@ class _CustomExpandedListViewState extends State<CustomExpandedListView>
       children: [
         const Divider(),
         InkWell(
-          key: _headerKey,
-          onTap: _toggle,
+          onTap: widget.onToggle,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
             child: Row(
@@ -98,9 +85,9 @@ class _CustomExpandedListViewState extends State<CustomExpandedListView>
             ),
           ),
         ),
-        if (_isExpanded) const Divider(indent: 18, endIndent: 18),
+        if (widget.isExpanded) const Divider(indent: 18, endIndent: 18),
         ExpandedSection(
-          expand: _isExpanded,
+          expand: widget.isExpanded,
           child: Column(
             children: widget.children,
           ),
