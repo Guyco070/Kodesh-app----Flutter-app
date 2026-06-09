@@ -13,6 +13,8 @@ import 'package:kodesh_app/api/l10n/app_localizations.dart';
 import 'package:kodesh_app/screens/tefilot/sfirat_omer_screen.dart';
 import 'package:kodesh_app/screens/tefilot/birkat_hamazon.dart';
 import 'package:kodesh_app/screens/tefilot/kriyat_shema_al_hamita.dart';
+import 'package:kodesh_app/screens/daf_yomi_screen.dart';
+import 'package:kodesh_app/screens/holiday_calendar_screen.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
 import 'package:kodesh_app/widgets/custom_expanded_list_view.dart';
 
@@ -107,6 +109,19 @@ class _AppDrawerState extends State<AppDrawer> {
                         leading: const Icon(Icons.compass_calibration_outlined),
                         title: Text(appLocalizations.compass),
                         onTap: () => Navigator.pushNamed(context, CompassScreen.routeName),
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.menu_book_outlined),
+                        title: Text(appLocalizations.dafYomiMenu),
+                        onTap: () => Navigator.pushNamed(context, DafYomiScreen.routeName),
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.calendar_month_outlined),
+                        title: Text(appLocalizations.holidayCalendarMenu),
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          HolidayCalendarScreen.routeName,
+                        ),
                       ),
                     ],
                   ),
