@@ -157,6 +157,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       ),
                     ],
                   ),
+                  const Divider(),
                 ],
               ),
             ),
