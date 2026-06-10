@@ -188,13 +188,17 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String remindMeXhoursAndYMinutesBeforeShbatAndHolidays(
-      String hours, String minutes) {
+    String hours,
+    String minutes,
+  ) {
     return 'Напомнить мне $hours часов и $minutes минут до Шаббата или праздника';
   }
 
   @override
   String remindMeXhoursAndYMinutesBeforeNerotHanukkah(
-      String hours, String minutes) {
+    String hours,
+    String minutes,
+  ) {
     return 'Напомни мне $hours часов и $minutes минут до зажжения свечей Хануки';
   }
 
@@ -247,13 +251,17 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String remindMeXhoursAndYMinutesBeforeCandlesLighning(
-      String hours, String minutes) {
+    String hours,
+    String minutes,
+  ) {
     return 'Напомни мне зажечь свечи $hours часа и $minutes минут до Шаббата или праздника';
   }
 
   @override
   String remindMeXhoursAndYMinutesAfterShabatForHavdalah(
-      String hours, String minutes) {
+    String hours,
+    String minutes,
+  ) {
     return 'Напомни мне совершить авдалу $hours часов и $minutes минут после Шаббата или праздника';
   }
 
@@ -301,4 +309,40 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get lightMode => 'Светлый режим';
+
+  @override
+  String get birkatHamazonMenu => 'Биркат Хамазон';
+
+  @override
+  String get kriyatShemaAlHamitaMenu => 'Шма перед сном';
+
+  @override
+  String get addCustomTask => 'Добавить задачу';
+
+  @override
+  String get taskName => 'Название задачи';
+
+  @override
+  String get add => 'Добавить';
+
+  @override
+  String get cancel => 'Отмена';
+
+  @override
+  String get delete => 'Удалить';
+
+  @override
+  String get customTasksSection => 'Мои задачи';
+
+  @override
+  String get deleteTaskTitle => 'Удалить задачу?';
+
+  @override
+  String get useMyLocation => 'Использовать моё местоположение';
+
+  @override
+  String get locationNotAvailable => 'Не удалось определить местоположение. Проверьте разрешения.';
+
+  @override
+  String get detectingLocation => 'Определение местоположения...';
 }

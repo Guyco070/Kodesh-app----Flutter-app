@@ -17,13 +17,19 @@ class RemindersTranslates {
         return body;
       },
       'candlesTitle': 'Shabbat Shalom - candle lighting time',
-      'candlesBody': (int beforeShabatAndHolidaysCandlesHours,
-              int beforeShabatAndHolidaysCandlesMinutes) =>
-          'In ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours hours and ' : ''}$beforeShabatAndHolidaysCandlesMinutes minutes Shabbat will come, don\'t forget to light candles.',
+      'candlesBody':
+          (
+            int beforeShabatAndHolidaysCandlesHours,
+            int beforeShabatAndHolidaysCandlesMinutes,
+          ) =>
+              'In ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours hours and ' : ''}$beforeShabatAndHolidaysCandlesMinutes minutes Shabbat will come, don\'t forget to light candles.',
       'havdalahTitle': 'Havdalah time',
-      'havdalahBody': (int beforeShabatAndHolidaysCandlesHours,
-              int beforeShabatAndHolidaysCandlesMinutes) =>
-          'Before ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours hours and ' : ''}$beforeShabatAndHolidaysCandlesMinutes minutes Shabbat ended, don\'t forget to do Havdalah.',
+      'havdalahBody':
+          (
+            int beforeShabatAndHolidaysCandlesHours,
+            int beforeShabatAndHolidaysCandlesMinutes,
+          ) =>
+              'Before ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours hours and ' : ''}$beforeShabatAndHolidaysCandlesMinutes minutes Shabbat ended, don\'t forget to do Havdalah.',
     },
     'he': {
       'title': 'שבת שלום',
@@ -38,13 +44,19 @@ class RemindersTranslates {
         return body;
       },
       'candlesTitle': 'שבת שלום - זמן להדלקת נרות',
-      'candlesBody': (int beforeShabatAndHolidaysCandlesHours,
-              int beforeShabatAndHolidaysCandlesMinutes) =>
-          'בעוד ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours שעות ו-' : ''}$beforeShabatAndHolidaysCandlesMinutes דקות תכנס השבת , לא לשכוח להדליק נרות.',
+      'candlesBody':
+          (
+            int beforeShabatAndHolidaysCandlesHours,
+            int beforeShabatAndHolidaysCandlesMinutes,
+          ) =>
+              'בעוד ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours שעות ו-' : ''}$beforeShabatAndHolidaysCandlesMinutes דקות תכנס השבת , לא לשכוח להדליק נרות.',
       'havdalahTitle': 'זמן הבדלה',
-      'havdalahBody': (int beforeShabatAndHolidaysCandlesHours,
-              int beforeShabatAndHolidaysCandlesMinutes) =>
-          'לפני ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours שעות ו-' : ''}$beforeShabatAndHolidaysCandlesMinutes דקות יצאה שבת, לא לשכוח לעשות הבדלה.',
+      'havdalahBody':
+          (
+            int beforeShabatAndHolidaysCandlesHours,
+            int beforeShabatAndHolidaysCandlesMinutes,
+          ) =>
+              'לפני ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours שעות ו-' : ''}$beforeShabatAndHolidaysCandlesMinutes דקות יצאה שבת, לא לשכוח לעשות הבדלה.',
     },
     'es': {
       'title': 'Shabat shalom',
@@ -62,9 +74,12 @@ class RemindersTranslates {
         return body;
       },
       'candlesTitle': 'Shabat Shalom - tiempo de encendido de velas',
-      'candlesBody': (int beforeShabatAndHolidaysCandlesHours,
-              int beforeShabatAndHolidaysCandlesMinutes) =>
-          'en ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours horas y-' : ''}$beforeShabatAndHolidaysCandlesMinutes minutos llegará Shabat, no olvides encender velas.',
+      'candlesBody':
+          (
+            int beforeShabatAndHolidaysCandlesHours,
+            int beforeShabatAndHolidaysCandlesMinutes,
+          ) =>
+              'en ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours horas y-' : ''}$beforeShabatAndHolidaysCandlesMinutes minutos llegará Shabat, no olvides encender velas.',
     },
     'ru': {
       'title': 'Шаббат шалом',
@@ -81,9 +96,12 @@ class RemindersTranslates {
         return body;
       },
       'candlesTitle': 'Шаббат Шалом - время зажигания свечей',
-      'candlesBody': (int beforeShabatAndHolidaysCandlesHours,
-              int beforeShabatAndHolidaysCandlesMinutes) =>
-          'в ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours часы а также-' : ''}$beforeShabatAndHolidaysCandlesMinutes минуты Шаббат придет, не забудьте зажечь свечи.',
+      'candlesBody':
+          (
+            int beforeShabatAndHolidaysCandlesHours,
+            int beforeShabatAndHolidaysCandlesMinutes,
+          ) =>
+              'в ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours часы а также-' : ''}$beforeShabatAndHolidaysCandlesMinutes минуты Шаббат придет, не забудьте зажечь свечи.',
     },
   };
 
@@ -104,16 +122,25 @@ class RemindersTranslates {
         return body;
       },
       'candlesTitle': 'Holiday candle lighting time',
-      'candlesBody': (int beforeShabatAndHolidaysCandlesHours,
-              int beforeShabatAndHolidaysCandlesMinutes) =>
-          'In ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours hours and ' : ''}$beforeShabatAndHolidaysCandlesMinutes minutes the holiday will come, don\'t forget to light candles.',
-      'chnukahCandlesBody': (int beforeShabatAndHolidaysCandlesHours,
-              int beforeShabatAndHolidaysCandlesMinutes) =>
-          'In ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours hours and ' : ''}$beforeShabatAndHolidaysCandlesMinutes minutes it\'s time to light Hanukkah candles will come, don\'t forget to light candles.',
+      'candlesBody':
+          (
+            int beforeShabatAndHolidaysCandlesHours,
+            int beforeShabatAndHolidaysCandlesMinutes,
+          ) =>
+              'In ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours hours and ' : ''}$beforeShabatAndHolidaysCandlesMinutes minutes the holiday will come, don\'t forget to light candles.',
+      'chnukahCandlesBody':
+          (
+            int beforeShabatAndHolidaysCandlesHours,
+            int beforeShabatAndHolidaysCandlesMinutes,
+          ) =>
+              'In ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours hours and ' : ''}$beforeShabatAndHolidaysCandlesMinutes minutes it\'s time to light Hanukkah candles will come, don\'t forget to light candles.',
       'havdalahTitle': 'Havdalah time',
-      'havdalahBody': (int beforeShabatAndHolidaysCandlesHours,
-              int beforeShabatAndHolidaysCandlesMinutes) =>
-          'Before ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours hours and ' : ''}$beforeShabatAndHolidaysCandlesMinutes minutes the Holiday ended, don\'t forget to do Havdalah.',
+      'havdalahBody':
+          (
+            int beforeShabatAndHolidaysCandlesHours,
+            int beforeShabatAndHolidaysCandlesMinutes,
+          ) =>
+              'Before ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours hours and ' : ''}$beforeShabatAndHolidaysCandlesMinutes minutes the Holiday ended, don\'t forget to do Havdalah.',
     },
     'he': {
       // 'title': 'שבת שלום',
@@ -129,16 +156,25 @@ class RemindersTranslates {
         return body;
       },
       'candlesTitle': 'זמן להדלקת נרות החג',
-      'candlesBody': (int beforeShabatAndHolidaysCandlesHours,
-              int beforeShabatAndHolidaysCandlesMinutes) =>
-          'בעוד ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours שעות ו-' : ''}$beforeShabatAndHolidaysCandlesMinutes דקות יכנס החג, לא לשכוח להדליק נרות.',
-      'chnukahCandlesBody': (int beforeShabatAndHolidaysCandlesHours,
-              int beforeShabatAndHolidaysCandlesMinutes) =>
-          'בעוד ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours שעות ו-' : ''}$beforeShabatAndHolidaysCandlesMinutes דקות זמן להדלקת נרות חנוכה, לא לשכוח להדליק נרות.',
+      'candlesBody':
+          (
+            int beforeShabatAndHolidaysCandlesHours,
+            int beforeShabatAndHolidaysCandlesMinutes,
+          ) =>
+              'בעוד ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours שעות ו-' : ''}$beforeShabatAndHolidaysCandlesMinutes דקות יכנס החג, לא לשכוח להדליק נרות.',
+      'chnukahCandlesBody':
+          (
+            int beforeShabatAndHolidaysCandlesHours,
+            int beforeShabatAndHolidaysCandlesMinutes,
+          ) =>
+              'בעוד ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours שעות ו-' : ''}$beforeShabatAndHolidaysCandlesMinutes דקות זמן להדלקת נרות חנוכה, לא לשכוח להדליק נרות.',
       'havdalahTitle': 'זמן הבדלה',
-      'havdalahBody': (int beforeShabatAndHolidaysCandlesHours,
-              int beforeShabatAndHolidaysCandlesMinutes) =>
-          'לפני ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours שעות ו-' : ''}$beforeShabatAndHolidaysCandlesMinutes דקות יצא החג, לא לשכוח לעשות הבדלה.',
+      'havdalahBody':
+          (
+            int beforeShabatAndHolidaysCandlesHours,
+            int beforeShabatAndHolidaysCandlesMinutes,
+          ) =>
+              'לפני ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours שעות ו-' : ''}$beforeShabatAndHolidaysCandlesMinutes דקות יצא החג, לא לשכוח לעשות הבדלה.',
     },
     'es': {
       // 'title': 'Shabat shalom',
@@ -155,13 +191,19 @@ class RemindersTranslates {
         return body;
       },
       'candlesTitle': 'Tiempo de encendido de velas navideñas',
-      'candlesBody': (int beforeShabatAndHolidaysCandlesHours,
-              int beforeShabatAndHolidaysCandlesMinutes) =>
-          'en ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours horas y-' : ''}$beforeShabatAndHolidaysCandlesMinutes minutos llegarán las vacaciones, no olvides encender velas.',
+      'candlesBody':
+          (
+            int beforeShabatAndHolidaysCandlesHours,
+            int beforeShabatAndHolidaysCandlesMinutes,
+          ) =>
+              'en ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours horas y-' : ''}$beforeShabatAndHolidaysCandlesMinutes minutos llegarán las vacaciones, no olvides encender velas.',
       'chnukahCandlesTitle': 'Hora de encender las velas de Hanukkah',
-      'chnukahCandlesBody': (int beforeShabatAndHolidaysCandlesHours,
-              int beforeShabatAndHolidaysCandlesMinutes) =>
-          'En ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours horas y ' : ''}$beforeShabatAndHolidaysCandlesMinutes minutos es hora de encender las velas de Hanukkah.',
+      'chnukahCandlesBody':
+          (
+            int beforeShabatAndHolidaysCandlesHours,
+            int beforeShabatAndHolidaysCandlesMinutes,
+          ) =>
+              'En ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours horas y ' : ''}$beforeShabatAndHolidaysCandlesMinutes minutos es hora de encender las velas de Hanukkah.',
     },
     'ru': {
       // 'title': 'Шаббат шалом',
@@ -178,36 +220,46 @@ class RemindersTranslates {
         return body;
       },
       'candlesTitle': 'Время зажжения праздничных свечей',
-      'candlesBody': (int beforeShabatAndHolidaysCandlesHours,
-              int beforeShabatAndHolidaysCandlesMinutes) =>
-          'в ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours часы а также-' : ''}$beforeShabatAndHolidaysCandlesMinutes минуты праздник придет, не забудьте зажечь свечи.',
+      'candlesBody':
+          (
+            int beforeShabatAndHolidaysCandlesHours,
+            int beforeShabatAndHolidaysCandlesMinutes,
+          ) =>
+              'в ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours часы а также-' : ''}$beforeShabatAndHolidaysCandlesMinutes минуты праздник придет, не забудьте зажечь свечи.',
       'chnukahCandlesTitle': 'Время зажжения свечей Хануки',
-      'chnukahCandlesBody': (int beforeShabatAndHolidaysCandlesHours,
-              int beforeShabatAndHolidaysCandlesMinutes) =>
-          'Через ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours часа и ' : ''}$beforeShabatAndHolidaysCandlesMinutes минут время зажигать свечи Хануки.',
+      'chnukahCandlesBody':
+          (
+            int beforeShabatAndHolidaysCandlesHours,
+            int beforeShabatAndHolidaysCandlesMinutes,
+          ) =>
+              'Через ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours часа и ' : ''}$beforeShabatAndHolidaysCandlesMinutes минут время зажигать свечи Хануки.',
     },
   };
 
   static final roshHodeshReminderTranslated = {
     'en': {
       // 'title': 'English',
-      'body': (DateTime entryDate, String title) =>
-          'On the date ${DateFormat('dd/MM/yy').format(entryDate)} - $title',
+      'body':
+          (DateTime entryDate, String title) =>
+              'On the date ${DateFormat('dd/MM/yy').format(entryDate)} - $title',
     },
     'he': {
       // 'title': 'עברית',
-      'body': (DateTime entryDate, String title) =>
-          'בתאריך ${DateFormat('dd/MM/yy').format(entryDate)} - $title',
+      'body':
+          (DateTime entryDate, String title) =>
+              'בתאריך ${DateFormat('dd/MM/yy').format(entryDate)} - $title',
     },
     'es': {
       // 'title': 'español',
-      'body': (DateTime entryDate, String title) =>
-          'En la cita ${DateFormat('dd/MM/yy').format(entryDate)} - $title',
+      'body':
+          (DateTime entryDate, String title) =>
+              'En la cita ${DateFormat('dd/MM/yy').format(entryDate)} - $title',
     },
     'ru': {
       // 'title': 'ру́сский язы́к',
-      'body': (DateTime entryDate, String title) =>
-          'В день ${DateFormat('dd/MM/yy').format(entryDate)} - $title',
+      'body':
+          (DateTime entryDate, String title) =>
+              'В день ${DateFormat('dd/MM/yy').format(entryDate)} - $title',
     },
   };
 

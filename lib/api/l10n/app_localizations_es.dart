@@ -188,13 +188,17 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String remindMeXhoursAndYMinutesBeforeShbatAndHolidays(
-      String hours, String minutes) {
+    String hours,
+    String minutes,
+  ) {
     return 'Recordarme $hours horas y $minutes minutos antes del Shabat o festivo';
   }
 
   @override
   String remindMeXhoursAndYMinutesBeforeNerotHanukkah(
-      String hours, String minutes) {
+    String hours,
+    String minutes,
+  ) {
     return 'Recordarme $hours horas y $minutes minutos antes del encendido de velas de Janucá';
   }
 
@@ -246,13 +250,17 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String remindMeXhoursAndYMinutesBeforeCandlesLighning(
-      String hours, String minutes) {
+    String hours,
+    String minutes,
+  ) {
     return 'Recordarme encender las velas $hours horas y $minutes minutos antes del Shabat o festivo';
   }
 
   @override
   String remindMeXhoursAndYMinutesAfterShabatForHavdalah(
-      String hours, String minutes) {
+    String hours,
+    String minutes,
+  ) {
     return 'Recordarme hacer Havdalá $hours horas y $minutes minutos después del Shabat o festivo';
   }
 
@@ -301,4 +309,40 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lightMode => 'Modo claro';
+
+  @override
+  String get birkatHamazonMenu => 'Birkat Hamazón';
+
+  @override
+  String get kriyatShemaAlHamitaMenu => 'Shemá antes de dormir';
+
+  @override
+  String get addCustomTask => 'Agregar tarea';
+
+  @override
+  String get taskName => 'Nombre de la tarea';
+
+  @override
+  String get add => 'Agregar';
+
+  @override
+  String get cancel => 'Cancelar';
+
+  @override
+  String get delete => 'Eliminar';
+
+  @override
+  String get customTasksSection => 'Mis tareas personales';
+
+  @override
+  String get deleteTaskTitle => '¿Eliminar tarea?';
+
+  @override
+  String get useMyLocation => 'Usar mi ubicación';
+
+  @override
+  String get locationNotAvailable => 'No se pudo detectar la ubicación. Verifica los permisos de ubicación.';
+
+  @override
+  String get detectingLocation => 'Detectando ubicación...';
 }

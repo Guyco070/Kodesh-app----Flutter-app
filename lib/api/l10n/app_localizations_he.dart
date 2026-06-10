@@ -187,13 +187,17 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String remindMeXhoursAndYMinutesBeforeShbatAndHolidays(
-      String hours, String minutes) {
+    String hours,
+    String minutes,
+  ) {
     return 'הזכר לי $hours שעות ו- $minutes דקות לפני שבת או חג';
   }
 
   @override
   String remindMeXhoursAndYMinutesBeforeNerotHanukkah(
-      String hours, String minutes) {
+    String hours,
+    String minutes,
+  ) {
     return 'הזכר לי $hours שעות ו- $minutes דקות לפני הדלקת נרות חנוכה';
   }
 
@@ -245,13 +249,17 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String remindMeXhoursAndYMinutesBeforeCandlesLighning(
-      String hours, String minutes) {
+    String hours,
+    String minutes,
+  ) {
     return 'הזכר לי להדליק נרות $hours שעות ו- $minutes דקות לפני שבת או חג';
   }
 
   @override
   String remindMeXhoursAndYMinutesAfterShabatForHavdalah(
-      String hours, String minutes) {
+    String hours,
+    String minutes,
+  ) {
     return 'הזכר לי להדליק נרות $hours שעות ו- $minutes דקות אחרי שבת או חג להבדלה';
   }
 
@@ -298,4 +306,40 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get lightMode => 'מצב יום';
+
+  @override
+  String get birkatHamazonMenu => 'ברכת המזון';
+
+  @override
+  String get kriyatShemaAlHamitaMenu => 'קריאת שמע על המיטה';
+
+  @override
+  String get addCustomTask => 'הוסף מטלה';
+
+  @override
+  String get taskName => 'שם המטלה';
+
+  @override
+  String get add => 'הוסף';
+
+  @override
+  String get cancel => 'ביטול';
+
+  @override
+  String get delete => 'מחק';
+
+  @override
+  String get customTasksSection => 'המטלות שלי';
+
+  @override
+  String get deleteTaskTitle => 'למחוק את המטלה?';
+
+  @override
+  String get useMyLocation => 'השתמש במיקום שלי';
+
+  @override
+  String get locationNotAvailable => 'לא ניתן לזהות מיקום. אנא בדוק את הרשאות המיקום.';
+
+  @override
+  String get detectingLocation => 'מזהה מיקום...';
 }

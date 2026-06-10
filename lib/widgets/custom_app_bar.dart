@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar(
-      {super.key,
-      required this.title,
-      this.leading,
-      this.trailing,
-      this.titleWidget,
-      this.noBackBotton = false});
+  const CustomAppBar({
+    super.key,
+    required this.title,
+    this.leading,
+    this.trailing,
+    this.titleWidget,
+    this.noBackBotton = false,
+  });
 
   final String title;
   final Widget? leading;
@@ -17,31 +19,57 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: ListTile(
-          horizontalTitleGap: 2,
-          leading: leading ?? (!noBackBotton ? IconButton(
-                      onPressed: () {
-                        Navigator.maybePop(context);
-                       },
-                      icon: const Icon(Icons.chevron_left_outlined)) : null),
-           title: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-             children: [
-               FittedBox(
-                 child: Center(
-                      child: titleWidget ??
-                          Text(
-                            title,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16),
-                          ),
+    final bgColor =
+        Theme.of(context).appBarTheme.backgroundColor ??
+        Theme.of(context).colorScheme.surface;
+    final isDark =
+        ThemeData.estimateBrightnessForColor(bgColor) == Brightness.dark;
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        statusBarColor: bgColor,
+        statusBarIconBrightness:
+            isDark ? Brightness.light : Brightness.dark,
+        statusBarBrightness:
+            isDark ? Brightness.dark : Brightness.light,
+      ),
+      child: ColoredBox(
+        color: bgColor,
+        child: SizedBox(
+          height: preferredSize.height,
+          child: ListTile(
+        horizontalTitleGap: 2,
+        leading:
+            leading ??
+            (!noBackBotton
+                ? IconButton(
+                  onPressed: () {
+                    Navigator.maybePop(context);
+                  },
+                  icon: const Icon(Icons.chevron_left_outlined),
+                )
+                : null),
+        title: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            FittedBox(
+              child: Center(
+                child:
+                    titleWidget ??
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
-               ),
-             ],
-           ),
-            trailing: trailing ?? const LimitedBox(), // if no traili
+              ),
+            ),
+          ],
         ),
+        trailing: trailing ?? const LimitedBox(),
+          ),
+        ),
+      ),
     );
   }
 
