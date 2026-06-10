@@ -311,6 +311,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lightMode => 'Light mode';
 
   @override
+  String get systemMode => 'System';
+
+  @override
   String get birkatHamazonMenu => 'Birkat Hamazon';
 
   @override
@@ -341,8 +344,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get useMyLocation => 'Use my location';
 
   @override
-  String get locationNotAvailable => 'Could not detect location. Please check location permissions.';
+  String get locationNotAvailable =>
+      'Could not detect location. Please check location permissions.';
 
   @override
   String get detectingLocation => 'Detecting location...';
+
+  @override
+  String get dafYomiMenu => 'Daf Yomi';
+
+  @override
+  String get holidayCalendarMenu => 'Jewish Holiday Calendar';
+
+  @override
+  String get todaysDaf => "Today's Daf";
+
+  @override
+  String get noHolidaysFound => 'No holidays found.';
 }

@@ -331,6 +331,9 @@
     "lightMode": "Light mode",
     "@lightMode": { "description": "lightMode" },
 
+    "systemMode": "System",
+    "@systemMode": { "description": "systemMode" },
+
     "birkatHamazonMenu": "Birkat Hamazon",
     "@birkatHamazonMenu": { "description": "birkatHamazonMenu" },
 
@@ -365,5 +368,17 @@
     "@locationNotAvailable": { "description": "Shown when location detection fails" },
 
     "detectingLocation": "Detecting location...",
-    "@detectingLocation": { "description": "Shown while GPS location is being detected" }
+    "@detectingLocation": { "description": "Shown while GPS location is being detected" },
+
+    "dafYomiMenu": "Daf Yomi",
+    "@dafYomiMenu": { "description": "dafYomiMenu" },
+
+    "holidayCalendarMenu": "Jewish Holiday Calendar",
+    "@holidayCalendarMenu": { "description": "holidayCalendarMenu" },
+
+    "todaysDaf": "Today's Daf",
+    "@todaysDaf": { "description": "todaysDaf" },
+
+    "noHolidaysFound": "No holidays found.",
+    "@noHolidaysFound": { "description": "noHolidaysFound" }
 }

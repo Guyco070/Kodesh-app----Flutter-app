@@ -12,6 +12,8 @@ import 'package:kodesh_app/models/holiday.dart';
 import 'package:kodesh_app/models/rosh_chodesh.dart';
 import 'package:kodesh_app/models/sfirat_omer.dart';
 import 'package:kodesh_app/models/shabat.dart';
+import 'package:kodesh_app/models/daf_yomi.dart';
+import 'package:kodesh_app/models/hebcal_holiday.dart';
 import 'package:kodesh_app/models/zman.dart';
 import 'package:kodesh_app/widgets/events_widgets/holiday_widget.dart';
 import 'package:kodesh_app/widgets/events_widgets/rosh_chodesh_widget.dart';
@@ -51,6 +53,11 @@ class Events with ChangeNotifier {
   Map<DateTime, String>? _hebrewDates = {};
 
   /// [_hebrewDates] : if isHebrewDate is true, fill in the Hebrew dates that correspond to the Gregorian dates of the events. Fill by fetching from an appropriate API.
+
+  DafYomi? _dafYomiItem;
+  List<HebcalHoliday>? _annualHolidays;
+  String? _dafYomiError;
+  String? _annualHolidaysError;
 
   Locale _currentLocale = const Locale('en');
 
@@ -92,6 +99,12 @@ class Events with ChangeNotifier {
   Map<DateTime, String>? get hebrewDates {
     return _hebrewDates == null ? null : {..._hebrewDates!};
   }
+
+  DafYomi? get dafYomiItem => _dafYomiItem;
+  List<HebcalHoliday>? get annualHolidays =>
+      _annualHolidays == null ? null : [..._annualHolidays!];
+  String? get dafYomiError => _dafYomiError;
+  String? get annualHolidaysError => _annualHolidaysError;
 
   void setWebLocation(double lat, double lng, String tzid) {
     _webLat = lat;
@@ -675,5 +688,93 @@ class Events with ChangeNotifier {
     if (event is RoshChodesh) return RoshChodeshWidget(data: event);
     if (event is SfiratOmer) return SfiratOmerWidget(data: event);
     return null;
+  }
+
+  Future<void> fetchDafYomi() async {
+    final now = DateTime.now();
+    final dateStr =
+        '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
+    // Sefaria's /api/calendars returns today's Jewish learning schedule including Daf Yomi
+    final url = Uri.https('www.sefaria.org', '/api/calendars', {
+      'timezone': 'UTC',
+      'diaspora': '1',
+    });
+    try {
+      final response = await get(url);
+      if (response.statusCode != 200) {
+        _dafYomiError = 'HTTP ${response.statusCode}';
+        notifyListeners();
+        return;
+      }
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      final rawItems = data['calendar_items'];
+      final items = rawItems is List ? rawItems : <dynamic>[];
+      DafYomi? found;
+      for (final item in items) {
+        final titleMap = item['title'] as Map<String, dynamic>?;
+        if (titleMap?['en'] == 'Daf Yomi') {
+          final displayValue = item['displayValue'] as Map<String, dynamic>?;
+          final ref = item['url'] as String? ?? '';
+          found = DafYomi(
+            title: displayValue?['en'] as String? ?? '',
+            hebrew: displayValue?['he'] as String? ?? '',
+            date: dateStr,
+            link: ref.isNotEmpty ? 'https://www.sefaria.org/$ref' : null,
+          );
+          break;
+        }
+      }
+      if (found != null) {
+        _dafYomiItem = found;
+        _dafYomiError = null;
+      } else {
+        _dafYomiError = 'not_found';
+      }
+    } catch (e) {
+      _dafYomiError = e.toString();
+      logger.e('Failed to fetch Daf Yomi', error: e);
+    }
+    notifyListeners();
+  }
+
+  Future<void> fetchAnnualHolidays() async {
+    final year = DateTime.now().year;
+    final url = Uri.https('www.hebcal.com', '/hebcal', {
+      'cfg': 'json',
+      'v': '1',
+      'maj': 'on',
+      'min': 'on',
+      'start': '$year-01-01',
+      'end': '$year-12-31',
+    });
+    try {
+      final response = await get(url);
+      if (response.statusCode != 200) {
+        _annualHolidaysError = 'HTTP ${response.statusCode}';
+        notifyListeners();
+        return;
+      }
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      final items = data['items'] as List<dynamic>? ?? [];
+      _annualHolidays =
+          items
+              .where((item) => item['category'] == 'holiday')
+              .map(
+                (item) => HebcalHoliday(
+                  title: item['title'] as String? ?? '',
+                  hebrew: item['hebrew'] as String? ?? '',
+                  date:
+                      DateTime.tryParse(item['date'] as String? ?? '') ??
+                      DateTime.now(),
+                  isMajor: (item['subcat'] as String?) == 'major',
+                ),
+              )
+              .toList();
+      _annualHolidaysError = null;
+    } catch (e) {
+      _annualHolidaysError = e.toString();
+      logger.e('Failed to fetch annual holidays', error: e);
+    }
+    notifyListeners();
   }
 }

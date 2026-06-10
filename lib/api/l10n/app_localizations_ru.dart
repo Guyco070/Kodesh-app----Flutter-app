@@ -311,6 +311,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get lightMode => 'Светлый режим';
 
   @override
+  String get systemMode => 'Системная';
+
+  @override
   String get birkatHamazonMenu => 'Биркат Хамазон';
 
   @override
@@ -341,8 +344,21 @@ class AppLocalizationsRu extends AppLocalizations {
   String get useMyLocation => 'Использовать моё местоположение';
 
   @override
-  String get locationNotAvailable => 'Не удалось определить местоположение. Проверьте разрешения.';
+  String get locationNotAvailable =>
+      'Не удалось определить местоположение. Проверьте разрешения.';
 
   @override
   String get detectingLocation => 'Определение местоположения...';
+
+  @override
+  String get dafYomiMenu => 'Daf Yomi';
+
+  @override
+  String get holidayCalendarMenu => 'Jewish Holiday Calendar';
+
+  @override
+  String get todaysDaf => "Today's Daf";
+
+  @override
+  String get noHolidaysFound => 'No holidays found.';
 }

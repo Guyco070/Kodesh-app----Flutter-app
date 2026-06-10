@@ -654,6 +654,8 @@ abstract class AppLocalizations {
   /// **'Light mode'**
   String get lightMode;
 
+  String get systemMode;
+
   String get birkatHamazonMenu;
   String get kriyatShemaAlHamitaMenu;
   String get addCustomTask;
@@ -681,6 +683,11 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Detecting location...'**
   String get detectingLocation;
+
+  String get dafYomiMenu;
+  String get holidayCalendarMenu;
+  String get todaysDaf;
+  String get noHolidaysFound;
 }
 
 class _AppLocalizationsDelegate
