@@ -17,7 +17,8 @@ class ZmanWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isNotYTT = !isYesterdayTodayOrTomorrow(data.date);
     Events events = Provider.of<Events>(context);
-    final langCode = LanguageChangeProvider.getCurrentLocale.languageCode;
+    final langCode =
+        Provider.of<LanguageChangeProvider>(context).currentLocale.languageCode;
     final langMap = types[langCode] ?? types['en']!;
     final labels = langMap[data.title] ?? {data.title, ''};
     return Card(

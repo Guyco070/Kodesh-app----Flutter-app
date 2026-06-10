@@ -16,16 +16,13 @@ class SfiratOmerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     final bool isHebrewDate = Provider.of<Events>(context).isHebrewDate;
+    final langCode =
+        Provider.of<LanguageChangeProvider>(context).currentLocale.languageCode;
 
     return Column(
       children: [
         Text(
-          (data as SfiratOmer).sefira['sefira'][LanguageChangeProvider
-                      .getCurrentLocale
-                      .languageCode ==
-                  'he'
-              ? 'he'
-              : 'en'],
+          (data as SfiratOmer).sefira['sefira'][langCode == 'he' ? 'he' : 'en'],
           style: TextStyle(color: Colors.grey[700]),
           textAlign: TextAlign.center,
         ),
@@ -33,7 +30,7 @@ class SfiratOmerWidget extends StatelessWidget {
           padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 15),
           child: FittedBox(
             child: Text(
-              '${(data as SfiratOmer).sefira['count'][LanguageChangeProvider.getCurrentLocale.languageCode == 'he' ? 'he' : 'en']}.',
+              '${(data as SfiratOmer).sefira['count'][langCode == 'he' ? 'he' : 'en']}.',
               style: TextStyle(color: Colors.grey[700]),
               textAlign: TextAlign.center,
             ),

@@ -34,12 +34,7 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
       value: item.languageCode,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 6),
-        decoration: isSelected
-            ? BoxDecoration(
-                color: primaryColor.withAlpha(30),
-                borderRadius: BorderRadius.circular(8),
-              )
-            : null,
+        decoration: null,
         child: Row(
           children: [
             Icon(

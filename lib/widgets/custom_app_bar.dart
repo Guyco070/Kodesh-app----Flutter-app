@@ -26,7 +26,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ThemeData.estimateBrightnessForColor(bgColor) == Brightness.dark;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
+        statusBarColor: bgColor,
         statusBarIconBrightness:
             isDark ? Brightness.light : Brightness.dark,
         statusBarBrightness:
@@ -34,7 +34,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       child: ColoredBox(
         color: bgColor,
-        child: SafeArea(
         child: SizedBox(
           height: preferredSize.height,
           child: ListTile(
@@ -70,7 +69,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         trailing: trailing ?? const LimitedBox(),
           ),
         ),
-      ),
       ),
     );
   }
