@@ -311,6 +311,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lightMode => 'Light mode';
 
   @override
+  String get systemMode => 'System';
+
+  @override
   String get birkatHamazonMenu => 'Birkat Hamazon';
 
   @override

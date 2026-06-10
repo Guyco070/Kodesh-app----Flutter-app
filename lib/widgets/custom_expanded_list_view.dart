@@ -61,7 +61,8 @@ class _CustomExpandedListViewState extends State<CustomExpandedListView>
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const Divider(),
-        InkWell(
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
           onTap: widget.onToggle,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),

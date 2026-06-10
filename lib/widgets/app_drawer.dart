@@ -34,6 +34,25 @@ class _AppDrawerState extends State<AppDrawer> {
     });
   }
 
+  ThemeMode _nextThemeMode(ThemeMode current) => switch (current) {
+        ThemeMode.system => ThemeMode.light,
+        ThemeMode.light => ThemeMode.dark,
+        ThemeMode.dark => ThemeMode.system,
+      };
+
+  IconData _nextThemeIcon(ThemeMode current) => switch (current) {
+        ThemeMode.system => Icons.light_mode_outlined,
+        ThemeMode.light => Icons.dark_mode_outlined,
+        ThemeMode.dark => Icons.brightness_auto_outlined,
+      };
+
+  String _nextThemeLabel(ThemeMode current, appLocalizations) =>
+      switch (current) {
+        ThemeMode.system => appLocalizations.lightMode,
+        ThemeMode.light => appLocalizations.darkMode,
+        ThemeMode.dark => appLocalizations.systemMode,
+      };
+
   @override
   Widget build(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
@@ -139,20 +158,10 @@ class _AppDrawerState extends State<AppDrawer> {
                         ),
                       ),
                       ListTile(
-                        leading: Icon(
-                          langProvider.themeMode == ThemeMode.dark
-                              ? Icons.light_mode_outlined
-                              : Icons.dark_mode_outlined,
-                        ),
-                        title: Text(
-                          langProvider.themeMode == ThemeMode.dark
-                              ? appLocalizations.lightMode
-                              : appLocalizations.darkMode,
-                        ),
+                        leading: Icon(_nextThemeIcon(langProvider.themeMode)),
+                        title: Text(_nextThemeLabel(langProvider.themeMode, appLocalizations)),
                         onTap: () => langProvider.changeThemeMode(
-                          langProvider.themeMode == ThemeMode.dark
-                              ? ThemeMode.light
-                              : ThemeMode.dark,
+                          _nextThemeMode(langProvider.themeMode),
                         ),
                       ),
                     ],

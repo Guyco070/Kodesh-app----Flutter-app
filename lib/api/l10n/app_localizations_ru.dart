@@ -311,6 +311,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get lightMode => 'Светлый режим';
 
   @override
+  String get systemMode => 'Системная';
+
+  @override
   String get birkatHamazonMenu => 'Биркат Хамазон';
 
   @override

@@ -654,6 +654,8 @@ abstract class AppLocalizations {
   /// **'Light mode'**
   String get lightMode;
 
+  String get systemMode;
+
   String get birkatHamazonMenu;
   String get kriyatShemaAlHamitaMenu;
   String get addCustomTask;

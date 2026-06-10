@@ -308,6 +308,9 @@ class AppLocalizationsHe extends AppLocalizations {
   String get lightMode => 'מצב יום';
 
   @override
+  String get systemMode => 'לפי המערכת';
+
+  @override
   String get birkatHamazonMenu => 'ברכת המזון';
 
   @override

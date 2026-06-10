@@ -331,6 +331,9 @@
     "lightMode": "Light mode",
     "@lightMode": { "description": "lightMode" },
 
+    "systemMode": "System",
+    "@systemMode": { "description": "systemMode" },
+
     "birkatHamazonMenu": "Birkat Hamazon",
     "@birkatHamazonMenu": { "description": "birkatHamazonMenu" },
 
