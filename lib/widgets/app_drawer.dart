@@ -41,16 +41,16 @@ class _AppDrawerState extends State<AppDrawer> {
       };
 
   IconData _nextThemeIcon(ThemeMode current) => switch (current) {
-        ThemeMode.system => Icons.light_mode_outlined,
-        ThemeMode.light => Icons.dark_mode_outlined,
-        ThemeMode.dark => Icons.brightness_auto_outlined,
+        ThemeMode.system => Icons.brightness_auto_outlined,
+        ThemeMode.light => Icons.light_mode_outlined,
+        ThemeMode.dark => Icons.dark_mode_outlined,
       };
 
   String _nextThemeLabel(ThemeMode current, appLocalizations) =>
       switch (current) {
-        ThemeMode.system => appLocalizations.lightMode,
-        ThemeMode.light => appLocalizations.darkMode,
-        ThemeMode.dark => appLocalizations.systemMode,
+        ThemeMode.system => appLocalizations.systemMode,
+        ThemeMode.light => appLocalizations.lightMode,
+        ThemeMode.dark => appLocalizations.darkMode,
       };
 
   @override
