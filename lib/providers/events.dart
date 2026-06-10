@@ -13,9 +13,11 @@ import 'package:kodesh_app/models/rosh_chodesh.dart';
 import 'package:kodesh_app/models/sfirat_omer.dart';
 import 'package:kodesh_app/models/shabat.dart';
 import 'package:kodesh_app/models/daf_yomi.dart';
+import 'package:kodesh_app/models/molad.dart';
 import 'package:kodesh_app/models/hebcal_holiday.dart';
 import 'package:kodesh_app/models/zman.dart';
 import 'package:kodesh_app/widgets/events_widgets/holiday_widget.dart';
+import 'package:kodesh_app/widgets/events_widgets/molad_widget.dart';
 import 'package:kodesh_app/widgets/events_widgets/rosh_chodesh_widget.dart';
 import 'package:kodesh_app/widgets/events_widgets/sfirat_omer_widget.dart';
 import 'package:kodesh_app/widgets/events_widgets/shabat_widget.dart';
@@ -275,7 +277,15 @@ class Events with ChangeNotifier {
     final cityName = parts[0];
     final lg = lang ?? LanguageChangeProvider.getCurrentLocale.languageCode;
 
-    Map<String, String> base = {'cfg': 'json', 'o': 'on', 'lg': lg};
+    Map<String, String> base = {
+      'cfg': 'json',
+      'o': 'on',
+      'lg': lg,
+      'leyning': 'on',
+      'molad': 'on',
+      'yzkr': 'on',
+      'mvch': 'on',
+    };
     if (!isToday) {
       base.addAll({
         'gy': startDate.year.toString(),
@@ -480,8 +490,49 @@ class Events with ChangeNotifier {
         tempItems.add(
           SfiratOmer.createSfiratOmer(candles: null, parashat: items[i]),
         );
+      } else if (items[i]['category'] == 'molad') {
+        tempItems.add(Molad.fromMap(items[i] as Map<String, dynamic>));
       }
     }
+
+    // Apply mevarchim data to matching Shabat events
+    final mevarchimItems =
+        items
+            .where((item) => item['category'] == 'mevarchim')
+            .toList();
+    if (mevarchimItems.isNotEmpty) {
+      for (int idx = 0; idx < tempItems.length; idx++) {
+        final event = tempItems[idx];
+        if (event is! Shabat) continue;
+        for (final mv in mevarchimItems) {
+          final mvDate = DateTime.tryParse(
+            getDateWithoutTime(mv['date'] as String? ?? ''),
+          );
+          if (mvDate != null &&
+              event.entryDate != null &&
+              mvDate.year == event.entryDate!.year &&
+              mvDate.month == event.entryDate!.month &&
+              mvDate.day == event.entryDate!.day) {
+            final months =
+                (mv['months'] as List?)
+                    ?.map((m) => m.toString())
+                    .toList() ??
+                (mv['hebrew'] != null ? [mv['hebrew'] as String] : <String>[]);
+            tempItems[idx] = Shabat(
+              title: event.title,
+              parasha: event.parasha,
+              entryDate: event.entryDate,
+              releaseDate: event.releaseDate,
+              titleOrig: event.titleOrig,
+              leyning: event.leyning,
+              isMevarchim: true,
+              mevarchimMonths: months,
+            );
+          }
+        }
+      }
+    }
+
     List<int> toRemove = [];
     for (int i = 0; i < tempItems.length; i++) {
       for (Event x in tempItems) {
@@ -687,6 +738,7 @@ class Events with ChangeNotifier {
     if (event is Holiday) return HolidayWidget(data: event);
     if (event is RoshChodesh) return RoshChodeshWidget(data: event);
     if (event is SfiratOmer) return SfiratOmerWidget(data: event);
+    if (event is Molad) return MoladWidget(data: event);
     return null;
   }
 

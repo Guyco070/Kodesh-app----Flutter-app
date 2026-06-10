@@ -380,5 +380,25 @@
     "@todaysDaf": { "description": "todaysDaf" },
 
     "noHolidaysFound": "No holidays found.",
-    "@noHolidaysFound": { "description": "noHolidaysFound" }
+    "@noHolidaysFound": { "description": "noHolidaysFound" },
+
+    "torahReading": "Torah Reading",
+    "@torahReading": { "description": "Torah reading aliyot section header" },
+
+    "haftarah": "Haftarah",
+    "@haftarah": { "description": "Haftarah reading label" },
+
+    "mevarchimShabat": "Shabbat Mevarchim",
+    "@mevarchimShabat": { "description": "Label for Shabbat Mevarchim" },
+
+    "blessingMonth": "Blessing: {months}",
+    "@blessingMonth": {
+        "description": "Shabbat Mevarchim — month(s) being blessed",
+        "placeholders": {
+            "months": { "type": "String" }
+        }
+    },
+
+    "molad": "New Moon (Molad)",
+    "@molad": { "description": "Molad section label" }
 }

@@ -361,4 +361,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noHolidaysFound => 'No holidays found.';
+
+  @override
+  String get torahReading => 'Torah Reading';
+
+  @override
+  String get haftarah => 'Haftarah';
+
+  @override
+  String get mevarchimShabat => 'Shabbat Mevarchim';
+
+  @override
+  String blessingMonth(String months) => 'Blessing: $months';
+
+  @override
+  String get molad => 'New Moon (Molad)';
 }

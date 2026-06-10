@@ -3,12 +3,19 @@ import 'package:kodesh_app/models/event.dart';
 import 'package:kodesh_app/providers/events.dart';
 
 class Shabat extends Event {
+  final Map<String, String>? leyning;
+  final bool isMevarchim;
+  final List<String>? mevarchimMonths;
+
   Shabat({
     required super.title,
     required super.parasha,
     required super.entryDate,
     required super.releaseDate,
     required super.titleOrig,
+    this.leyning,
+    this.isMevarchim = false,
+    this.mevarchimMonths,
   });
 
   @override
@@ -21,7 +28,12 @@ class Shabat extends Event {
     required Map<String, dynamic> candles,
     required Map<String, dynamic> parashat,
     required Map<String, dynamic> havdalah,
+    bool isMevarchim = false,
+    List<String>? mevarchimMonths,
   }) {
+    final rawLeyning = parashat['leyning'] as Map<String, dynamic>?;
+    final leyning =
+        rawLeyning?.map((k, v) => MapEntry(k, v.toString()));
     return Shabat(
       title: title ?? 'Shabat',
       parasha: parashat['title'],
@@ -30,6 +42,9 @@ class Shabat extends Event {
         Events.getDateWithoutTime(havdalah['date']),
       ),
       titleOrig: parashat['title_orig'],
+      leyning: leyning,
+      isMevarchim: isMevarchim,
+      mevarchimMonths: mevarchimMonths,
     );
   }
 

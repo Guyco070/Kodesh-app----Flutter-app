@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:kodesh_app/models/shabat.dart';
 import 'package:kodesh_app/models/event.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/widgets/date_with_time_left.dart';
@@ -12,11 +13,26 @@ class ShabatWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
-    final bool isHebrewDate = Provider.of<Events>(context).isHebrewDate;
+    final appLocalizations = AppLocalizations.of(context)!;
+    final isHebrewDate = Provider.of<Events>(context).isHebrewDate;
+    final shabat = data is Shabat ? data as Shabat : null;
 
     return Column(
       children: [
+        if (shabat != null && shabat.isMevarchim)
+          ListTile(
+            leading: const Icon(Icons.auto_awesome),
+            title: Text(appLocalizations.mevarchimShabat),
+            subtitle:
+                shabat.mevarchimMonths != null &&
+                        shabat.mevarchimMonths!.isNotEmpty
+                    ? Text(
+                        appLocalizations.blessingMonth(
+                          shabat.mevarchimMonths!.join(', '),
+                        ),
+                      )
+                    : null,
+          ),
         if (data.entryDate != null)
           ListTile(
             title: Text(DateFormat('HH:mm').format(data.entryDate!)),
@@ -42,7 +58,91 @@ class ShabatWidget extends StatelessWidget {
           subtitle: Text(appLocalizations.parasha),
           leading: const Icon(Icons.book_outlined),
         ),
+        if (shabat != null &&
+            shabat.leyning != null &&
+            shabat.leyning!.isNotEmpty)
+          _LeyningSection(leyning: shabat.leyning!, appLocalizations: appLocalizations),
       ],
     );
+  }
+}
+
+class _LeyningSection extends StatefulWidget {
+  const _LeyningSection({
+    required this.leyning,
+    required this.appLocalizations,
+  });
+
+  final Map<String, String> leyning;
+  final AppLocalizations appLocalizations;
+
+  @override
+  State<_LeyningSection> createState() => _LeynningSectionState();
+}
+
+class _LeynningSectionState extends State<_LeyningSection> {
+  bool _expanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final aliyot = widget.leyning.entries
+        .where((e) => e.key != 'haftarah' && e.key != 'summary')
+        .toList()
+      ..sort((a, b) => _aliyaOrder(a.key).compareTo(_aliyaOrder(b.key)));
+    final haftarah = widget.leyning['haftarah'];
+
+    return Column(
+      children: [
+        InkWell(
+          onTap: () => setState(() => _expanded = !_expanded),
+          child: ListTile(
+            leading: const Icon(Icons.menu_book_outlined),
+            title: Text(widget.appLocalizations.torahReading),
+            trailing: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
+          ),
+        ),
+        if (_expanded) ...[
+          for (final entry in aliyot)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 28,
+                    child: Text(
+                      entry.key,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Expanded(child: Text(entry.value)),
+                ],
+              ),
+            ),
+          if (haftarah != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 70,
+                    child: Text(
+                      widget.appLocalizations.haftarah,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Expanded(child: Text(haftarah)),
+                ],
+              ),
+            ),
+          const SizedBox(height: 8),
+        ],
+      ],
+    );
+  }
+
+  int _aliyaOrder(String key) {
+    const order = {'1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, 'M': 8};
+    return order[key] ?? 99;
   }
 }

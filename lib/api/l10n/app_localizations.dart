@@ -688,6 +688,12 @@ abstract class AppLocalizations {
   String get holidayCalendarMenu;
   String get todaysDaf;
   String get noHolidaysFound;
+
+  String get torahReading;
+  String get haftarah;
+  String get mevarchimShabat;
+  String blessingMonth(String months);
+  String get molad;
 }
 
 class _AppLocalizationsDelegate
