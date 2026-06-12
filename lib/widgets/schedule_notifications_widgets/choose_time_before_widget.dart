@@ -8,7 +8,9 @@ class ChooseTimeBeforeWidget extends StatelessWidget {
     required this.setHours,
     required this.setMinutes,
     required this.hoursValue,
-    required this.minutesValue, this.helpText, this.localizedHelpText,
+    required this.minutesValue,
+    this.helpText,
+    this.localizedHelpText,
   }) : super(key: key);
 
   final int hoursValue;
@@ -34,7 +36,9 @@ class ChooseTimeBeforeWidget extends StatelessWidget {
                 Text(
                   appLocalizations.hours,
                   style: TextStyle(
-                      color: Theme.of(context).primaryColor, fontSize: 16),
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 16,
+                  ),
                 ),
                 NumberPicker(
                   minValue: 00,
@@ -52,7 +56,9 @@ class ChooseTimeBeforeWidget extends StatelessWidget {
                 Text(
                   appLocalizations.minutes,
                   style: TextStyle(
-                      color: Theme.of(context).primaryColor, fontSize: 16),
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 16,
+                  ),
                 ),
                 NumberPicker(
                   minValue: 00,
@@ -67,12 +73,14 @@ class ChooseTimeBeforeWidget extends StatelessWidget {
             ),
           ],
         ),
-        if(localizedHelpText != null) FittedBox(
+        if (localizedHelpText != null)
+          FittedBox(
             child: Text(
-          '${localizedHelpText!(hoursValue.toString(), minutesValue.toString())}.',
-          style: TextStyle(color: Colors.grey[700], fontSize: 12),
-          textAlign: TextAlign.center,
-        )),
+              '${localizedHelpText!(hoursValue.toString(), minutesValue.toString())}.',
+              style: TextStyle(color: Colors.grey[700], fontSize: 12),
+              textAlign: TextAlign.center,
+            ),
+          ),
       ],
     );
   }

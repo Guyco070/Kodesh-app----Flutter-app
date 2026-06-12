@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
 class ExpandedSection extends StatefulWidget {
-
   final Widget child;
   final bool expand;
   const ExpandedSection({super.key, this.expand = false, required this.child});
@@ -10,42 +9,40 @@ class ExpandedSection extends StatefulWidget {
   _ExpandedSectionState createState() => _ExpandedSectionState();
 }
 
-class _ExpandedSectionState extends State<ExpandedSection> with SingleTickerProviderStateMixin {
+class _ExpandedSectionState extends State<ExpandedSection>
+    with SingleTickerProviderStateMixin {
   late AnimationController expandController;
-  late Animation<double> animation; 
+  late Animation<double> animation;
 
   @override
   void initState() {
     super.initState();
     prepareAnimations();
-    _runExpandCheck();
+    // Jump to initial state immediately, no animation on first render
+    expandController.value = widget.expand ? 1.0 : 0.0;
   }
 
-  ///Setting up the animation
   void prepareAnimations() {
     expandController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500)
+      duration: const Duration(milliseconds: 300),
     );
     animation = CurvedAnimation(
       parent: expandController,
-      curve: Curves.fastOutSlowIn,
+      curve: Curves.easeInOut,
     );
-  }
-
-  void _runExpandCheck() {
-    if(widget.expand) {
-      expandController.forward();
-    }
-    else {
-      expandController.reverse();
-    }
   }
 
   @override
   void didUpdateWidget(ExpandedSection oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _runExpandCheck();
+    if (oldWidget.expand != widget.expand) {
+      if (widget.expand) {
+        expandController.forward();
+      } else {
+        expandController.reverse();
+      }
+    }
   }
 
   @override
@@ -59,7 +56,7 @@ class _ExpandedSectionState extends State<ExpandedSection> with SingleTickerProv
     return SizeTransition(
       axisAlignment: 1.0,
       sizeFactor: animation,
-      child: widget.child
+      child: widget.child,
     );
   }
 }

@@ -329,5 +329,56 @@
     "@darkMode": { "description": "darkMode" },
 
     "lightMode": "Light mode",
-    "@lightMode": { "description": "lightMode" }
+    "@lightMode": { "description": "lightMode" },
+
+    "systemMode": "System",
+    "@systemMode": { "description": "systemMode" },
+
+    "birkatHamazonMenu": "Birkat Hamazon",
+    "@birkatHamazonMenu": { "description": "birkatHamazonMenu" },
+
+    "kriyatShemaAlHamitaMenu": "Bedtime Shema",
+    "@kriyatShemaAlHamitaMenu": { "description": "kriyatShemaAlHamitaMenu" },
+
+    "addCustomTask": "Add task",
+    "@addCustomTask": { "description": "addCustomTask" },
+
+    "taskName": "Task name",
+    "@taskName": { "description": "taskName" },
+
+    "add": "Add",
+    "@add": { "description": "add" },
+
+    "cancel": "Cancel",
+    "@cancel": { "description": "cancel" },
+
+    "delete": "Delete",
+    "@delete": { "description": "delete" },
+
+    "customTasksSection": "My custom tasks",
+    "@customTasksSection": { "description": "customTasksSection" },
+
+    "deleteTaskTitle": "Delete task?",
+    "@deleteTaskTitle": { "description": "deleteTaskTitle" },
+
+    "useMyLocation": "Use my location",
+    "@useMyLocation": { "description": "Tooltip for the GPS location detection button" },
+
+    "locationNotAvailable": "Could not detect location. Please check location permissions.",
+    "@locationNotAvailable": { "description": "Shown when location detection fails" },
+
+    "detectingLocation": "Detecting location...",
+    "@detectingLocation": { "description": "Shown while GPS location is being detected" },
+
+    "dafYomiMenu": "Daf Yomi",
+    "@dafYomiMenu": { "description": "dafYomiMenu" },
+
+    "holidayCalendarMenu": "Jewish Holiday Calendar",
+    "@holidayCalendarMenu": { "description": "holidayCalendarMenu" },
+
+    "todaysDaf": "Today's Daf",
+    "@todaysDaf": { "description": "todaysDaf" },
+
+    "noHolidaysFound": "No holidays found.",
+    "@noHolidaysFound": { "description": "noHolidaysFound" }
 }

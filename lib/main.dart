@@ -16,14 +16,21 @@ import 'package:kodesh_app/screens/tefilot/adlakat_nerot_chanukah.dart';
 import 'package:kodesh_app/screens/tefilot/havdalah.dart';
 import 'package:kodesh_app/screens/tefilot/seder_anahat_tefilin.dart';
 import 'package:kodesh_app/screens/tefilot/sfirat_omer_screen.dart';
+import 'package:kodesh_app/screens/tefilot/birkat_hamazon.dart';
+import 'package:kodesh_app/screens/tefilot/kriyat_shema_al_hamita.dart';
+import 'package:kodesh_app/screens/daf_yomi_screen.dart';
+import 'package:kodesh_app/screens/holiday_calendar_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
 void main() {
   FlutterError.onError = (FlutterErrorDetails details) {
-    logger.e('Flutter error',
-        error: details.exception, stackTrace: details.stack);
+    logger.e(
+      'Flutter error',
+      error: details.exception,
+      stackTrace: details.stack,
+    );
     FlutterError.presentError(details);
   };
 
@@ -38,7 +45,8 @@ void main() {
         ChangeNotifierProvider(create: (_) => Events()),
         ChangeNotifierProvider(create: (_) => Reminders()),
         ChangeNotifierProvider(
-            create: (_) => LanguageChangeProvider()..getData()),
+          create: (_) => LanguageChangeProvider()..getData(),
+        ),
         ChangeNotifierProvider(create: (_) => Tfilot()),
       ],
       child: const MyApp(),
@@ -49,39 +57,57 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  static const MaterialColor _primaryColor = MaterialColor(
-    0xFF0047AE,
-    <int, Color>{
-      50: Color(0xFF0047AE),
-      100: Color(0xFF0047AE),
-      200: Color(0xFF0047AE),
-      300: Color(0xFF0047AE),
-      400: Color(0xFF0047AE),
-      500: Color(0xFF0047AE),
-      600: Color(0xFF0047AE),
-      700: Color(0xFF0047AE),
-      800: Color(0xFF0047AE),
-      900: Color(0xFF0047AE),
-    },
-  );
+  static const Color _seed = Color(0xFF0047AE);
 
   static final ThemeData _lightTheme = ThemeData(
-    primarySwatch: _primaryColor,
-    brightness: Brightness.light,
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: _seed,
+      primary: _seed,
+      brightness: Brightness.light,
+    ).copyWith(
+      surface: Colors.white,
+      surfaceContainerLowest: Colors.white,
+      surfaceContainerLow: const Color(0xFFF5F5F5),
+      surfaceContainer: const Color(0xFFEEEEEE),
+      surfaceContainerHigh: const Color(0xFFE8E8E8),
+      surfaceContainerHighest: const Color(0xFFE0E0E0),
+      secondary: const Color(0xFF1565C0),
+      secondaryContainer: const Color(0xFFD6E4FF),
+      onSecondary: Colors.white,
+      onSecondaryContainer: const Color(0xFF001E6C),
+      tertiary: const Color(0xFF0D47A1),
+      tertiaryContainer: const Color(0xFFBBDEFB),
+      onTertiary: Colors.white,
+      onTertiaryContainer: const Color(0xFF001E6C),
+    ),
+    scaffoldBackgroundColor: Colors.white,
+    drawerTheme: const DrawerThemeData(backgroundColor: Colors.white),
+    useMaterial3: true,
   );
 
   static final ThemeData _darkTheme = ThemeData(
-    primarySwatch: _primaryColor,
-    brightness: Brightness.dark,
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: _seed,
+      primary: _seed,
+      brightness: Brightness.dark,
+    ).copyWith(
+      surface: const Color(0xFF1A1A2E),
+      secondary: const Color(0xFF90CAF9),
+      secondaryContainer: const Color(0xFF0D47A1),
+      onSecondary: const Color(0xFF003065),
+      onSecondaryContainer: const Color(0xFFD6E4FF),
+      tertiary: const Color(0xFFBBDEFB),
+      tertiaryContainer: const Color(0xFF1565C0),
+      onTertiary: const Color(0xFF003065),
+      onTertiaryContainer: const Color(0xFFD6E4FF),
+    ),
+    useMaterial3: true,
     scaffoldBackgroundColor: const Color(0xFF1A1A2E),
-    cardColor: const Color(0xFF16213E),
     appBarTheme: const AppBarTheme(
       backgroundColor: Color(0xFF0F3460),
       foregroundColor: Colors.white,
     ),
-    drawerTheme: const DrawerThemeData(
-      backgroundColor: Color(0xFF16213E),
-    ),
+    drawerTheme: const DrawerThemeData(backgroundColor: Color(0xFF16213E)),
   );
 
   @override
@@ -102,16 +128,20 @@ class MyApp extends StatelessWidget {
       supportedLocales: L10n.all,
       home: const EventScreen(),
       routes: {
-        ScheduleNotificationsScreen.routeName: (_) =>
-            const ScheduleNotificationsScreen(),
+        ScheduleNotificationsScreen.routeName:
+            (_) => const ScheduleNotificationsScreen(),
         SederAnahatTefilin.routeName: (_) => SederAnahatTefilin(),
         AdlakatNerot.routeName: (_) => AdlakatNerot(),
-        ShabatAndHolidaysCheckList.routeName: (_) =>
-            const ShabatAndHolidaysCheckList(),
+        ShabatAndHolidaysCheckList.routeName:
+            (_) => const ShabatAndHolidaysCheckList(),
         CompassScreen.routeName: (_) => const CompassScreen(),
         AdlakatNerotChanukah.routeName: (_) => AdlakatNerotChanukah(),
         SfiratOmerScreen.routeName: (_) => SfiratOmerScreen(),
         Havdalah.routeName: (_) => Havdalah(),
+        BirkatHamazon.routeName: (_) => BirkatHamazon(),
+        KriyatShemaAlHamita.routeName: (_) => KriyatShemaAlHamita(),
+        DafYomiScreen.routeName: (_) => const DafYomiScreen(),
+        HolidayCalendarScreen.routeName: (_) => const HolidayCalendarScreen(),
         AboutScreen.routeName: (_) => const AboutScreen(),
       },
     );

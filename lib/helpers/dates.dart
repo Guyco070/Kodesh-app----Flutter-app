@@ -8,7 +8,7 @@ String getDayName(AppLocalizations appLocalizations, weekDay) {
     4: appLocalizations.thursday,
     5: appLocalizations.friday,
     6: appLocalizations.saturday,
-    7: appLocalizations.sunday
+    7: appLocalizations.sunday,
   }[weekDay]!;
 }
 
@@ -46,16 +46,13 @@ bool isToday(DateTime date) {
 }
 
 bool isYesterdayTodayOrTomorrow(DateTime date) {
-  int timeLeft = DateTime.now()
-      .difference(DateTime(date.year, date.month, date.day))
-      .inDays;
+  int timeLeft =
+      DateTime.now()
+          .difference(DateTime(date.year, date.month, date.day))
+          .inDays;
   return timeLeft == 0 || timeLeft == 1;
 }
 
 DateTime getDateTimeSetToZero(DateTime date) {
-  return DateTime(
-    date.year,
-    date.month,
-    date.day,
-  );
+  return DateTime(date.year, date.month, date.day);
 }

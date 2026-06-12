@@ -12,6 +12,9 @@ class LoadingScaffold extends StatefulWidget {
 class _LoadingScaffoldState extends State<LoadingScaffold> {
   @override
   Widget build(BuildContext context) {
-    return DefaultScaffold(title: AppLocalizations.of(context)!.loading, body: const Center(child: CircularProgressIndicator()));
+    return DefaultScaffold(
+      title: AppLocalizations.of(context)!.loading,
+      body: const Center(child: CircularProgressIndicator()),
+    );
   }
 }
