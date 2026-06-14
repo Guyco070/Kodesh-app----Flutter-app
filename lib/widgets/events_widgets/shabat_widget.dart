@@ -113,16 +113,46 @@ class _LeynningSectionState extends State<_LeyningSection> {
     'Leviticus': 'ויקרא',
     'Numbers': 'במדבר',
     'Deuteronomy': 'דברים',
+    'Joshua': 'יהושע',
+    'Judges': 'שופטים',
+    'I Samuel': 'שמואל א',
+    'II Samuel': 'שמואל ב',
+    'I Kings': 'מלכים א',
+    'II Kings': 'מלכים ב',
+    'Isaiah': 'ישעיהו',
+    'Jeremiah': 'ירמיהו',
+    'Ezekiel': 'יחזקאל',
+    'Hosea': 'הושע',
+    'Joel': 'יואל',
+    'Amos': 'עמוס',
+    'Obadiah': 'עובדיה',
+    'Jonah': 'יונה',
+    'Micah': 'מיכה',
+    'Nahum': 'נחום',
+    'Habakkuk': 'חבקוק',
+    'Zephaniah': 'צפניה',
+    'Haggai': 'חגי',
+    'Zechariah': 'זכריה',
+    'Malachi': 'מלאכי',
   };
 
   static String _localizeRef(String ref, bool isHe) {
-    if (!isHe) return ref;
-    for (final entry in _hebrewBooks.entries) {
-      if (ref.startsWith(entry.key)) {
-        return entry.value + ref.substring(entry.key.length);
+    String result = ref;
+    if (isHe) {
+      for (final entry in _hebrewBooks.entries) {
+        if (result.startsWith(entry.key)) {
+          result =
+              entry.value + result.substring(entry.key.length);
+          break;
+        }
       }
     }
-    return ref;
+    // Simplify "ch:v1-ch:v2" → "ch:v1-v2" when same chapter
+    result = result.replaceAllMapped(
+      RegExp(r'(\d+):(\d+)-\1:(\d+)'),
+      (m) => '${m[1]}:${m[2]}-${m[3]}',
+    );
+    return result;
   }
 
   static const _aliyaKeys = {
