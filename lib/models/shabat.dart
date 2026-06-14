@@ -20,7 +20,8 @@ class Shabat extends Event {
 
   @override
   String toString() {
-    return '${super.toString()} - title: $title, parasha: $parasha, entryDate: $entryDate, releaseDate: $releaseDate.\n';
+    return '${super.toString()} - title: $title, parasha: $parasha, '
+        'entryDate: $entryDate, releaseDate: $releaseDate.\n';
   }
 
   static Shabat createShabat({

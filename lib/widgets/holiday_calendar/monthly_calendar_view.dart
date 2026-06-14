@@ -26,7 +26,10 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
   @override
   void initState() {
     super.initState();
-    _currentMonth = DateTime(widget.initialMonth.year, widget.initialMonth.month);
+    _currentMonth = DateTime(
+      widget.initialMonth.year,
+      widget.initialMonth.month,
+    );
   }
 
   @override
@@ -55,7 +58,8 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
   Map<int, List<HebcalHoliday>> _buildDayMap() {
     final map = <int, List<HebcalHoliday>>{};
     for (final h in widget.holidays) {
-      if (h.date.year == _currentMonth.year && h.date.month == _currentMonth.month) {
+      if (h.date.year == _currentMonth.year &&
+          h.date.month == _currentMonth.month) {
         map.putIfAbsent(h.date.day, () => []).add(h);
       }
     }
@@ -66,7 +70,8 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
   Widget build(BuildContext context) {
     final dayMap = _buildDayMap();
     final firstDay = DateTime(_currentMonth.year, _currentMonth.month, 1);
-    final daysInMonth = DateTime(_currentMonth.year, _currentMonth.month + 1, 0).day;
+    final daysInMonth =
+        DateTime(_currentMonth.year, _currentMonth.month + 1, 0).day;
     // weekday: 1=Mon..7=Sun, we want Sun=0
     final startOffset = (firstDay.weekday % 7);
 
@@ -84,19 +89,27 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
                 icon: const Icon(Icons.chevron_left),
                 onPressed: _canGoPrev
                     ? () => setState(() {
-                          _currentMonth = DateTime(_currentMonth.year, _currentMonth.month - 1);
+                          _currentMonth = DateTime(
+                            _currentMonth.year,
+                            _currentMonth.month - 1,
+                          );
                         })
                     : null,
               ),
               Text(
                 DateFormat('MMMM yyyy').format(_currentMonth),
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               IconButton(
                 icon: const Icon(Icons.chevron_right),
                 onPressed: _canGoNext
                     ? () => setState(() {
-                          _currentMonth = DateTime(_currentMonth.year, _currentMonth.month + 1);
+                          _currentMonth = DateTime(
+                            _currentMonth.year,
+                            _currentMonth.month + 1,
+                          );
                         })
                     : null,
               ),
@@ -162,14 +175,21 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
                       '$day',
                       style: TextStyle(
                         fontSize: 12,
-                        fontWeight: isToday ? FontWeight.bold : FontWeight.normal,
+                        fontWeight:
+                            isToday ? FontWeight.bold : FontWeight.normal,
                         color: isToday ? colorScheme.onPrimaryContainer : null,
                       ),
                     ),
                     ...dayHolidays.take(2).map(
                           (h) => Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 1, vertical: 1),
-                            padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 1),
+                            margin: const EdgeInsets.symmetric(
+                              horizontal: 1,
+                              vertical: 1,
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 2,
+                              vertical: 1,
+                            ),
                             decoration: BoxDecoration(
                               color: h.isMajor
                                   ? colorScheme.primary.withAlpha(204)
@@ -192,7 +212,10 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
                     if (dayHolidays.length > 2)
                       Text(
                         '+${dayHolidays.length - 2}',
-                        style: TextStyle(fontSize: 7, color: colorScheme.onSurface.withAlpha(153)),
+                        style: TextStyle(
+                          fontSize: 7,
+                          color: colorScheme.onSurface.withAlpha(153),
+                        ),
                       ),
                   ],
                 ),
@@ -204,7 +227,11 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
     );
   }
 
-  void _showHolidayDetails(BuildContext context, int day, List<HebcalHoliday> holidays) {
+  void _showHolidayDetails(
+    BuildContext context,
+    int day,
+    List<HebcalHoliday> holidays,
+  ) {
     showModalBottomSheet(
       context: context,
       builder: (ctx) => Padding(
@@ -214,8 +241,12 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              DateFormat('d MMMM yyyy').format(DateTime(_currentMonth.year, _currentMonth.month, day)),
-              style: Theme.of(ctx).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+              DateFormat('d MMMM yyyy').format(
+                DateTime(_currentMonth.year, _currentMonth.month, day),
+              ),
+              style: Theme.of(ctx).textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 12),
             ...holidays.map(

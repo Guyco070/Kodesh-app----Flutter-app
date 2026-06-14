@@ -74,21 +74,32 @@ class _AppDrawerState extends State<AppDrawer> {
                       ListTile(
                         leading: const Icon(Icons.fireplace_outlined),
                         title: Text(appLocalizations.candleLightingOrderMenu),
-                        onTap: () => Navigator.pushNamed(context, AdlakatNerot.routeName),
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          AdlakatNerot.routeName,
+                        ),
                       ),
                       ListTile(
                         leading: const Icon(Icons.wine_bar),
                         title: Text(appLocalizations.havdalah),
-                        onTap: () => Navigator.pushNamed(context, Havdalah.routeName),
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          Havdalah.routeName,
+                        ),
                       ),
                       ListTile(
                         leading: const Icon(Icons.add_reaction_outlined),
                         title: Text(appLocalizations.tefilinOrderMenu),
-                        onTap: () => Navigator.pushNamed(context, SederAnahatTefilin.routeName),
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          SederAnahatTefilin.routeName,
+                        ),
                       ),
                       ListTile(
                         leading: const Icon(Icons.fireplace),
-                        title: Text(appLocalizations.hanukkahCandleLightingOrderMenu),
+                        title: Text(
+                          appLocalizations.hanukkahCandleLightingOrderMenu,
+                        ),
                         onTap: () => Navigator.pushNamed(
                           context,
                           AdlakatNerotChanukah.routeName,
@@ -97,17 +108,26 @@ class _AppDrawerState extends State<AppDrawer> {
                       ListTile(
                         leading: const Icon(Icons.content_cut),
                         title: Text(appLocalizations.sederSfiratOmer),
-                        onTap: () => Navigator.pushNamed(context, SfiratOmerScreen.routeName),
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          SfiratOmerScreen.routeName,
+                        ),
                       ),
                       ListTile(
                         leading: const Icon(Icons.restaurant_outlined),
                         title: Text(appLocalizations.birkatHamazonMenu),
-                        onTap: () => Navigator.pushNamed(context, BirkatHamazon.routeName),
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          BirkatHamazon.routeName,
+                        ),
                       ),
                       ListTile(
                         leading: const Icon(Icons.bedtime_outlined),
                         title: Text(appLocalizations.kriyatShemaAlHamitaMenu),
-                        onTap: () => Navigator.pushNamed(context, KriyatShemaAlHamita.routeName),
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          KriyatShemaAlHamita.routeName,
+                        ),
                       ),
                     ],
                   ),
@@ -127,12 +147,18 @@ class _AppDrawerState extends State<AppDrawer> {
                       ListTile(
                         leading: const Icon(Icons.compass_calibration_outlined),
                         title: Text(appLocalizations.compass),
-                        onTap: () => Navigator.pushNamed(context, CompassScreen.routeName),
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          CompassScreen.routeName,
+                        ),
                       ),
                       ListTile(
                         leading: const Icon(Icons.menu_book_outlined),
                         title: Text(appLocalizations.dafYomiMenu),
-                        onTap: () => Navigator.pushNamed(context, DafYomiScreen.routeName),
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          DafYomiScreen.routeName,
+                        ),
                       ),
                       ListTile(
                         leading: const Icon(Icons.calendar_month_outlined),
@@ -159,7 +185,12 @@ class _AppDrawerState extends State<AppDrawer> {
                       ),
                       ListTile(
                         leading: Icon(_nextThemeIcon(langProvider.themeMode)),
-                        title: Text(_nextThemeLabel(langProvider.themeMode, appLocalizations)),
+                        title: Text(
+                          _nextThemeLabel(
+                            langProvider.themeMode,
+                            appLocalizations,
+                          ),
+                        ),
                         onTap: () => langProvider.changeThemeMode(
                           _nextThemeMode(langProvider.themeMode),
                         ),

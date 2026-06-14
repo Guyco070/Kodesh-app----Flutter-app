@@ -203,7 +203,10 @@ class _EventScreenState extends State<EventScreen> {
       });
       DateTime now = DateTime.now();
       var x = {};
-      final langCode = Provider.of<LanguageChangeProvider>(context, listen: false).currentLocale.languageCode;
+      final langCode = Provider.of<LanguageChangeProvider>(
+        context,
+        listen: false,
+      ).currentLocale.languageCode;
       final searchLower = _zmanimSearch.toLowerCase();
       for (Zman z in zmanim) {
         x[z.title] = z.title;

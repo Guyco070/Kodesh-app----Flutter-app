@@ -61,7 +61,10 @@ class ShabatWidget extends StatelessWidget {
         if (shabat != null &&
             shabat.leyning != null &&
             shabat.leyning!.isNotEmpty)
-          _LeyningSection(leyning: shabat.leyning!, appLocalizations: appLocalizations),
+          _LeyningSection(
+            leyning: shabat.leyning!,
+            appLocalizations: appLocalizations,
+          ),
       ],
     );
   }
@@ -142,7 +145,16 @@ class _LeynningSectionState extends State<_LeyningSection> {
   }
 
   int _aliyaOrder(String key) {
-    const order = {'1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, 'M': 8};
+    const order = {
+      '1': 1,
+      '2': 2,
+      '3': 3,
+      '4': 4,
+      '5': 5,
+      '6': 6,
+      '7': 7,
+      'M': 8,
+    };
     return order[key] ?? 99;
   }
 }

@@ -32,7 +32,11 @@ class _HolidayCalendarScreenState extends State<HolidayCalendarScreen> {
   void initState() {
     super.initState();
     _dateFrom = DateTime.now();
-    _dateTo = DateTime(DateTime.now().year + 1, DateTime.now().month, DateTime.now().day);
+    _dateTo = DateTime(
+      DateTime.now().year + 1,
+      DateTime.now().month,
+      DateTime.now().day,
+    );
     _loadHolidays();
   }
 
@@ -201,12 +205,18 @@ class _DateRangeRow extends StatelessWidget {
             const SizedBox(width: 8),
             Text(
               '$fromLabel: ${fmt.format(dateFrom)}',
-              style: TextStyle(color: colorScheme.primary, fontWeight: FontWeight.w500),
+              style: TextStyle(
+                color: colorScheme.primary,
+                fontWeight: FontWeight.w500,
+              ),
             ),
             const SizedBox(width: 12),
             Text(
               '$toLabel: ${fmt.format(dateTo)}',
-              style: TextStyle(color: colorScheme.primary, fontWeight: FontWeight.w500),
+              style: TextStyle(
+                color: colorScheme.primary,
+                fontWeight: FontWeight.w500,
+              ),
             ),
             const Spacer(),
             Icon(Icons.edit_calendar, size: 16, color: colorScheme.primary),

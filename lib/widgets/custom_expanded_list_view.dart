@@ -65,7 +65,10 @@ class _CustomExpandedListViewState extends State<CustomExpandedListView>
           behavior: HitTestBehavior.opaque,
           onTap: widget.onToggle,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 6.0,
+            ),
             child: Row(
               children: [
                 Expanded(
