@@ -165,28 +165,56 @@ class _LeynningSectionState extends State<_LeyningSection> {
   }
 
   static String _localizeRef(String ref, bool isHe) {
-    String result = ref;
-    if (isHe) {
-      for (final entry in _hebrewBooks.entries) {
-        if (result.startsWith(entry.key)) {
-          result =
-              entry.value + result.substring(entry.key.length);
-          break;
-        }
+    if (!isHe) return ref;
+
+    String bookHe = '';
+    String rest = ref;
+    for (final entry in _hebrewBooks.entries) {
+      if (ref.startsWith(entry.key)) {
+        bookHe = entry.value;
+        rest = ref.substring(entry.key.length).trim();
+        break;
       }
     }
-    // Simplify "ch:v1-ch:v2" → "ch:v1-v2" when same chapter
-    result = result.replaceAllMapped(
-      RegExp(r'(\d+):(\d+)-\1:(\d+)'),
-      (m) => '${m[1]}:${m[2]}-${m[3]}',
-    );
-    if (isHe) {
-      result = result.replaceAllMapped(
-        RegExp(r'\d+'),
-        (m) => _toHebNum(int.parse(m.group(0)!)),
-      );
+
+    final fullRange =
+        RegExp(r'^(\d+):(\d+)-(\d+):(\d+)$').firstMatch(rest);
+    final sameChRange =
+        RegExp(r'^(\d+):(\d+)-(\d+)$').firstMatch(rest);
+    final single =
+        RegExp(r'^(\d+):(\d+)$').firstMatch(rest);
+
+    String refHe;
+    if (fullRange != null) {
+      final ch1 = int.parse(fullRange.group(1)!);
+      final v1 = int.parse(fullRange.group(2)!);
+      final ch2 = int.parse(fullRange.group(3)!);
+      final v2 = int.parse(fullRange.group(4)!);
+      if (ch1 == ch2) {
+        refHe =
+            'פרק ${_toHebNum(ch1)}, '
+            'פסוקים ${_toHebNum(v1)}-${_toHebNum(v2)}';
+      } else {
+        refHe =
+            'פרק ${_toHebNum(ch1)} פסוק ${_toHebNum(v1)}'
+            ' - פרק ${_toHebNum(ch2)} פסוק ${_toHebNum(v2)}';
+      }
+    } else if (sameChRange != null) {
+      final ch = int.parse(sameChRange.group(1)!);
+      final v1 = int.parse(sameChRange.group(2)!);
+      final v2 = int.parse(sameChRange.group(3)!);
+      refHe =
+          'פרק ${_toHebNum(ch)}, '
+          'פסוקים ${_toHebNum(v1)}-${_toHebNum(v2)}';
+    } else if (single != null) {
+      final ch = int.parse(single.group(1)!);
+      final v = int.parse(single.group(2)!);
+      refHe = 'פרק ${_toHebNum(ch)}, פסוק ${_toHebNum(v)}';
+    } else {
+      refHe = rest;
     }
-    return result;
+
+    return bookHe.isEmpty ? refHe : '$bookHe $refHe';
   }
 
   static const _aliyaKeys = {
