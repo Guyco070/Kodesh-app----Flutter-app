@@ -373,4 +373,25 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get molad => 'מולד הלבנה';
+
+  @override
+  String get search => 'חיפוש...';
+
+  @override
+  String get listView => 'רשימה';
+
+  @override
+  String get monthlyView => 'לוח חודשי';
+
+  @override
+  String get noSearchResults => 'לא נמצאו תוצאות';
+
+  @override
+  String get dateRangeFrom => 'מ-';
+
+  @override
+  String get dateRangeTo => 'עד';
+
+  @override
+  String get selectDateRange => 'בחר טווח תאריכים';
 }

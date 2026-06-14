@@ -400,5 +400,26 @@
     },
 
     "molad": "New Moon (Molad)",
-    "@molad": { "description": "Molad section label" }
+    "@molad": { "description": "Molad section label" },
+
+    "search": "Search...",
+    "@search": { "description": "search hint text" },
+
+    "listView": "List",
+    "@listView": { "description": "list view toggle label" },
+
+    "monthlyView": "Monthly",
+    "@monthlyView": { "description": "monthly calendar view toggle label" },
+
+    "noSearchResults": "No results found",
+    "@noSearchResults": { "description": "shown when search returns no results" },
+
+    "dateRangeFrom": "From",
+    "@dateRangeFrom": { "description": "date range start label" },
+
+    "dateRangeTo": "To",
+    "@dateRangeTo": { "description": "date range end label" },
+
+    "selectDateRange": "Select date range",
+    "@selectDateRange": { "description": "button label to open date range picker" }
 }

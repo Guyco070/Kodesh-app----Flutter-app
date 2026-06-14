@@ -792,15 +792,23 @@ class Events with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchAnnualHolidays() async {
-    final year = DateTime.now().year;
+  Future<void> fetchAnnualHolidays({
+    DateTime? startDate,
+    DateTime? endDate,
+  }) async {
+    final from = startDate ?? DateTime.now();
+    final to = endDate ?? DateTime(from.year + 1, from.month, from.day);
+    final startStr =
+        '${from.year}-${from.month.toString().padLeft(2, '0')}-${from.day.toString().padLeft(2, '0')}';
+    final endStr =
+        '${to.year}-${to.month.toString().padLeft(2, '0')}-${to.day.toString().padLeft(2, '0')}';
     final url = Uri.https('www.hebcal.com', '/hebcal', {
       'cfg': 'json',
       'v': '1',
       'maj': 'on',
       'min': 'on',
-      'start': '$year-01-01',
-      'end': '$year-12-31',
+      'start': startStr,
+      'end': endStr,
     });
     try {
       final response = await get(url);
