@@ -258,10 +258,17 @@ class _LeynningSectionState extends State<_LeyningSection> {
         if (_expanded) ...[
           for (final entry in aliyot)
             Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 2,
-              ),
+              padding: isRtl
+                  ? const EdgeInsets.only(
+                      left: 56,
+                      right: 16,
+                      top: 2,
+                      bottom: 2,
+                    )
+                  : const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 2,
+                    ),
               child: Row(
                 children: isRtl
                     ? [
@@ -304,10 +311,17 @@ class _LeynningSectionState extends State<_LeyningSection> {
             ),
           if (haftarah != null)
             Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 4,
-              ),
+              padding: isRtl
+                  ? const EdgeInsets.only(
+                      left: 56,
+                      right: 16,
+                      top: 4,
+                      bottom: 4,
+                    )
+                  : const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 4,
+                    ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: isRtl
