@@ -27,7 +27,13 @@ class RoshChodesh extends Event {
     } else {
       date = DateTime.tryParse(Events.getDateWithoutTime(parashat['date']));
     }
-    return RoshChodesh(title: parashat['title'], entryDate: date);
+    return RoshChodesh(
+      title: parashat['title'] as String,
+      entryDate: date,
+      titleOrig:
+          parashat['hebrew'] as String? ??
+          parashat['title_orig'] as String?,
+    );
   }
 
   static RoshChodesh marge(RoshChodesh rs1, RoshChodesh rs2) {

@@ -54,7 +54,12 @@ class ShabatWidget extends StatelessWidget {
             leading: const Icon(Icons.wine_bar),
           ),
         ListTile(
-          title: Text(data.parasha!),
+          title: Text(
+            Localizations.localeOf(context).languageCode == 'he' &&
+                    data.titleOrig != null
+                ? data.titleOrig!
+                : data.parasha!,
+          ),
           subtitle: Text(appLocalizations.parasha),
           leading: const Icon(Icons.book_outlined),
         ),
@@ -85,6 +90,24 @@ class _LeyningSection extends StatefulWidget {
 
 class _LeynningSectionState extends State<_LeyningSection> {
   bool _expanded = false;
+
+  static const _hebrewBooks = {
+    'Genesis': 'בראשית',
+    'Exodus': 'שמות',
+    'Leviticus': 'ויקרא',
+    'Numbers': 'במדבר',
+    'Deuteronomy': 'דברים',
+  };
+
+  static String _localizeRef(String ref, bool isHe) {
+    if (!isHe) return ref;
+    for (final entry in _hebrewBooks.entries) {
+      if (ref.startsWith(entry.key)) {
+        return entry.value + ref.substring(entry.key.length);
+      }
+    }
+    return ref;
+  }
 
   static const _aliyaKeys = {
     '1': 1,
@@ -135,7 +158,7 @@ class _LeynningSectionState extends State<_LeyningSection> {
                     ? [
                         Expanded(
                           child: Text(
-                            entry.value,
+                            _localizeRef(entry.value, isRtl),
                             textAlign: TextAlign.right,
                           ),
                         ),
@@ -162,7 +185,11 @@ class _LeynningSectionState extends State<_LeyningSection> {
                           ),
                         ),
                         const SizedBox(width: 8),
-                        Expanded(child: Text(entry.value)),
+                        Expanded(
+                          child: Text(
+                            _localizeRef(entry.value, isRtl),
+                          ),
+                        ),
                       ],
               ),
             ),
@@ -178,7 +205,7 @@ class _LeynningSectionState extends State<_LeyningSection> {
                     ? [
                         Expanded(
                           child: Text(
-                            haftarah,
+                            _localizeRef(haftarah, isRtl),
                             textAlign: TextAlign.right,
                           ),
                         ),
@@ -198,7 +225,11 @@ class _LeynningSectionState extends State<_LeyningSection> {
                           ),
                         ),
                         const SizedBox(width: 8),
-                        Expanded(child: Text(haftarah)),
+                        Expanded(
+                          child: Text(
+                            _localizeRef(haftarah, isRtl),
+                          ),
+                        ),
                       ],
               ),
             ),
