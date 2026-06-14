@@ -8,7 +8,7 @@
       "Bash(./gradlew clean:*)",
       "Bash(test:*)",
       "Bash(flutter gen-l10n *)",
-      "Bash(grep -r \"class FlutterLocalNotificationsPlugin\" ~/.pub-cache/hosted/pub.dev/flutter_local_notifications-21.*/lib/ 2>/dev/null | head -3 && grep -n \"Future.*zonedSchedule\\\\|Future.*initialize\\\\|Future.*show\\\\b\\\\|Future.*cancel\" ~/.pub-cache/hosted/pub.dev/flutter_local_notifications-21.*/lib/src/flutter_local_notifications_plugin.dart 2>/dev/null | head -30)",
+      "Bash(grep -r \"class FlutterLocalNotificationsPlugin\" ~/.pub-cache/hosted/pub.dev/flutter_local_notifications-21.*/lib/ 2>/dev/null | head -3 && grep -n \"Future.*zonedSchedule\\|Future.*initialize\\|Future.*show\\b\\|Future.*cancel\" ~/.pub-cache/hosted/pub.dev/flutter_local_notifications-21.*/lib/src/flutter_local_notifications_plugin.dart 2>/dev/null | head -30)",
       "Read(//Users/guy/.pub-cache/hosted/pub.dev/**)",
       "Bash(sed -n '115,160p' ~/.pub-cache/hosted/pub.dev/flutter_local_notifications-21.0.0/lib/src/flutter_local_notifications_plugin.dart)",
       "Bash(sed -n '249,340p' ~/.pub-cache/hosted/pub.dev/flutter_local_notifications-21.0.0/lib/src/flutter_local_notifications_plugin.dart)",
@@ -21,7 +21,21 @@
       "Bash(pod install *)",
       "Bash(plutil -lint /Users/guy/projects/Kodesh-app----Flutter-app/ios/Runner/Info.plist)",
       "Bash(git add *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(mkdir -p /home/user/Kodesh-app----Flutter-app/.claude)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path // empty' 2>/dev/null); [[ \"$f\" == *.dart ]] && { bad=$(awk 'length > 80 {printf \"%d(%d) \", NR, length}' \"$f\" 2>/dev/null); [ -n \"$bad\" ] && echo \"dart format warning: lines over 80 chars at lines: $bad\"; }; exit 0"
+          }
+        ]
+      }
     ]
   }
 }

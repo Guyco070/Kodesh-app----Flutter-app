@@ -62,12 +62,15 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
+  web:
+    generate: true
+    image_path: "assets/logo.jpg"
   image_path: "assets/logo.jpg"
 
 flutter_native_splash:
   android: true
   ios: true
-  web: false
+  web: true
   color: "#294C85"
   image: "assets/logo.jpg"
   android_gravity: fill

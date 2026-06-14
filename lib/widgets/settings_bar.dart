@@ -44,7 +44,9 @@ class _SettingsBarState extends State<SettingsBar> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _autoDetectIfPermitted());
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _autoDetectIfPermitted(),
+    );
   }
 
   Future<void> _autoDetectIfPermitted() async {
@@ -405,10 +407,11 @@ class _SettingsBarState extends State<SettingsBar> {
                                       ? events.hebrewDates == null ||
                                               events.hebrewDates!.isEmpty
                                           ? '  '
-                                          : events
-                                              .hebrewDates![getDateTimeSetToZero(
-                                            DateTime.now(),
-                                          )]!
+                                          : events.hebrewDates![
+                                              getDateTimeSetToZero(
+                                                DateTime.now(),
+                                              )
+                                            ]!
                                       : df.DateFormat(
                                         'dd/MM/yyyy',
                                       ).format(DateTime.now()),
