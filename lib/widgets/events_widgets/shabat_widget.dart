@@ -136,6 +136,34 @@ class _LeynningSectionState extends State<_LeyningSection> {
     'Malachi': 'מלאכי',
   };
 
+  static String _toHebNum(int n) {
+    if (n <= 0) return n.toString();
+    const ones = [
+      '', 'א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט',
+    ];
+    const tens = [
+      '', 'י', 'כ', 'ל', 'מ', 'נ', 'ס', 'ע', 'פ', 'צ',
+    ];
+    final letters = <String>[];
+    int r = n;
+    while (r >= 400) { letters.add('ת'); r -= 400; }
+    if (r >= 300) { letters.add('ש'); r -= 300; }
+    if (r >= 200) { letters.add('ר'); r -= 200; }
+    if (r >= 100) { letters.add('ק'); r -= 100; }
+    if (r == 15) {
+      letters.addAll(['ט', 'ו']);
+    } else if (r == 16) {
+      letters.addAll(['ט', 'ז']);
+    } else {
+      if (r >= 10) { letters.add(tens[r ~/ 10]); r %= 10; }
+      if (r > 0) { letters.add(ones[r]); }
+    }
+    if (letters.isEmpty) return '0';
+    final s = letters.join();
+    if (s.length == 1) return '$s׳';
+    return '${s.substring(0, s.length - 1)}״${s[s.length - 1]}';
+  }
+
   static String _localizeRef(String ref, bool isHe) {
     String result = ref;
     if (isHe) {
@@ -152,6 +180,12 @@ class _LeynningSectionState extends State<_LeyningSection> {
       RegExp(r'(\d+):(\d+)-\1:(\d+)'),
       (m) => '${m[1]}:${m[2]}-${m[3]}',
     );
+    if (isHe) {
+      result = result.replaceAllMapped(
+        RegExp(r'\d+'),
+        (m) => _toHebNum(int.parse(m.group(0)!)),
+      );
+    }
     return result;
   }
 
