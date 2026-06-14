@@ -118,16 +118,20 @@ class _LeynningSectionState extends State<_LeyningSection>
     wasExpanded ? _animCtrl.reverse() : _animCtrl.forward();
     setState(() => _expanded = !_expanded);
     if (wasExpanded) return;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_headerKey.currentContext != null) {
-        Scrollable.ensureVisible(
-          _headerKey.currentContext!,
-          alignment: 0.0,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeOut,
-        );
-      }
-    });
+    _animCtrl.addStatusListener(_scrollAfterExpand);
+  }
+
+  void _scrollAfterExpand(AnimationStatus status) {
+    if (status != AnimationStatus.completed) return;
+    _animCtrl.removeStatusListener(_scrollAfterExpand);
+    if (_headerKey.currentContext != null) {
+      Scrollable.ensureVisible(
+        _headerKey.currentContext!,
+        alignment: 0.0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    }
   }
 
   static const _hebrewBooks = {
