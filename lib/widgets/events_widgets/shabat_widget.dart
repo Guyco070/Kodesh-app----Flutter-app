@@ -86,12 +86,28 @@ class _LeyningSection extends StatefulWidget {
 class _LeynningSectionState extends State<_LeyningSection> {
   bool _expanded = false;
 
+  static const _aliyaKeys = {
+    '1': 1,
+    '2': 2,
+    '3': 3,
+    '4': 4,
+    '5': 5,
+    '6': 6,
+    '7': 7,
+    'M': 8,
+  };
+
   @override
   Widget build(BuildContext context) {
+    final isRtl =
+        Directionality.of(context) == TextDirection.rtl;
     final aliyot = widget.leyning.entries
-        .where((e) => e.key != 'haftarah' && e.key != 'summary')
+        .where((e) => _aliyaKeys.containsKey(e.key))
         .toList()
-      ..sort((a, b) => _aliyaOrder(a.key).compareTo(_aliyaOrder(b.key)));
+      ..sort(
+        (a, b) =>
+            _aliyaKeys[a.key]!.compareTo(_aliyaKeys[b.key]!),
+      );
     final haftarah = widget.leyning['haftarah'];
 
     return Column(
@@ -101,60 +117,93 @@ class _LeynningSectionState extends State<_LeyningSection> {
           child: ListTile(
             leading: const Icon(Icons.menu_book_outlined),
             title: Text(widget.appLocalizations.torahReading),
-            trailing: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
+            trailing: Icon(
+              _expanded ? Icons.expand_less : Icons.expand_more,
+            ),
           ),
         ),
         if (_expanded) ...[
           for (final entry in aliyot)
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 2,
+              ),
               child: Row(
-                children: [
-                  SizedBox(
-                    width: 28,
-                    child: Text(
-                      entry.key,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Expanded(child: Text(entry.value)),
-                ],
+                children: isRtl
+                    ? [
+                        Expanded(
+                          child: Text(
+                            entry.value,
+                            textAlign: TextAlign.right,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        SizedBox(
+                          width: 24,
+                          child: Text(
+                            entry.key,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ]
+                    : [
+                        SizedBox(
+                          width: 24,
+                          child: Text(
+                            entry.key,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(child: Text(entry.value)),
+                      ],
               ),
             ),
           if (haftarah != null)
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 4,
+              ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: 70,
-                    child: Text(
-                      widget.appLocalizations.haftarah,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Expanded(child: Text(haftarah)),
-                ],
+                children: isRtl
+                    ? [
+                        Expanded(
+                          child: Text(
+                            haftarah,
+                            textAlign: TextAlign.right,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          widget.appLocalizations.haftarah,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ]
+                    : [
+                        Text(
+                          widget.appLocalizations.haftarah,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(child: Text(haftarah)),
+                      ],
               ),
             ),
           const SizedBox(height: 8),
         ],
       ],
     );
-  }
-
-  int _aliyaOrder(String key) {
-    const order = {
-      '1': 1,
-      '2': 2,
-      '3': 3,
-      '4': 4,
-      '5': 5,
-      '6': 6,
-      '7': 7,
-      'M': 8,
-    };
-    return order[key] ?? 99;
   }
 }
