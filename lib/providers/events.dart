@@ -71,7 +71,7 @@ class Events with ChangeNotifier {
 
       if (setIsLoading != null) setIsLoading(true);
 
-      fetchAndSetProducts(forceRefresh: true).then((value) {
+      fetchAndSetProducts(forceRefresh: true, lang: locale).then((value) {
         if (setIsLoading != null) setIsLoading(false);
       });
       notifyListeners();
@@ -323,9 +323,10 @@ class Events with ChangeNotifier {
     bool filterByUser = false,
     bool getDataFirst = false,
     bool forceRefresh = false,
-    String lang = 'en',
+    String? lang,
     void Function(bool bool)? setIsThereInternetConnection,
   }) async {
+    lang ??= _currentLocale.languageCode;
     if (getDataFirst) await getData();
 
     if (!forceRefresh &&
@@ -340,11 +341,11 @@ class Events with ChangeNotifier {
 
     if (await isThereInternetConnection()) {
       try {
-        final extractData = await tryFetch();
+        final extractData = await tryFetch(lang: lang);
         final items = extractData['items'] as List;
         _eventsItems = getEventsItemsFromMap(items);
         _lastEventsFetch = DateTime.now();
-        _cacheEventsItems(items);
+        _cacheEventsItems(items, lang: lang);
         notifyListeners();
         fetchAndSetHebrewDatesProducts();
         return _eventsItems;
@@ -372,10 +373,11 @@ class Events with ChangeNotifier {
     }
   }
 
-  Future<void> _cacheEventsItems(List items) async {
+  Future<void> _cacheEventsItems(List items, {String? lang}) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('cachedEventsJson_$city', jsonEncode(items));
+      final lg = lang ?? _currentLocale.languageCode;
+      await prefs.setString('cachedEventsJson_${city}_$lg', jsonEncode(items));
     } catch (e) {
       logger.w('Failed to cache events', error: e);
     }
@@ -384,7 +386,8 @@ class Events with ChangeNotifier {
   Future<List<Event>?> _loadCachedEventsItems() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final cached = prefs.getString('cachedEventsJson_$city');
+      final lg = _currentLocale.languageCode;
+      final cached = prefs.getString('cachedEventsJson_${city}_$lg');
       if (cached == null) return null;
       final items = jsonDecode(cached) as List;
       logger.i('Loaded ${items.length} events from cache');
