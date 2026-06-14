@@ -273,7 +273,6 @@ class _LeynningSectionState extends State<_LeyningSection>
           key: _headerKey,
           onTap: _toggle,
           splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
           leading: const Icon(Icons.menu_book_outlined),
           title: Text(widget.appLocalizations.torahReading),
           trailing: RotationTransition(
