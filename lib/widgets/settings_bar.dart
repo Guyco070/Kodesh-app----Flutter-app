@@ -211,46 +211,92 @@ class _SettingsBarState extends State<SettingsBar> {
                               ],
                             ),
                             const SizedBox(width: 12),
-                            ElevatedButton.icon(
-                              onPressed: () async {
-                                DateTime? newDate = await showDatePicker(
-                                  context: context,
-                                  initialDate: events.startDate,
-                                  firstDate: DateTime.now().subtract(
-                                    const Duration(days: 365),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ElevatedButton.icon(
+                                  onPressed: () async {
+                                    DateTime? newDate = await showDatePicker(
+                                      context: context,
+                                      initialDate: events.startDate,
+                                      firstDate: DateTime.now().subtract(
+                                        const Duration(days: 365),
+                                      ),
+                                      lastDate: DateTime.now().add(
+                                        const Duration(days: 365),
+                                      ),
+                                    );
+                                    if (newDate != null) {
+                                      events.setStartDate(
+                                        newDate,
+                                        setIsLoading: widget.setIsLoading,
+                                        setIsLoadingZmanim:
+                                            widget.setIsLoadingZmanim,
+                                      );
+                                    }
+                                  },
+                                  icon: const Icon(
+                                    Icons.calendar_month_outlined,
                                   ),
-                                  lastDate: DateTime.now().add(
-                                    const Duration(days: 365),
+                                  label: AnimatedSwitcher(
+                                    duration:
+                                        const Duration(milliseconds: 500),
+                                    transitionBuilder: (child, animation) =>
+                                        ScaleTransition(
+                                          scale: animation,
+                                          child: child,
+                                        ),
+                                    child: Text(
+                                      key: ValueKey<String>(
+                                        df.DateFormat(
+                                          'dd/MM/yyyy',
+                                        ).format(events.startDate),
+                                      ),
+                                      df.DateFormat(
+                                        'dd/MM/yyyy',
+                                      ).format(events.startDate),
+                                    ),
                                   ),
-                                );
-                                if (newDate != null) {
-                                  events.setStartDate(
-                                    newDate,
-                                    setIsLoading: widget.setIsLoading,
-                                    setIsLoadingZmanim:
-                                        widget.setIsLoadingZmanim,
-                                  );
-                                }
-                              },
-                              icon: const Icon(Icons.calendar_month_outlined),
-                              label: AnimatedSwitcher(
-                                duration: const Duration(milliseconds: 500),
-                                transitionBuilder:
-                                    ((child, animation) => ScaleTransition(
-                                      scale: animation,
-                                      child: child,
-                                    )),
-                                child: Text(
-                                  key: ValueKey<String>(
-                                    df.DateFormat(
-                                      'dd/MM/yyyy',
-                                    ).format(events.startDate),
-                                  ),
-                                  df.DateFormat(
-                                    'dd/MM/yyyy',
-                                  ).format(events.startDate),
                                 ),
-                              ),
+                                if (_isExpanded)
+                                  SizedBox(
+                                    height: 30,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        IconButton(
+                                          onPressed: () => events.setStartDate(
+                                            events.startDate.subtract(
+                                              const Duration(days: 1),
+                                            ),
+                                            setIsLoading: widget.setIsLoading,
+                                            setIsLoadingZmanim:
+                                                widget.setIsLoadingZmanim,
+                                          ),
+                                          icon: const Icon(
+                                            Icons.remove,
+                                            size: 20,
+                                          ),
+                                        ),
+                                        IconButton(
+                                          onPressed: () => events.setStartDate(
+                                            events.startDate.add(
+                                              const Duration(days: 1),
+                                            ),
+                                            setIsLoading: widget.setIsLoading,
+                                            setIsLoadingZmanim:
+                                                widget.setIsLoadingZmanim,
+                                          ),
+                                          icon: const Icon(
+                                            Icons.add,
+                                            size: 20,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                              ],
                             ),
                           ],
                         ),
@@ -258,46 +304,6 @@ class _SettingsBarState extends State<SettingsBar> {
                     ),
                   ),
                 ),
-                if (_isExpanded)
-                  Align(
-                    alignment: Alignment(
-                      LanguageChangeProvider.isDirectionRTL(
-                            events.currentLocale.languageCode,
-                          )
-                          ? -1
-                          : 1,
-                      5,
-                    ),
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width / 2.3,
-                      height: 30,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                            onPressed:
-                                () => events.setStartDate(
-                                  events.startDate.subtract(
-                                    const Duration(days: 1),
-                                  ),
-                                  setIsLoading: widget.setIsLoading,
-                                  setIsLoadingZmanim: widget.setIsLoadingZmanim,
-                                ),
-                            icon: const Icon(Icons.remove, size: 20),
-                          ),
-                          IconButton(
-                            onPressed:
-                                () => events.setStartDate(
-                                  events.startDate.add(const Duration(days: 1)),
-                                  setIsLoading: widget.setIsLoading,
-                                  setIsLoadingZmanim: widget.setIsLoadingZmanim,
-                                ),
-                            icon: const Icon(Icons.add, size: 20),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
                 Container(
                   padding: const EdgeInsets.only(top: 0),
                   height: 30,
