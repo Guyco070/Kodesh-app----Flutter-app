@@ -148,5 +148,6 @@
     "compass": "Brújula",
 
     "darkMode": "Modo oscuro",
-    "lightMode": "Modo claro"
+    "lightMode": "Modo claro",
+    "systemMode": "Sistema"
 }
