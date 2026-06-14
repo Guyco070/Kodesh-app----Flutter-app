@@ -88,13 +88,36 @@ class _LeyningSection extends StatefulWidget {
   State<_LeyningSection> createState() => _LeynningSectionState();
 }
 
-class _LeynningSectionState extends State<_LeyningSection> {
+class _LeynningSectionState extends State<_LeyningSection>
+    with SingleTickerProviderStateMixin {
   bool _expanded = false;
   final _headerKey = GlobalKey();
+  late final AnimationController _animCtrl;
+  late final Animation<double> _rotation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animCtrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    _rotation = Tween<double>(begin: 0.0, end: 0.5).animate(
+      CurvedAnimation(parent: _animCtrl, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _animCtrl.dispose();
+    super.dispose();
+  }
 
   void _toggle() {
+    final wasExpanded = _expanded;
+    wasExpanded ? _animCtrl.reverse() : _animCtrl.forward();
     setState(() => _expanded = !_expanded);
-    if (!_expanded) return;
+    if (wasExpanded) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_headerKey.currentContext != null) {
         Scrollable.ensureVisible(
@@ -228,6 +251,8 @@ class _LeynningSectionState extends State<_LeyningSection> {
     'M': 8,
   };
 
+  static const _trailingWidth = 60.0;
+
   @override
   Widget build(BuildContext context) {
     final locale = Localizations.localeOf(context);
@@ -244,120 +269,122 @@ class _LeynningSectionState extends State<_LeyningSection> {
 
     return Column(
       children: [
-        GestureDetector(
+        ListTile(
           key: _headerKey,
           onTap: _toggle,
-          child: ListTile(
-            leading: const Icon(Icons.menu_book_outlined),
-            title: Text(widget.appLocalizations.torahReading),
-            trailing: Icon(
-              _expanded ? Icons.expand_less : Icons.expand_more,
-            ),
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          leading: const Icon(Icons.menu_book_outlined),
+          title: Text(widget.appLocalizations.torahReading),
+          trailing: RotationTransition(
+            turns: _rotation,
+            child: const Icon(Icons.expand_more),
           ),
         ),
-        if (_expanded) ...[
-          for (final entry in aliyot)
-            Padding(
-              padding: isRtl
-                  ? const EdgeInsets.only(
-                      left: 16,
-                      right: 16,
-                      top: 2,
-                      bottom: 2,
-                    )
-                  : const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 2,
-                    ),
-              child: Row(
-                children: isRtl
-                    ? [
-                        Expanded(
-                          child: Text(
-                            _localizeRef(entry.value, isRtl),
-                            textAlign: TextAlign.right,
-                          ),
+        AnimatedSize(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+          child: _expanded
+              ? Column(
+                  children: [
+                    for (final entry in aliyot)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 2,
                         ),
-                        const SizedBox(width: 8),
-                        SizedBox(
-                          width: 24,
-                          child: Text(
-                            entry.key,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                        child: Row(
+                          children: isRtl
+                              ? [
+                                  Expanded(
+                                    child: Text(
+                                      _localizeRef(entry.value, isRtl),
+                                      textAlign: TextAlign.right,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  SizedBox(
+                                    width: _trailingWidth,
+                                    child: Text(
+                                      entry.key,
+                                      textAlign: TextAlign.right,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ]
+                              : [
+                                  SizedBox(
+                                    width: _trailingWidth,
+                                    child: Text(
+                                      entry.key,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Text(
+                                      _localizeRef(entry.value, isRtl),
+                                    ),
+                                  ),
+                                ],
                         ),
-                      ]
-                    : [
-                        SizedBox(
-                          width: 24,
-                          child: Text(
-                            entry.key,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                      ),
+                    if (haftarah != null)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 4,
                         ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            _localizeRef(entry.value, isRtl),
-                          ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: isRtl
+                              ? [
+                                  Expanded(
+                                    child: Text(
+                                      _localizeRef(haftarah, isRtl),
+                                      textAlign: TextAlign.right,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  SizedBox(
+                                    width: _trailingWidth,
+                                    child: Text(
+                                      widget.appLocalizations.haftarah,
+                                      textAlign: TextAlign.right,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ]
+                              : [
+                                  SizedBox(
+                                    width: _trailingWidth,
+                                    child: Text(
+                                      widget.appLocalizations.haftarah,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Text(
+                                      _localizeRef(haftarah, isRtl),
+                                    ),
+                                  ),
+                                ],
                         ),
-                      ],
-              ),
-            ),
-          if (haftarah != null)
-            Padding(
-              padding: isRtl
-                  ? const EdgeInsets.only(
-                      left: 16,
-                      right: 16,
-                      top: 4,
-                      bottom: 4,
-                    )
-                  : const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 4,
-                    ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: isRtl
-                    ? [
-                        Expanded(
-                          child: Text(
-                            _localizeRef(haftarah, isRtl),
-                            textAlign: TextAlign.right,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          widget.appLocalizations.haftarah,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ]
-                    : [
-                        Text(
-                          widget.appLocalizations.haftarah,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            _localizeRef(haftarah, isRtl),
-                          ),
-                        ),
-                      ],
-              ),
-            ),
-          const SizedBox(height: 8),
-        ],
+                      ),
+                    const SizedBox(height: 8),
+                  ],
+                )
+              : const SizedBox.shrink(),
+        ),
       ],
     );
   }
