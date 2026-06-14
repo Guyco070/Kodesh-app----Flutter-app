@@ -42,12 +42,14 @@ class RoshChodesh extends Event {
         title: rs1.title,
         entryDate: rs1.entryDate,
         releaseDate: rs2.entryDate,
+        titleOrig: rs1.titleOrig,
       );
     }
     return RoshChodesh(
       title: rs1.title,
       entryDate: rs2.entryDate,
       releaseDate: rs1.entryDate,
+      titleOrig: rs1.titleOrig,
     );
   }
 
