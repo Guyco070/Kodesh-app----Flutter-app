@@ -244,7 +244,7 @@ class _LeynningSectionState extends State<_LeyningSection> {
 
     return Column(
       children: [
-        InkWell(
+        GestureDetector(
           key: _headerKey,
           onTap: _toggle,
           child: ListTile(
@@ -260,7 +260,7 @@ class _LeynningSectionState extends State<_LeyningSection> {
             Padding(
               padding: isRtl
                   ? const EdgeInsets.only(
-                      left: 56,
+                      left: 16,
                       right: 16,
                       top: 2,
                       bottom: 2,
@@ -313,7 +313,7 @@ class _LeynningSectionState extends State<_LeyningSection> {
             Padding(
               padding: isRtl
                   ? const EdgeInsets.only(
-                      left: 56,
+                      left: 16,
                       right: 16,
                       top: 4,
                       bottom: 4,
