@@ -361,4 +361,25 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get noHolidaysFound => 'No holidays found.';
+
+  @override
+  String get search => 'Search...';
+
+  @override
+  String get listView => 'List';
+
+  @override
+  String get monthlyView => 'Monthly';
+
+  @override
+  String get noSearchResults => 'No results found';
+
+  @override
+  String get dateRangeFrom => 'From';
+
+  @override
+  String get dateRangeTo => 'To';
+
+  @override
+  String get selectDateRange => 'Select date range';
 }

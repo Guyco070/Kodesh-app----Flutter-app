@@ -688,6 +688,13 @@ abstract class AppLocalizations {
   String get holidayCalendarMenu;
   String get todaysDaf;
   String get noHolidaysFound;
+  String get search;
+  String get listView;
+  String get monthlyView;
+  String get noSearchResults;
+  String get dateRangeFrom;
+  String get dateRangeTo;
+  String get selectDateRange;
 }
 
 class _AppLocalizationsDelegate
