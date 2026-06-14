@@ -90,6 +90,22 @@ class _LeyningSection extends StatefulWidget {
 
 class _LeynningSectionState extends State<_LeyningSection> {
   bool _expanded = false;
+  final _headerKey = GlobalKey();
+
+  void _toggle() {
+    setState(() => _expanded = !_expanded);
+    if (!_expanded) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_headerKey.currentContext != null) {
+        Scrollable.ensureVisible(
+          _headerKey.currentContext!,
+          alignment: 0.0,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+    });
+  }
 
   static const _hebrewBooks = {
     'Genesis': 'בראשית',
@@ -137,7 +153,8 @@ class _LeynningSectionState extends State<_LeyningSection> {
     return Column(
       children: [
         InkWell(
-          onTap: () => setState(() => _expanded = !_expanded),
+          key: _headerKey,
+          onTap: _toggle,
           child: ListTile(
             leading: const Icon(Icons.menu_book_outlined),
             title: Text(widget.appLocalizations.torahReading),
