@@ -99,8 +99,9 @@ class _LeynningSectionState extends State<_LeyningSection> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context);
     final isRtl =
-        Directionality.of(context) == TextDirection.rtl;
+        locale.languageCode == 'he' || locale.languageCode == 'ar';
     final aliyot = widget.leyning.entries
         .where((e) => _aliyaKeys.containsKey(e.key))
         .toList()
