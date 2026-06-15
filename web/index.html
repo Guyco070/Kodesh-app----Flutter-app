@@ -37,6 +37,20 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
+  <script>
+    window.needsCompassPermission = function () {
+      return typeof DeviceOrientationEvent !== 'undefined' &&
+             typeof DeviceOrientationEvent.requestPermission === 'function';
+    };
+    window.requestCompassPermission = async function () {
+      if (window.needsCompassPermission()) {
+        const result = await DeviceOrientationEvent.requestPermission();
+        return result === 'granted';
+      }
+      return true;
+    };
+  </script>
+
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

@@ -358,4 +358,10 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get noHolidaysFound => 'לא נמצאו חגים.';
+
+  @override
+  String get compassNotSupported => 'המצפן אינו נתמך במכשיר זה';
+
+  @override
+  String get enableCompass => 'הפעל מצפן';
 }

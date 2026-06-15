@@ -361,4 +361,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get noHolidaysFound => 'No holidays found.';
+
+  @override
+  String get compassNotSupported => 'Compass is not supported on this device';
+
+  @override
+  String get enableCompass => 'Enable Compass';
 }

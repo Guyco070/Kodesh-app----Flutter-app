@@ -129,5 +129,8 @@
     "dafYomiMenu": "דף יומי",
     "holidayCalendarMenu": "לוח חגים יהודי",
     "todaysDaf": "הדף היומי",
-    "noHolidaysFound": "לא נמצאו חגים."
+    "noHolidaysFound": "לא נמצאו חגים.",
+
+    "compassNotSupported": "המצפן אינו נתמך במכשיר זה",
+    "enableCompass": "הפעל מצפן"
 }

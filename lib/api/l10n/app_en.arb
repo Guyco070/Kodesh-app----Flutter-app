@@ -380,5 +380,11 @@
     "@todaysDaf": { "description": "todaysDaf" },
 
     "noHolidaysFound": "No holidays found.",
-    "@noHolidaysFound": { "description": "noHolidaysFound" }
+    "@noHolidaysFound": { "description": "noHolidaysFound" },
+
+    "compassNotSupported": "Compass is not supported on this device",
+    "@compassNotSupported": { "description": "shown when device has no compass sensor" },
+
+    "enableCompass": "Enable Compass",
+    "@enableCompass": { "description": "button to request compass/orientation permission" }
 }

@@ -688,6 +688,8 @@ abstract class AppLocalizations {
   String get holidayCalendarMenu;
   String get todaysDaf;
   String get noHolidaysFound;
+  String get compassNotSupported;
+  String get enableCompass;
 }
 
 class _AppLocalizationsDelegate
