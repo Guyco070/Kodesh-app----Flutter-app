@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kodesh_app/api/l10n/l10n.dart';
@@ -26,6 +28,22 @@ class Time {
 }
 
 class Reminders with ChangeNotifier {
+  Timer? _debounceTimer;
+
+  void _scheduleSetReminders() {
+    _debounceTimer?.cancel();
+    _debounceTimer = Timer(
+      const Duration(milliseconds: 500),
+      () => setReminders(update: true),
+    );
+  }
+
+  @override
+  void dispose() {
+    _debounceTimer?.cancel();
+    super.dispose();
+  }
+
   int id = 0;
   bool shabatAndHolidays = false;
   bool nerotHanukkah = false;
@@ -153,6 +171,7 @@ class Reminders with ChangeNotifier {
       roshChodesh = !roshChodesh;
     }
     notifyListeners();
+    _scheduleSetReminders();
   }
 
   setShabatAndHolidays({bool? newShabatAndHolidays}) {
@@ -162,6 +181,7 @@ class Reminders with ChangeNotifier {
       shabatAndHolidays = !shabatAndHolidays;
     }
     notifyListeners();
+    _scheduleSetReminders();
   }
 
   setHavdalah({bool? newHavdalah}) {
@@ -171,6 +191,7 @@ class Reminders with ChangeNotifier {
       havdalah = !havdalah;
     }
     notifyListeners();
+    _scheduleSetReminders();
   }
 
   setNerotHanukkah({bool? newNerotHanukkah}) {
@@ -180,6 +201,7 @@ class Reminders with ChangeNotifier {
       nerotHanukkah = !nerotHanukkah;
     }
     notifyListeners();
+    _scheduleSetReminders();
   }
 
   setSfiratOmer({bool? newSfiratOmer}) {
@@ -189,6 +211,7 @@ class Reminders with ChangeNotifier {
       sfiratOmer = !sfiratOmer;
     }
     notifyListeners();
+    _scheduleSetReminders();
   }
 
   setShabatAndHolidaysThingsToRemindList({
@@ -197,36 +220,43 @@ class Reminders with ChangeNotifier {
     shabatAndHolidaysThingsToRemindList =
         newShabatAndHolidaysThingsToRemindList;
     notifyListeners();
+    _scheduleSetReminders();
   }
 
   setShabatAndHolidaysShabatMinutes(int newBeforeShabatMinutes) {
     beforeShabatMinutes = newBeforeShabatMinutes;
     notifyListeners();
+    _scheduleSetReminders();
   }
 
   setShabatAndHolidaysShabatHours(int newBeforeShabatHours) {
     beforeShabatHours = newBeforeShabatHours;
     notifyListeners();
+    _scheduleSetReminders();
   }
 
   setAfterShabatHavdalahMinutes(int newAfterShabatMinutes) {
     afterShabatHavdalahMinutes = newAfterShabatMinutes;
     notifyListeners();
+    _scheduleSetReminders();
   }
 
   setAfterShabatHavdalahHours(int newAfterShabatHours) {
     afterShabatHavdalahHours = newAfterShabatHours;
     notifyListeners();
+    _scheduleSetReminders();
   }
 
   setNerotHanukkahMinutes(int newBeforeNerotHanukkahMinutes) {
     beforeNerotHanukkahMinutes = newBeforeNerotHanukkahMinutes;
     notifyListeners();
+    _scheduleSetReminders();
   }
 
   setNerotHanukkahHours(int newBeforeNerotHanukkahHours) {
     beforeNerotHanukkahHours = newBeforeNerotHanukkahHours;
     notifyListeners();
+    _scheduleSetReminders();
   }
 
   setShabatAndHolidaysCandles({bool? newShabatAndHolidaysCandles}) {
@@ -236,16 +266,19 @@ class Reminders with ChangeNotifier {
       shabatAndHolidaysCandles = !shabatAndHolidaysCandles;
     }
     notifyListeners();
+    _scheduleSetReminders();
   }
 
   setShabatAndHolidaysCandlesMinutes(int newBeforeShabatCandlesMinutes) {
     beforeShabatAndHolidaysCandlesMinutes = newBeforeShabatCandlesMinutes;
     notifyListeners();
+    _scheduleSetReminders();
   }
 
   setShabatAndHolidaysCandlesHours(int newBeforeShabatCandlesHours) {
     beforeShabatAndHolidaysCandlesHours = newBeforeShabatCandlesHours;
     notifyListeners();
+    _scheduleSetReminders();
   }
 
   void setTefilin({bool? newTefilin}) {
@@ -255,21 +288,25 @@ class Reminders with ChangeNotifier {
       tefilin = !tefilin;
     }
     notifyListeners();
+    _scheduleSetReminders();
   }
 
   void setTefilinTime(String newTefilinTime) {
     tefilinTime = newTefilinTime;
     notifyListeners();
+    _scheduleSetReminders();
   }
 
   void setRoshChodeshTime(String newRoshChodeshTime) {
     roshChodeshTime = newRoshChodeshTime;
     notifyListeners();
+    _scheduleSetReminders();
   }
 
   void setSfiratOmerTime(String newSfiratOmerTime) {
     sfiratOmerTime = newSfiratOmerTime;
     notifyListeners();
+    _scheduleSetReminders();
   }
 
   getData() async {
