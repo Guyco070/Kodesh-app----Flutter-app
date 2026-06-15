@@ -52,8 +52,10 @@ class Tfilot with ChangeNotifier {
   Widget getNosahim(BuildContext context, Map getBracha) {
     List<Widget> widgets = [];
 
+    final langCode = LanguageChangeProvider.getCurrentLocale.languageCode;
     Map<Nosah, List<String>> bracha =
-        getBracha[LanguageChangeProvider.getCurrentLocale.languageCode]!;
+        (getBracha[langCode] ?? getBracha['he'] ?? getBracha.values.first)
+            as Map<Nosah, List<String>>;
 
     for (Nosah i in bracha.keys) {
       widgets.add(
@@ -105,13 +107,14 @@ class Tfilot with ChangeNotifier {
     Map<String, List<String>>? textList,
     double fontSizeScale = 0,
   }) {
+    final langCode = LanguageChangeProvider.getCurrentLocale.languageCode;
     final List<String> seder =
         textList != null
-            ? textList[LanguageChangeProvider.getCurrentLocale.languageCode]!
-            : (getBracha[LanguageChangeProvider
-                    .getCurrentLocale
-                    .languageCode])![isWithNosah ? _nosah : Nosah.mizrah]
-                as List<String>;
+            ? (textList[langCode] ?? textList['he'] ?? textList.values.first)
+            : ((getBracha[langCode] ?? getBracha['he'] ?? getBracha.values.first)
+                    as Map<Nosah, List<String>>)[
+                isWithNosah ? _nosah : Nosah.mizrah
+              ]!;
     TextStyle font;
     List<TextSpan> widgets = [];
     final double titleFontSize = 15 + fontSizeScale;
