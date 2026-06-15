@@ -54,7 +54,7 @@ class Tfilot with ChangeNotifier {
 
     final langCode = LanguageChangeProvider.getCurrentLocale.languageCode;
     Map<Nosah, List<String>> bracha =
-        (getBracha[langCode] ?? getBracha['he'] ?? getBracha.values.first)
+        (getBracha[langCode] ?? getBracha['en'] ?? getBracha.values.first)
             as Map<Nosah, List<String>>;
 
     for (Nosah i in bracha.keys) {
@@ -110,8 +110,8 @@ class Tfilot with ChangeNotifier {
     final langCode = LanguageChangeProvider.getCurrentLocale.languageCode;
     final List<String> seder =
         textList != null
-            ? (textList[langCode] ?? textList['he'] ?? textList.values.first)
-            : ((getBracha[langCode] ?? getBracha['he'] ?? getBracha.values.first)
+            ? (textList[langCode] ?? textList['en'] ?? textList.values.first)
+            : ((getBracha[langCode] ?? getBracha['en'] ?? getBracha.values.first)
                     as Map<Nosah, List<String>>)[
                 isWithNosah ? _nosah : Nosah.mizrah
               ]!;
