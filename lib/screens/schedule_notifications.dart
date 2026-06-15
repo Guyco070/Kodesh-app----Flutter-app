@@ -20,15 +20,6 @@ class ScheduleNotificationsScreen extends StatefulWidget {
 
 class _ScheduleNotificationsScreenState
     extends State<ScheduleNotificationsScreen> {
-  bool tefilin = false;
-  bool preys = false;
-  bool roshChodesh = false;
-  String tefilinTime = '';
-
-  bool _isLoading = false;
-
-  // TextEditingController? tefilinController;
-
   @override
   Widget build(BuildContext context) {
     var reminders = Provider.of<Reminders>(context);
@@ -174,13 +165,7 @@ class _ScheduleNotificationsScreenState
 
     return Scaffold(
       appBar: CustomAppBar(title: appLocalizations.settingRemindersMenu),
-      body:
-          _isLoading
-              ? SizedBox(
-                height: MediaQuery.of(context).size.height / 2,
-                child: const Center(child: CircularProgressIndicator()),
-              )
-              : SingleChildScrollView(
+      body: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Column(
@@ -244,22 +229,6 @@ class _ScheduleNotificationsScreenState
                       ),
 
                       // sfirat omer - end
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            _isLoading = true;
-                          });
-                          reminders
-                              .setReminders(update: true)
-                              .then(
-                                (value) => setState(() {
-                                  _isLoading = false;
-                                }),
-                              );
-                          Navigator.pushNamed(context, '/');
-                        },
-                        child: Text(appLocalizations.updateRemindersTitle),
-                      ),
                     ],
                   ),
                 ),
