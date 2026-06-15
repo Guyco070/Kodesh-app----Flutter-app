@@ -2,9 +2,10 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_compass/flutter_compass.dart';
 import 'package:kodesh_app/screens/compass_screen.dart';
+import 'package:kodesh_app/services/compass_service.dart';
 import 'package:kodesh_app/widgets/compass/custom_rect_tween.dart';
+import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
 enum CompassIndicatorIcon { none, top, center }
 
@@ -16,33 +17,83 @@ class CompassWidget extends StatefulWidget {
   final CompassIndicatorIcon indicatorType;
 
   @override
-  State<CompassWidget> createState() => _CompassScreenState();
+  State<CompassWidget> createState() => _CompassWidgetState();
 }
 
-class _CompassScreenState extends State<CompassWidget> {
-  StreamSubscription<CompassEvent>? stream;
+class _CompassWidgetState extends State<CompassWidget> {
+  StreamSubscription<double?>? _stream;
   double? heading = 0;
+  bool _permissionGranted = false;
+  bool _permissionChecked = false;
 
   @override
   void initState() {
     super.initState();
-    if (FlutterCompass.events != null) {
-      stream = FlutterCompass.events!.listen((event) {
-        setState(() {
-          heading = event.heading;
-        });
-      });
+    _init();
+  }
+
+  Future<void> _init() async {
+    if (!isCompassAvailable) {
+      setState(() => _permissionChecked = true);
+      return;
+    }
+    if (needsPermissionRequest) {
+      setState(() => _permissionChecked = true);
+      return;
+    }
+    await _startListening();
+  }
+
+  Future<void> _startListening() async {
+    _stream = getCompassStream().listen((h) {
+      if (mounted) setState(() => heading = h);
+    });
+    if (mounted) setState(() { _permissionGranted = true; _permissionChecked = true; });
+  }
+
+  Future<void> _requestAndStart() async {
+    final granted = await requestPermission();
+    if (granted) {
+      await _startListening();
     }
   }
 
   @override
   void dispose() {
-    stream?.cancel();
+    _stream?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
+
+    if (!isCompassAvailable) {
+      return Center(
+        child: Text(
+          appLocalizations.compassNotSupported,
+          textAlign: TextAlign.center,
+        ),
+      );
+    }
+
+    if (needsPermissionRequest && !_permissionGranted) {
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.explore_outlined, size: 64, color: Colors.grey),
+            const SizedBox(height: 16),
+            ElevatedButton.icon(
+              icon: const Icon(Icons.sensors),
+              label: Text(appLocalizations.enableCompass),
+              onPressed: _requestAndStart,
+            ),
+          ],
+        ),
+      );
+    }
+
     Icon indicatorIcon() {
       if (heading != null && heading! <= 55.0 && heading! >= 45.0) {
         return const Icon(
@@ -83,7 +134,6 @@ class _CompassScreenState extends State<CompassWidget> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      // Text('${heading!.ceil()}', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 26),),
                       if (widget.indicatorType == CompassIndicatorIcon.top &&
                           orientation == Orientation.portrait) ...{
                         Padding(

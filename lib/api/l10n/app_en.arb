@@ -382,44 +382,9 @@
     "noHolidaysFound": "No holidays found.",
     "@noHolidaysFound": { "description": "noHolidaysFound" },
 
-    "torahReading": "Torah Reading",
-    "@torahReading": { "description": "Torah reading aliyot section header" },
+    "compassNotSupported": "Compass is not supported on this device",
+    "@compassNotSupported": { "description": "shown when device has no compass sensor" },
 
-    "haftarah": "Haftarah",
-    "@haftarah": { "description": "Haftarah reading label" },
-
-    "mevarchimShabat": "Shabbat Mevarchim",
-    "@mevarchimShabat": { "description": "Label for Shabbat Mevarchim" },
-
-    "blessingMonth": "Blessing: {months}",
-    "@blessingMonth": {
-        "description": "Shabbat Mevarchim — month(s) being blessed",
-        "placeholders": {
-            "months": { "type": "String" }
-        }
-    },
-
-    "molad": "New Moon (Molad)",
-    "@molad": { "description": "Molad section label" },
-
-    "search": "Search...",
-    "@search": { "description": "search hint text" },
-
-    "listView": "List",
-    "@listView": { "description": "list view toggle label" },
-
-    "monthlyView": "Monthly",
-    "@monthlyView": { "description": "monthly calendar view toggle label" },
-
-    "noSearchResults": "No results found",
-    "@noSearchResults": { "description": "shown when search returns no results" },
-
-    "dateRangeFrom": "From",
-    "@dateRangeFrom": { "description": "date range start label" },
-
-    "dateRangeTo": "To",
-    "@dateRangeTo": { "description": "date range end label" },
-
-    "selectDateRange": "Select date range",
-    "@selectDateRange": { "description": "button label to open date range picker" }
+    "enableCompass": "Enable Compass",
+    "@enableCompass": { "description": "button to request compass/orientation permission" }
 }
