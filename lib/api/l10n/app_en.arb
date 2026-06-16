@@ -386,5 +386,46 @@
     "@compassNotSupported": { "description": "shown when device has no compass sensor" },
 
     "enableCompass": "Enable Compass",
-    "@enableCompass": { "description": "button to request compass/orientation permission" }
+    "@enableCompass": { "description": "button to request compass/orientation permission" },
+
+    "search": "Search...",
+    "@search": { "description": "Search field hint text" },
+
+    "noSearchResults": "No results found",
+    "@noSearchResults": { "description": "Shown when search returns no results" },
+
+    "selectDateRange": "Select date range",
+    "@selectDateRange": { "description": "Date range picker title" },
+
+    "dateRangeFrom": "From",
+    "@dateRangeFrom": { "description": "Start of date range label" },
+
+    "dateRangeTo": "To",
+    "@dateRangeTo": { "description": "End of date range label" },
+
+    "listView": "List",
+    "@listView": { "description": "List view toggle label" },
+
+    "monthlyView": "Monthly",
+    "@monthlyView": { "description": "Monthly view toggle label" },
+
+    "torahReading": "Torah Reading",
+    "@torahReading": { "description": "Torah reading section label" },
+
+    "haftarah": "Haftarah",
+    "@haftarah": { "description": "Haftarah section label" },
+
+    "mevarchimShabat": "Shabbat Mevarchim",
+    "@mevarchimShabat": { "description": "Shabbat Mevarchim label" },
+
+    "blessingMonth": "Blessing: {months}",
+    "@blessingMonth": {
+        "description": "Month blessing label",
+        "placeholders": {
+            "months": { "type": "String" }
+        }
+    },
+
+    "molad": "New Moon (Molad)",
+    "@molad": { "description": "Molad label" }
 }
