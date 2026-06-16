@@ -367,4 +367,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get enableCompass => 'Enable Compass';
+
+  @override
+  String get search => 'Buscar...';
+
+  @override
+  String get noSearchResults => 'No se encontraron resultados';
 }

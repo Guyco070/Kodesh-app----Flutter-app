@@ -48,6 +48,7 @@ class _EventScreenState extends State<EventScreen> {
   bool _isLoadingLang = false;
   bool _isOnlyShabat = false;
   bool _isTodayTimesFromNow = false;
+  String _zmanimSearchQuery = '';
 
   String? title;
 
@@ -192,18 +193,26 @@ class _EventScreenState extends State<EventScreen> {
   }
 
   Widget _getZmanimWidgets(List<Zman>? zmanim) {
+    final appLocalizations = AppLocalizations.of(context)!;
     List<Widget> widgets = [];
     if (zmanim != null) {
-      zmanim.sort((a, b) {
-        return a.date.compareTo(b.date);
-      });
-      DateTime now = DateTime.now();
-      var x = {};
+      zmanim.sort((a, b) => a.date.compareTo(b.date));
+      final now = DateTime.now();
+      final query = _zmanimSearchQuery.trim().toLowerCase();
       for (Zman z in zmanim) {
-        x[z.title] = z.title;
-        if (!_isTodayTimesFromNow || z.date.isAfter(now)) {
-          widgets.add(ZmanWidget(data: z));
+        if (_isTodayTimesFromNow && !z.date.isAfter(now)) continue;
+        if (query.isNotEmpty) {
+          final langMap = types[Provider.of<LanguageChangeProvider>(
+            context,
+            listen: false,
+          ).currentLocale.languageCode] ?? types['en']!;
+          final labels = langMap[z.title] ?? {z.title, ''};
+          final title = labels.elementAt(0).toLowerCase();
+          final subtitle =
+              labels.length > 1 ? labels.elementAt(1).toLowerCase() : '';
+          if (!title.contains(query) && !subtitle.contains(query)) continue;
         }
+        widgets.add(ZmanWidget(data: z));
       }
     }
 
@@ -212,17 +221,45 @@ class _EventScreenState extends State<EventScreen> {
         SizedBox(
           height: MediaQuery.of(context).size.height / 2,
           child: Center(
-            child: Text(AppLocalizations.of(context)!.noLaterTimesToShow),
+            child: Text(
+              _zmanimSearchQuery.isNotEmpty
+                  ? appLocalizations.noSearchResults
+                  : appLocalizations.noLaterTimesToShow,
+            ),
           ),
         ),
       );
     } else {
       widgets.add(const SizedBox(height: 10));
     }
+
+    final searchField = Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      child: TextField(
+        onChanged: (v) => setState(() => _zmanimSearchQuery = v),
+        decoration: InputDecoration(
+          hintText: appLocalizations.search,
+          prefixIcon: const Icon(Icons.search),
+          suffixIcon:
+              _zmanimSearchQuery.isNotEmpty
+                  ? IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: () => setState(() => _zmanimSearchQuery = ''),
+                  )
+                  : null,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+          contentPadding: const EdgeInsets.symmetric(vertical: 0),
+          isDense: true,
+        ),
+      ),
+    );
+
     if (_isTodayTimesFromNow) {
-      return AnimatedFromNowOnTimesListView(widgets: widgets);
+      return AnimatedFromNowOnTimesListView(
+        widgets: [searchField, ...widgets],
+      );
     }
-    return AnimatedTimesListView(widgets: widgets);
+    return AnimatedTimesListView(widgets: [searchField, ...widgets]);
   }
 
   setViewState(ViewState newViewState) {

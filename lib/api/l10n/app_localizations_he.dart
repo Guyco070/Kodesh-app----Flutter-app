@@ -364,4 +364,10 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get enableCompass => 'הפעל מצפן';
+
+  @override
+  String get search => 'חיפוש...';
+
+  @override
+  String get noSearchResults => 'לא נמצאו תוצאות';
 }
