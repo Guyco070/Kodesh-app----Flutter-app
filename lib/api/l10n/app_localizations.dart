@@ -692,6 +692,16 @@ abstract class AppLocalizations {
   String get enableCompass;
   String get search;
   String get noSearchResults;
+  String get selectDateRange;
+  String get dateRangeFrom;
+  String get dateRangeTo;
+  String get listView;
+  String get monthlyView;
+  String get torahReading;
+  String get haftarah;
+  String get mevarchimShabat;
+  String blessingMonth(String months);
+  String get molad;
 }
 
 class _AppLocalizationsDelegate
