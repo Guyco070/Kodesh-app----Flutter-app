@@ -373,4 +373,34 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get noSearchResults => 'No se encontraron resultados';
+
+  @override
+  String get selectDateRange => 'Seleccionar rango de fechas';
+
+  @override
+  String get dateRangeFrom => 'Desde';
+
+  @override
+  String get dateRangeTo => 'Hasta';
+
+  @override
+  String get listView => 'Lista';
+
+  @override
+  String get monthlyView => 'Mensual';
+
+  @override
+  String get torahReading => 'Lectura de la Torá';
+
+  @override
+  String get haftarah => 'Haftará';
+
+  @override
+  String get mevarchimShabat => 'Shabat Mevarchim';
+
+  @override
+  String blessingMonth(String months) => 'Bendición: $months';
+
+  @override
+  String get molad => 'Luna Nueva (Molad)';
 }

@@ -148,5 +148,42 @@
     "compass": "Brújula",
 
     "darkMode": "Modo oscuro",
-    "lightMode": "Modo claro"
+    "lightMode": "Modo claro",
+    "systemMode": "Sistema",
+
+    "birkatHamazonMenu": "Birkat Hamazón",
+    "kriyatShemaAlHamitaMenu": "Shemá antes de dormir",
+    "addCustomTask": "Agregar tarea",
+    "taskName": "Nombre de la tarea",
+    "add": "Agregar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "customTasksSection": "Mis tareas personales",
+    "deleteTaskTitle": "¿Eliminar tarea?",
+    "useMyLocation": "Usar mi ubicación",
+    "locationNotAvailable": "No se pudo detectar la ubicación. Verifica los permisos de ubicación.",
+    "detectingLocation": "Detectando ubicación...",
+    "dafYomiMenu": "Daf Yomi",
+    "holidayCalendarMenu": "Calendario de Fiestas Judías",
+    "todaysDaf": "El Daf de Hoy",
+    "noHolidaysFound": "No se encontraron fiestas.",
+    "compassNotSupported": "La brújula no es compatible con este dispositivo",
+    "enableCompass": "Activar brújula",
+    "search": "Buscar...",
+    "noSearchResults": "No se encontraron resultados",
+    "selectDateRange": "Seleccionar rango de fechas",
+    "dateRangeFrom": "Desde",
+    "dateRangeTo": "Hasta",
+    "listView": "Lista",
+    "monthlyView": "Mensual",
+    "torahReading": "Lectura de la Torá",
+    "haftarah": "Haftará",
+    "mevarchimShabat": "Shabat Mevarchim",
+    "blessingMonth": "Bendición: {months}",
+    "@blessingMonth": {
+        "placeholders": {
+            "months": { "type": "String" }
+        }
+    },
+    "molad": "Luna Nueva (Molad)"
 }

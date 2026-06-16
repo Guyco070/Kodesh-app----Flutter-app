@@ -256,10 +256,14 @@ class _EventScreenState extends State<EventScreen> {
 
     if (_isTodayTimesFromNow) {
       return AnimatedFromNowOnTimesListView(
+        key: ValueKey(_zmanimSearchQuery),
         widgets: [searchField, ...widgets],
       );
     }
-    return AnimatedTimesListView(widgets: [searchField, ...widgets]);
+    return AnimatedTimesListView(
+      key: ValueKey(_zmanimSearchQuery),
+      widgets: [searchField, ...widgets],
+    );
   }
 
   setViewState(ViewState newViewState) {

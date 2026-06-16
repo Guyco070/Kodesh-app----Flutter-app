@@ -373,4 +373,34 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get noSearchResults => 'Результаты не найдены';
+
+  @override
+  String get selectDateRange => 'Выбрать диапазон дат';
+
+  @override
+  String get dateRangeFrom => 'От';
+
+  @override
+  String get dateRangeTo => 'До';
+
+  @override
+  String get listView => 'Список';
+
+  @override
+  String get monthlyView => 'Месячный';
+
+  @override
+  String get torahReading => 'Чтение Торы';
+
+  @override
+  String get haftarah => 'Гафтара';
+
+  @override
+  String get mevarchimShabat => 'Шаббат Мевархим';
+
+  @override
+  String blessingMonth(String months) => 'Благословение: $months';
+
+  @override
+  String get molad => 'Новолуние (Молад)';
 }

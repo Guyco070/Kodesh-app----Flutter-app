@@ -132,5 +132,23 @@
     "noHolidaysFound": "לא נמצאו חגים.",
 
     "compassNotSupported": "המצפן אינו נתמך במכשיר זה",
-    "enableCompass": "הפעל מצפן"
+    "enableCompass": "הפעל מצפן",
+
+    "search": "חיפוש...",
+    "noSearchResults": "לא נמצאו תוצאות",
+    "selectDateRange": "בחר טווח תאריכים",
+    "dateRangeFrom": "מ-",
+    "dateRangeTo": "עד",
+    "listView": "רשימה",
+    "monthlyView": "לוח חודשי",
+    "torahReading": "קריאת התורה",
+    "haftarah": "הפטרה",
+    "mevarchimShabat": "שבת מברכים",
+    "blessingMonth": "מברכים: {months}",
+    "@blessingMonth": {
+        "placeholders": {
+            "months": { "type": "String" }
+        }
+    },
+    "molad": "מולד הלבנה"
 }
