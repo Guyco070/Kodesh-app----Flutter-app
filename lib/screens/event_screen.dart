@@ -12,7 +12,6 @@ import 'package:kodesh_app/widgets/default_scaffold.dart';
 import 'package:kodesh_app/widgets/events_widgets/event_factory_widget.dart';
 import 'package:kodesh_app/widgets/settings_bar.dart';
 import 'package:kodesh_app/widgets/swiches/view_type_switch.dart';
-import 'package:kodesh_app/widgets/search_filter_bar.dart';
 import 'package:kodesh_app/widgets/zman_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/data/latest.dart';
@@ -49,9 +48,7 @@ class _EventScreenState extends State<EventScreen> {
   bool _isLoadingLang = false;
   bool _isOnlyShabat = false;
   bool _isTodayTimesFromNow = false;
-
-  final TextEditingController _zmanimSearchController = TextEditingController();
-  String _zmanimSearch = '';
+  String _zmanimSearchQuery = '';
 
   String? title;
 
@@ -196,61 +193,76 @@ class _EventScreenState extends State<EventScreen> {
   }
 
   Widget _getZmanimWidgets(List<Zman>? zmanim) {
+    final appLocalizations = AppLocalizations.of(context)!;
     List<Widget> widgets = [];
     if (zmanim != null) {
-      zmanim.sort((a, b) {
-        return a.date.compareTo(b.date);
-      });
-      DateTime now = DateTime.now();
-      var x = {};
-      final langCode = Provider.of<LanguageChangeProvider>(
-        context,
-        listen: false,
-      ).currentLocale.languageCode;
-      final searchLower = _zmanimSearch.toLowerCase();
+      zmanim.sort((a, b) => a.date.compareTo(b.date));
+      final now = DateTime.now();
+      final query = _zmanimSearchQuery.trim().toLowerCase();
       for (Zman z in zmanim) {
-        x[z.title] = z.title;
-        if (!_isTodayTimesFromNow || z.date.isAfter(now)) {
-          if (_zmanimSearch.isEmpty) {
-            widgets.add(ZmanWidget(data: z));
-          } else {
-            final langMap = types[langCode] ?? types['en']!;
-            final labels = langMap[z.title];
-            final title = labels?.elementAt(0) ?? z.title;
-            final subtitle = labels?.elementAt(1) ?? '';
-            if (title.toLowerCase().contains(searchLower) ||
-                subtitle.toLowerCase().contains(searchLower)) {
-              widgets.add(ZmanWidget(data: z));
-            }
-          }
+        if (_isTodayTimesFromNow && !z.date.isAfter(now)) continue;
+        if (query.isNotEmpty) {
+          final langMap = types[Provider.of<LanguageChangeProvider>(
+            context,
+            listen: false,
+          ).currentLocale.languageCode] ?? types['en']!;
+          final labels = langMap[z.title] ?? {z.title, ''};
+          final title = labels.elementAt(0).toLowerCase();
+          final subtitle =
+              labels.length > 1 ? labels.elementAt(1).toLowerCase() : '';
+          if (!title.contains(query) && !subtitle.contains(query)) continue;
         }
+        widgets.add(ZmanWidget(data: z));
       }
     }
 
     if (widgets.isEmpty) {
-      final emptyMessage = _zmanimSearch.isNotEmpty
-          ? AppLocalizations.of(context)!.noSearchResults
-          : AppLocalizations.of(context)!.noLaterTimesToShow;
       widgets.add(
         SizedBox(
           height: MediaQuery.of(context).size.height / 2,
-          child: Center(child: Text(emptyMessage)),
+          child: Center(
+            child: Text(
+              _zmanimSearchQuery.isNotEmpty
+                  ? appLocalizations.noSearchResults
+                  : appLocalizations.noLaterTimesToShow,
+            ),
+          ),
         ),
       );
     } else {
       widgets.add(const SizedBox(height: 10));
     }
+
+    final searchField = Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      child: TextField(
+        onChanged: (v) => setState(() => _zmanimSearchQuery = v),
+        decoration: InputDecoration(
+          hintText: appLocalizations.search,
+          prefixIcon: const Icon(Icons.search),
+          suffixIcon:
+              _zmanimSearchQuery.isNotEmpty
+                  ? IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: () => setState(() => _zmanimSearchQuery = ''),
+                  )
+                  : null,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+          contentPadding: const EdgeInsets.symmetric(vertical: 0),
+          isDense: true,
+        ),
+      ),
+    );
+
     if (_isTodayTimesFromNow) {
-      return AnimatedFromNowOnTimesListView(widgets: widgets);
+      return AnimatedFromNowOnTimesListView(
+        widgets: [searchField, ...widgets],
+      );
     }
-    return AnimatedTimesListView(widgets: widgets);
+    return AnimatedTimesListView(widgets: [searchField, ...widgets]);
   }
 
   setViewState(ViewState newViewState) {
-    if (newViewState != _viewState && newViewState != ViewState.zmanim) {
-      _zmanimSearchController.clear();
-      _zmanimSearch = '';
-    }
     setState(() {
       _viewState = newViewState;
     });
@@ -269,12 +281,6 @@ class _EventScreenState extends State<EventScreen> {
     setState(() {
       _isTodayTimesFromNow = !_isTodayTimesFromNow;
     });
-  }
-
-  @override
-  void dispose() {
-    _zmanimSearchController.dispose();
-    super.dispose();
   }
 
   Widget renderNoInternetConnection(String localErrorMessage) {
@@ -313,98 +319,77 @@ class _EventScreenState extends State<EventScreen> {
     Events events = Provider.of<Events>(context);
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
 
-    final bool showZmanimSearch =
-        events.zmanimItems != null &&
-        _viewState == ViewState.zmanim &&
-        !_isLoadingZmanim &&
-        !_isLoadingLang;
-
     return DefaultScaffold(
       setIsLoading: setIsLoadingLang,
       title: AppLocalizations.of(context)!.main,
-      body: Column(
-        children: [
-          SettingsBar(
-            isOnlyShabat:
-                _viewState == ViewState.events
-                    ? _isOnlyShabat
-                    : _isTodayTimesFromNow,
-            updateIsOnlyShabat:
-                _viewState == ViewState.events
-                    ? setIsOnlyShabat
-                    : setIsTodayTimesFromNow,
-            setIsLoading: setIsLoading,
-            setIsLoadingZmanim: setIsLoadingZmanim,
-            viewState: _viewState,
-            isHebrewDate: events.isHebrewDate,
-            updateIsHebrewDate: events.updateIsHebrewDate,
-          ),
-          if (LanguageChangeProvider.isInitialized && !_isLoadingLang)
-            ViewTypeSwitch(
-              appLocalizations: appLocalizations,
-              viewState: _viewState,
-              setViewState: setViewState,
-            ),
-          if (showZmanimSearch)
-            SearchFilterBar(
-              controller: _zmanimSearchController,
-              hintText: AppLocalizations.of(context)!.search,
-              onChanged: (val) => setState(() => _zmanimSearch = val),
-            ),
-          Expanded(
-            child: RefreshIndicator(
-              onRefresh: () async {
-                String lang =
-                    Provider.of<LanguageChangeProvider>(
-                      context,
-                      listen: false,
-                    ).currentLocale.languageCode;
-                await Provider.of<Events>(
-                  context,
-                  listen: false,
-                ).fetchAndSetProducts(lang: lang, forceRefresh: true);
-                await Provider.of<Events>(
-                  context,
-                  listen: false,
-                ).fetchAndSetZmanimProducts(lang: lang, forceRefresh: true);
-              },
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Column(
-                  children: [
-                    if (events.eventsItems != null &&
-                        _viewState == ViewState.events) ...{
-                      if (_isLoading || _isLoadingLang)
-                        renderLoading(context)
-                      else ...{
-                        _getEventwidgets(
-                          events.eventsItems!,
-                          events.isOnlyShabat,
-                        ),
-                      },
-                    } else if (events.zmanimItems != null &&
-                        _viewState == ViewState.zmanim) ...{
-                      if (_isLoadingZmanim || _isLoadingLang)
-                        renderLoading(context)
-                      else ...{
-                        _getZmanimWidgets(events.zmanimItems),
-                      },
-                    } else ...{
-                      if (_isLoading || _isLoadingLang)
-                        renderLoading(context)
-                      else
-                        renderNoInternetConnection(
-                          events.eventsError != null
-                              ? AppLocalizations.of(context)!.apiErrorMessage
-                              : AppLocalizations.of(context)!.noIntrnetMessage,
-                        ),
-                    },
-                  ],
-                ),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          String lang =
+              Provider.of<LanguageChangeProvider>(
+                context,
+                listen: false,
+              ).currentLocale.languageCode;
+          await Provider.of<Events>(
+            context,
+            listen: false,
+          ).fetchAndSetProducts(lang: lang, forceRefresh: true);
+          await Provider.of<Events>(
+            context,
+            listen: false,
+          ).fetchAndSetZmanimProducts(lang: lang, forceRefresh: true);
+        },
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            children: [
+              SettingsBar(
+                isOnlyShabat:
+                    _viewState == ViewState.events
+                        ? _isOnlyShabat
+                        : _isTodayTimesFromNow,
+                updateIsOnlyShabat:
+                    _viewState == ViewState.events
+                        ? setIsOnlyShabat
+                        : setIsTodayTimesFromNow,
+                setIsLoading: setIsLoading,
+                setIsLoadingZmanim: setIsLoadingZmanim,
+                viewState: _viewState,
+                isHebrewDate: events.isHebrewDate,
+                updateIsHebrewDate: events.updateIsHebrewDate,
               ),
-            ),
+              if (LanguageChangeProvider.isInitialized && !_isLoadingLang)
+                ViewTypeSwitch(
+                  appLocalizations: appLocalizations,
+                  viewState: _viewState,
+                  setViewState: setViewState,
+                ),
+              if (events.eventsItems != null &&
+                  _viewState == ViewState.events) ...{
+                if (_isLoading || _isLoadingLang)
+                  renderLoading(context)
+                else ...{
+                  _getEventwidgets(events.eventsItems!, events.isOnlyShabat),
+                },
+              } else if (events.zmanimItems != null &&
+                  _viewState == ViewState.zmanim) ...{
+                if (_isLoadingZmanim || _isLoadingLang)
+                  renderLoading(context)
+                else ...{
+                  _getZmanimWidgets(events.zmanimItems),
+                },
+              } else ...{
+                if (_isLoading || _isLoadingLang)
+                  renderLoading(context)
+                else
+                  renderNoInternetConnection(
+                    events.eventsError != null
+                        ? AppLocalizations.of(context)!.apiErrorMessage
+                        : AppLocalizations.of(context)!.noIntrnetMessage,
+                  ),
+              },
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

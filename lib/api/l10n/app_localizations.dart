@@ -690,6 +690,8 @@ abstract class AppLocalizations {
   String get noHolidaysFound;
   String get compassNotSupported;
   String get enableCompass;
+  String get search;
+  String get noSearchResults;
 }
 
 class _AppLocalizationsDelegate
