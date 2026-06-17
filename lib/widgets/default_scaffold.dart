@@ -87,9 +87,10 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
           }
         },
         customButton: langIcon(lang),
-        buttonStyleData: const ButtonStyleData(
-          padding: EdgeInsets.only(left: 14, right: 14),
+        buttonStyleData: ButtonStyleData(
+          padding: const EdgeInsets.only(left: 14, right: 14),
           elevation: 0,
+          overlayColor: WidgetStateProperty.all(Colors.transparent),
         ),
         iconStyleData: const IconStyleData(iconEnabledColor: Colors.white),
         dropdownStyleData: DropdownStyleData(
