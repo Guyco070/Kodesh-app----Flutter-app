@@ -87,13 +87,9 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
           }
         },
         customButton: langIcon(lang),
-        buttonStyleData: ButtonStyleData(
-          padding: const EdgeInsets.only(left: 14, right: 14),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: Colors.black26),
-          ),
-          elevation: 2,
+        buttonStyleData: const ButtonStyleData(
+          padding: EdgeInsets.only(left: 14, right: 14),
+          elevation: 0,
         ),
         iconStyleData: const IconStyleData(iconEnabledColor: Colors.white),
         dropdownStyleData: DropdownStyleData(
