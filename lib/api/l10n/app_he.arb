@@ -129,5 +129,19 @@
     "dafYomiMenu": "דף יומי",
     "holidayCalendarMenu": "לוח חגים יהודי",
     "todaysDaf": "הדף היומי",
-    "noHolidaysFound": "לא נמצאו חגים."
+    "noHolidaysFound": "לא נמצאו חגים.",
+
+    "torahReading": "קריאת התורה",
+    "haftarah": "הפטרה",
+    "mevarchimShabat": "שבת מברכים",
+    "blessingMonth": "מברכים: {months}",
+    "molad": "מולד הלבנה",
+
+    "search": "חיפוש...",
+    "listView": "רשימה",
+    "monthlyView": "לוח חודשי",
+    "noSearchResults": "לא נמצאו תוצאות",
+    "dateRangeFrom": "מ-",
+    "dateRangeTo": "עד",
+    "selectDateRange": "בחר טווח תאריכים"
 }

@@ -5,7 +5,11 @@ import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
 class EventFactoryWidget extends StatelessWidget {
-  const EventFactoryWidget({super.key, required this.data, this.isFirst = false});
+  const EventFactoryWidget({
+    super.key,
+    required this.data,
+    this.isFirst = false,
+  });
   final Event data;
   final bool isFirst;
 
