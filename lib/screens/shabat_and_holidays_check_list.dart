@@ -140,8 +140,8 @@ class _ShabatAndHolidaysCheckListState
                     SliverGrid(
                       gridDelegate:
                           const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 200,
-                            childAspectRatio: 0.85,
+                            maxCrossAxisExtent: 180,
+                            childAspectRatio: 1.0,
                             crossAxisSpacing: 0,
                             mainAxisSpacing: 0,
                           ),
@@ -151,12 +151,9 @@ class _ShabatAndHolidaysCheckListState
                             reminders.allShabatAndHolidaysThingsToRemindMap(
                               context,
                             )[key]!;
-                        return Padding(
-                          padding: const EdgeInsets.all(25 / 2),
-                          child: ThingToRemind(
-                            title: element['action'] as String,
-                            icon: element['icon'] as IconData,
-                          ),
+                        return ThingToRemind(
+                          title: element['action'] as String,
+                          icon: element['icon'] as IconData,
                         );
                       }, childCount: selectedPredefined.length),
                     ),
