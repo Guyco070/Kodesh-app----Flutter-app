@@ -688,19 +688,20 @@ abstract class AppLocalizations {
   String get holidayCalendarMenu;
   String get todaysDaf;
   String get noHolidaysFound;
-
+  String get compassNotSupported;
+  String get enableCompass;
+  String get search;
+  String get noSearchResults;
+  String get selectDateRange;
+  String get dateRangeFrom;
+  String get dateRangeTo;
+  String get listView;
+  String get monthlyView;
   String get torahReading;
   String get haftarah;
   String get mevarchimShabat;
   String blessingMonth(String months);
   String get molad;
-  String get search;
-  String get listView;
-  String get monthlyView;
-  String get noSearchResults;
-  String get dateRangeFrom;
-  String get dateRangeTo;
-  String get selectDateRange;
 }
 
 class _AppLocalizationsDelegate

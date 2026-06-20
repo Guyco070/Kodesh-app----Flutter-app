@@ -37,7 +37,9 @@ class Holiday extends Event {
               ? DateTime.tryParse(Events.getDateWithoutTime(havdalah['date']))
               : null,
       subcat: parashat['subcat'], // major, minor, modern, shabat, fast
-      titleOrig: parashat['title_orig'],
+      titleOrig:
+          parashat['hebrew'] as String? ??
+          parashat['title_orig'] as String?,
     );
   }
 

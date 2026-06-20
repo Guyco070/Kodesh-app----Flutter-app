@@ -42,7 +42,9 @@ class Shabat extends Event {
       releaseDate: DateTime.tryParse(
         Events.getDateWithoutTime(havdalah['date']),
       ),
-      titleOrig: parashat['title_orig'],
+      titleOrig:
+          parashat['hebrew'] as String? ??
+          parashat['title_orig'] as String?,
       leyning: leyning,
       isMevarchim: isMevarchim,
       mevarchimMonths: mevarchimMonths,

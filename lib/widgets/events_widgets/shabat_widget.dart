@@ -54,7 +54,12 @@ class ShabatWidget extends StatelessWidget {
             leading: const Icon(Icons.wine_bar),
           ),
         ListTile(
-          title: Text(data.parasha!),
+          title: Text(
+            Localizations.localeOf(context).languageCode == 'he' &&
+                    data.titleOrig != null
+                ? data.titleOrig!
+                : data.parasha!,
+          ),
           subtitle: Text(appLocalizations.parasha),
           leading: const Icon(Icons.book_outlined),
         ),
@@ -83,78 +88,307 @@ class _LeyningSection extends StatefulWidget {
   State<_LeyningSection> createState() => _LeynningSectionState();
 }
 
-class _LeynningSectionState extends State<_LeyningSection> {
+class _LeynningSectionState extends State<_LeyningSection>
+    with SingleTickerProviderStateMixin {
   bool _expanded = false;
+  final _headerKey = GlobalKey();
+  late final AnimationController _animCtrl;
+  late final Animation<double> _rotation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animCtrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    _rotation = Tween<double>(begin: 0.0, end: 0.5).animate(
+      CurvedAnimation(parent: _animCtrl, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _animCtrl.dispose();
+    super.dispose();
+  }
+
+  void _toggle() {
+    final wasExpanded = _expanded;
+    wasExpanded ? _animCtrl.reverse() : _animCtrl.forward();
+    setState(() => _expanded = !_expanded);
+    if (wasExpanded) return;
+    _animCtrl.addStatusListener(_scrollAfterExpand);
+  }
+
+  void _scrollAfterExpand(AnimationStatus status) {
+    if (status != AnimationStatus.completed) return;
+    _animCtrl.removeStatusListener(_scrollAfterExpand);
+    if (_headerKey.currentContext != null) {
+      Scrollable.ensureVisible(
+        _headerKey.currentContext!,
+        alignment: 0.0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    }
+  }
+
+  static const _hebrewBooks = {
+    'Genesis': 'בראשית',
+    'Exodus': 'שמות',
+    'Leviticus': 'ויקרא',
+    'Numbers': 'במדבר',
+    'Deuteronomy': 'דברים',
+    'Joshua': 'יהושע',
+    'Judges': 'שופטים',
+    'I Samuel': 'שמואל א',
+    'II Samuel': 'שמואל ב',
+    'I Kings': 'מלכים א',
+    'II Kings': 'מלכים ב',
+    'Isaiah': 'ישעיהו',
+    'Jeremiah': 'ירמיהו',
+    'Ezekiel': 'יחזקאל',
+    'Hosea': 'הושע',
+    'Joel': 'יואל',
+    'Amos': 'עמוס',
+    'Obadiah': 'עובדיה',
+    'Jonah': 'יונה',
+    'Micah': 'מיכה',
+    'Nahum': 'נחום',
+    'Habakkuk': 'חבקוק',
+    'Zephaniah': 'צפניה',
+    'Haggai': 'חגי',
+    'Zechariah': 'זכריה',
+    'Malachi': 'מלאכי',
+  };
+
+  static String _toHebNum(int n) {
+    if (n <= 0) return n.toString();
+    const ones = [
+      '', 'א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט',
+    ];
+    const tens = [
+      '', 'י', 'כ', 'ל', 'מ', 'נ', 'ס', 'ע', 'פ', 'צ',
+    ];
+    final letters = <String>[];
+    int r = n;
+    while (r >= 400) { letters.add('ת'); r -= 400; }
+    if (r >= 300) { letters.add('ש'); r -= 300; }
+    if (r >= 200) { letters.add('ר'); r -= 200; }
+    if (r >= 100) { letters.add('ק'); r -= 100; }
+    if (r == 15) {
+      letters.addAll(['ט', 'ו']);
+    } else if (r == 16) {
+      letters.addAll(['ט', 'ז']);
+    } else {
+      if (r >= 10) { letters.add(tens[r ~/ 10]); r %= 10; }
+      if (r > 0) { letters.add(ones[r]); }
+    }
+    if (letters.isEmpty) return '0';
+    final s = letters.join();
+    if (s.length == 1) return '$s׳';
+    return '${s.substring(0, s.length - 1)}״${s[s.length - 1]}';
+  }
+
+  static String _localizeRef(String ref, bool isHe) {
+    if (!isHe) return ref;
+
+    String bookHe = '';
+    String rest = ref;
+    for (final entry in _hebrewBooks.entries) {
+      if (ref.startsWith(entry.key)) {
+        bookHe = entry.value;
+        rest = ref.substring(entry.key.length).trim();
+        break;
+      }
+    }
+
+    final fullRange =
+        RegExp(r'^(\d+):(\d+)-(\d+):(\d+)$').firstMatch(rest);
+    final sameChRange =
+        RegExp(r'^(\d+):(\d+)-(\d+)$').firstMatch(rest);
+    final single =
+        RegExp(r'^(\d+):(\d+)$').firstMatch(rest);
+
+    String refHe;
+    if (fullRange != null) {
+      final ch1 = int.parse(fullRange.group(1)!);
+      final v1 = int.parse(fullRange.group(2)!);
+      final ch2 = int.parse(fullRange.group(3)!);
+      final v2 = int.parse(fullRange.group(4)!);
+      if (ch1 == ch2) {
+        refHe =
+            'פרק ${_toHebNum(ch1)}, '
+            'פסוקים ${_toHebNum(v1)}-${_toHebNum(v2)}';
+      } else {
+        refHe =
+            'פרק ${_toHebNum(ch1)} פסוק ${_toHebNum(v1)}'
+            ' - פרק ${_toHebNum(ch2)} פסוק ${_toHebNum(v2)}';
+      }
+    } else if (sameChRange != null) {
+      final ch = int.parse(sameChRange.group(1)!);
+      final v1 = int.parse(sameChRange.group(2)!);
+      final v2 = int.parse(sameChRange.group(3)!);
+      refHe =
+          'פרק ${_toHebNum(ch)}, '
+          'פסוקים ${_toHebNum(v1)}-${_toHebNum(v2)}';
+    } else if (single != null) {
+      final ch = int.parse(single.group(1)!);
+      final v = int.parse(single.group(2)!);
+      refHe = 'פרק ${_toHebNum(ch)}, פסוק ${_toHebNum(v)}';
+    } else {
+      refHe = rest;
+    }
+
+    return bookHe.isEmpty ? refHe : '$bookHe $refHe';
+  }
+
+  static const _aliyaKeys = {
+    '1': 1,
+    '2': 2,
+    '3': 3,
+    '4': 4,
+    '5': 5,
+    '6': 6,
+    '7': 7,
+    'M': 8,
+  };
+
+  static const _trailingWidth = 60.0;
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context);
+    final isRtl =
+        locale.languageCode == 'he' || locale.languageCode == 'ar';
     final aliyot = widget.leyning.entries
-        .where((e) => e.key != 'haftarah' && e.key != 'summary')
+        .where((e) => _aliyaKeys.containsKey(e.key))
         .toList()
-      ..sort((a, b) => _aliyaOrder(a.key).compareTo(_aliyaOrder(b.key)));
+      ..sort(
+        (a, b) =>
+            _aliyaKeys[a.key]!.compareTo(_aliyaKeys[b.key]!),
+      );
     final haftarah = widget.leyning['haftarah'];
 
     return Column(
       children: [
-        InkWell(
-          onTap: () => setState(() => _expanded = !_expanded),
-          child: ListTile(
-            leading: const Icon(Icons.menu_book_outlined),
-            title: Text(widget.appLocalizations.torahReading),
-            trailing: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
+        ListTile(
+          key: _headerKey,
+          onTap: _toggle,
+          splashColor: Colors.transparent,
+          leading: const Icon(Icons.menu_book_outlined),
+          title: Text(widget.appLocalizations.torahReading),
+          trailing: RotationTransition(
+            turns: _rotation,
+            child: const Icon(Icons.expand_more),
           ),
         ),
-        if (_expanded) ...[
-          for (final entry in aliyot)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 28,
-                    child: Text(
-                      entry.key,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Expanded(child: Text(entry.value)),
-                ],
-              ),
-            ),
-          if (haftarah != null)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: 70,
-                    child: Text(
-                      widget.appLocalizations.haftarah,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Expanded(child: Text(haftarah)),
-                ],
-              ),
-            ),
-          const SizedBox(height: 8),
-        ],
+        AnimatedSize(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+          child: _expanded
+              ? Column(
+                  children: [
+                    for (final entry in aliyot)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 2,
+                        ),
+                        child: Row(
+                          children: isRtl
+                              ? [
+                                  Expanded(
+                                    child: Text(
+                                      _localizeRef(entry.value, isRtl),
+                                      textAlign: TextAlign.right,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  SizedBox(
+                                    width: _trailingWidth,
+                                    child: Text(
+                                      entry.key,
+                                      textAlign: TextAlign.right,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ]
+                              : [
+                                  SizedBox(
+                                    width: _trailingWidth,
+                                    child: Text(
+                                      entry.key,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Text(
+                                      _localizeRef(entry.value, isRtl),
+                                    ),
+                                  ),
+                                ],
+                        ),
+                      ),
+                    if (haftarah != null)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 4,
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: isRtl
+                              ? [
+                                  Expanded(
+                                    child: Text(
+                                      _localizeRef(haftarah, isRtl),
+                                      textAlign: TextAlign.right,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  SizedBox(
+                                    width: _trailingWidth,
+                                    child: Text(
+                                      widget.appLocalizations.haftarah,
+                                      textAlign: TextAlign.right,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ]
+                              : [
+                                  SizedBox(
+                                    width: _trailingWidth,
+                                    child: Text(
+                                      widget.appLocalizations.haftarah,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Text(
+                                      _localizeRef(haftarah, isRtl),
+                                    ),
+                                  ),
+                                ],
+                        ),
+                      ),
+                    const SizedBox(height: 8),
+                  ],
+                )
+              : const SizedBox.shrink(),
+        ),
       ],
     );
-  }
-
-  int _aliyaOrder(String key) {
-    const order = {
-      '1': 1,
-      '2': 2,
-      '3': 3,
-      '4': 4,
-      '5': 5,
-      '6': 6,
-      '7': 7,
-      'M': 8,
-    };
-    return order[key] ?? 99;
   }
 }
