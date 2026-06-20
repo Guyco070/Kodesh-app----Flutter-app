@@ -27,6 +27,8 @@ class Time {
   const Time(this.hour, this.minute);
 }
 
+const String _kCholHaMoedMarker = "(CH''M)";
+
 class Reminders with ChangeNotifier {
   Timer? _debounceTimer;
 
@@ -804,6 +806,6 @@ class Reminders with ChangeNotifier {
       a.year == b.year && a.month == b.month && a.day == b.day;
 
   static bool _isCholHaMoed(Event e) =>
-      (e.titleOrig != null && e.titleOrig!.contains("(CH''M)")) ||
-      e.title.contains("(CH''M)");
+      (e.titleOrig != null && e.titleOrig!.contains(_kCholHaMoedMarker)) ||
+      e.title.contains(_kCholHaMoedMarker);
 }
