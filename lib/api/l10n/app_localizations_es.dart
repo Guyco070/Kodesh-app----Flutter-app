@@ -354,19 +354,20 @@ class AppLocalizationsEs extends AppLocalizations {
   String get dafYomiMenu => 'Daf Yomi';
 
   @override
-  String get holidayCalendarMenu => 'Jewish Holiday Calendar';
+  String get holidayCalendarMenu => 'Calendario de Fiestas Judías';
 
   @override
-  String get todaysDaf => "Today's Daf";
+  String get todaysDaf => 'El Daf de Hoy';
 
   @override
-  String get noHolidaysFound => 'No holidays found.';
+  String get noHolidaysFound => 'No se encontraron fiestas.';
 
   @override
-  String get compassNotSupported => 'Compass is not supported on this device';
+  String get compassNotSupported =>
+      'La brújula no es compatible con este dispositivo';
 
   @override
-  String get enableCompass => 'Enable Compass';
+  String get enableCompass => 'Activar brújula';
 
   @override
   String get search => 'Buscar...';
@@ -399,7 +400,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mevarchimShabat => 'Shabat Mevarchim';
 
   @override
-  String blessingMonth(String months) => 'Bendición: $months';
+  String blessingMonth(String months) {
+    return 'Bendición: $months';
+  }
 
   @override
   String get molad => 'Luna Nueva (Molad)';
