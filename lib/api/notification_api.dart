@@ -229,15 +229,6 @@ class NotificationApi {
   }
 
   // actions
-  static void onDidReceiveLocalNotification(
-    int id,
-    String? title,
-    String? body,
-    String? payload,
-  ) {
-    logger.d('onDidReceiveLocalNotification: id=$id');
-  }
-
   static void onDidReceiveNotificationResponse(NotificationResponse details) {
     logger.d('onDidReceiveNotificationResponse: id=${details.id}');
     if (details.payload != null) {
