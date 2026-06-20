@@ -154,5 +154,10 @@
             "months": { "type": "String" }
         }
     },
-    "molad": "מולד הלבנה"
+    "molad": "מולד הלבנה",
+
+    "sendTestNotification": "שלח התראת בדיקה",
+    "testNotificationTitle": "התראת בדיקה",
+    "testNotificationBody": "ההתראות עובדות כראוי!",
+    "testNotificationSent": "התראת הבדיקה נשלחה"
 }

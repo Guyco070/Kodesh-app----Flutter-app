@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kodesh_app/animations/expanded_section.dart';
+import 'package:kodesh_app/api/notification_api.dart';
 import 'package:kodesh_app/providers/reminders.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
 import 'package:kodesh_app/widgets/group_card.dart';
@@ -235,11 +236,38 @@ class _ScheduleNotificationsScreenState
                 ),
 
                 const SizedBox(height: 24),
+
+                _TestNotificationButton(),
+
+                const SizedBox(height: 24),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class _TestNotificationButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    return OutlinedButton.icon(
+      onPressed: () async {
+        await NotificationApi.showNotification(
+          id: 0,
+          title: l.testNotificationTitle,
+          body: l.testNotificationBody,
+        );
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(l.testNotificationSent)),
+          );
+        }
+      },
+      icon: const Icon(Icons.notifications_active_outlined),
+      label: Text(l.sendTestNotification),
     );
   }
 }

@@ -414,4 +414,16 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get molad => 'מולד הלבנה';
+
+  @override
+  String get sendTestNotification => 'שלח התראת בדיקה';
+
+  @override
+  String get testNotificationTitle => 'התראת בדיקה';
+
+  @override
+  String get testNotificationBody => 'ההתראות עובדות כראוי!';
+
+  @override
+  String get testNotificationSent => 'התראת הבדיקה נשלחה';
 }
