@@ -136,6 +136,10 @@
 
     "search": "חיפוש...",
     "noSearchResults": "לא נמצאו תוצאות",
+    "zmanimDisplayModeTooltip": "אפשרויות תצוגה",
+    "zmanimDisplayMultiExpand": "מצומצם (הרחבת כמה)",
+    "zmanimDisplaySingleExpand": "מצומצם (אחד בכל פעם)",
+    "zmanimDisplayExpandedByDefault": "מורחב",
     "selectDateRange": "בחר טווח תאריכים",
     "dateRangeFrom": "מ-",
     "dateRangeTo": "עד",

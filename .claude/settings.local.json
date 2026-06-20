@@ -22,7 +22,17 @@
       "Bash(plutil -lint /Users/guy/projects/Kodesh-app----Flutter-app/ios/Runner/Info.plist)",
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
-      "Bash(mkdir -p /home/user/Kodesh-app----Flutter-app/.claude)"
+      "Bash(mkdir -p /home/user/Kodesh-app----Flutter-app/.claude)",
+      "Bash(git checkout *)",
+      "Bash(git stash *)",
+      "Bash(flutter test *)",
+      "Bash(git commit -q -m 'docs: add zmanim display mode design spec *)",
+      "Bash(git commit -q -m 'Add zmanim display mode picker and fix search filtering *)",
+      "Bash(git check-ignore *)",
+      "Bash(git commit -q -m 'Skip leading divider on first drawer section *)",
+      "Bash(git commit -q -m 'chore: update local permission allowlist *)",
+      "Bash(git commit -q -m 'Remove unused import in event factory widget *)",
+      "Bash(git commit -q -m 'style: apply dart format to event screen *)"
     ]
   },
   "hooks": {

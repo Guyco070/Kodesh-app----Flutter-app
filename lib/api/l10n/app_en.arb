@@ -394,6 +394,18 @@
     "noSearchResults": "No results found",
     "@noSearchResults": { "description": "Shown when search returns no results" },
 
+    "zmanimDisplayModeTooltip": "Display options",
+    "@zmanimDisplayModeTooltip": { "description": "Tooltip for the zmanim display-mode picker button" },
+
+    "zmanimDisplayMultiExpand": "Collapsed (expand several)",
+    "@zmanimDisplayMultiExpand": { "description": "Zmanim display mode: all collapsed, tap to expand, multiple can stay open" },
+
+    "zmanimDisplaySingleExpand": "Collapsed (one at a time)",
+    "@zmanimDisplaySingleExpand": { "description": "Zmanim display mode: all collapsed, tap to expand only one at a time" },
+
+    "zmanimDisplayExpandedByDefault": "Expanded",
+    "@zmanimDisplayExpandedByDefault": { "description": "Zmanim display mode: all descriptions expanded by default" },
+
     "selectDateRange": "Select date range",
     "@selectDateRange": { "description": "Date range picker title" },
 

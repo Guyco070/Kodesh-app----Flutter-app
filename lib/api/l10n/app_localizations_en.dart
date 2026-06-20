@@ -375,6 +375,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noSearchResults => 'No results found';
 
   @override
+  String get zmanimDisplayModeTooltip => 'Display options';
+
+  @override
+  String get zmanimDisplayMultiExpand => 'Collapsed (expand several)';
+
+  @override
+  String get zmanimDisplaySingleExpand => 'Collapsed (one at a time)';
+
+  @override
+  String get zmanimDisplayExpandedByDefault => 'Expanded';
+
+  @override
   String get selectDateRange => 'Select date range';
 
   @override

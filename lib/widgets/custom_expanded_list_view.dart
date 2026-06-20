@@ -8,12 +8,14 @@ class CustomExpandedListView extends StatefulWidget {
     required this.title,
     required this.isExpanded,
     required this.onToggle,
+    this.isFirst = false,
   });
 
   final List<Widget> children;
   final String title;
   final bool isExpanded;
   final VoidCallback onToggle;
+  final bool isFirst;
 
   @override
   State<CustomExpandedListView> createState() => _CustomExpandedListViewState();
@@ -31,9 +33,10 @@ class _CustomExpandedListViewState extends State<CustomExpandedListView>
       duration: const Duration(milliseconds: 200),
       vsync: this,
     );
-    _iconTurns = Tween<double>(begin: 0.0, end: 0.5).animate(
-      CurvedAnimation(parent: _iconController, curve: Curves.easeIn),
-    );
+    _iconTurns = Tween<double>(
+      begin: 0.0,
+      end: 0.5,
+    ).animate(CurvedAnimation(parent: _iconController, curve: Curves.easeIn));
     _iconController.value = widget.isExpanded ? 1.0 : 0.0;
   }
 
@@ -60,7 +63,7 @@ class _CustomExpandedListViewState extends State<CustomExpandedListView>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Divider(),
+        widget.isFirst ? const SizedBox(height: 8) : const Divider(),
         GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: widget.onToggle,
@@ -92,9 +95,7 @@ class _CustomExpandedListViewState extends State<CustomExpandedListView>
         if (widget.isExpanded) const Divider(indent: 18, endIndent: 18),
         ExpandedSection(
           expand: widget.isExpanded,
-          child: Column(
-            children: widget.children,
-          ),
+          child: Column(children: widget.children),
         ),
       ],
     );

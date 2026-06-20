@@ -16,6 +16,7 @@ import 'package:kodesh_app/models/daf_yomi.dart';
 import 'package:kodesh_app/models/molad.dart';
 import 'package:kodesh_app/models/hebcal_holiday.dart';
 import 'package:kodesh_app/models/zman.dart';
+import 'package:kodesh_app/models/zmanim_display_mode.dart';
 import 'package:kodesh_app/widgets/events_widgets/holiday_widget.dart';
 import 'package:kodesh_app/widgets/events_widgets/molad_widget.dart';
 import 'package:kodesh_app/widgets/events_widgets/rosh_chodesh_widget.dart';
@@ -52,6 +53,10 @@ class Events with ChangeNotifier {
   bool isHebrewDate = false;
 
   /// [isHebrewDate] : if false - the dates will view in Gregorian Date format. else, the dates will view in Hebrew Date format.
+  ZmanimDisplayMode _zmanimDisplayMode = ZmanimDisplayMode.multiExpand;
+
+  /// [_zmanimDisplayMode] : controls how zmanim descriptions are displayed
+  /// (collapsed multi-expand, collapsed single-expand, or expanded by default).
   Map<DateTime, String>? _hebrewDates = {};
 
   /// [_hebrewDates] : if isHebrewDate is true, fill in the Hebrew dates that correspond to the Gregorian dates of the events. Fill by fetching from an appropriate API.
@@ -94,6 +99,8 @@ class Events with ChangeNotifier {
 
   List<Zman>? get zmanimItems =>
       _zmanimItems == null ? null : [..._zmanimItems!];
+
+  ZmanimDisplayMode get zmanimDisplayMode => _zmanimDisplayMode;
 
   String? get eventsError => _eventsError;
   String? get zmanimError => _zmanimError;
@@ -225,6 +232,15 @@ class Events with ChangeNotifier {
     prefs.setBool('isHebrewDate', isHebrewDate);
   }
 
+  /// update [zmanimDisplayMode] value
+  updateZmanimDisplayMode(ZmanimDisplayMode mode) async {
+    if (_zmanimDisplayMode == mode) return;
+    _zmanimDisplayMode = mode;
+    notifyListeners();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt('zmanimDisplayMode', mode.index);
+  }
+
   setStartDate(
     DateTime newDate, {
     required Function? setIsLoading,
@@ -262,6 +278,12 @@ class Events with ChangeNotifier {
     }
     if (prefsKeys.contains('isTodayTimesFromNow')) {
       isTodayTimesFromNow = prefs.getBool('isTodayTimesFromNow')!;
+    }
+    if (prefsKeys.contains('zmanimDisplayMode')) {
+      final index = prefs.getInt('zmanimDisplayMode')!;
+      if (index >= 0 && index < ZmanimDisplayMode.values.length) {
+        _zmanimDisplayMode = ZmanimDisplayMode.values[index];
+      }
     }
     if (prefsKeys.contains('language')) {
       _currentLocale = Locale(prefs.getString('language')!);
