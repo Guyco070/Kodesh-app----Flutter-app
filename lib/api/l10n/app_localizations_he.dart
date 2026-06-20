@@ -360,6 +360,33 @@ class AppLocalizationsHe extends AppLocalizations {
   String get noHolidaysFound => 'לא נמצאו חגים.';
 
   @override
+  String get compassNotSupported => 'המצפן אינו נתמך במכשיר זה';
+
+  @override
+  String get enableCompass => 'הפעל מצפן';
+
+  @override
+  String get search => 'חיפוש...';
+
+  @override
+  String get noSearchResults => 'לא נמצאו תוצאות';
+
+  @override
+  String get selectDateRange => 'בחר טווח תאריכים';
+
+  @override
+  String get dateRangeFrom => 'מ-';
+
+  @override
+  String get dateRangeTo => 'עד';
+
+  @override
+  String get listView => 'רשימה';
+
+  @override
+  String get monthlyView => 'לוח חודשי';
+
+  @override
   String get torahReading => 'קריאת התורה';
 
   @override
@@ -373,25 +400,4 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get molad => 'מולד הלבנה';
-
-  @override
-  String get search => 'חיפוש...';
-
-  @override
-  String get listView => 'רשימה';
-
-  @override
-  String get monthlyView => 'לוח חודשי';
-
-  @override
-  String get noSearchResults => 'לא נמצאו תוצאות';
-
-  @override
-  String get dateRangeFrom => 'מ-';
-
-  @override
-  String get dateRangeTo => 'עד';
-
-  @override
-  String get selectDateRange => 'בחר טווח תאריכים';
 }

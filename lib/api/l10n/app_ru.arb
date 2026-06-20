@@ -148,5 +148,42 @@
     "compass": "Компас",
 
     "darkMode": "Тёмный режим",
-    "lightMode": "Светлый режим"
+    "lightMode": "Светлый режим",
+    "systemMode": "Системный",
+
+    "birkatHamazonMenu": "Биркат Хамазон",
+    "kriyatShemaAlHamitaMenu": "Шма перед сном",
+    "addCustomTask": "Добавить задачу",
+    "taskName": "Название задачи",
+    "add": "Добавить",
+    "cancel": "Отмена",
+    "delete": "Удалить",
+    "customTasksSection": "Мои задачи",
+    "deleteTaskTitle": "Удалить задачу?",
+    "useMyLocation": "Использовать моё местоположение",
+    "locationNotAvailable": "Не удалось определить местоположение. Проверьте разрешения.",
+    "detectingLocation": "Определение местоположения...",
+    "dafYomiMenu": "Daf Yomi",
+    "holidayCalendarMenu": "Еврейский календарь праздников",
+    "todaysDaf": "Дневной лист",
+    "noHolidaysFound": "Праздники не найдены.",
+    "compassNotSupported": "Компас не поддерживается на этом устройстве",
+    "enableCompass": "Включить компас",
+    "search": "Поиск...",
+    "noSearchResults": "Результаты не найдены",
+    "selectDateRange": "Выбрать диапазон дат",
+    "dateRangeFrom": "От",
+    "dateRangeTo": "До",
+    "listView": "Список",
+    "monthlyView": "Месячный",
+    "torahReading": "Чтение Торы",
+    "haftarah": "Гафтара",
+    "mevarchimShabat": "Шаббат Мевархим",
+    "blessingMonth": "Благословение: {months}",
+    "@blessingMonth": {
+        "placeholders": {
+            "months": { "type": "String" }
+        }
+    },
+    "molad": "Новолуние (Молад)"
 }

@@ -131,17 +131,24 @@
     "todaysDaf": "הדף היומי",
     "noHolidaysFound": "לא נמצאו חגים.",
 
+    "compassNotSupported": "המצפן אינו נתמך במכשיר זה",
+    "enableCompass": "הפעל מצפן",
+
+    "search": "חיפוש...",
+    "noSearchResults": "לא נמצאו תוצאות",
+    "selectDateRange": "בחר טווח תאריכים",
+    "dateRangeFrom": "מ-",
+    "dateRangeTo": "עד",
+    "listView": "רשימה",
+    "monthlyView": "לוח חודשי",
     "torahReading": "קריאת התורה",
     "haftarah": "הפטרה",
     "mevarchimShabat": "שבת מברכים",
     "blessingMonth": "מברכים: {months}",
-    "molad": "מולד הלבנה",
-
-    "search": "חיפוש...",
-    "listView": "רשימה",
-    "monthlyView": "לוח חודשי",
-    "noSearchResults": "לא נמצאו תוצאות",
-    "dateRangeFrom": "מ-",
-    "dateRangeTo": "עד",
-    "selectDateRange": "בחר טווח תאריכים"
+    "@blessingMonth": {
+        "placeholders": {
+            "months": { "type": "String" }
+        }
+    },
+    "molad": "מולד הלבנה"
 }

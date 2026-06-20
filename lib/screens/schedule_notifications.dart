@@ -20,15 +20,6 @@ class ScheduleNotificationsScreen extends StatefulWidget {
 
 class _ScheduleNotificationsScreenState
     extends State<ScheduleNotificationsScreen> {
-  bool tefilin = false;
-  bool preys = false;
-  bool roshChodesh = false;
-  String tefilinTime = '';
-
-  bool _isLoading = false;
-
-  // TextEditingController? tefilinController;
-
   @override
   Widget build(BuildContext context) {
     var reminders = Provider.of<Reminders>(context);
@@ -98,7 +89,7 @@ class _ScheduleNotificationsScreenState
           ],
         ),
 
-        const Divider(height: 32, thickness: 1.5, indent: 15, endIndent: 15),
+        const SizedBox(height: 12),
 
         GroupCard(
           children: [
@@ -122,7 +113,7 @@ class _ScheduleNotificationsScreenState
           ],
         ),
 
-        const Divider(height: 32, thickness: 1.5, indent: 15, endIndent: 15),
+        const SizedBox(height: 12),
 
         GroupCard(
           children: [
@@ -149,7 +140,7 @@ class _ScheduleNotificationsScreenState
           ],
         ),
 
-        const Divider(height: 32, thickness: 1.5, indent: 15, endIndent: 15),
+        const SizedBox(height: 12),
 
         GroupCard(
           children: [
@@ -167,103 +158,108 @@ class _ScheduleNotificationsScreenState
             ),
           ],
         ),
-
-        // devider,
       ];
     }
 
     return Scaffold(
       appBar: CustomAppBar(title: appLocalizations.settingRemindersMenu),
-      body:
-          _isLoading
-              ? SizedBox(
-                height: MediaQuery.of(context).size.height / 2,
-                child: const Center(child: CircularProgressIndicator()),
-              )
-              : SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    children: [
-                      GroupCard(
-                        children: [
-                          CuperinoTextCheckSwitch(
-                            value: reminders.shabatAndHolidays,
-                            onChanged: () => reminders.setShabatAndHolidays(),
-                            text:
-                                appLocalizations
-                                    .beforeShabatAndHolidaysSettengs,
-                          ),
-                          ExpandedSection(
-                            expand: reminders.shabatAndHolidays,
-                            child: Column(
-                              children: shabatAndHolidaysElements(),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      if (!reminders.shabatAndHolidays) ...{
-                        const Divider(height: 32, thickness: 1.5),
-                      },
-                      // tefillin - start
-                      ChooseTimeInDayWidget(
-                        title: appLocalizations.tefillin,
-                        subtitle: appLocalizations.remindTeffilinSettingsAt,
-                        isExpanded: reminders.tefilin,
-                        setIsExpanded: reminders.setTefilin,
-                        timeObject: reminders.getTefilinTimeObject,
-                        setTime: reminders.setTefilinTime,
-                        timeString: reminders.tefilinTime,
-                      ),
-                      // tefillin - end
-
-                      // rosh hodesh - start
-                      ChooseTimeInDayWidget(
-                        title: appLocalizations.roshHodesh,
-                        subtitle: appLocalizations.remindRoshHodeshSettingsAt,
-                        isExpanded: reminders.roshChodesh,
-                        setIsExpanded: reminders.setRoshChodesh,
-                        timeObject: reminders.getRoshChodeshTimeObject,
-                        setTime: reminders.setRoshChodeshTime,
-                        timeString: reminders.roshChodeshTime,
-                        noteText:
-                            appLocalizations.roshHodeshReminderWillBeAdvanced,
-                      ),
-                      // rosh hodesh - end
-
-                      // sfirat omer - start
-                      ChooseTimeInDayWidget(
-                        title: appLocalizations.sfiratOmer,
-                        subtitle: appLocalizations.remindSfiratOmerSettingsAt,
-                        isExpanded: reminders.sfiratOmer,
-                        setIsExpanded: reminders.setSfiratOmer,
-                        timeObject: reminders.getSfiratOmerTimeObject,
-                        setTime: reminders.setSfiratOmerTime,
-                        timeString: reminders.sfiratOmerTime,
-                      ),
-
-                      // sfirat omer - end
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            _isLoading = true;
-                          });
-                          reminders
-                              .setReminders(update: true)
-                              .then(
-                                (value) => setState(() {
-                                  _isLoading = false;
-                                }),
-                              );
-                          Navigator.pushNamed(context, '/');
-                        },
-                        child: Text(appLocalizations.updateRemindersTitle),
-                      ),
-                    ],
-                  ),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 600),
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _SectionHeader(
+                  title: appLocalizations.beforeShabatAndHolidaysSettengs,
                 ),
-              ),
+                const SizedBox(height: 8),
+                GroupCard(
+                  children: [
+                    CuperinoTextCheckSwitch(
+                      value: reminders.shabatAndHolidays,
+                      onChanged: () => reminders.setShabatAndHolidays(),
+                      text: appLocalizations.beforeShabatAndHolidaysSettengs,
+                    ),
+                    ExpandedSection(
+                      expand: reminders.shabatAndHolidays,
+                      child: Column(
+                        children: shabatAndHolidaysElements(),
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 24),
+
+                _SectionHeader(title: appLocalizations.tefillin),
+                const SizedBox(height: 8),
+                ChooseTimeInDayWidget(
+                  title: appLocalizations.tefillin,
+                  subtitle: appLocalizations.remindTeffilinSettingsAt,
+                  isExpanded: reminders.tefilin,
+                  setIsExpanded: reminders.setTefilin,
+                  timeObject: reminders.getTefilinTimeObject,
+                  setTime: reminders.setTefilinTime,
+                  timeString: reminders.tefilinTime,
+                ),
+
+                const SizedBox(height: 24),
+
+                _SectionHeader(title: appLocalizations.roshHodesh),
+                const SizedBox(height: 8),
+                ChooseTimeInDayWidget(
+                  title: appLocalizations.roshHodesh,
+                  subtitle: appLocalizations.remindRoshHodeshSettingsAt,
+                  isExpanded: reminders.roshChodesh,
+                  setIsExpanded: reminders.setRoshChodesh,
+                  timeObject: reminders.getRoshChodeshTimeObject,
+                  setTime: reminders.setRoshChodeshTime,
+                  timeString: reminders.roshChodeshTime,
+                  noteText: appLocalizations.roshHodeshReminderWillBeAdvanced,
+                ),
+
+                const SizedBox(height: 24),
+
+                _SectionHeader(title: appLocalizations.sfiratOmer),
+                const SizedBox(height: 8),
+                ChooseTimeInDayWidget(
+                  title: appLocalizations.sfiratOmer,
+                  subtitle: appLocalizations.remindSfiratOmerSettingsAt,
+                  isExpanded: reminders.sfiratOmer,
+                  setIsExpanded: reminders.setSfiratOmer,
+                  timeObject: reminders.getSfiratOmerTimeObject,
+                  setTime: reminders.setSfiratOmerTime,
+                  timeString: reminders.sfiratOmerTime,
+                ),
+
+                const SizedBox(height: 24),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SectionHeader extends StatelessWidget {
+  const _SectionHeader({required this.title});
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4),
+      child: Text(
+        title,
+        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+              color: Theme.of(context).colorScheme.primary,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 0.5,
+            ),
+      ),
     );
   }
 }
@@ -284,19 +280,15 @@ class TextCheckBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Card(
-          child: ListTile(
-            title: Text(text),
-            subtitle: subText != null ? Text(subText!) : null,
-            leading: Checkbox(
-              value: value,
-              onChanged: (newValue) => onChanged(newValue),
-            ),
-          ),
+    return Card(
+      child: ListTile(
+        title: Text(text),
+        subtitle: subText != null ? Text(subText!) : null,
+        leading: Checkbox(
+          value: value,
+          onChanged: (newValue) => onChanged(newValue),
         ),
-      ],
+      ),
     );
   }
 }

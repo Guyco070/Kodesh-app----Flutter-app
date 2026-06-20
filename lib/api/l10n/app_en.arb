@@ -382,44 +382,50 @@
     "noHolidaysFound": "No holidays found.",
     "@noHolidaysFound": { "description": "noHolidaysFound" },
 
+    "compassNotSupported": "Compass is not supported on this device",
+    "@compassNotSupported": { "description": "shown when device has no compass sensor" },
+
+    "enableCompass": "Enable Compass",
+    "@enableCompass": { "description": "button to request compass/orientation permission" },
+
+    "search": "Search...",
+    "@search": { "description": "Search field hint text" },
+
+    "noSearchResults": "No results found",
+    "@noSearchResults": { "description": "Shown when search returns no results" },
+
+    "selectDateRange": "Select date range",
+    "@selectDateRange": { "description": "Date range picker title" },
+
+    "dateRangeFrom": "From",
+    "@dateRangeFrom": { "description": "Start of date range label" },
+
+    "dateRangeTo": "To",
+    "@dateRangeTo": { "description": "End of date range label" },
+
+    "listView": "List",
+    "@listView": { "description": "List view toggle label" },
+
+    "monthlyView": "Monthly",
+    "@monthlyView": { "description": "Monthly view toggle label" },
+
     "torahReading": "Torah Reading",
-    "@torahReading": { "description": "Torah reading aliyot section header" },
+    "@torahReading": { "description": "Torah reading section label" },
 
     "haftarah": "Haftarah",
-    "@haftarah": { "description": "Haftarah reading label" },
+    "@haftarah": { "description": "Haftarah section label" },
 
     "mevarchimShabat": "Shabbat Mevarchim",
-    "@mevarchimShabat": { "description": "Label for Shabbat Mevarchim" },
+    "@mevarchimShabat": { "description": "Shabbat Mevarchim label" },
 
     "blessingMonth": "Blessing: {months}",
     "@blessingMonth": {
-        "description": "Shabbat Mevarchim — month(s) being blessed",
+        "description": "Month blessing label",
         "placeholders": {
             "months": { "type": "String" }
         }
     },
 
     "molad": "New Moon (Molad)",
-    "@molad": { "description": "Molad section label" },
-
-    "search": "Search...",
-    "@search": { "description": "search hint text" },
-
-    "listView": "List",
-    "@listView": { "description": "list view toggle label" },
-
-    "monthlyView": "Monthly",
-    "@monthlyView": { "description": "monthly calendar view toggle label" },
-
-    "noSearchResults": "No results found",
-    "@noSearchResults": { "description": "shown when search returns no results" },
-
-    "dateRangeFrom": "From",
-    "@dateRangeFrom": { "description": "date range start label" },
-
-    "dateRangeTo": "To",
-    "@dateRangeTo": { "description": "date range end label" },
-
-    "selectDateRange": "Select date range",
-    "@selectDateRange": { "description": "button label to open date range picker" }
+    "@molad": { "description": "Molad label" }
 }

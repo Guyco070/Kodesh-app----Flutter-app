@@ -363,6 +363,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noHolidaysFound => 'No holidays found.';
 
   @override
+  String get compassNotSupported => 'Compass is not supported on this device';
+
+  @override
+  String get enableCompass => 'Enable Compass';
+
+  @override
+  String get search => 'Search...';
+
+  @override
+  String get noSearchResults => 'No results found';
+
+  @override
+  String get selectDateRange => 'Select date range';
+
+  @override
+  String get dateRangeFrom => 'From';
+
+  @override
+  String get dateRangeTo => 'To';
+
+  @override
+  String get listView => 'List';
+
+  @override
+  String get monthlyView => 'Monthly';
+
+  @override
   String get torahReading => 'Torah Reading';
 
   @override
@@ -376,25 +403,4 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get molad => 'New Moon (Molad)';
-
-  @override
-  String get search => 'Search...';
-
-  @override
-  String get listView => 'List';
-
-  @override
-  String get monthlyView => 'Monthly';
-
-  @override
-  String get noSearchResults => 'No results found';
-
-  @override
-  String get dateRangeFrom => 'From';
-
-  @override
-  String get dateRangeTo => 'To';
-
-  @override
-  String get selectDateRange => 'Select date range';
 }

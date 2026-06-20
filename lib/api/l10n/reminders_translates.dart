@@ -79,7 +79,14 @@ class RemindersTranslates {
             int beforeShabatAndHolidaysCandlesHours,
             int beforeShabatAndHolidaysCandlesMinutes,
           ) =>
-              'en ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours horas y-' : ''}$beforeShabatAndHolidaysCandlesMinutes minutos llegará Shabat, no olvides encender velas.',
+              'en ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours horas y ' : ''}$beforeShabatAndHolidaysCandlesMinutes minutos llegará Shabat, no olvides encender velas.',
+      'havdalahTitle': 'Hora de Havdalá',
+      'havdalahBody':
+          (
+            int beforeShabatAndHolidaysCandlesHours,
+            int beforeShabatAndHolidaysCandlesMinutes,
+          ) =>
+              'Antes de ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours horas y ' : ''}$beforeShabatAndHolidaysCandlesMinutes minutos terminó el Shabat, no olvides hacer la Havdalá.',
     },
     'ru': {
       'title': 'Шаббат шалом',
@@ -101,7 +108,14 @@ class RemindersTranslates {
             int beforeShabatAndHolidaysCandlesHours,
             int beforeShabatAndHolidaysCandlesMinutes,
           ) =>
-              'в ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours часы а также-' : ''}$beforeShabatAndHolidaysCandlesMinutes минуты Шаббат придет, не забудьте зажечь свечи.',
+              'Через ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours ч и ' : ''}$beforeShabatAndHolidaysCandlesMinutes мин наступит Шаббат, не забудьте зажечь свечи.',
+      'havdalahTitle': 'Время Хавдалы',
+      'havdalahBody':
+          (
+            int beforeShabatAndHolidaysCandlesHours,
+            int beforeShabatAndHolidaysCandlesMinutes,
+          ) =>
+              'До окончания Шаббата осталось ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours ч и ' : ''}$beforeShabatAndHolidaysCandlesMinutes мин, не забудьте сделать Хавдалу.',
     },
   };
 
@@ -204,6 +218,13 @@ class RemindersTranslates {
             int beforeShabatAndHolidaysCandlesMinutes,
           ) =>
               'En ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours horas y ' : ''}$beforeShabatAndHolidaysCandlesMinutes minutos es hora de encender las velas de Hanukkah.',
+      'havdalahTitle': 'Hora de Havdalá',
+      'havdalahBody':
+          (
+            int beforeShabatAndHolidaysCandlesHours,
+            int beforeShabatAndHolidaysCandlesMinutes,
+          ) =>
+              'Antes de ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours horas y ' : ''}$beforeShabatAndHolidaysCandlesMinutes minutos terminó la festividad, no olvides hacer la Havdalá.',
     },
     'ru': {
       // 'title': 'Шаббат шалом',
@@ -233,6 +254,13 @@ class RemindersTranslates {
             int beforeShabatAndHolidaysCandlesMinutes,
           ) =>
               'Через ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours часа и ' : ''}$beforeShabatAndHolidaysCandlesMinutes минут время зажигать свечи Хануки.',
+      'havdalahTitle': 'Время Хавдалы',
+      'havdalahBody':
+          (
+            int beforeShabatAndHolidaysCandlesHours,
+            int beforeShabatAndHolidaysCandlesMinutes,
+          ) =>
+              'До окончания праздника осталось ${beforeShabatAndHolidaysCandlesHours != 0 ? '$beforeShabatAndHolidaysCandlesHours ч и ' : ''}$beforeShabatAndHolidaysCandlesMinutes мин, не забудьте сделать Хавдалу.',
     },
   };
 

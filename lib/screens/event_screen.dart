@@ -12,7 +12,6 @@ import 'package:kodesh_app/widgets/default_scaffold.dart';
 import 'package:kodesh_app/widgets/events_widgets/event_factory_widget.dart';
 import 'package:kodesh_app/widgets/settings_bar.dart';
 import 'package:kodesh_app/widgets/swiches/view_type_switch.dart';
-import 'package:kodesh_app/widgets/search_filter_bar.dart';
 import 'package:kodesh_app/widgets/zman_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/data/latest.dart';
@@ -49,9 +48,7 @@ class _EventScreenState extends State<EventScreen> {
   bool _isLoadingLang = false;
   bool _isOnlyShabat = false;
   bool _isTodayTimesFromNow = false;
-
-  final TextEditingController _zmanimSearchController = TextEditingController();
-  String _zmanimSearch = '';
+  String _zmanimSearchQuery = '';
 
   String? title;
 
@@ -196,34 +193,26 @@ class _EventScreenState extends State<EventScreen> {
   }
 
   Widget _getZmanimWidgets(List<Zman>? zmanim) {
+    final appLocalizations = AppLocalizations.of(context)!;
     List<Widget> widgets = [];
     if (zmanim != null) {
-      zmanim.sort((a, b) {
-        return a.date.compareTo(b.date);
-      });
-      DateTime now = DateTime.now();
-      var x = {};
-      final langCode = Provider.of<LanguageChangeProvider>(
-        context,
-        listen: false,
-      ).currentLocale.languageCode;
-      final searchLower = _zmanimSearch.toLowerCase();
+      zmanim.sort((a, b) => a.date.compareTo(b.date));
+      final now = DateTime.now();
+      final query = _zmanimSearchQuery.trim().toLowerCase();
       for (Zman z in zmanim) {
-        x[z.title] = z.title;
-        if (!_isTodayTimesFromNow || z.date.isAfter(now)) {
-          if (_zmanimSearch.isEmpty) {
-            widgets.add(ZmanWidget(data: z));
-          } else {
-            final langMap = types[langCode] ?? types['en']!;
-            final labels = langMap[z.title];
-            final title = labels?.elementAt(0) ?? z.title;
-            final subtitle = labels?.elementAt(1) ?? '';
-            if (title.toLowerCase().contains(searchLower) ||
-                subtitle.toLowerCase().contains(searchLower)) {
-              widgets.add(ZmanWidget(data: z));
-            }
-          }
+        if (_isTodayTimesFromNow && !z.date.isAfter(now)) continue;
+        if (query.isNotEmpty) {
+          final langMap = types[Provider.of<LanguageChangeProvider>(
+            context,
+            listen: false,
+          ).currentLocale.languageCode] ?? types['en']!;
+          final labels = langMap[z.title] ?? {z.title, ''};
+          final title = labels.elementAt(0).toLowerCase();
+          final subtitle =
+              labels.length > 1 ? labels.elementAt(1).toLowerCase() : '';
+          if (!title.contains(query) && !subtitle.contains(query)) continue;
         }
+        widgets.add(ZmanWidget(data: z));
       }
     }
 
@@ -232,17 +221,49 @@ class _EventScreenState extends State<EventScreen> {
         SizedBox(
           height: MediaQuery.of(context).size.height / 2,
           child: Center(
-            child: Text(AppLocalizations.of(context)!.noLaterTimesToShow),
+            child: Text(
+              _zmanimSearchQuery.isNotEmpty
+                  ? appLocalizations.noSearchResults
+                  : appLocalizations.noLaterTimesToShow,
+            ),
           ),
         ),
       );
     } else {
       widgets.add(const SizedBox(height: 10));
     }
+
+    final searchField = Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      child: TextField(
+        onChanged: (v) => setState(() => _zmanimSearchQuery = v),
+        decoration: InputDecoration(
+          hintText: appLocalizations.search,
+          prefixIcon: const Icon(Icons.search),
+          suffixIcon:
+              _zmanimSearchQuery.isNotEmpty
+                  ? IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: () => setState(() => _zmanimSearchQuery = ''),
+                  )
+                  : null,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+          contentPadding: const EdgeInsets.symmetric(vertical: 0),
+          isDense: true,
+        ),
+      ),
+    );
+
     if (_isTodayTimesFromNow) {
-      return AnimatedFromNowOnTimesListView(widgets: widgets);
+      return AnimatedFromNowOnTimesListView(
+        key: ValueKey(_zmanimSearchQuery),
+        widgets: [searchField, ...widgets],
+      );
     }
-    return AnimatedTimesListView(widgets: widgets);
+    return AnimatedTimesListView(
+      key: ValueKey(_zmanimSearchQuery),
+      widgets: [searchField, ...widgets],
+    );
   }
 
   setViewState(ViewState newViewState) {
@@ -264,12 +285,6 @@ class _EventScreenState extends State<EventScreen> {
     setState(() {
       _isTodayTimesFromNow = !_isTodayTimesFromNow;
     });
-  }
-
-  @override
-  void dispose() {
-    _zmanimSearchController.dispose();
-    super.dispose();
   }
 
   Widget renderNoInternetConnection(String localErrorMessage) {
@@ -364,11 +379,6 @@ class _EventScreenState extends State<EventScreen> {
                 if (_isLoadingZmanim || _isLoadingLang)
                   renderLoading(context)
                 else ...{
-                  SearchFilterBar(
-                    controller: _zmanimSearchController,
-                    hintText: AppLocalizations.of(context)!.search,
-                    onChanged: (val) => setState(() => _zmanimSearch = val),
-                  ),
                   _getZmanimWidgets(events.zmanimItems),
                 },
               } else ...{

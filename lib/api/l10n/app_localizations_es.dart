@@ -363,38 +363,44 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noHolidaysFound => 'No holidays found.';
 
   @override
-  String get torahReading => 'Torah Reading';
+  String get compassNotSupported => 'Compass is not supported on this device';
 
   @override
-  String get haftarah => 'Haftarah';
+  String get enableCompass => 'Enable Compass';
 
   @override
-  String get mevarchimShabat => 'Shabbat Mevarchim';
+  String get search => 'Buscar...';
 
   @override
-  String blessingMonth(String months) => 'Blessing: $months';
+  String get noSearchResults => 'No se encontraron resultados';
 
   @override
-  String get molad => 'New Moon (Molad)';
+  String get selectDateRange => 'Seleccionar rango de fechas';
 
   @override
-  String get search => 'Search...';
+  String get dateRangeFrom => 'Desde';
 
   @override
-  String get listView => 'List';
+  String get dateRangeTo => 'Hasta';
 
   @override
-  String get monthlyView => 'Monthly';
+  String get listView => 'Lista';
 
   @override
-  String get noSearchResults => 'No results found';
+  String get monthlyView => 'Mensual';
 
   @override
-  String get dateRangeFrom => 'From';
+  String get torahReading => 'Lectura de la Torá';
 
   @override
-  String get dateRangeTo => 'To';
+  String get haftarah => 'Haftará';
 
   @override
-  String get selectDateRange => 'Select date range';
+  String get mevarchimShabat => 'Shabat Mevarchim';
+
+  @override
+  String blessingMonth(String months) => 'Bendición: $months';
+
+  @override
+  String get molad => 'Luna Nueva (Molad)';
 }

@@ -30,41 +30,42 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         statusBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
         statusBarBrightness: isDark ? Brightness.dark : Brightness.light,
       ),
-      child: ColoredBox(
+      child: Material(
         color: bgColor,
-        child: SizedBox(
-          height: preferredSize.height,
-          child: ListTile(
-            horizontalTitleGap: 2,
-            leading:
-                leading ??
-                (!noBackBotton
-                    ? IconButton(
-                      onPressed: () {
-                        Navigator.maybePop(context);
-                      },
-                      icon: const Icon(Icons.chevron_left_outlined),
-                    )
-                    : null),
-            title: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FittedBox(
-                  child: Center(
-                    child:
-                        titleWidget ??
-                        Text(
-                          title,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
+        child: SafeArea(
+          bottom: false,
+          child: SizedBox(
+            height: preferredSize.height,
+            child: ListTile(
+              horizontalTitleGap: 2,
+              leading:
+                  leading ??
+                  (!noBackBotton
+                      ? IconButton(
+                        onPressed: () => Navigator.maybePop(context),
+                        icon: const Icon(Icons.chevron_left_outlined),
+                      )
+                      : null),
+              title: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FittedBox(
+                    child: Center(
+                      child:
+                          titleWidget ??
+                          Text(
+                            title,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
                           ),
-                        ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
+              trailing: trailing ?? const LimitedBox(),
             ),
-            trailing: trailing ?? const LimitedBox(),
           ),
         ),
       ),
