@@ -372,6 +372,18 @@ class AppLocalizationsHe extends AppLocalizations {
   String get noSearchResults => 'לא נמצאו תוצאות';
 
   @override
+  String get zmanimDisplayModeTooltip => 'אפשרויות תצוגה';
+
+  @override
+  String get zmanimDisplayMultiExpand => 'מצומצם (הרחבת כמה)';
+
+  @override
+  String get zmanimDisplaySingleExpand => 'מצומצם (אחד בכל פעם)';
+
+  @override
+  String get zmanimDisplayExpandedByDefault => 'מורחב';
+
+  @override
   String get selectDateRange => 'בחר טווח תאריכים';
 
   @override

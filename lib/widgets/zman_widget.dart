@@ -10,8 +10,15 @@ import 'package:kodesh_app/widgets/time_left.dart';
 import 'package:provider/provider.dart';
 
 class ZmanWidget extends StatelessWidget {
-  const ZmanWidget({super.key, required this.data});
+  const ZmanWidget({
+    super.key,
+    required this.data,
+    required this.isExpanded,
+    required this.onToggle,
+  });
   final Zman data;
+  final bool isExpanded;
+  final VoidCallback onToggle;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +30,9 @@ class ZmanWidget extends StatelessWidget {
     final labels = langMap[data.title] ?? {data.title, ''};
     return Card(
       child: ListTile(
+        onTap: onToggle,
         title: Text(labels.elementAt(0)),
-        subtitle: AnimatedLongText(labels.elementAt(1)),
+        subtitle: AnimatedLongText(labels.elementAt(1), expanded: isExpanded),
         trailing: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [

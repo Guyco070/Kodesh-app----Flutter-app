@@ -780,6 +780,30 @@ abstract class AppLocalizations {
   /// **'No results found'**
   String get noSearchResults;
 
+  /// Tooltip for the zmanim display-mode picker button
+  ///
+  /// In en, this message translates to:
+  /// **'Display options'**
+  String get zmanimDisplayModeTooltip;
+
+  /// Zmanim display mode: all collapsed, tap to expand, multiple can stay open
+  ///
+  /// In en, this message translates to:
+  /// **'Collapsed (expand several)'**
+  String get zmanimDisplayMultiExpand;
+
+  /// Zmanim display mode: all collapsed, tap to expand only one at a time
+  ///
+  /// In en, this message translates to:
+  /// **'Collapsed (one at a time)'**
+  String get zmanimDisplaySingleExpand;
+
+  /// Zmanim display mode: all descriptions expanded by default
+  ///
+  /// In en, this message translates to:
+  /// **'Expanded'**
+  String get zmanimDisplayExpandedByDefault;
+
   /// Date range picker title
   ///
   /// In en, this message translates to:

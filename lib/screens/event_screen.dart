@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:kodesh_app/animations/animated_events_list_view.dart';
-import 'package:kodesh_app/animations/animated_from_now_on_times_list.dart';
 import 'package:kodesh_app/animations/animated_only_shabat.dart';
-import 'package:kodesh_app/animations/animated_times_list_view.dart';
+import 'package:kodesh_app/animations/animated_zmanim_list.dart';
 import 'package:kodesh_app/models/event.dart';
 import 'package:kodesh_app/models/shabat.dart';
 import 'package:kodesh_app/models/zman.dart';
+import 'package:kodesh_app/models/zmanim_display_mode.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/widgets/default_scaffold.dart';
@@ -49,10 +49,22 @@ class _EventScreenState extends State<EventScreen> {
   bool _isOnlyShabat = false;
   bool _isTodayTimesFromNow = false;
   String _zmanimSearchQuery = '';
+  final TextEditingController _zmanimSearchController = TextEditingController();
+
+  /// Keys of zmanim rows the user explicitly toggled. Interpreted relative to
+  /// the active [ZmanimDisplayMode]: for collapsed modes a key means "expanded";
+  /// for [ZmanimDisplayMode.expandedByDefault] a key means "collapsed".
+  final Set<String> _expandedKeys = {};
 
   String? title;
 
   ViewState _viewState = ViewState.events;
+
+  @override
+  void dispose() {
+    _zmanimSearchController.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -192,7 +204,119 @@ class _EventScreenState extends State<EventScreen> {
     });
   }
 
-  Widget _getZmanimWidgets(List<Zman>? zmanim) {
+  String _zmanLabel(ZmanimDisplayMode mode, AppLocalizations l) {
+    switch (mode) {
+      case ZmanimDisplayMode.multiExpand:
+        return l.zmanimDisplayMultiExpand;
+      case ZmanimDisplayMode.singleExpand:
+        return l.zmanimDisplaySingleExpand;
+      case ZmanimDisplayMode.expandedByDefault:
+        return l.zmanimDisplayExpandedByDefault;
+    }
+  }
+
+  String _zmanKey(Zman z) => '${z.title}_${z.date.toIso8601String()}';
+
+  bool _isZmanExpanded(String key, ZmanimDisplayMode mode) {
+    if (mode == ZmanimDisplayMode.expandedByDefault) {
+      return !_expandedKeys.contains(key);
+    }
+    return _expandedKeys.contains(key);
+  }
+
+  void _toggleZman(String key, ZmanimDisplayMode mode) {
+    setState(() {
+      final wasSet = _expandedKeys.contains(key);
+      if (mode == ZmanimDisplayMode.singleExpand) {
+        _expandedKeys.clear();
+        if (!wasSet) _expandedKeys.add(key);
+      } else {
+        if (wasSet) {
+          _expandedKeys.remove(key);
+        } else {
+          _expandedKeys.add(key);
+        }
+      }
+    });
+  }
+
+  Widget _buildZmanimSearchField(ZmanimDisplayMode mode) {
+    final appLocalizations = AppLocalizations.of(context)!;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      child: Row(
+        children: [
+          Expanded(
+            child: TextField(
+              controller: _zmanimSearchController,
+              onChanged: (v) => setState(() => _zmanimSearchQuery = v),
+              decoration: InputDecoration(
+                hintText: appLocalizations.search,
+                prefixIcon: const Icon(Icons.search),
+                suffixIcon:
+                    _zmanimSearchQuery.isNotEmpty
+                        ? IconButton(
+                          icon: const Icon(Icons.clear),
+                          onPressed: () {
+                            _zmanimSearchController.clear();
+                            setState(() => _zmanimSearchQuery = '');
+                          },
+                        )
+                        : null,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                isDense: true,
+              ),
+            ),
+          ),
+          const SizedBox(width: 4),
+          PopupMenuButton<ZmanimDisplayMode>(
+            icon: const Icon(Icons.tune),
+            tooltip: appLocalizations.zmanimDisplayModeTooltip,
+            initialValue: mode,
+            onSelected: (selected) {
+              Provider.of<Events>(
+                context,
+                listen: false,
+              ).updateZmanimDisplayMode(selected);
+              setState(_expandedKeys.clear);
+            },
+            itemBuilder:
+                (context) =>
+                    ZmanimDisplayMode.values
+                        .map(
+                          (m) => PopupMenuItem<ZmanimDisplayMode>(
+                            value: m,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  m == mode
+                                      ? Icons.check
+                                      : Icons.check_box_outline_blank,
+                                  size: 18,
+                                  color:
+                                      m == mode
+                                          ? Theme.of(context).colorScheme.primary
+                                          : Colors.transparent,
+                                ),
+                                const SizedBox(width: 8),
+                                Flexible(
+                                  child: Text(_zmanLabel(m, appLocalizations)),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                        .toList(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _getZmanimWidgets(List<Zman>? zmanim, ZmanimDisplayMode mode) {
     final appLocalizations = AppLocalizations.of(context)!;
     List<Widget> widgets = [];
     if (zmanim != null) {
@@ -212,58 +336,33 @@ class _EventScreenState extends State<EventScreen> {
               labels.length > 1 ? labels.elementAt(1).toLowerCase() : '';
           if (!title.contains(query) && !subtitle.contains(query)) continue;
         }
-        widgets.add(ZmanWidget(data: z));
+        final key = _zmanKey(z);
+        widgets.add(
+          ZmanWidget(
+            key: ValueKey(key),
+            data: z,
+            isExpanded: _isZmanExpanded(key, mode),
+            onToggle: () => _toggleZman(key, mode),
+          ),
+        );
       }
     }
 
     if (widgets.isEmpty) {
-      widgets.add(
-        SizedBox(
-          height: MediaQuery.of(context).size.height / 2,
-          child: Center(
-            child: Text(
-              _zmanimSearchQuery.isNotEmpty
-                  ? appLocalizations.noSearchResults
-                  : appLocalizations.noLaterTimesToShow,
-            ),
+      return SizedBox(
+        height: MediaQuery.of(context).size.height / 2,
+        child: Center(
+          child: Text(
+            _zmanimSearchQuery.isNotEmpty
+                ? appLocalizations.noSearchResults
+                : appLocalizations.noLaterTimesToShow,
           ),
         ),
       );
-    } else {
-      widgets.add(const SizedBox(height: 10));
     }
+    widgets.add(const SizedBox(key: ValueKey('zmanim-bottom-spacer'), height: 10));
 
-    final searchField = Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      child: TextField(
-        onChanged: (v) => setState(() => _zmanimSearchQuery = v),
-        decoration: InputDecoration(
-          hintText: appLocalizations.search,
-          prefixIcon: const Icon(Icons.search),
-          suffixIcon:
-              _zmanimSearchQuery.isNotEmpty
-                  ? IconButton(
-                    icon: const Icon(Icons.clear),
-                    onPressed: () => setState(() => _zmanimSearchQuery = ''),
-                  )
-                  : null,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-          contentPadding: const EdgeInsets.symmetric(vertical: 0),
-          isDense: true,
-        ),
-      ),
-    );
-
-    if (_isTodayTimesFromNow) {
-      return AnimatedFromNowOnTimesListView(
-        key: ValueKey(_zmanimSearchQuery),
-        widgets: [searchField, ...widgets],
-      );
-    }
-    return AnimatedTimesListView(
-      key: ValueKey(_zmanimSearchQuery),
-      widgets: [searchField, ...widgets],
-    );
+    return AnimatedZmanimList(widgets: widgets);
   }
 
   setViewState(ViewState newViewState) {
@@ -379,7 +478,11 @@ class _EventScreenState extends State<EventScreen> {
                 if (_isLoadingZmanim || _isLoadingLang)
                   renderLoading(context)
                 else ...{
-                  _getZmanimWidgets(events.zmanimItems),
+                  _buildZmanimSearchField(events.zmanimDisplayMode),
+                  _getZmanimWidgets(
+                    events.zmanimItems,
+                    events.zmanimDisplayMode,
+                  ),
                 },
               } else ...{
                 if (_isLoading || _isLoadingLang)

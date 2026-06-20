@@ -376,6 +376,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noSearchResults => 'No se encontraron resultados';
 
   @override
+  String get zmanimDisplayModeTooltip => 'Opciones de visualización';
+
+  @override
+  String get zmanimDisplayMultiExpand => 'Contraído (expandir varios)';
+
+  @override
+  String get zmanimDisplaySingleExpand => 'Contraído (uno a la vez)';
+
+  @override
+  String get zmanimDisplayExpandedByDefault => 'Expandido';
+
+  @override
   String get selectDateRange => 'Seleccionar rango de fechas';
 
   @override

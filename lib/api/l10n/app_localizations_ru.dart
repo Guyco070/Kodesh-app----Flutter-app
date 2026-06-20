@@ -376,6 +376,18 @@ class AppLocalizationsRu extends AppLocalizations {
   String get noSearchResults => 'Результаты не найдены';
 
   @override
+  String get zmanimDisplayModeTooltip => 'Параметры отображения';
+
+  @override
+  String get zmanimDisplayMultiExpand => 'Свёрнуто (раскрыть несколько)';
+
+  @override
+  String get zmanimDisplaySingleExpand => 'Свёрнуто (по одному)';
+
+  @override
+  String get zmanimDisplayExpandedByDefault => 'Развёрнуто';
+
+  @override
   String get selectDateRange => 'Выбрать диапазон дат';
 
   @override
