@@ -654,53 +654,190 @@ abstract class AppLocalizations {
   /// **'Light mode'**
   String get lightMode;
 
+  /// systemMode
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
   String get systemMode;
 
+  /// birkatHamazonMenu
+  ///
+  /// In en, this message translates to:
+  /// **'Birkat Hamazon'**
   String get birkatHamazonMenu;
+
+  /// kriyatShemaAlHamitaMenu
+  ///
+  /// In en, this message translates to:
+  /// **'Bedtime Shema'**
   String get kriyatShemaAlHamitaMenu;
+
+  /// addCustomTask
+  ///
+  /// In en, this message translates to:
+  /// **'Add task'**
   String get addCustomTask;
+
+  /// taskName
+  ///
+  /// In en, this message translates to:
+  /// **'Task name'**
   String get taskName;
+
+  /// add
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
   String get add;
+
+  /// cancel
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
   String get cancel;
+
+  /// delete
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
   String get delete;
+
+  /// customTasksSection
+  ///
+  /// In en, this message translates to:
+  /// **'My custom tasks'**
   String get customTasksSection;
+
+  /// deleteTaskTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Delete task?'**
   String get deleteTaskTitle;
 
-  /// useMyLocation
+  /// Tooltip for the GPS location detection button
   ///
   /// In en, this message translates to:
   /// **'Use my location'**
   String get useMyLocation;
 
-  /// locationNotAvailable
+  /// Shown when location detection fails
   ///
   /// In en, this message translates to:
   /// **'Could not detect location. Please check location permissions.'**
   String get locationNotAvailable;
 
-  /// detectingLocation
+  /// Shown while GPS location is being detected
   ///
   /// In en, this message translates to:
   /// **'Detecting location...'**
   String get detectingLocation;
 
+  /// dafYomiMenu
+  ///
+  /// In en, this message translates to:
+  /// **'Daf Yomi'**
   String get dafYomiMenu;
+
+  /// holidayCalendarMenu
+  ///
+  /// In en, this message translates to:
+  /// **'Jewish Holiday Calendar'**
   String get holidayCalendarMenu;
+
+  /// todaysDaf
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s Daf'**
   String get todaysDaf;
+
+  /// noHolidaysFound
+  ///
+  /// In en, this message translates to:
+  /// **'No holidays found.'**
   String get noHolidaysFound;
+
+  /// shown when device has no compass sensor
+  ///
+  /// In en, this message translates to:
+  /// **'Compass is not supported on this device'**
   String get compassNotSupported;
+
+  /// button to request compass/orientation permission
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Compass'**
   String get enableCompass;
+
+  /// Search field hint text
+  ///
+  /// In en, this message translates to:
+  /// **'Search...'**
   String get search;
+
+  /// Shown when search returns no results
+  ///
+  /// In en, this message translates to:
+  /// **'No results found'**
   String get noSearchResults;
+
+  /// Date range picker title
+  ///
+  /// In en, this message translates to:
+  /// **'Select date range'**
   String get selectDateRange;
+
+  /// Start of date range label
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
   String get dateRangeFrom;
+
+  /// End of date range label
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
   String get dateRangeTo;
+
+  /// List view toggle label
+  ///
+  /// In en, this message translates to:
+  /// **'List'**
   String get listView;
+
+  /// Monthly view toggle label
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
   String get monthlyView;
+
+  /// Torah reading section label
+  ///
+  /// In en, this message translates to:
+  /// **'Torah Reading'**
   String get torahReading;
+
+  /// Haftarah section label
+  ///
+  /// In en, this message translates to:
+  /// **'Haftarah'**
   String get haftarah;
+
+  /// Shabbat Mevarchim label
+  ///
+  /// In en, this message translates to:
+  /// **'Shabbat Mevarchim'**
   String get mevarchimShabat;
+
+  /// Month blessing label
+  ///
+  /// In en, this message translates to:
+  /// **'Blessing: {months}'**
   String blessingMonth(String months);
+
+  /// Molad label
+  ///
+  /// In en, this message translates to:
+  /// **'New Moon (Molad)'**
   String get molad;
 }
 

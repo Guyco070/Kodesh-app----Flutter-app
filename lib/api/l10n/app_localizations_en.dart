@@ -357,7 +357,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get holidayCalendarMenu => 'Jewish Holiday Calendar';
 
   @override
-  String get todaysDaf => "Today's Daf";
+  String get todaysDaf => 'Today\'s Daf';
 
   @override
   String get noHolidaysFound => 'No holidays found.';
@@ -399,7 +399,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mevarchimShabat => 'Shabbat Mevarchim';
 
   @override
-  String blessingMonth(String months) => 'Blessing: $months';
+  String blessingMonth(String months) {
+    return 'Blessing: $months';
+  }
 
   @override
   String get molad => 'New Moon (Molad)';

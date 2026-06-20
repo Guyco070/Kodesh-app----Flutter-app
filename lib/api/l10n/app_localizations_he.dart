@@ -396,7 +396,9 @@ class AppLocalizationsHe extends AppLocalizations {
   String get mevarchimShabat => 'שבת מברכים';
 
   @override
-  String blessingMonth(String months) => 'מברכים: $months';
+  String blessingMonth(String months) {
+    return 'מברכים: $months';
+  }
 
   @override
   String get molad => 'מולד הלבנה';
