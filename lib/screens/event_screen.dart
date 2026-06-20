@@ -298,7 +298,9 @@ class _EventScreenState extends State<EventScreen> {
                                   size: 18,
                                   color:
                                       m == mode
-                                          ? Theme.of(context).colorScheme.primary
+                                          ? Theme.of(
+                                            context,
+                                          ).colorScheme.primary
                                           : Colors.transparent,
                                 ),
                                 const SizedBox(width: 8),
@@ -326,10 +328,12 @@ class _EventScreenState extends State<EventScreen> {
       for (Zman z in zmanim) {
         if (_isTodayTimesFromNow && !z.date.isAfter(now)) continue;
         if (query.isNotEmpty) {
-          final langMap = types[Provider.of<LanguageChangeProvider>(
-            context,
-            listen: false,
-          ).currentLocale.languageCode] ?? types['en']!;
+          final langMap =
+              types[Provider.of<LanguageChangeProvider>(
+                context,
+                listen: false,
+              ).currentLocale.languageCode] ??
+              types['en']!;
           final labels = langMap[z.title] ?? {z.title, ''};
           final title = labels.elementAt(0).toLowerCase();
           final subtitle =
@@ -360,7 +364,9 @@ class _EventScreenState extends State<EventScreen> {
         ),
       );
     }
-    widgets.add(const SizedBox(key: ValueKey('zmanim-bottom-spacer'), height: 10));
+    widgets.add(
+      const SizedBox(key: ValueKey('zmanim-bottom-spacer'), height: 10),
+    );
 
     return AnimatedZmanimList(widgets: widgets);
   }
