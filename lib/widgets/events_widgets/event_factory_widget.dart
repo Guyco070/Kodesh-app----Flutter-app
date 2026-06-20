@@ -3,7 +3,6 @@ import 'package:kodesh_app/models/event.dart';
 import 'package:kodesh_app/models/shabat.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
-import 'package:kodesh_app/models/rosh_chodesh.dart';
 
 class EventFactoryWidget extends StatelessWidget {
   const EventFactoryWidget({
@@ -18,8 +17,7 @@ class EventFactoryWidget extends StatelessWidget {
     if (data.title == 'Shabat') {
       return AppLocalizations.of(context)!.shabat;
     }
-    final isHe =
-        Localizations.localeOf(context).languageCode == 'he';
+    final isHe = Localizations.localeOf(context).languageCode == 'he';
     if (isHe && data.titleOrig != null && data is! Shabat) {
       return data.titleOrig!;
     }
