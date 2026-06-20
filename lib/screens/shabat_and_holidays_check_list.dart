@@ -138,22 +138,22 @@ class _ShabatAndHolidaysCheckListState
                 slivers: [
                   if (selectedPredefined.isNotEmpty)
                     SliverGrid(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: selectedPredefined.length < 3 ? 2 : 3,
-                        childAspectRatio: 2,
-                      ),
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 180,
+                            childAspectRatio: 1.0,
+                            crossAxisSpacing: 0,
+                            mainAxisSpacing: 0,
+                          ),
                       delegate: SliverChildBuilderDelegate((context, index) {
                         final key = selectedPredefined.toList()[index];
                         final element =
                             reminders.allShabatAndHolidaysThingsToRemindMap(
                               context,
                             )[key]!;
-                        return Padding(
-                          padding: const EdgeInsets.all(25 / 2),
-                          child: ThingToRemind(
-                            title: element['action'] as String,
-                            icon: element['icon'] as IconData,
-                          ),
+                        return ThingToRemind(
+                          title: element['action'] as String,
+                          icon: element['icon'] as IconData,
                         );
                       }, childCount: selectedPredefined.length),
                     ),
@@ -171,17 +171,19 @@ class _ShabatAndHolidaysCheckListState
                         ),
                       ),
                     ),
-                    SliverToBoxAdapter(
-                      child: ReorderableListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: reminders.customChecklistItems.length,
-                        onReorder: reminders.reorderCustomChecklistItem,
-                        itemBuilder: (context, index) {
-                          final task = reminders.customChecklistItems[index];
-                          return ListTile(
-                            key: ValueKey(task + index.toString()),
-                            leading: const Icon(Icons.drag_handle),
+                    SliverReorderableList(
+                      itemCount: reminders.customChecklistItems.length,
+                      onReorder: reminders.reorderCustomChecklistItem,
+                      itemBuilder: (context, index) {
+                        final task = reminders.customChecklistItems[index];
+                        return Material(
+                          key: ValueKey(task + index.toString()),
+                          color: Colors.transparent,
+                          child: ListTile(
+                            leading: ReorderableDragStartListener(
+                              index: index,
+                              child: const Icon(Icons.drag_handle),
+                            ),
                             title: Text(task),
                             trailing: IconButton(
                               icon: const Icon(
@@ -196,9 +198,9 @@ class _ShabatAndHolidaysCheckListState
                                     index,
                                   ),
                             ),
-                          );
-                        },
-                      ),
+                          ),
+                        );
+                      },
                     ),
                   ],
                   const SliverToBoxAdapter(child: SizedBox(height: 80)),

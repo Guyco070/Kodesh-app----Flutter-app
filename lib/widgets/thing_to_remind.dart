@@ -13,61 +13,71 @@ class ThingToRemind extends StatefulWidget {
 class _ThingToRemindState extends State<ThingToRemind> {
   bool isChecked = false;
 
-  setIsCheck() {
-    setState(() {
-      isChecked = !isChecked;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(24),
-        onTap: () {
-          setIsCheck();
-        },
-        child: Container(
-          decoration: BoxDecoration(
-            color: isChecked ? Colors.grey[900] : Colors.grey[200],
-            borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: Colors.grey, width: 2),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final size = constraints.maxWidth;
+        final iconSize = size * 0.32;
+        final fontSize = (size * 0.11).clamp(11.0, 16.0);
+
+        return GestureDetector(
+          onTap: () => setState(() => isChecked = !isChecked),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            margin: EdgeInsets.all(size * 0.04),
+            decoration: BoxDecoration(
+              color:
+                  isChecked
+                      ? Theme.of(context).colorScheme.primary
+                      : Theme.of(context).colorScheme.surfaceContainerLow,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color:
                     isChecked
-                        ? const Icon(Icons.check, color: Colors.green, size: 30)
-                        : const Icon(Icons.remove, color: Colors.red, size: 30),
-                    Expanded(
-                      child: Text(
-                        widget.title,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: isChecked ? Colors.white : Colors.black,
-                        ),
-                      ),
-                    ),
-                  ],
+                        ? Theme.of(context).colorScheme.primary
+                        : Colors.grey.shade300,
+                width: 1.5,
+              ),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 200),
+                  child: Icon(
+                    isChecked ? Icons.check_circle_rounded : widget.icon,
+                    key: ValueKey(isChecked),
+                    size: iconSize,
+                    color:
+                        isChecked
+                            ? Colors.white
+                            : Theme.of(context).colorScheme.onSurface,
+                  ),
                 ),
-              ),
-              Icon(
-                widget.icon,
-                size: 50,
-                color: isChecked ? Colors.white : Colors.black,
-              ),
-            ],
+                SizedBox(height: size * 0.06),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: size * 0.06),
+                  child: Text(
+                    widget.title,
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: fontSize,
+                      color:
+                          isChecked
+                              ? Colors.white
+                              : Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
