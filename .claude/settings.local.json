@@ -22,7 +22,9 @@
       "Bash(plutil -lint /Users/guy/projects/Kodesh-app----Flutter-app/ios/Runner/Info.plist)",
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
-      "Bash(mkdir -p /home/user/Kodesh-app----Flutter-app/.claude)"
+      "Bash(mkdir -p /home/user/Kodesh-app----Flutter-app/.claude)",
+      "Bash(git checkout *)",
+      "Bash(git stash *)"
     ]
   },
   "hooks": {

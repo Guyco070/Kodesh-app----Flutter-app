@@ -69,3 +69,4 @@ lib/l10n/
 
 # Coverage reports
 coverage/
+.claude/settings.local.json
