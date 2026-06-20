@@ -138,11 +138,10 @@ class _ShabatAndHolidaysCheckListState
                 slivers: [
                   if (selectedPredefined.isNotEmpty)
                     SliverGrid(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 0.8,
-                          ),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: selectedPredefined.length < 3 ? 2 : 3,
+                        childAspectRatio: 2,
+                      ),
                       delegate: SliverChildBuilderDelegate((context, index) {
                         final key = selectedPredefined.toList()[index];
                         final element =

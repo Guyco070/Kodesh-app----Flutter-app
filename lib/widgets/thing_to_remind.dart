@@ -21,13 +21,13 @@ class _ThingToRemindState extends State<ThingToRemind> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      // When the user taps the button, show a snackbar.
-      onTap: () {
-        setIsCheck();
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(24),
+        onTap: () {
+          setIsCheck();
+        },
         child: Container(
           decoration: BoxDecoration(
             color: isChecked ? Colors.grey[900] : Colors.grey[200],

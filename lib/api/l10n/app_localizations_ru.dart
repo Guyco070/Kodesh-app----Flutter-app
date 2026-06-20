@@ -311,7 +311,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get lightMode => 'Светлый режим';
 
   @override
-  String get systemMode => 'Системная';
+  String get systemMode => 'Системный';
 
   @override
   String get birkatHamazonMenu => 'Биркат Хамазон';
@@ -354,19 +354,20 @@ class AppLocalizationsRu extends AppLocalizations {
   String get dafYomiMenu => 'Daf Yomi';
 
   @override
-  String get holidayCalendarMenu => 'Jewish Holiday Calendar';
+  String get holidayCalendarMenu => 'Еврейский календарь праздников';
 
   @override
-  String get todaysDaf => "Today's Daf";
+  String get todaysDaf => 'Дневной лист';
 
   @override
-  String get noHolidaysFound => 'No holidays found.';
+  String get noHolidaysFound => 'Праздники не найдены.';
 
   @override
-  String get compassNotSupported => 'Compass is not supported on this device';
+  String get compassNotSupported =>
+      'Компас не поддерживается на этом устройстве';
 
   @override
-  String get enableCompass => 'Enable Compass';
+  String get enableCompass => 'Включить компас';
 
   @override
   String get search => 'Поиск...';
@@ -399,7 +400,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get mevarchimShabat => 'Шаббат Мевархим';
 
   @override
-  String blessingMonth(String months) => 'Благословение: $months';
+  String blessingMonth(String months) {
+    return 'Благословение: $months';
+  }
 
   @override
   String get molad => 'Новолуние (Молад)';

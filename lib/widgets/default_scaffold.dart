@@ -97,7 +97,7 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
         ),
         iconStyleData: const IconStyleData(iconEnabledColor: Colors.white),
         dropdownStyleData: DropdownStyleData(
-          maxHeight: 200,
+          maxHeight: 400,
           width: 200,
           padding: null,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(14)),

@@ -125,8 +125,7 @@ class _SettingsBarState extends State<SettingsBar> {
                                   ),
                                   width:
                                       MediaQuery.of(context).size.width / 2.3,
-                                  child: InkWell(
-                                    borderRadius: BorderRadius.circular(10),
+                                  child: GestureDetector(
                                     onTap: () async {
                                       final langCode =
                                           lang.currentLocale.languageCode;
@@ -239,10 +238,9 @@ class _SettingsBarState extends State<SettingsBar> {
                                     Icons.calendar_month_outlined,
                                   ),
                                   label: AnimatedSwitcher(
-                                    duration:
-                                        const Duration(milliseconds: 500),
-                                    transitionBuilder: (child, animation) =>
-                                        ScaleTransition(
+                                    duration: const Duration(milliseconds: 500),
+                                    transitionBuilder:
+                                        (child, animation) => ScaleTransition(
                                           scale: animation,
                                           child: child,
                                         ),
@@ -266,32 +264,33 @@ class _SettingsBarState extends State<SettingsBar> {
                                           MainAxisAlignment.center,
                                       children: [
                                         IconButton(
-                                          onPressed: () => events.setStartDate(
-                                            events.startDate.subtract(
-                                              const Duration(days: 1),
-                                            ),
-                                            setIsLoading: widget.setIsLoading,
-                                            setIsLoadingZmanim:
-                                                widget.setIsLoadingZmanim,
-                                          ),
+                                          onPressed:
+                                              () => events.setStartDate(
+                                                events.startDate.subtract(
+                                                  const Duration(days: 1),
+                                                ),
+                                                setIsLoading:
+                                                    widget.setIsLoading,
+                                                setIsLoadingZmanim:
+                                                    widget.setIsLoadingZmanim,
+                                              ),
                                           icon: const Icon(
                                             Icons.remove,
                                             size: 20,
                                           ),
                                         ),
                                         IconButton(
-                                          onPressed: () => events.setStartDate(
-                                            events.startDate.add(
-                                              const Duration(days: 1),
-                                            ),
-                                            setIsLoading: widget.setIsLoading,
-                                            setIsLoadingZmanim:
-                                                widget.setIsLoadingZmanim,
-                                          ),
-                                          icon: const Icon(
-                                            Icons.add,
-                                            size: 20,
-                                          ),
+                                          onPressed:
+                                              () => events.setStartDate(
+                                                events.startDate.add(
+                                                  const Duration(days: 1),
+                                                ),
+                                                setIsLoading:
+                                                    widget.setIsLoading,
+                                                setIsLoadingZmanim:
+                                                    widget.setIsLoadingZmanim,
+                                              ),
+                                          icon: const Icon(Icons.add, size: 20),
                                         ),
                                       ],
                                     ),
@@ -413,11 +412,10 @@ class _SettingsBarState extends State<SettingsBar> {
                                       ? events.hebrewDates == null ||
                                               events.hebrewDates!.isEmpty
                                           ? '  '
-                                          : events.hebrewDates![
-                                              getDateTimeSetToZero(
-                                                DateTime.now(),
-                                              )
-                                            ]!
+                                          : events
+                                              .hebrewDates![getDateTimeSetToZero(
+                                            DateTime.now(),
+                                          )]!
                                       : df.DateFormat(
                                         'dd/MM/yyyy',
                                       ).format(DateTime.now()),
