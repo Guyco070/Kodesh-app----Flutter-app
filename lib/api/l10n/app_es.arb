@@ -38,6 +38,8 @@
     "currentDate": "Fecha actual",
     "entryAndLightingCandles": "Entrada y encendido de velas",
     "departureAndHavdalah": "Salida y Havdalá",
+    "fastBegins": "Comienzo del ayuno",
+    "fastEnds": "Fin del ayuno",
     "eventDay": "Día del evento",
     "startDate": "Fecha de inicio",
     "endDate": "Fecha final",

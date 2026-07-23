@@ -106,6 +106,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get departureAndHavdalah => 'Departure and havdalah';
 
   @override
+  String get fastBegins => 'Fast begins';
+
+  @override
+  String get fastEnds => 'Fast ends';
+
+  @override
   String get startDate => 'Start date';
 
   @override
