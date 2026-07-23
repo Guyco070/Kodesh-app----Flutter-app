@@ -863,6 +863,11 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'New Moon (Molad)'**
   String get molad;
+
+  String get sendTestNotification;
+  String get testNotificationTitle;
+  String get testNotificationBody;
+  String get testNotificationSent;
 }
 
 class _AppLocalizationsDelegate

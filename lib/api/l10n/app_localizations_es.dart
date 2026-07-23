@@ -418,4 +418,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get molad => 'Luna Nueva (Molad)';
+
+  @override
+  String get sendTestNotification => 'Enviar notificación de prueba';
+
+  @override
+  String get testNotificationTitle => 'Notificación de prueba';
+
+  @override
+  String get testNotificationBody => '¡Las notificaciones funcionan correctamente!';
+
+  @override
+  String get testNotificationSent => 'Notificación de prueba enviada';
 }

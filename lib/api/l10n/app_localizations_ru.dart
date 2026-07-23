@@ -418,4 +418,16 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get molad => 'Новолуние (Молад)';
+
+  @override
+  String get sendTestNotification => 'Отправить тестовое уведомление';
+
+  @override
+  String get testNotificationTitle => 'Тестовое уведомление';
+
+  @override
+  String get testNotificationBody => 'Уведомления работают правильно!';
+
+  @override
+  String get testNotificationSent => 'Тестовое уведомление отправлено';
 }
