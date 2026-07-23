@@ -125,15 +125,41 @@ class NotificationApi {
     required DateTime date,
   }) async {
     if (kIsWeb) return;
-    return _notifications.zonedSchedule(
-      id: id,
-      title: title,
-      body: body,
-      scheduledDate: TZDateTime.from(date, local),
-      notificationDetails: _notificationDetails(),
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      payload: payload,
+    await _withRetry(
+      () => _notifications.zonedSchedule(
+        id: id,
+        title: title,
+        body: body,
+        scheduledDate: TZDateTime.from(date, local),
+        notificationDetails: _notificationDetails(),
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        payload: payload,
+      ),
+      label: 'notification id=$id',
     );
+  }
+
+  static Future<void> _withRetry(
+    Future<void> Function() action, {
+    required String label,
+    int maxAttempts = 3,
+  }) async {
+    int delay = 1;
+    for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+      try {
+        await action();
+        return;
+      } catch (e, st) {
+        if (attempt == maxAttempts) {
+          logger.e('Failed to schedule $label after $maxAttempts attempts',
+              error: e, stackTrace: st);
+          return;
+        }
+        logger.w('Scheduling $label failed (attempt $attempt), retrying in ${delay}s');
+        await Future.delayed(Duration(seconds: delay));
+        delay *= 2;
+      }
+    }
   }
 
   static Future<void> showScheduledWeeklyNotification({
