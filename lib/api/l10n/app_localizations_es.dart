@@ -106,6 +106,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get departureAndHavdalah => 'Salida y Havdalá';
 
   @override
+  String get fastBegins => 'Comienzo del ayuno';
+
+  @override
+  String get fastEnds => 'Fin del ayuno';
+
+  @override
   String get startDate => 'Fecha de inicio';
 
   @override

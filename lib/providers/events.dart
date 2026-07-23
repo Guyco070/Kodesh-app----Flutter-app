@@ -370,6 +370,7 @@ class Events with ChangeNotifier {
         _cacheEventsItems(items, lang: lang);
         notifyListeners();
         fetchAndSetHebrewDatesProducts();
+        _populateFastTimes(_eventsItems!);
         return _eventsItems;
       } catch (error, st) {
         logger.e('Failed to fetch events', error: error, stackTrace: st);
@@ -586,6 +587,7 @@ class Events with ChangeNotifier {
     String? cityToTake,
     String? lang,
     bool isToday = false,
+    DateTime? date,
   }) async {
     cityToTake ??= city;
     final parts = cityToTake.split('|');
@@ -594,7 +596,11 @@ class Events with ChangeNotifier {
     final lg = lang ?? LanguageChangeProvider.getCurrentLocale.languageCode;
 
     Map<String, String> base = {'cfg': 'json', 'lg': lg};
-    if (!isToday) base['date'] = getDushedFormatedDate(startDate);
+    if (date != null) {
+      base['date'] = getDushedFormatedDate(date);
+    } else if (!isToday) {
+      base['date'] = getDushedFormatedDate(startDate);
+    }
 
     Uri url;
     if (_webLat != null && _webLng != null) {
@@ -657,6 +663,79 @@ class Events with ChangeNotifier {
       if (date != null) tempItems.add(Zman(i, date));
     }
     return tempItems.isEmpty ? null : tempItems;
+  }
+
+  // Candidate zmanim keys for fast times, ordered by preference. The first key
+  // present in the Hebcal response is used, so less-common keys act as
+  // fallbacks.
+  static const List<String> _fastEndKeys = [
+    'tzeit7083deg',
+    'tzeit85deg',
+    'tzeit50min',
+    'tzeit42min',
+    'tzeit72min',
+    'tzaisBaalHatanya',
+    'dusk',
+  ];
+  static const List<String> _fastStartSunsetKeys = ['sunset', 'dusk'];
+  static const List<String> _fastStartDawnKeys = [
+    'alotHaShachar',
+    'alosBaalHatanya',
+    'dawn',
+    'misheyakir',
+  ];
+
+  DateTime? _pickZman(Map<String, dynamic>? times, List<String> keys) {
+    if (times == null) return null;
+    for (final key in keys) {
+      final raw = times[key];
+      if (raw is String) {
+        final parsed = DateTime.tryParse(getDateWithoutTime(raw));
+        if (parsed != null) return parsed;
+      }
+    }
+    return null;
+  }
+
+  Future<Map<String, dynamic>?> _fetchZmanimTimesForDate(DateTime date) async {
+    final extractData = await tryFetchZmanim(date: date);
+    return extractData['times'] as Map<String, dynamic>?;
+  }
+
+  /// Populates fast begin/end times for any fast day in [events] by fetching
+  /// zmanim for the relevant dates. The fast ends at nightfall on the fast day;
+  /// it begins at the previous evening's sunset for Tisha B'Av, or at dawn on
+  /// the fast day for the minor fasts.
+  Future<void> _populateFastTimes(List<Event> events) async {
+    final fasts =
+        events.whereType<Holiday>().where((h) => h.isFast).toList();
+    if (fasts.isEmpty) return;
+
+    bool changed = false;
+    for (final fast in fasts) {
+      final fastDay = fast.entryDate;
+      if (fastDay == null) continue;
+      try {
+        final dayTimes = await _fetchZmanimTimesForDate(fastDay);
+        final end = _pickZman(dayTimes, _fastEndKeys);
+        DateTime? start;
+        if (fast.fastStartsAtNightfall) {
+          final prevTimes = await _fetchZmanimTimesForDate(
+            fastDay.subtract(const Duration(days: 1)),
+          );
+          start = _pickZman(prevTimes, _fastStartSunsetKeys);
+        } else {
+          start = _pickZman(dayTimes, _fastStartDawnKeys);
+        }
+        if (start != null || end != null) {
+          fast.setFastTimes(start, end);
+          changed = true;
+        }
+      } catch (error, st) {
+        logger.w('Failed to populate fast times', error: error, stackTrace: st);
+      }
+    }
+    if (changed) notifyListeners();
   }
 
   Future<dynamic> tryFetchHebrewDates({
