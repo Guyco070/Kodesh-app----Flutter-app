@@ -413,15 +413,15 @@ class Events with ChangeNotifier {
       if (cached == null) return null;
       final items = jsonDecode(cached) as List;
       logger.i('Loaded ${items.length} events from cache');
-      return getEventsItemsFromMap(items) as List<Event>?;
+      return getEventsItemsFromMap(items);
     } catch (e) {
       logger.w('Failed to load cached events', error: e);
       return null;
     }
   }
 
-  static getEventsItemsFromMap(List? items) {
-    dynamic searchHavdalah(List items, int index) {
+  static List<Event>? getEventsItemsFromMap(List? items) {
+    Map<String, dynamic>? searchHavdalah(List items, int index) {
       while (index < items.length) {
         if (items[index]['category'] == 'havdalah') {
           return items[index];
@@ -582,7 +582,7 @@ class Events with ChangeNotifier {
     return aftetrFiltering;
   }
 
-  tryFetchZmanim({
+  Future<Map<String, dynamic>> tryFetchZmanim({
     String? cityToTake,
     String? lang,
     bool isToday = false,
@@ -650,7 +650,7 @@ class Events with ChangeNotifier {
     }
   }
 
-  static getZmanimItemsFromMap(Map<String, dynamic> items) {
+  static List<Zman>? getZmanimItemsFromMap(Map<String, dynamic> items) {
     List<Zman> tempItems = [];
     for (var i in items.keys) {
       DateTime? date = DateTime.tryParse(getDateWithoutTime(items[i]));
