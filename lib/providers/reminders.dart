@@ -467,7 +467,7 @@ class Reminders with ChangeNotifier {
         lang: lang,
       );
       final List<Event> items =
-          Events.getEventsItemsFromMap(extractData['items']);
+          Events.getEventsItemsFromMap(extractData['items'] as List?) ?? [];
       final DateTime now = DateTime.now();
       for (final Event e in items) {
         if (shabatAndHolidays && e is! RoshChodesh && e is! SfiratOmer) {
@@ -740,9 +740,7 @@ class Reminders with ChangeNotifier {
     });
     id++;
     for (int i = 0; i < 7; i++) {
-      DateTime tz = tefilinDates.last.add(
-        Duration(days: tefilinDates.last.weekday == 5 ? 2 : 1),
-      );
+      DateTime tz = tefilinNextDate(tefilinDates.last);
       tefilinDates.add(tz);
       notValues.add({
         'id': id,
@@ -776,6 +774,10 @@ class Reminders with ChangeNotifier {
 
   static bool _isSameDay(DateTime a, DateTime b) =>
       a.year == b.year && a.month == b.month && a.day == b.day;
+
+  // Advances to the next tefillin day: skips Shabbat (Saturday) by adding 2 from Friday.
+  static DateTime tefilinNextDate(DateTime from) =>
+      from.add(Duration(days: from.weekday == DateTime.friday ? 2 : 1));
 
   static bool _isCholHaMoed(Event e) =>
       (e.titleOrig != null && e.titleOrig!.contains(_kCholHaMoedMarker)) ||
