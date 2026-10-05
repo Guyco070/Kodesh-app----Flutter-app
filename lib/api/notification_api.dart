@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:kodesh_app/helpers/app_logger.dart';
@@ -10,6 +11,10 @@ class NotificationApi {
   static final _notifications = FlutterLocalNotificationsPlugin();
   static final onNotifications = BehaviorSubject<String?>();
   static bool isFirstInit = true;
+
+  /// Reserved ID for the manual test notification. Scheduled reminders use
+  /// sequential IDs starting at 0, so this must stay well above that range.
+  static const int testNotificationId = 9999;
 
   static initialize() async {
     if (kIsWeb) return;
@@ -125,20 +130,43 @@ class NotificationApi {
     required DateTime date,
   }) async {
     if (kIsWeb) return;
+    // zonedSchedule throws for dates in the past; skip them instead of
+    // failing (e.g. Sefirat HaOmer days earlier this week).
+    if (!date.isAfter(DateTime.now())) {
+      logger.d('Skipping notification id=$id: date $date is in the past');
+      return;
+    }
+
+    Future<void> schedule(AndroidScheduleMode mode) =>
+        _notifications.zonedSchedule(
+          id: id,
+          title: title,
+          body: body,
+          scheduledDate: TZDateTime.from(date, local),
+          notificationDetails: _notificationDetails(),
+          androidScheduleMode: mode,
+          payload: payload,
+        );
+
     await _withRetry(
-      () => _notifications.zonedSchedule(
-        id: id,
-        title: title,
-        body: body,
-        scheduledDate: TZDateTime.from(date, local),
-        notificationDetails: _notificationDetails(),
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        payload: payload,
-      ),
+      () async {
+        try {
+          await schedule(AndroidScheduleMode.exactAllowWhileIdle);
+        } on PlatformException catch (e) {
+          // Android 12+ without the exact-alarm permission: fall back to an
+          // inexact alarm rather than dropping the reminder entirely.
+          if (e.code != 'exact_alarms_not_permitted') rethrow;
+          logger.w('Exact alarms not permitted, using inexact for id=$id');
+          await schedule(AndroidScheduleMode.inexactAllowWhileIdle);
+        }
+      },
       label: 'notification id=$id',
     );
   }
 
+  /// Runs [action], retrying transient failures with exponential backoff.
+  /// Deterministic failures (bad arguments, platform errors) are logged once
+  /// and not retried, so a single bad reminder never stalls the whole batch.
   static Future<void> _withRetry(
     Future<void> Function() action, {
     required String label,
@@ -149,13 +177,24 @@ class NotificationApi {
       try {
         await action();
         return;
+      } on ArgumentError catch (e, st) {
+        logger.e('Failed to schedule $label', error: e, stackTrace: st);
+        return;
+      } on PlatformException catch (e, st) {
+        logger.e('Failed to schedule $label', error: e, stackTrace: st);
+        return;
       } catch (e, st) {
         if (attempt == maxAttempts) {
-          logger.e('Failed to schedule $label after $maxAttempts attempts',
-              error: e, stackTrace: st);
+          logger.e(
+            'Failed to schedule $label after $maxAttempts attempts',
+            error: e,
+            stackTrace: st,
+          );
           return;
         }
-        logger.w('Scheduling $label failed (attempt $attempt), retrying in ${delay}s');
+        logger.w(
+          'Scheduling $label failed (attempt $attempt), retrying in ${delay}s',
+        );
         await Future.delayed(Duration(seconds: delay));
         delay *= 2;
       }
