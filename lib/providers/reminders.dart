@@ -27,6 +27,8 @@ class Time {
   const Time(this.hour, this.minute);
 }
 
+const String _kCholHaMoedMarker = "(CH''M)";
+
 class Reminders with ChangeNotifier {
   Timer? _debounceTimer;
 
@@ -446,284 +448,258 @@ class Reminders with ChangeNotifier {
   }
 
   Future<void> setReminders({bool update = false, String? lang}) async {
-    if (update) {
-      updateAll();
-    }
+    if (update) updateAll();
 
-    if (lang == null) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      Set<String> prefsKeys = prefs.getKeys();
-      if (prefsKeys.contains('language')) {
-        lang = prefs.getString('language')!;
-      } else {
-        lang = 'en';
-      }
-    }
-
+    lang = await _resolveLanguage(lang);
     NotificationApi.cancelAll();
     id = 0;
+    notValues = [];
 
     List<DateTime> tefilinDates = [];
-    List<int> tzToRemove = [];
-    notValues = [];
+    final List<int> tzToRemove = [];
     if (tefilin) tefilinDates = await setRemindersForTefilin(lang);
 
-    Events events = Events();
+    final Events events = Events();
     if (await events.isThereInternetConnection()) {
-      Map<String, dynamic> extractData = await events.tryFetch(
+      final Map<String, dynamic> extractData = await events.tryFetch(
         cityToTake: city,
         isToday: true,
         lang: lang,
       );
-      List<Event> items = Events.getEventsItemsFromMap(extractData['items']);
+      final List<Event> items =
+          Events.getEventsItemsFromMap(extractData['items'] as List?) ?? [];
       final DateTime now = DateTime.now();
-      for (Event e in items) {
+      for (final Event e in items) {
         if (shabatAndHolidays && e is! RoshChodesh && e is! SfiratOmer) {
-          // if Shabat or Holiday
-          DateTime? x;
-          if (e is Holiday) {
-            if (DateFormat('HH:mm').format(e.entryDate!) == '00:00') {
-              x = DateTime(
-                e.entryDate!.year,
-                e.entryDate!.month,
-                e.entryDate!.day - 1,
-                20,
-                0,
-              );
-            } else {
-              x = e.entryDate!.subtract(
-                Duration(
-                  hours: beforeShabatHours,
-                  minutes: beforeShabatMinutes,
-                ),
-              );
-            }
-          } else {
-            x = e.entryDate!.subtract(
-              Duration(hours: beforeShabatHours, minutes: beforeShabatMinutes),
-            );
-          }
-
-          if (nerotHanukkah && e.title.contains('Chanukah') ||
-              (e.titleOrig != null && e.titleOrig!.contains('Chanukah'))) {
-            // reminder to light Chanukah candles
-            if (DateFormat('HH:mm').format(e.entryDate!) != '00:00') {
-              // at the last day (the day after the last night of lightning candles) time  is equal to 00:00 - skip it
-              x = e.entryDate!.subtract(
-                Duration(
-                  hours: beforeNerotHanukkahHours,
-                  minutes: beforeNerotHanukkahMinutes,
-                ),
-              );
-
-              if (now.isBefore(x)) {
-                notValues.add({
-                  'id': id,
-                  'title': e.title.replaceFirst('Chanukah', 'Hanukkah'),
-                  'body': (e as Holiday).getReminderHanukkahCandlesBody(
-                    beforeNerotHanukkahHours,
-                    beforeNerotHanukkahMinutes,
-                    lang,
-                  ),
-                  'date': x,
-                  'payload': AdlakatNerotChanukah.routeName,
-                });
-                id++;
-              }
-            }
-          } else if (now.isBefore(x)) {
-            // reminder for chores before shabat
-            notValues.add({
-              'id': id,
-              'title': e.getReminderTitle(lang),
-              'body': e.getReminderBody(lang),
-              'date': x,
-              'payload': ShabatAndHolidaysCheckList.routeName,
-            });
-            id++;
-
-            if (shabatAndHolidaysCandles &&
-                (e is Shabat || (e is Holiday && e.subcat == 'major'))) {
-              // reminder for Hanukkah
-
-              // shabat or holiday
-              // reminder to light shabat candles
-              x = e.entryDate!.subtract(
-                Duration(
-                  hours: beforeShabatAndHolidaysCandlesHours,
-                  minutes: beforeShabatAndHolidaysCandlesMinutes,
-                ),
-              );
-              if (now.isBefore(x)) {
-                notValues.add({
-                  'id': id,
-                  'title': e.getReminderCandlesTitle(lang),
-                  'body': e.getReminderCandlesBody(
-                    beforeShabatAndHolidaysCandlesHours,
-                    beforeShabatAndHolidaysCandlesMinutes,
-                    lang,
-                  ),
-                  'date': x,
-                  'payload': AdlakatNerot.routeName,
-                });
-              }
-              id++;
-            }
-
-            if (havdalah &&
-                (e is Shabat ||
-                    (e is Holiday && e.subcat == 'major') &&
-                        e.releaseDate != null)) {
-              // reminder for Hanukkah
-
-              // shabat or holiday
-              // reminder to light shabat candles
-              x = e.releaseDate!.add(
-                Duration(
-                  hours: afterShabatHavdalahHours,
-                  minutes: afterShabatHavdalahMinutes,
-                ),
-              );
-
-              if (now.isBefore(x)) {
-                notValues.add({
-                  'id': id,
-                  'title': e.getReminderHavdalahTitle(lang),
-                  'body': e.getReminderHavdalahBody(
-                    afterShabatHavdalahHours,
-                    afterShabatHavdalahHours,
-                    lang,
-                  ),
-                  'date': x,
-                  'payload': Havdalah.routeName,
-                });
-              }
-              id++;
-            }
-          }
+          _scheduleShabbatHolidayNotifications(e, lang, now);
         }
-
-        if (e is Holiday &&
-            !_isCholHaMoed(e) &&
-            !(e.title.contains('Chanukah') ||
-                (e.titleOrig != null && e.titleOrig!.contains('Chanukah')))) {
-          // Full Yom Tov: remove tefillin for every day within the holiday
-          if (tefilinDates.isNotEmpty && e.releaseDate != null) {
-            final entryDay = DateTime(
-              e.entryDate!.year,
-              e.entryDate!.month,
-              e.entryDate!.day,
-            );
-            final dayAfterRelease = DateTime(
-              e.releaseDate!.year,
-              e.releaseDate!.month,
-              e.releaseDate!.day + 1,
-            );
-            for (int i = 0; i < tefilinDates.length; i++) {
-              if (!tefilinDates[i].isBefore(entryDay) &&
-                  tefilinDates[i].isBefore(dayAfterRelease)) {
-                tzToRemove.add(i);
-              }
-            }
-          }
-        } else if (_isCholHaMoed(e)) {
-          // Chol HaMoed: remove tefillin only for that specific day
-          for (int i = 0; i < tefilinDates.length; i++) {
-            if (_isSameDay(tefilinDates[i], e.entryDate!)) {
-              tzToRemove.add(i);
-            }
-          }
-        } else if (roshChodesh && e is RoshChodesh) {
-          // rosh chodesh
-          DateTime dayBefore = DateTime(
-            e.entryDate!.year,
-            e.entryDate!.month,
-            e.entryDate!.day,
-            getRoshChodeshTimeObject.hour,
-            getRoshChodeshTimeObject.minute,
-          ).subtract(const Duration(days: 1));
-
-          if (dayBefore.weekday == 5 || dayBefore.weekday == 6) {
-            DateTime twoOc = DateTime(
-              e.entryDate!.year,
-              e.entryDate!.month,
-              e.entryDate!.day,
-              14,
-              0,
-            ).subtract(const Duration(days: 1));
-            if (dayBefore.isAfter(twoOc)) {
-              // After 14:00: Friday→Thursday, Saturday→Thursday
-              dayBefore = dayBefore.subtract(
-                Duration(days: dayBefore.weekday == 5 ? 1 : 2),
-              );
-            } else if (dayBefore.weekday == 6) {
-              // Saturday before 14:00: move to Friday (same time, still before 14:00)
-              dayBefore = dayBefore.subtract(const Duration(days: 1));
-            }
-            // Friday before 14:00: valid, no change needed
-          }
-          if (now.isBefore(dayBefore)) {
-            notValues.add({
-              'id': id,
-              'title': e.getReminderTitle(lang),
-              'body': e.getReminderBody(lang),
-              'date': dayBefore,
-            });
-            id++;
-          }
-
-          for (DateTime tz in tefilinDates) {
-            String tefTzFormated = DateFormat('dd/MM/yy').format(tz);
-            if ((e.entryDate != null &&
-                    DateFormat('dd/MM/yy').format(e.entryDate!) ==
-                        tefTzFormated) ||
-                (e.releaseDate != null &&
-                    DateFormat('dd/MM/yy').format(e.releaseDate!) ==
-                        tefTzFormated)) {
-              Map<String, Object> toChange = notValues.firstWhere(
-                (element) =>
-                    DateFormat(
-                      'dd/MM/yy',
-                    ).format(element['date'] as DateTime) ==
-                    tefTzFormated,
-              );
-
-              toChange['title'] =
-                  RemindersTranslates
-                          .tefilinReminderTranslated[lang]!['roshHodeshTitle']
-                      as String;
-              toChange['body'] =
-                  RemindersTranslates
-                          .tefilinReminderTranslated[lang]!['roshHodeshBody']
-                      as String;
-              notValues[toChange['id'] as int] = toChange;
-            }
-          }
-        } else if (sfiratOmer && e is SfiratOmer) {
-          notValues.add({
-            'id': id,
-            'title': e.title,
-            'body':
-                e.sefira['sefira'][currentLocal.languageCode == 'he'
-                    ? 'he'
-                    : 'en'],
-            'date': DateTime(
-              e.entryDate!.year,
-              e.entryDate!.month,
-              e.entryDate!.day,
-              getSfiratOmerTimeObject.hour,
-              getSfiratOmerTimeObject.minute,
-            ),
-            'payload': SfiratOmerScreen.routeName,
-          });
-          id++;
-        }
-
-        //else if(shabatAndHolidays && e is Shabat){ // tefila
+        _processEventForTefillinAndCalendar(
+            e, lang, now, tefilinDates, tzToRemove);
       }
     }
 
-    for (Map<String, Object> e in notValues) {
+    await _dispatchCollectedNotifications(tzToRemove);
+  }
+
+  Future<String> _resolveLanguage(String? lang) async {
+    if (lang != null) return lang;
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('language') ?? 'en';
+  }
+
+  void _scheduleShabbatHolidayNotifications(
+      Event e, String lang, DateTime now) {
+    final DateTime x;
+    if (e is Holiday && DateFormat('HH:mm').format(e.entryDate!) == '00:00') {
+      x = DateTime(
+          e.entryDate!.year, e.entryDate!.month, e.entryDate!.day - 1, 20, 0);
+    } else {
+      x = e.entryDate!.subtract(
+          Duration(hours: beforeShabatHours, minutes: beforeShabatMinutes));
+    }
+
+    // Preserve original operator-precedence: fires when nerotHanukkah+title OR titleOrig matches
+    if (nerotHanukkah && e.title.contains('Chanukah') ||
+        (e.titleOrig != null && e.titleOrig!.contains('Chanukah'))) {
+      _scheduleHanukkahCandlesNotification(e as Holiday, lang, now);
+    } else if (now.isBefore(x)) {
+      _schedulePreEventNotification(e, lang, now, x);
+    }
+  }
+
+  void _scheduleHanukkahCandlesNotification(
+      Holiday e, String lang, DateTime now) {
+    // at the last day time is 00:00 — skip it
+    if (DateFormat('HH:mm').format(e.entryDate!) == '00:00') return;
+    final DateTime x = e.entryDate!.subtract(Duration(
+        hours: beforeNerotHanukkahHours, minutes: beforeNerotHanukkahMinutes));
+    if (now.isBefore(x)) {
+      notValues.add({
+        'id': id,
+        'title': e.title.replaceFirst('Chanukah', 'Hanukkah'),
+        'body': e.getReminderHanukkahCandlesBody(
+            beforeNerotHanukkahHours, beforeNerotHanukkahMinutes, lang),
+        'date': x,
+        'payload': AdlakatNerotChanukah.routeName,
+      });
+      id++;
+    }
+  }
+
+  void _schedulePreEventNotification(
+      Event e, String lang, DateTime now, DateTime x) {
+    notValues.add({
+      'id': id,
+      'title': e.getReminderTitle(lang),
+      'body': e.getReminderBody(lang),
+      'date': x,
+      'payload': ShabatAndHolidaysCheckList.routeName,
+    });
+    id++;
+
+    if (shabatAndHolidaysCandles &&
+        (e is Shabat || (e is Holiday && e.subcat == 'major'))) {
+      _scheduleCandleLightingNotification(e, lang, now);
+    }
+
+    if (havdalah &&
+        (e is Shabat ||
+            (e is Holiday && e.subcat == 'major') && e.releaseDate != null)) {
+      _scheduleHavdalahNotification(e, lang, now);
+    }
+  }
+
+  void _scheduleCandleLightingNotification(
+      Event e, String lang, DateTime now) {
+    final DateTime x = e.entryDate!.subtract(Duration(
+        hours: beforeShabatAndHolidaysCandlesHours,
+        minutes: beforeShabatAndHolidaysCandlesMinutes));
+    if (now.isBefore(x)) {
+      notValues.add({
+        'id': id,
+        'title': e.getReminderCandlesTitle(lang),
+        'body': e.getReminderCandlesBody(beforeShabatAndHolidaysCandlesHours,
+            beforeShabatAndHolidaysCandlesMinutes, lang),
+        'date': x,
+        'payload': AdlakatNerot.routeName,
+      });
+    }
+    id++;
+  }
+
+  void _scheduleHavdalahNotification(Event e, String lang, DateTime now) {
+    final DateTime x = e.releaseDate!.add(Duration(
+        hours: afterShabatHavdalahHours, minutes: afterShabatHavdalahMinutes));
+    if (now.isBefore(x)) {
+      notValues.add({
+        'id': id,
+        'title': e.getReminderHavdalahTitle(lang),
+        // passing hours twice preserves original behaviour
+        'body': e.getReminderHavdalahBody(
+            afterShabatHavdalahHours, afterShabatHavdalahHours, lang),
+        'date': x,
+        'payload': Havdalah.routeName,
+      });
+    }
+    id++;
+  }
+
+  void _processEventForTefillinAndCalendar(Event e, String lang, DateTime now,
+      List<DateTime> tefilinDates, List<int> tzToRemove) {
+    final bool isHanukkah = e.title.contains('Chanukah') ||
+        (e.titleOrig != null && e.titleOrig!.contains('Chanukah'));
+
+    if (e is Holiday && !_isCholHaMoed(e) && !isHanukkah) {
+      _collectYomTovTefillinRemovals(e, tefilinDates, tzToRemove);
+    } else if (_isCholHaMoed(e)) {
+      _collectCholHaMoedTefillinRemovals(e, tefilinDates, tzToRemove);
+    } else if (roshChodesh && e is RoshChodesh) {
+      _scheduleRoshChodeshNotification(e, lang, now, tefilinDates);
+    } else if (sfiratOmer && e is SfiratOmer) {
+      _scheduleSfiratOmerNotification(e);
+    }
+  }
+
+  void _collectYomTovTefillinRemovals(
+      Holiday e, List<DateTime> tefilinDates, List<int> tzToRemove) {
+    if (tefilinDates.isEmpty || e.releaseDate == null) return;
+    final DateTime entryDay =
+        DateTime(e.entryDate!.year, e.entryDate!.month, e.entryDate!.day);
+    final DateTime dayAfterRelease = DateTime(
+        e.releaseDate!.year, e.releaseDate!.month, e.releaseDate!.day + 1);
+    for (int i = 0; i < tefilinDates.length; i++) {
+      if (!tefilinDates[i].isBefore(entryDay) &&
+          tefilinDates[i].isBefore(dayAfterRelease)) {
+        tzToRemove.add(i);
+      }
+    }
+  }
+
+  void _collectCholHaMoedTefillinRemovals(
+      Event e, List<DateTime> tefilinDates, List<int> tzToRemove) {
+    for (int i = 0; i < tefilinDates.length; i++) {
+      if (_isSameDay(tefilinDates[i], e.entryDate!)) tzToRemove.add(i);
+    }
+  }
+
+  void _scheduleRoshChodeshNotification(RoshChodesh e, String lang,
+      DateTime now, List<DateTime> tefilinDates) {
+    DateTime dayBefore = DateTime(
+      e.entryDate!.year,
+      e.entryDate!.month,
+      e.entryDate!.day,
+      getRoshChodeshTimeObject.hour,
+      getRoshChodeshTimeObject.minute,
+    ).subtract(const Duration(days: 1));
+
+    if (dayBefore.weekday == 5 || dayBefore.weekday == 6) {
+      final DateTime twoOc = DateTime(
+              e.entryDate!.year, e.entryDate!.month, e.entryDate!.day, 14, 0)
+          .subtract(const Duration(days: 1));
+      if (dayBefore.isAfter(twoOc)) {
+        // After 14:00: Friday→Thursday, Saturday→Thursday
+        dayBefore =
+            dayBefore.subtract(Duration(days: dayBefore.weekday == 5 ? 1 : 2));
+      } else if (dayBefore.weekday == 6) {
+        // Saturday before 14:00: move to Friday
+        dayBefore = dayBefore.subtract(const Duration(days: 1));
+      }
+      // Friday before 14:00: valid, no change needed
+    }
+
+    if (now.isBefore(dayBefore)) {
+      notValues.add({
+        'id': id,
+        'title': e.getReminderTitle(lang),
+        'body': e.getReminderBody(lang),
+        'date': dayBefore,
+      });
+      id++;
+    }
+
+    for (final DateTime tz in tefilinDates) {
+      final String tefTzFormatted = DateFormat('dd/MM/yy').format(tz);
+      if ((e.entryDate != null &&
+              DateFormat('dd/MM/yy').format(e.entryDate!) == tefTzFormatted) ||
+          (e.releaseDate != null &&
+              DateFormat('dd/MM/yy').format(e.releaseDate!) ==
+                  tefTzFormatted)) {
+        final Map<String, Object> toChange = notValues.firstWhere(
+          (element) =>
+              DateFormat('dd/MM/yy').format(element['date'] as DateTime) ==
+              tefTzFormatted,
+        );
+        toChange['title'] =
+            RemindersTranslates.tefilinReminderTranslated[lang]!['roshHodeshTitle']
+                as String;
+        toChange['body'] =
+            RemindersTranslates.tefilinReminderTranslated[lang]!['roshHodeshBody']
+                as String;
+        notValues[toChange['id'] as int] = toChange;
+      }
+    }
+  }
+
+  void _scheduleSfiratOmerNotification(SfiratOmer e) {
+    notValues.add({
+      'id': id,
+      'title': e.title,
+      'body': e.sefira['sefira']
+          [currentLocal.languageCode == 'he' ? 'he' : 'en'],
+      'date': DateTime(
+        e.entryDate!.year,
+        e.entryDate!.month,
+        e.entryDate!.day,
+        getSfiratOmerTimeObject.hour,
+        getSfiratOmerTimeObject.minute,
+      ),
+      'payload': SfiratOmerScreen.routeName,
+    });
+    id++;
+  }
+
+  Future<void> _dispatchCollectedNotifications(List<int> tzToRemove) async {
+    for (final Map<String, Object> e in notValues) {
       await NotificationApi.showScheduledNotification(
         id: e['id'] as int,
         title: e['title'] as String,
@@ -732,9 +708,7 @@ class Reminders with ChangeNotifier {
         payload: e['payload'] as String?,
       );
     }
-
-    for (int i in tzToRemove) {
-      // remove holidays dates
+    for (final int i in tzToRemove) {
       NotificationApi.cancel(i);
     }
   }
@@ -766,9 +740,7 @@ class Reminders with ChangeNotifier {
     });
     id++;
     for (int i = 0; i < 7; i++) {
-      DateTime tz = tefilinDates.last.add(
-        Duration(days: tefilinDates.last.weekday == 5 ? 2 : 1),
-      );
+      DateTime tz = tefilinNextDate(tefilinDates.last);
       tefilinDates.add(tz);
       notValues.add({
         'id': id,
@@ -803,7 +775,11 @@ class Reminders with ChangeNotifier {
   static bool _isSameDay(DateTime a, DateTime b) =>
       a.year == b.year && a.month == b.month && a.day == b.day;
 
+  // Advances to the next tefillin day: skips Shabbat (Saturday) by adding 2 from Friday.
+  static DateTime tefilinNextDate(DateTime from) =>
+      from.add(Duration(days: from.weekday == DateTime.friday ? 2 : 1));
+
   static bool _isCholHaMoed(Event e) =>
-      (e.titleOrig != null && e.titleOrig!.contains("(CH''M)")) ||
-      e.title.contains("(CH''M)");
+      (e.titleOrig != null && e.titleOrig!.contains(_kCholHaMoedMarker)) ||
+      e.title.contains(_kCholHaMoedMarker);
 }
