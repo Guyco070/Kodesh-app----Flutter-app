@@ -106,6 +106,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get departureAndHavdalah => 'Отъезд и авдала';
 
   @override
+  String get fastBegins => 'Начало поста';
+
+  @override
+  String get fastEnds => 'Окончание поста';
+
+  @override
   String get startDate => 'Дата начала';
 
   @override

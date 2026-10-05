@@ -105,6 +105,12 @@ class AppLocalizationsHe extends AppLocalizations {
   String get departureAndHavdalah => 'יציאה והבדלה';
 
   @override
+  String get fastBegins => 'תחילת הצום';
+
+  @override
+  String get fastEnds => 'צאת הצום';
+
+  @override
   String get startDate => 'תאריך התחלה';
 
   @override

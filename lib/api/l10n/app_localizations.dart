@@ -294,6 +294,18 @@ abstract class AppLocalizations {
   /// **'Departure and havdalah'**
   String get departureAndHavdalah;
 
+  /// Label for the time a fast begins
+  ///
+  /// In en, this message translates to:
+  /// **'Fast begins'**
+  String get fastBegins;
+
+  /// Label for the time a fast ends
+  ///
+  /// In en, this message translates to:
+  /// **'Fast ends'**
+  String get fastEnds;
+
   /// startDate
   ///
   /// In en, this message translates to:

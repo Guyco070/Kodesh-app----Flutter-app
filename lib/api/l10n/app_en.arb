@@ -100,6 +100,12 @@
     "departureAndHavdalah": "Departure and havdalah",
     "@departureAndHavdalah": { "description": "departureAndHavdalah" },
 
+    "fastBegins": "Fast begins",
+    "@fastBegins": { "description": "Label for the time a fast begins" },
+
+    "fastEnds": "Fast ends",
+    "@fastEnds": { "description": "Label for the time a fast ends" },
+
     "startDate": "Start date",
     "@startDate": { "description": "startDate" },
 
