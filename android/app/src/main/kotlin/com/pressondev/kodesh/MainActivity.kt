@@ -1,4 +1,4 @@
-package com.example.kodesh_app
+package com.pressondev.kodesh
 
 import io.flutter.embedding.android.FlutterActivity
 
