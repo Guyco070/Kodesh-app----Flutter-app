@@ -876,9 +876,28 @@ abstract class AppLocalizations {
   /// **'New Moon (Molad)'**
   String get molad;
 
+  /// Button label to fire a test notification immediately
+  ///
+  /// In en, this message translates to:
+  /// **'Send test notification'**
   String get sendTestNotification;
+
+  /// Title of the test notification
+  ///
+  /// In en, this message translates to:
+  /// **'Test notification'**
   String get testNotificationTitle;
+
+  /// Body of the test notification
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are working correctly!'**
   String get testNotificationBody;
+
+  /// Snackbar message after sending a test notification
+  ///
+  /// In en, this message translates to:
+  /// **'Test notification sent'**
   String get testNotificationSent;
 }
 

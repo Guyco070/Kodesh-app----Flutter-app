@@ -48,8 +48,10 @@ class _HolidayCalendarScreenState extends State<HolidayCalendarScreen> {
 
   Future<void> _loadHolidays() async {
     setState(() => _isLoading = true);
-    await Provider.of<Events>(context, listen: false)
-        .fetchAnnualHolidays(startDate: _dateFrom, endDate: _dateTo);
+    await Provider.of<Events>(
+      context,
+      listen: false,
+    ).fetchAnnualHolidays(startDate: _dateFrom, endDate: _dateTo);
     if (mounted) setState(() => _isLoading = false);
   }
 
@@ -98,9 +100,7 @@ class _HolidayCalendarScreenState extends State<HolidayCalendarScreen> {
             monthlyLabel: appLocalizations.monthlyView,
             onChanged: (mode) => setState(() => _viewMode = mode),
           ),
-          Expanded(
-            child: _buildBody(appLocalizations, events),
-          ),
+          Expanded(child: _buildBody(appLocalizations, events)),
         ],
       ),
     );
@@ -128,15 +128,16 @@ class _HolidayCalendarScreenState extends State<HolidayCalendarScreen> {
     }
 
     final allHolidays = events.annualHolidays ?? [];
-    final filtered = allHolidays.where((h) {
-      final inRange =
-          !h.date.isBefore(_dateFrom) && !h.date.isAfter(_dateTo);
-      if (!inRange) return false;
-      if (_searchText.isEmpty) return true;
-      final q = _searchText.toLowerCase();
-      return h.title.toLowerCase().contains(q) ||
-          h.hebrew.contains(_searchText);
-    }).toList();
+    final filtered =
+        allHolidays.where((h) {
+          final inRange =
+              !h.date.isBefore(_dateFrom) && !h.date.isAfter(_dateTo);
+          if (!inRange) return false;
+          if (_searchText.isEmpty) return true;
+          final q = _searchText.toLowerCase();
+          return h.title.toLowerCase().contains(q) ||
+              h.hebrew.contains(_searchText);
+        }).toList();
 
     if (filtered.isEmpty) {
       return Center(child: Text(appLocalizations.noSearchResults));
@@ -163,10 +164,7 @@ class _HolidayCalendarScreenState extends State<HolidayCalendarScreen> {
             Icons.calendar_today,
             color: holiday.isMajor ? Colors.blue : Colors.grey,
           ),
-          title: Text(
-            holiday.hebrew,
-            textAlign: TextAlign.right,
-          ),
+          title: Text(holiday.hebrew, textAlign: TextAlign.right),
           subtitle: Text(
             '${holiday.title} · ${dateFormat.format(holiday.date)}',
           ),

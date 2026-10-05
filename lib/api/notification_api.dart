@@ -148,20 +148,17 @@ class NotificationApi {
           payload: payload,
         );
 
-    await _withRetry(
-      () async {
-        try {
-          await schedule(AndroidScheduleMode.exactAllowWhileIdle);
-        } on PlatformException catch (e) {
-          // Android 12+ without the exact-alarm permission: fall back to an
-          // inexact alarm rather than dropping the reminder entirely.
-          if (e.code != 'exact_alarms_not_permitted') rethrow;
-          logger.w('Exact alarms not permitted, using inexact for id=$id');
-          await schedule(AndroidScheduleMode.inexactAllowWhileIdle);
-        }
-      },
-      label: 'notification id=$id',
-    );
+    await _withRetry(() async {
+      try {
+        await schedule(AndroidScheduleMode.exactAllowWhileIdle);
+      } on PlatformException catch (e) {
+        // Android 12+ without the exact-alarm permission: fall back to an
+        // inexact alarm rather than dropping the reminder entirely.
+        if (e.code != 'exact_alarms_not_permitted') rethrow;
+        logger.w('Exact alarms not permitted, using inexact for id=$id');
+        await schedule(AndroidScheduleMode.inexactAllowWhileIdle);
+      }
+    }, label: 'notification id=$id');
   }
 
   /// Runs [action], retrying transient failures with exponential backoff.

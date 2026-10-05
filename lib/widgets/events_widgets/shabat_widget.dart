@@ -27,10 +27,10 @@ class ShabatWidget extends StatelessWidget {
                 shabat.mevarchimMonths != null &&
                         shabat.mevarchimMonths!.isNotEmpty
                     ? Text(
-                        appLocalizations.blessingMonth(
-                          shabat.mevarchimMonths!.join(', '),
-                        ),
-                      )
+                      appLocalizations.blessingMonth(
+                        shabat.mevarchimMonths!.join(', '),
+                      ),
+                    )
                     : null,
           ),
         if (data.entryDate != null)
@@ -102,9 +102,10 @@ class _LeynningSectionState extends State<_LeyningSection>
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
-    _rotation = Tween<double>(begin: 0.0, end: 0.5).animate(
-      CurvedAnimation(parent: _animCtrl, curve: Curves.easeInOut),
-    );
+    _rotation = Tween<double>(
+      begin: 0.0,
+      end: 0.5,
+    ).animate(CurvedAnimation(parent: _animCtrl, curve: Curves.easeInOut));
   }
 
   @override
@@ -165,25 +166,38 @@ class _LeynningSectionState extends State<_LeyningSection>
 
   static String _toHebNum(int n) {
     if (n <= 0) return n.toString();
-    const ones = [
-      '', 'א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט',
-    ];
-    const tens = [
-      '', 'י', 'כ', 'ל', 'מ', 'נ', 'ס', 'ע', 'פ', 'צ',
-    ];
+    const ones = ['', 'א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ז', 'ח', 'ט'];
+    const tens = ['', 'י', 'כ', 'ל', 'מ', 'נ', 'ס', 'ע', 'פ', 'צ'];
     final letters = <String>[];
     int r = n;
-    while (r >= 400) { letters.add('ת'); r -= 400; }
-    if (r >= 300) { letters.add('ש'); r -= 300; }
-    if (r >= 200) { letters.add('ר'); r -= 200; }
-    if (r >= 100) { letters.add('ק'); r -= 100; }
+    while (r >= 400) {
+      letters.add('ת');
+      r -= 400;
+    }
+    if (r >= 300) {
+      letters.add('ש');
+      r -= 300;
+    }
+    if (r >= 200) {
+      letters.add('ר');
+      r -= 200;
+    }
+    if (r >= 100) {
+      letters.add('ק');
+      r -= 100;
+    }
     if (r == 15) {
       letters.addAll(['ט', 'ו']);
     } else if (r == 16) {
       letters.addAll(['ט', 'ז']);
     } else {
-      if (r >= 10) { letters.add(tens[r ~/ 10]); r %= 10; }
-      if (r > 0) { letters.add(ones[r]); }
+      if (r >= 10) {
+        letters.add(tens[r ~/ 10]);
+        r %= 10;
+      }
+      if (r > 0) {
+        letters.add(ones[r]);
+      }
     }
     if (letters.isEmpty) return '0';
     final s = letters.join();
@@ -204,12 +218,9 @@ class _LeynningSectionState extends State<_LeyningSection>
       }
     }
 
-    final fullRange =
-        RegExp(r'^(\d+):(\d+)-(\d+):(\d+)$').firstMatch(rest);
-    final sameChRange =
-        RegExp(r'^(\d+):(\d+)-(\d+)$').firstMatch(rest);
-    final single =
-        RegExp(r'^(\d+):(\d+)$').firstMatch(rest);
+    final fullRange = RegExp(r'^(\d+):(\d+)-(\d+):(\d+)$').firstMatch(rest);
+    final sameChRange = RegExp(r'^(\d+):(\d+)-(\d+)$').firstMatch(rest);
+    final single = RegExp(r'^(\d+):(\d+)$').firstMatch(rest);
 
     String refHe;
     if (fullRange != null) {
@@ -260,15 +271,12 @@ class _LeynningSectionState extends State<_LeyningSection>
   @override
   Widget build(BuildContext context) {
     final locale = Localizations.localeOf(context);
-    final isRtl =
-        locale.languageCode == 'he' || locale.languageCode == 'ar';
-    final aliyot = widget.leyning.entries
-        .where((e) => _aliyaKeys.containsKey(e.key))
-        .toList()
-      ..sort(
-        (a, b) =>
-            _aliyaKeys[a.key]!.compareTo(_aliyaKeys[b.key]!),
-      );
+    final isRtl = locale.languageCode == 'he' || locale.languageCode == 'ar';
+    final aliyot =
+        widget.leyning.entries
+            .where((e) => _aliyaKeys.containsKey(e.key))
+            .toList()
+          ..sort((a, b) => _aliyaKeys[a.key]!.compareTo(_aliyaKeys[b.key]!));
     final haftarah = widget.leyning['haftarah'];
 
     return Column(
@@ -287,106 +295,109 @@ class _LeynningSectionState extends State<_LeyningSection>
         AnimatedSize(
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOut,
-          child: _expanded
-              ? Column(
-                  children: [
-                    for (final entry in aliyot)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 2,
-                        ),
-                        child: Row(
-                          children: isRtl
-                              ? [
-                                  Expanded(
-                                    child: Text(
-                                      _localizeRef(entry.value, isRtl),
-                                      textAlign: TextAlign.right,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  SizedBox(
-                                    width: _trailingWidth,
-                                    child: Text(
-                                      entry.key,
-                                      textAlign: TextAlign.right,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
+          child:
+              _expanded
+                  ? Column(
+                    children: [
+                      for (final entry in aliyot)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 2,
+                          ),
+                          child: Row(
+                            children:
+                                isRtl
+                                    ? [
+                                      Expanded(
+                                        child: Text(
+                                          _localizeRef(entry.value, isRtl),
+                                          textAlign: TextAlign.right,
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                ]
-                              : [
-                                  SizedBox(
-                                    width: _trailingWidth,
-                                    child: Text(
-                                      entry.key,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
+                                      const SizedBox(width: 8),
+                                      SizedBox(
+                                        width: _trailingWidth,
+                                        child: Text(
+                                          entry.key,
+                                          textAlign: TextAlign.right,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Expanded(
-                                    child: Text(
-                                      _localizeRef(entry.value, isRtl),
-                                    ),
-                                  ),
-                                ],
-                        ),
-                      ),
-                    if (haftarah != null)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 4,
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: isRtl
-                              ? [
-                                  Expanded(
-                                    child: Text(
-                                      _localizeRef(haftarah, isRtl),
-                                      textAlign: TextAlign.right,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  SizedBox(
-                                    width: _trailingWidth,
-                                    child: Text(
-                                      widget.appLocalizations.haftarah,
-                                      textAlign: TextAlign.right,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
+                                    ]
+                                    : [
+                                      SizedBox(
+                                        width: _trailingWidth,
+                                        child: Text(
+                                          entry.key,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                ]
-                              : [
-                                  SizedBox(
-                                    width: _trailingWidth,
-                                    child: Text(
-                                      widget.appLocalizations.haftarah,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
+                                      const SizedBox(width: 8),
+                                      Expanded(
+                                        child: Text(
+                                          _localizeRef(entry.value, isRtl),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Expanded(
-                                    child: Text(
-                                      _localizeRef(haftarah, isRtl),
-                                    ),
-                                  ),
-                                ],
+                                    ],
+                          ),
                         ),
-                      ),
-                    const SizedBox(height: 8),
-                  ],
-                )
-              : const SizedBox.shrink(),
+                      if (haftarah != null)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 4,
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children:
+                                isRtl
+                                    ? [
+                                      Expanded(
+                                        child: Text(
+                                          _localizeRef(haftarah, isRtl),
+                                          textAlign: TextAlign.right,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      SizedBox(
+                                        width: _trailingWidth,
+                                        child: Text(
+                                          widget.appLocalizations.haftarah,
+                                          textAlign: TextAlign.right,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ]
+                                    : [
+                                      SizedBox(
+                                        width: _trailingWidth,
+                                        child: Text(
+                                          widget.appLocalizations.haftarah,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Expanded(
+                                        child: Text(
+                                          _localizeRef(haftarah, isRtl),
+                                        ),
+                                      ),
+                                    ],
+                          ),
+                        ),
+                      const SizedBox(height: 8),
+                    ],
+                  )
+                  : const SizedBox.shrink(),
         ),
       ],
     );

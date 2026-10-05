@@ -1,11 +1,7 @@
 import 'package:kodesh_app/models/event.dart';
 
 class Molad extends Event {
-  Molad({
-    required super.title,
-    required super.entryDate,
-    super.titleOrig,
-  });
+  Molad({required super.title, required super.entryDate, super.titleOrig});
 
   factory Molad.fromMap(Map<String, dynamic> item) {
     return Molad(

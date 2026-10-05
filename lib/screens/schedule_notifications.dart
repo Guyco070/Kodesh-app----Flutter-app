@@ -185,9 +185,7 @@ class _ScheduleNotificationsScreenState
                     ),
                     ExpandedSection(
                       expand: reminders.shabatAndHolidays,
-                      child: Column(
-                        children: shabatAndHolidaysElements(),
-                      ),
+                      child: Column(children: shabatAndHolidaysElements()),
                     ),
                   ],
                 ),
@@ -261,9 +259,9 @@ class _TestNotificationButton extends StatelessWidget {
           body: l.testNotificationBody,
         );
         if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(l.testNotificationSent)),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(l.testNotificationSent)));
         }
       },
       icon: const Icon(Icons.notifications_active_outlined),
@@ -283,10 +281,10 @@ class _SectionHeader extends StatelessWidget {
       child: Text(
         title,
         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              color: Theme.of(context).colorScheme.primary,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 0.5,
-            ),
+          color: Theme.of(context).colorScheme.primary,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 0.5,
+        ),
       ),
     );
   }

@@ -111,10 +111,12 @@ class Tfilot with ChangeNotifier {
     final List<String> seder =
         textList != null
             ? (textList[langCode] ?? textList['en'] ?? textList.values.first)
-            : ((getBracha[langCode] ?? getBracha['en'] ?? getBracha.values.first)
-                    as Map<Nosah, List<String>>)[
-                isWithNosah ? _nosah : Nosah.mizrah
-              ]!;
+            : ((getBracha[langCode] ??
+                    getBracha['en'] ??
+                    getBracha.values.first)
+                as Map<Nosah, List<String>>)[isWithNosah
+                ? _nosah
+                : Nosah.mizrah]!;
     TextStyle font;
     List<TextSpan> widgets = [];
     final double titleFontSize = 15 + fontSizeScale;

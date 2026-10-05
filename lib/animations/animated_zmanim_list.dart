@@ -31,11 +31,7 @@ class AnimatedZmanimList extends StatelessWidget {
 }
 
 class _SlideInItem extends StatefulWidget {
-  const _SlideInItem({
-    super.key,
-    required this.index,
-    required this.child,
-  });
+  const _SlideInItem({super.key, required this.index, required this.child});
 
   final int index;
   final Widget child;
@@ -57,10 +53,14 @@ class _SlideInItemState extends State<_SlideInItem>
       vsync: this,
       duration: const Duration(milliseconds: 350),
     );
-    final begin = Offset(LanguageChangeProvider.isDirectionRTL(null) ? -1 : 1, 0);
-    _offset = Tween<Offset>(begin: begin, end: Offset.zero).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
+    final begin = Offset(
+      LanguageChangeProvider.isDirectionRTL(null) ? -1 : 1,
+      0,
     );
+    _offset = Tween<Offset>(
+      begin: begin,
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
     _fade = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
 
     // Stagger the entry animation by item index, capped so later items in a

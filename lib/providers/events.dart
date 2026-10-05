@@ -523,9 +523,7 @@ class Events with ChangeNotifier {
 
     // Apply mevarchim data to matching Shabat events
     final mevarchimItems =
-        items
-            .where((item) => item['category'] == 'mevarchim')
-            .toList();
+        items.where((item) => item['category'] == 'mevarchim').toList();
     if (mevarchimItems.isNotEmpty) {
       for (int idx = 0; idx < tempItems.length; idx++) {
         final event = tempItems[idx];
@@ -540,9 +538,7 @@ class Events with ChangeNotifier {
               mvDate.month == event.entryDate!.month &&
               mvDate.day == event.entryDate!.day) {
             final months =
-                (mv['months'] as List?)
-                    ?.map((m) => m.toString())
-                    .toList() ??
+                (mv['months'] as List?)?.map((m) => m.toString()).toList() ??
                 (mv['hebrew'] != null ? [mv['hebrew'] as String] : <String>[]);
             tempItems[idx] = Shabat(
               title: event.title,
@@ -707,8 +703,7 @@ class Events with ChangeNotifier {
   /// it begins at the previous evening's sunset for Tisha B'Av, or at dawn on
   /// the fast day for the minor fasts.
   Future<void> _populateFastTimes(List<Event> events) async {
-    final fasts =
-        events.whereType<Holiday>().where((h) => h.isFast).toList();
+    final fasts = events.whereType<Holiday>().where((h) => h.isFast).toList();
     if (fasts.isEmpty) return;
 
     bool changed = false;

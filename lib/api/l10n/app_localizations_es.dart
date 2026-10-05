@@ -432,7 +432,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get testNotificationTitle => 'Notificación de prueba';
 
   @override
-  String get testNotificationBody => '¡Las notificaciones funcionan correctamente!';
+  String get testNotificationBody =>
+      '¡Las notificaciones funcionan correctamente!';
 
   @override
   String get testNotificationSent => 'Notificación de prueba enviada';

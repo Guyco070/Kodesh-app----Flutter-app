@@ -48,7 +48,11 @@ class _CompassWidgetState extends State<CompassWidget> {
     _stream = getCompassStream().listen((h) {
       if (mounted) setState(() => heading = h);
     });
-    if (mounted) setState(() { _permissionGranted = true; _permissionChecked = true; });
+    if (mounted)
+      setState(() {
+        _permissionGranted = true;
+        _permissionChecked = true;
+      });
   }
 
   Future<void> _requestAndStart() async {

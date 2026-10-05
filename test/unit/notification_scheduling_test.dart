@@ -22,8 +22,10 @@ void main() {
       final now = DateTime.now();
       // Pick a time 2 hours from now (safe margin)
       final future = now.add(const Duration(hours: 2));
-      final result =
-          NotificationApi.scheduleDailyDateTime(future.hour, future.minute);
+      final result = NotificationApi.scheduleDailyDateTime(
+        future.hour,
+        future.minute,
+      );
       expect(result.day, now.day);
       expect(result.month, now.month);
       expect(result.year, now.year);
@@ -69,8 +71,11 @@ void main() {
       DateTime current = DateTime(2024, 6, 10); // Monday
       for (int i = 0; i < 14; i++) {
         current = Reminders.tefilinNextDate(current);
-        expect(current.weekday, isNot(DateTime.saturday),
-            reason: 'tefilinNextDate should never land on Shabbat');
+        expect(
+          current.weekday,
+          isNot(DateTime.saturday),
+          reason: 'tefilinNextDate should never land on Shabbat',
+        );
       }
     });
 

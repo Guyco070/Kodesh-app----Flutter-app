@@ -72,8 +72,7 @@ class Holiday extends Event {
               : null,
       subcat: parashat['subcat'], // major, minor, modern, shabat, fast
       titleOrig:
-          parashat['hebrew'] as String? ??
-          parashat['title_orig'] as String?,
+          parashat['hebrew'] as String? ?? parashat['title_orig'] as String?,
     );
   }
 

@@ -474,7 +474,12 @@ class Reminders with ChangeNotifier {
           _scheduleShabbatHolidayNotifications(e, lang, now);
         }
         _processEventForTefillinAndCalendar(
-            e, lang, now, tefilinDates, tzToRemove);
+          e,
+          lang,
+          now,
+          tefilinDates,
+          tzToRemove,
+        );
       }
     }
 
@@ -488,14 +493,23 @@ class Reminders with ChangeNotifier {
   }
 
   void _scheduleShabbatHolidayNotifications(
-      Event e, String lang, DateTime now) {
+    Event e,
+    String lang,
+    DateTime now,
+  ) {
     final DateTime x;
     if (e is Holiday && DateFormat('HH:mm').format(e.entryDate!) == '00:00') {
       x = DateTime(
-          e.entryDate!.year, e.entryDate!.month, e.entryDate!.day - 1, 20, 0);
+        e.entryDate!.year,
+        e.entryDate!.month,
+        e.entryDate!.day - 1,
+        20,
+        0,
+      );
     } else {
       x = e.entryDate!.subtract(
-          Duration(hours: beforeShabatHours, minutes: beforeShabatMinutes));
+        Duration(hours: beforeShabatHours, minutes: beforeShabatMinutes),
+      );
     }
 
     // Preserve original operator-precedence: fires when nerotHanukkah+title OR titleOrig matches
@@ -508,17 +522,27 @@ class Reminders with ChangeNotifier {
   }
 
   void _scheduleHanukkahCandlesNotification(
-      Holiday e, String lang, DateTime now) {
+    Holiday e,
+    String lang,
+    DateTime now,
+  ) {
     // at the last day time is 00:00 — skip it
     if (DateFormat('HH:mm').format(e.entryDate!) == '00:00') return;
-    final DateTime x = e.entryDate!.subtract(Duration(
-        hours: beforeNerotHanukkahHours, minutes: beforeNerotHanukkahMinutes));
+    final DateTime x = e.entryDate!.subtract(
+      Duration(
+        hours: beforeNerotHanukkahHours,
+        minutes: beforeNerotHanukkahMinutes,
+      ),
+    );
     if (now.isBefore(x)) {
       notValues.add({
         'id': id,
         'title': e.title.replaceFirst('Chanukah', 'Hanukkah'),
         'body': e.getReminderHanukkahCandlesBody(
-            beforeNerotHanukkahHours, beforeNerotHanukkahMinutes, lang),
+          beforeNerotHanukkahHours,
+          beforeNerotHanukkahMinutes,
+          lang,
+        ),
         'date': x,
         'payload': AdlakatNerotChanukah.routeName,
       });
@@ -527,7 +551,11 @@ class Reminders with ChangeNotifier {
   }
 
   void _schedulePreEventNotification(
-      Event e, String lang, DateTime now, DateTime x) {
+    Event e,
+    String lang,
+    DateTime now,
+    DateTime x,
+  ) {
     notValues.add({
       'id': id,
       'title': e.getReminderTitle(lang),
@@ -549,17 +577,22 @@ class Reminders with ChangeNotifier {
     }
   }
 
-  void _scheduleCandleLightingNotification(
-      Event e, String lang, DateTime now) {
-    final DateTime x = e.entryDate!.subtract(Duration(
+  void _scheduleCandleLightingNotification(Event e, String lang, DateTime now) {
+    final DateTime x = e.entryDate!.subtract(
+      Duration(
         hours: beforeShabatAndHolidaysCandlesHours,
-        minutes: beforeShabatAndHolidaysCandlesMinutes));
+        minutes: beforeShabatAndHolidaysCandlesMinutes,
+      ),
+    );
     if (now.isBefore(x)) {
       notValues.add({
         'id': id,
         'title': e.getReminderCandlesTitle(lang),
-        'body': e.getReminderCandlesBody(beforeShabatAndHolidaysCandlesHours,
-            beforeShabatAndHolidaysCandlesMinutes, lang),
+        'body': e.getReminderCandlesBody(
+          beforeShabatAndHolidaysCandlesHours,
+          beforeShabatAndHolidaysCandlesMinutes,
+          lang,
+        ),
         'date': x,
         'payload': AdlakatNerot.routeName,
       });
@@ -568,15 +601,22 @@ class Reminders with ChangeNotifier {
   }
 
   void _scheduleHavdalahNotification(Event e, String lang, DateTime now) {
-    final DateTime x = e.releaseDate!.add(Duration(
-        hours: afterShabatHavdalahHours, minutes: afterShabatHavdalahMinutes));
+    final DateTime x = e.releaseDate!.add(
+      Duration(
+        hours: afterShabatHavdalahHours,
+        minutes: afterShabatHavdalahMinutes,
+      ),
+    );
     if (now.isBefore(x)) {
       notValues.add({
         'id': id,
         'title': e.getReminderHavdalahTitle(lang),
         // passing hours twice preserves original behaviour
         'body': e.getReminderHavdalahBody(
-            afterShabatHavdalahHours, afterShabatHavdalahHours, lang),
+          afterShabatHavdalahHours,
+          afterShabatHavdalahHours,
+          lang,
+        ),
         'date': x,
         'payload': Havdalah.routeName,
       });
@@ -584,9 +624,15 @@ class Reminders with ChangeNotifier {
     id++;
   }
 
-  void _processEventForTefillinAndCalendar(Event e, String lang, DateTime now,
-      List<DateTime> tefilinDates, List<int> tzToRemove) {
-    final bool isHanukkah = e.title.contains('Chanukah') ||
+  void _processEventForTefillinAndCalendar(
+    Event e,
+    String lang,
+    DateTime now,
+    List<DateTime> tefilinDates,
+    List<int> tzToRemove,
+  ) {
+    final bool isHanukkah =
+        e.title.contains('Chanukah') ||
         (e.titleOrig != null && e.titleOrig!.contains('Chanukah'));
 
     if (e is Holiday && !_isCholHaMoed(e) && !isHanukkah) {
@@ -601,12 +647,21 @@ class Reminders with ChangeNotifier {
   }
 
   void _collectYomTovTefillinRemovals(
-      Holiday e, List<DateTime> tefilinDates, List<int> tzToRemove) {
+    Holiday e,
+    List<DateTime> tefilinDates,
+    List<int> tzToRemove,
+  ) {
     if (tefilinDates.isEmpty || e.releaseDate == null) return;
-    final DateTime entryDay =
-        DateTime(e.entryDate!.year, e.entryDate!.month, e.entryDate!.day);
+    final DateTime entryDay = DateTime(
+      e.entryDate!.year,
+      e.entryDate!.month,
+      e.entryDate!.day,
+    );
     final DateTime dayAfterRelease = DateTime(
-        e.releaseDate!.year, e.releaseDate!.month, e.releaseDate!.day + 1);
+      e.releaseDate!.year,
+      e.releaseDate!.month,
+      e.releaseDate!.day + 1,
+    );
     for (int i = 0; i < tefilinDates.length; i++) {
       if (!tefilinDates[i].isBefore(entryDay) &&
           tefilinDates[i].isBefore(dayAfterRelease)) {
@@ -616,14 +671,21 @@ class Reminders with ChangeNotifier {
   }
 
   void _collectCholHaMoedTefillinRemovals(
-      Event e, List<DateTime> tefilinDates, List<int> tzToRemove) {
+    Event e,
+    List<DateTime> tefilinDates,
+    List<int> tzToRemove,
+  ) {
     for (int i = 0; i < tefilinDates.length; i++) {
       if (_isSameDay(tefilinDates[i], e.entryDate!)) tzToRemove.add(i);
     }
   }
 
-  void _scheduleRoshChodeshNotification(RoshChodesh e, String lang,
-      DateTime now, List<DateTime> tefilinDates) {
+  void _scheduleRoshChodeshNotification(
+    RoshChodesh e,
+    String lang,
+    DateTime now,
+    List<DateTime> tefilinDates,
+  ) {
     DateTime dayBefore = DateTime(
       e.entryDate!.year,
       e.entryDate!.month,
@@ -634,12 +696,17 @@ class Reminders with ChangeNotifier {
 
     if (dayBefore.weekday == 5 || dayBefore.weekday == 6) {
       final DateTime twoOc = DateTime(
-              e.entryDate!.year, e.entryDate!.month, e.entryDate!.day, 14, 0)
-          .subtract(const Duration(days: 1));
+        e.entryDate!.year,
+        e.entryDate!.month,
+        e.entryDate!.day,
+        14,
+        0,
+      ).subtract(const Duration(days: 1));
       if (dayBefore.isAfter(twoOc)) {
         // After 14:00: Friday→Thursday, Saturday→Thursday
-        dayBefore =
-            dayBefore.subtract(Duration(days: dayBefore.weekday == 5 ? 1 : 2));
+        dayBefore = dayBefore.subtract(
+          Duration(days: dayBefore.weekday == 5 ? 1 : 2),
+        );
       } else if (dayBefore.weekday == 6) {
         // Saturday before 14:00: move to Friday
         dayBefore = dayBefore.subtract(const Duration(days: 1));
@@ -670,10 +737,12 @@ class Reminders with ChangeNotifier {
               tefTzFormatted,
         );
         toChange['title'] =
-            RemindersTranslates.tefilinReminderTranslated[lang]!['roshHodeshTitle']
+            RemindersTranslates
+                    .tefilinReminderTranslated[lang]!['roshHodeshTitle']
                 as String;
         toChange['body'] =
-            RemindersTranslates.tefilinReminderTranslated[lang]!['roshHodeshBody']
+            RemindersTranslates
+                    .tefilinReminderTranslated[lang]!['roshHodeshBody']
                 as String;
         notValues[toChange['id'] as int] = toChange;
       }
@@ -684,8 +753,8 @@ class Reminders with ChangeNotifier {
     notValues.add({
       'id': id,
       'title': e.title,
-      'body': e.sefira['sefira']
-          [currentLocal.languageCode == 'he' ? 'he' : 'en'],
+      'body':
+          e.sefira['sefira'][currentLocal.languageCode == 'he' ? 'he' : 'en'],
       'date': DateTime(
         e.entryDate!.year,
         e.entryDate!.month,

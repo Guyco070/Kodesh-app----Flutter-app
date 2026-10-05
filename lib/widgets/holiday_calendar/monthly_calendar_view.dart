@@ -87,31 +87,33 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
             children: [
               IconButton(
                 icon: const Icon(Icons.chevron_left),
-                onPressed: _canGoPrev
-                    ? () => setState(() {
+                onPressed:
+                    _canGoPrev
+                        ? () => setState(() {
                           _currentMonth = DateTime(
                             _currentMonth.year,
                             _currentMonth.month - 1,
                           );
                         })
-                    : null,
+                        : null,
               ),
               Text(
                 DateFormat('MMMM yyyy').format(_currentMonth),
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
               ),
               IconButton(
                 icon: const Icon(Icons.chevron_right),
-                onPressed: _canGoNext
-                    ? () => setState(() {
+                onPressed:
+                    _canGoNext
+                        ? () => setState(() {
                           _currentMonth = DateTime(
                             _currentMonth.year,
                             _currentMonth.month + 1,
                           );
                         })
-                    : null,
+                        : null,
               ),
             ],
           ),
@@ -120,22 +122,23 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4),
           child: Row(
-            children: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-                .map(
-                  (d) => Expanded(
-                    child: Center(
-                      child: Text(
-                        d,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 11,
-                          color: colorScheme.onSurface.withAlpha(153),
+            children:
+                ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+                    .map(
+                      (d) => Expanded(
+                        child: Center(
+                          child: Text(
+                            d,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 11,
+                              color: colorScheme.onSurface.withAlpha(153),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                )
-                .toList(),
+                    )
+                    .toList(),
           ),
         ),
         const SizedBox(height: 4),
@@ -152,22 +155,25 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
             if (index < startOffset) return const SizedBox.shrink();
             final day = index - startOffset + 1;
             final dayHolidays = dayMap[day] ?? [];
-            final isToday = DateTime.now().year == _currentMonth.year &&
+            final isToday =
+                DateTime.now().year == _currentMonth.year &&
                 DateTime.now().month == _currentMonth.month &&
                 DateTime.now().day == day;
 
             return GestureDetector(
-              onTap: dayHolidays.isEmpty
-                  ? null
-                  : () => _showHolidayDetails(context, day, dayHolidays),
+              onTap:
+                  dayHolidays.isEmpty
+                      ? null
+                      : () => _showHolidayDetails(context, day, dayHolidays),
               child: Container(
                 margin: const EdgeInsets.all(1),
-                decoration: isToday
-                    ? BoxDecoration(
-                        color: colorScheme.primaryContainer,
-                        borderRadius: BorderRadius.circular(6),
-                      )
-                    : null,
+                decoration:
+                    isToday
+                        ? BoxDecoration(
+                          color: colorScheme.primaryContainer,
+                          borderRadius: BorderRadius.circular(6),
+                        )
+                        : null,
                 child: Column(
                   children: [
                     const SizedBox(height: 2),
@@ -180,7 +186,9 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
                         color: isToday ? colorScheme.onPrimaryContainer : null,
                       ),
                     ),
-                    ...dayHolidays.take(2).map(
+                    ...dayHolidays
+                        .take(2)
+                        .map(
                           (h) => Container(
                             margin: const EdgeInsets.symmetric(
                               horizontal: 1,
@@ -191,18 +199,20 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
                               vertical: 1,
                             ),
                             decoration: BoxDecoration(
-                              color: h.isMajor
-                                  ? colorScheme.primary.withAlpha(204)
-                                  : colorScheme.secondary.withAlpha(153),
+                              color:
+                                  h.isMajor
+                                      ? colorScheme.primary.withAlpha(204)
+                                      : colorScheme.secondary.withAlpha(153),
                               borderRadius: BorderRadius.circular(3),
                             ),
                             child: Text(
                               h.hebrew,
                               style: TextStyle(
                                 fontSize: 7,
-                                color: h.isMajor
-                                    ? colorScheme.onPrimary
-                                    : colorScheme.onSecondary,
+                                color:
+                                    h.isMajor
+                                        ? colorScheme.onPrimary
+                                        : colorScheme.onSecondary,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -234,35 +244,36 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
   ) {
     showModalBottomSheet(
       context: context,
-      builder: (ctx) => Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              DateFormat('d MMMM yyyy').format(
-                DateTime(_currentMonth.year, _currentMonth.month, day),
-              ),
-              style: Theme.of(ctx).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 12),
-            ...holidays.map(
-              (h) => ListTile(
-                contentPadding: EdgeInsets.zero,
-                leading: Icon(
-                  Icons.star,
-                  color: h.isMajor ? Colors.blue : Colors.grey,
+      builder:
+          (ctx) => Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  DateFormat('d MMMM yyyy').format(
+                    DateTime(_currentMonth.year, _currentMonth.month, day),
+                  ),
+                  style: Theme.of(ctx).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                title: Text(h.hebrew, textAlign: TextAlign.right),
-                subtitle: Text(h.title),
-              ),
+                const SizedBox(height: 12),
+                ...holidays.map(
+                  (h) => ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: Icon(
+                      Icons.star,
+                      color: h.isMajor ? Colors.blue : Colors.grey,
+                    ),
+                    title: Text(h.hebrew, textAlign: TextAlign.right),
+                    subtitle: Text(h.title),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
     );
   }
 }
