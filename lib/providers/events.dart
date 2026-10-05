@@ -425,10 +425,11 @@ class Events with ChangeNotifier {
     Map<String, dynamic>? searchHavdalah(List items, int index) {
       while (index < items.length) {
         if (items[index]['category'] == 'havdalah') {
-          return items[index];
+          return items[index] as Map<String, dynamic>;
         }
         index++;
       }
+      return null;
     }
 
     if (items == null) return null;
@@ -441,6 +442,13 @@ class Events with ChangeNotifier {
           // go back and search for shaabat candles lightning time
           tempI--;
         }
+        final havdalah = searchHavdalah(items, i);
+        // A Shabbat without a havdalah entry can't be built; skip it rather
+        // than crash the whole parse (previously an implicit null deref).
+        if (havdalah == null) {
+          logger.w('No havdalah found for parashat at index $i, skipping');
+          continue;
+        }
         Shabat newS = Shabat.createShabat(
           title:
               items[tempI + 1]['title'] != items[i]['title']
@@ -448,7 +456,7 @@ class Events with ChangeNotifier {
                   : null,
           candles: items[tempI],
           parashat: items[i],
-          havdalah: searchHavdalah(items, i),
+          havdalah: havdalah,
         );
 
         tempItems.add(newS);
