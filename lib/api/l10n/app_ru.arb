@@ -191,5 +191,10 @@
             "months": { "type": "String" }
         }
     },
-    "molad": "Новолуние (Молад)"
+    "molad": "Новолуние (Молад)",
+
+    "sendTestNotification": "Отправить тестовое уведомление",
+    "testNotificationTitle": "Тестовое уведомление",
+    "testNotificationBody": "Уведомления работают правильно!",
+    "testNotificationSent": "Тестовое уведомление отправлено"
 }

@@ -191,5 +191,10 @@
             "months": { "type": "String" }
         }
     },
-    "molad": "Luna Nueva (Molad)"
+    "molad": "Luna Nueva (Molad)",
+
+    "sendTestNotification": "Enviar notificación de prueba",
+    "testNotificationTitle": "Notificación de prueba",
+    "testNotificationBody": "¡Las notificaciones funcionan correctamente!",
+    "testNotificationSent": "Notificación de prueba enviada"
 }
