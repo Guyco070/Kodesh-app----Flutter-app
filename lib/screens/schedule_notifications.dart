@@ -256,7 +256,7 @@ class _TestNotificationButton extends StatelessWidget {
     return OutlinedButton.icon(
       onPressed: () async {
         await NotificationApi.showNotification(
-          id: 0,
+          id: NotificationApi.testNotificationId,
           title: l.testNotificationTitle,
           body: l.testNotificationBody,
         );
