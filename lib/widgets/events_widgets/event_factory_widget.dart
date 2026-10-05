@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kodesh_app/models/event.dart';
+import 'package:kodesh_app/models/molad.dart';
 import 'package:kodesh_app/models/shabat.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
@@ -24,6 +25,10 @@ class EventFactoryWidget extends StatelessWidget {
     return data.title;
   }
 
+  /// Events whose body already carries the full text are shown without a
+  /// heading, so the same sentence isn't rendered twice.
+  static bool _hasHeading(Event data) => data is! Molad;
+
   @override
   String toStringShort() {
     return '${super.toStringShort()} - ${data.toString()}';
@@ -31,18 +36,26 @@ class EventFactoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final hasHeading = _hasHeading(data);
     return Column(
       children: [
         if (!isFirst) ...{
-          const Divider(thickness: 2, indent: 10, endIndent: 10, height: 40),
+          Divider(
+            thickness: hasHeading ? 2 : 0.5,
+            indent: hasHeading ? 10 : 35,
+            endIndent: hasHeading ? 10 : 35,
+            height: hasHeading ? 40 : 24,
+          ),
         } else ...{
           const SizedBox(height: 15),
         },
-        Text(
-          _resolveTitle(context, data),
-          style: const TextStyle(fontWeight: FontWeight.w600),
-        ),
-        const Divider(thickness: 0.5, indent: 35, endIndent: 35, height: 40),
+        if (hasHeading) ...[
+          Text(
+            _resolveTitle(context, data),
+            style: const TextStyle(fontWeight: FontWeight.w600),
+          ),
+          const Divider(thickness: 0.5, indent: 35, endIndent: 35, height: 40),
+        ],
         Events.eventsFactoryMethod(data)!,
       ],
     );
