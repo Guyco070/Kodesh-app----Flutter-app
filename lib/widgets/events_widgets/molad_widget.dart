@@ -5,19 +5,13 @@ import 'package:kodesh_app/models/molad.dart';
 /// Shows the Molad announcement as a compact note rather than a titled
 /// section: the announcement text already says everything, so a separate
 /// heading would only repeat it.
+///
+/// [Molad.title] is already localized by Hebcal (events are fetched in the UI
+/// language), so it is shown as-is. [Molad.titleOrig] holds only a short
+/// Hebrew form ("מולד חשון") and is not used here.
 class MoladWidget extends StatelessWidget {
   const MoladWidget({super.key, required this.data});
   final Molad data;
-
-  /// The Hebrew text (with nikud) reads better for Hebrew users; everyone else
-  /// gets the localized title Hebcal returned for their language.
-  String _resolveText(BuildContext context) {
-    final isHe = Localizations.localeOf(context).languageCode == 'he';
-    if (isHe && data.titleOrig != null && data.titleOrig!.isNotEmpty) {
-      return data.titleOrig!;
-    }
-    return data.title;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +37,7 @@ class MoladWidget extends StatelessWidget {
             const SizedBox(width: 10),
             Expanded(
               child: Text(
-                _resolveText(context),
+                data.title,
                 style: textTheme.bodyMedium?.copyWith(
                   color: colorScheme.onSecondaryContainer,
                   height: 1.4,
