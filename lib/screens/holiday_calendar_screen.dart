@@ -154,7 +154,9 @@ class _HolidayCalendarScreenState extends State<HolidayCalendarScreen> {
       );
     }
 
-    final dateFormat = DateFormat('d MMMM yyyy');
+    final locale = Localizations.localeOf(context);
+    final dateFormat = DateFormat.yMMMMEEEEd(locale.toLanguageTag());
+    final colorScheme = Theme.of(context).colorScheme;
     return ListView.builder(
       itemCount: filtered.length,
       itemBuilder: (context, index) {
@@ -162,12 +164,10 @@ class _HolidayCalendarScreenState extends State<HolidayCalendarScreen> {
         return ListTile(
           leading: Icon(
             Icons.calendar_today,
-            color: holiday.isMajor ? Colors.blue : Colors.grey,
+            color: holiday.isMajor ? colorScheme.primary : colorScheme.outline,
           ),
-          title: Text(holiday.hebrew, textAlign: TextAlign.right),
-          subtitle: Text(
-            '${holiday.title} · ${dateFormat.format(holiday.date)}',
-          ),
+          title: Text(holiday.displayName(locale.languageCode)),
+          subtitle: Text(dateFormat.format(holiday.date)),
         );
       },
     );
@@ -191,7 +191,7 @@ class _DateRangeRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fmt = DateFormat('dd/MM/yyyy');
+    final fmt = DateFormat.yMd(Localizations.localeOf(context).toLanguageTag());
     final colorScheme = Theme.of(context).colorScheme;
     return InkWell(
       onTap: onTap,

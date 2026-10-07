@@ -896,6 +896,9 @@ class Events with ChangeNotifier {
     notifyListeners();
   }
 
+  static String _hebcalLanguage(String languageCode) =>
+      const {'he': 'he', 'es': 'es', 'ru': 'ru'}[languageCode] ?? 's';
+
   Future<void> fetchAnnualHolidays({
     DateTime? startDate,
     DateTime? endDate,
@@ -913,6 +916,9 @@ class Events with ChangeNotifier {
       'min': 'on',
       'start': startStr,
       'end': endStr,
+      // Localized titles for the current UI language ('s' = Hebcal's default
+      // English transliteration).
+      'lg': _hebcalLanguage(LanguageChangeProvider.getCurrentLocale.languageCode),
     });
     try {
       final response = await get(url);
