@@ -37,8 +37,7 @@ class HolidayDaySheet extends StatelessWidget {
                 contentPadding: EdgeInsets.zero,
                 leading: Icon(
                   Icons.star_rounded,
-                  color:
-                      h.isMajor ? colorScheme.primary : colorScheme.outline,
+                  color: h.isMajor ? colorScheme.primary : colorScheme.outline,
                 ),
                 title: Text(h.displayName(locale.languageCode)),
               ),

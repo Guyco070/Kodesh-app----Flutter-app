@@ -918,7 +918,9 @@ class Events with ChangeNotifier {
       'end': endStr,
       // Localized titles for the current UI language ('s' = Hebcal's default
       // English transliteration).
-      'lg': _hebcalLanguage(LanguageChangeProvider.getCurrentLocale.languageCode),
+      'lg': _hebcalLanguage(
+        LanguageChangeProvider.getCurrentLocale.languageCode,
+      ),
     });
     try {
       final response = await get(url);
