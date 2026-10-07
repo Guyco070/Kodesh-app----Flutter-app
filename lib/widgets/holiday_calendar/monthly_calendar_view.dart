@@ -79,7 +79,11 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
         if (!mounted) return;
         setState(() => _cache[month] = holidays);
       } catch (e, st) {
-        logger.w('Failed to load holidays for $month', error: e, stackTrace: st);
+        logger.w(
+          'Failed to load holidays for $month',
+          error: e,
+          stackTrace: st,
+        );
         if (!mounted) return;
         setState(() => _failed.add(month));
       } finally {
@@ -127,9 +131,8 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
     final dayMap = _buildDayMap(_cache[_currentMonth] ?? const []);
 
     final firstDay = DateTime(_currentMonth.year, _currentMonth.month, 1);
-    final daysInMonth = _monthOffset(_currentMonth, 1)
-        .subtract(const Duration(days: 1))
-        .day;
+    final daysInMonth =
+        _monthOffset(_currentMonth, 1).subtract(const Duration(days: 1)).day;
     // DateTime.weekday: 1=Mon..7=Sun; Sunday-first grid needs Sun=0.
     final startOffset = firstDay.weekday % 7;
     final now = DateTime.now();
