@@ -1,0 +1,39 @@
+name: Format and verify (temporary)
+
+on:
+  push:
+    branches: [chore/format-and-verify]
+
+permissions:
+  contents: write
+
+jobs:
+  format-and-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Apply dart format
+        run: |
+          dart format lib/ test/
+          if ! git diff --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -am "style: apply dart format"
+            git push
+          fi
+      - name: Analyze and test (report committed back)
+        run: |
+          mkdir -p ci-report
+          flutter analyze > ci-report/analyze.txt 2>&1 || true
+          flutter test test/unit/ > ci-report/test.txt 2>&1 || true
+          flutter build web --release > ci-report/build.txt 2>&1 || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ci-report
+          git commit -m "ci: add analyze/test/build report"
+          git push
