@@ -899,52 +899,56 @@ class Events with ChangeNotifier {
   static String _hebcalLanguage(String languageCode) =>
       const {'he': 'he', 'es': 'es', 'ru': 'ru'}[languageCode] ?? 's';
 
-  Future<void> fetchAnnualHolidays({
-    DateTime? startDate,
-    DateTime? endDate,
-  }) async {
-    final from = startDate ?? DateTime.now();
-    final to = endDate ?? DateTime(from.year + 1, from.month, from.day);
-    final startStr =
-        '${from.year}-${from.month.toString().padLeft(2, '0')}-${from.day.toString().padLeft(2, '0')}';
-    final endStr =
-        '${to.year}-${to.month.toString().padLeft(2, '0')}-${to.day.toString().padLeft(2, '0')}';
+  /// Fetches holidays between [from] and [to] (inclusive) in the current UI
+  /// language. Returns the parsed list without touching provider state, so
+  /// callers such as the monthly calendar can cache per-month results.
+  /// Throws on network or HTTP errors.
+  Future<List<HebcalHoliday>> fetchHolidaysInRange(
+    DateTime from,
+    DateTime to,
+  ) async {
     final url = Uri.https('www.hebcal.com', '/hebcal', {
       'cfg': 'json',
       'v': '1',
       'maj': 'on',
       'min': 'on',
-      'start': startStr,
-      'end': endStr,
+      'start': getDushedFormatedDate(from),
+      'end': getDushedFormatedDate(to),
       // Localized titles for the current UI language ('s' = Hebcal's default
       // English transliteration).
       'lg': _hebcalLanguage(
         LanguageChangeProvider.getCurrentLocale.languageCode,
       ),
     });
+    final response = await get(url);
+    if (response.statusCode != 200) {
+      throw ClientException('HTTP ${response.statusCode}', url);
+    }
+    final data = jsonDecode(response.body) as Map<String, dynamic>;
+    final items = data['items'] as List<dynamic>? ?? [];
+    return items
+        .where((item) => item['category'] == 'holiday')
+        .map(
+          (item) => HebcalHoliday(
+            title: item['title'] as String? ?? '',
+            hebrew: item['hebrew'] as String? ?? '',
+            date:
+                DateTime.tryParse(item['date'] as String? ?? '') ??
+                DateTime.now(),
+            isMajor: (item['subcat'] as String?) == 'major',
+          ),
+        )
+        .toList();
+  }
+
+  Future<void> fetchAnnualHolidays({
+    DateTime? startDate,
+    DateTime? endDate,
+  }) async {
+    final from = startDate ?? DateTime.now();
+    final to = endDate ?? DateTime(from.year + 1, from.month, from.day);
     try {
-      final response = await get(url);
-      if (response.statusCode != 200) {
-        _annualHolidaysError = 'HTTP ${response.statusCode}';
-        notifyListeners();
-        return;
-      }
-      final data = jsonDecode(response.body) as Map<String, dynamic>;
-      final items = data['items'] as List<dynamic>? ?? [];
-      _annualHolidays =
-          items
-              .where((item) => item['category'] == 'holiday')
-              .map(
-                (item) => HebcalHoliday(
-                  title: item['title'] as String? ?? '',
-                  hebrew: item['hebrew'] as String? ?? '',
-                  date:
-                      DateTime.tryParse(item['date'] as String? ?? '') ??
-                      DateTime.now(),
-                  isMajor: (item['subcat'] as String?) == 'major',
-                ),
-              )
-              .toList();
+      _annualHolidays = await fetchHolidaysInRange(from, to);
       _annualHolidaysError = null;
     } catch (e) {
       _annualHolidaysError = e.toString();
