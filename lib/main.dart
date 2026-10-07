@@ -24,7 +24,9 @@ import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   FlutterError.onError = (FlutterErrorDetails details) {
     logger.e(
       'Flutter error',
@@ -39,14 +41,18 @@ void main() {
     return true;
   };
 
+  // Load the saved language before the first frame. Otherwise the first
+  // events fetch can go out with the default 'en' locale while preferences
+  // are still loading, and Hebcal returns English titles for a Hebrew UI.
+  final languageProvider = LanguageChangeProvider();
+  await languageProvider.getData();
+
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => Events()),
         ChangeNotifierProvider(create: (_) => Reminders()),
-        ChangeNotifierProvider(
-          create: (_) => LanguageChangeProvider()..getData(),
-        ),
+        ChangeNotifierProvider.value(value: languageProvider),
         ChangeNotifierProvider(create: (_) => Tfilot()),
       ],
       child: const MyApp(),
