@@ -1,0 +1,77 @@
+Resolving dependencies...
+Downloading packages...
+  archive 4.0.9 (4.3.0 available)
+  cli_util 0.4.2 (0.6.0 available)
+  clock 1.1.2 (1.1.3 available)
+  cupertino_icons 1.0.9 (2.0.0 available)
+  dbus 0.7.12 (0.8.0 available)
+  equatable 2.0.8 (3.0.0 available)
+  flutter_lints 2.0.3 (6.0.0 available)
+  flutter_local_notifications 21.0.0 (22.3.1 available)
+  flutter_local_notifications_linux 8.0.0 (8.0.1 available)
+  flutter_local_notifications_platform_interface 11.0.0 (12.2.0 available)
+  flutter_local_notifications_windows 3.0.0 (3.1.1 available)
+  flutter_native_splash 2.4.7 (2.4.8 available)
+  flutter_timezone 5.1.0 (5.1.1 available)
+  geolocator 13.0.4 (14.1.1 available)
+  geolocator_android 4.6.2 (5.1.1+1 available)
+  geolocator_platform_interface 4.2.8 (4.4.0 available)
+  html 0.15.6 (0.15.7 available)
+  image 4.8.0 (4.10.1 available)
+  internet_connection_checker_plus 3.0.1 (3.1.2 available)
+  lints 2.1.1 (6.1.0 available)
+  logger 2.7.0 (2.8.0 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  path_provider_linux 2.2.1 (2.2.2 available)
+  path_provider_platform_interface 2.1.2 (2.1.3 available)
+  petitparser 7.0.2 (7.1.0 available)
+  platform 3.1.6 (3.2.0 available)
+  posix 6.5.0 (6.5.2 available)
+  shared_preferences_android 2.4.23 (2.4.28 available)
+  shared_preferences_foundation 2.5.6 (2.5.7 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  test_api 0.7.12 (0.7.14 available)
+  timezone 0.11.0 (0.11.1 available)
+  uuid 4.5.3 (4.6.0 available)
+  vm_service 15.2.0 (15.3.0 available)
+  xml 6.6.1 (7.1.0 available)
+  yaml 3.1.3 (3.1.4 available)
+Got dependencies!
+36 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Analyzing Kodesh-app----Flutter-app...                          
+
+   info • The private field _list could be 'final'. Try making the field 'final' • lib/animations/animated_events_list_view.dart:14:16 • prefer_final_fields
+   info • Function literals shouldn't be passed to 'forEach'. Try using a 'for' loop • lib/animations/animated_events_list_view.dart:24:20 • avoid_function_literals_in_foreach_calls
+   info • The private field _list could be 'final'. Try making the field 'final' • lib/animations/animated_only_shabat.dart:16:16 • prefer_final_fields
+   info • Function literals shouldn't be passed to 'forEach'. Try using a 'for' loop • lib/animations/animated_only_shabat.dart:26:20 • avoid_function_literals_in_foreach_calls
+   info • Invalid use of a private type in a public API. Try making the private type public, or making the API that uses the private type also be private • lib/animations/expanded_section.dart:9:3 • library_private_types_in_public_api
+   info • 'axisAlignment' is deprecated and shouldn't be used. Use alignment instead. This property provides full control over both axes, which is an improvement over the old axisAlignment. This feature was deprecated after v3.41.0-1.0.pre. Try replacing the use of the deprecated member with the replacement • lib/animations/expanded_section.dart:57:7 • deprecated_member_use
+   info • Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation • lib/api/notification_api.dart:41:45 • prefer_const_constructors
+   info • 'dart:html' is deprecated and shouldn't be used. Use package:web and dart:js_interop instead. Try replacing the use of the deprecated member with the replacement • lib/helpers/geolocation_web.dart:2:1 • deprecated_member_use
+   info • Don't use web-only libraries outside Flutter web plugins. Try finding a different library for your needs • lib/helpers/geolocation_web.dart:4:1 • avoid_web_libraries_in_flutter
+   info • 'MaterialStateProperty' is deprecated and shouldn't be used. Use WidgetStateProperty instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre. Try replacing the use of the deprecated member with the replacement • lib/providers/tfilot.dart:71:22 • deprecated_member_use
+   info • 'MaterialStatePropertyAll' is deprecated and shouldn't be used. Use WidgetStatePropertyAll instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre. Try replacing the use of the deprecated member with the replacement • lib/providers/tfilot.dart:76:25 • deprecated_member_use
+   info • 'MaterialStatePropertyAll' is deprecated and shouldn't be used. Use WidgetStatePropertyAll instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre. Try replacing the use of the deprecated member with the replacement • lib/providers/tfilot.dart:79:25 • deprecated_member_use
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • lib/providers/tfilot.dart:140:11 • curly_braces_in_flow_control_structures
+   info • Don't use 'BuildContext's across async gaps. Try rewriting the code to not use the 'BuildContext', or guard the use with a 'mounted' check • lib/screens/event_screen.dart:446:13 • use_build_context_synchronously
+   info • 'onReorder' is deprecated and shouldn't be used. Use the onReorderItem callback instead. The onReorderItem callback adjusts the newIndex parameter for a removed item at the oldIndex. This feature was deprecated after v3.41.0-0.0.pre. Try replacing the use of the deprecated member with the replacement • lib/screens/shabat_and_holidays_check_list.dart:176:23 • deprecated_member_use
+   info • The imported package 'web' isn't a dependency of the importing package. Try adding a dependency for 'web' in the 'pubspec.yaml' file • lib/services/compass_service_web.dart:3:8 • depend_on_referenced_packages
+   info • Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation • lib/widgets/compass/compass_button.dart:27:59 • prefer_const_constructors
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • lib/widgets/compass/compass_widget.dart:51:7 • curly_braces_in_flow_control_structures
+   info • 'MaterialStateProperty' is deprecated and shouldn't be used. Use WidgetStateProperty instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre. Try replacing the use of the deprecated member with the replacement • lib/widgets/default_scaffold.dart:105:24 • deprecated_member_use
+   info • 'MaterialStateProperty' is deprecated and shouldn't be used. Use WidgetStateProperty instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre. Try replacing the use of the deprecated member with the replacement • lib/widgets/default_scaffold.dart:106:30 • deprecated_member_use
+   info • Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation • lib/widgets/events_widgets/holiday_widget.dart:31:11 • prefer_const_constructors
+   info • An uninitialized variable should have an explicit type annotation. Try adding a type annotation • lib/widgets/events_widgets/rosh_chodesh_widget.dart:30:9 • prefer_typing_uninitialized_variables
+   info • The private field _isExpanded could be 'final'. Try making the field 'final' • lib/widgets/settings_bar.dart:41:8 • prefer_final_fields
+   info • 'activeColor' is deprecated and shouldn't be used. Use activeTrackColor instead. This feature was deprecated after v3.24.0-0.2.pre. Try replacing the use of the deprecated member with the replacement • lib/widgets/swiches/cupertino_text_check_switch.dart:21:11 • deprecated_member_use
+   info • 'MaterialStateProperty' is deprecated and shouldn't be used. Use WidgetStateProperty instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre. Try replacing the use of the deprecated member with the replacement • lib/widgets/swiches/view_type_switch.dart:26:28 • deprecated_member_use
+   info • 'MaterialStateProperty' is deprecated and shouldn't be used. Use WidgetStateProperty instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre. Try replacing the use of the deprecated member with the replacement • lib/widgets/swiches/view_type_switch.dart:27:24 • deprecated_member_use
+   info • 'MaterialStatePropertyAll' is deprecated and shouldn't be used. Use WidgetStatePropertyAll instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre. Try replacing the use of the deprecated member with the replacement • lib/widgets/swiches/view_type_switch.dart:41:33 • deprecated_member_use
+   info • 'MaterialStatePropertyAll' is deprecated and shouldn't be used. Use WidgetStatePropertyAll instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre. Try replacing the use of the deprecated member with the replacement • lib/widgets/swiches/view_type_switch.dart:44:27 • deprecated_member_use
+   info • 'MaterialStateProperty' is deprecated and shouldn't be used. Use WidgetStateProperty instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre. Try replacing the use of the deprecated member with the replacement • lib/widgets/swiches/view_type_switch.dart:67:28 • deprecated_member_use
+   info • 'MaterialStateProperty' is deprecated and shouldn't be used. Use WidgetStateProperty instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre. Try replacing the use of the deprecated member with the replacement • lib/widgets/swiches/view_type_switch.dart:68:24 • deprecated_member_use
+   info • 'MaterialStatePropertyAll' is deprecated and shouldn't be used. Use WidgetStatePropertyAll instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre. Try replacing the use of the deprecated member with the replacement • lib/widgets/swiches/view_type_switch.dart:82:33 • deprecated_member_use
+   info • 'MaterialStatePropertyAll' is deprecated and shouldn't be used. Use WidgetStatePropertyAll instead. Moved to the Widgets layer to make code available outside of Material. This feature was deprecated after v3.19.0-0.3.pre. Try replacing the use of the deprecated member with the replacement • lib/widgets/swiches/view_type_switch.dart:85:27 • deprecated_member_use
+
+32 issues found. (ran in 9.5s)

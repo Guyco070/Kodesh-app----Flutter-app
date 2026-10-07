@@ -1,0 +1,158 @@
+Resolving dependencies...
+Downloading packages...
+  archive 4.0.9 (4.3.0 available)
+  cli_util 0.4.2 (0.6.0 available)
+  clock 1.1.2 (1.1.3 available)
+  cupertino_icons 1.0.9 (2.0.0 available)
+  dbus 0.7.12 (0.8.0 available)
+  equatable 2.0.8 (3.0.0 available)
+  flutter_lints 2.0.3 (6.0.0 available)
+  flutter_local_notifications 21.0.0 (22.3.1 available)
+  flutter_local_notifications_linux 8.0.0 (8.0.1 available)
+  flutter_local_notifications_platform_interface 11.0.0 (12.2.0 available)
+  flutter_local_notifications_windows 3.0.0 (3.1.1 available)
+  flutter_native_splash 2.4.7 (2.4.8 available)
+  flutter_timezone 5.1.0 (5.1.1 available)
+  geolocator 13.0.4 (14.1.1 available)
+  geolocator_android 4.6.2 (5.1.1+1 available)
+  geolocator_platform_interface 4.2.8 (4.4.0 available)
+  html 0.15.6 (0.15.7 available)
+  image 4.8.0 (4.10.1 available)
+  internet_connection_checker_plus 3.0.1 (3.1.2 available)
+  lints 2.1.1 (6.1.0 available)
+  logger 2.7.0 (2.8.0 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  path_provider_linux 2.2.1 (2.2.2 available)
+  path_provider_platform_interface 2.1.2 (2.1.3 available)
+  petitparser 7.0.2 (7.1.0 available)
+  platform 3.1.6 (3.2.0 available)
+  posix 6.5.0 (6.5.2 available)
+  shared_preferences_android 2.4.23 (2.4.28 available)
+  shared_preferences_foundation 2.5.6 (2.5.7 available)
+  stack_trace 1.12.1 (1.12.2 available)
+  test_api 0.7.12 (0.7.14 available)
+  timezone 0.11.0 (0.11.1 available)
+  uuid 4.5.3 (4.6.0 available)
+  vm_service 15.2.0 (15.3.0 available)
+  xml 6.6.1 (7.1.0 available)
+  yaml 3.1.3 (3.1.4 available)
+Got dependencies!
+36 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+
+::group::✅ Passing tests
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/dates_test.dart: isYesterdayTodayOrTomorrow returns true for today
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/dates_test.dart: isYesterdayTodayOrTomorrow returns true for yesterday
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/dates_test.dart: isYesterdayTodayOrTomorrow returns true for tomorrow
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/dates_test.dart: isYesterdayTodayOrTomorrow returns false for two days ago
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/dates_test.dart: isYesterdayTodayOrTomorrow returns false for two days from now
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/dates_test.dart: isYesterdayTodayOrTomorrow ignores time-of-day when comparing
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/dates_test.dart: isToday returns true for current DateTime
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/dates_test.dart: isToday returns false for yesterday
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/dates_test.dart: isToday returns false for tomorrow
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/dates_test.dart: getSingleElementZeroAdded pads single digit with leading zero
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/dates_test.dart: getSingleElementZeroAdded leaves two-digit string unchanged
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/dates_test.dart: getSingleElementZeroAdded pads empty string to 00
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/dates_test.dart: getTime formats DateTime to HH:mm
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/dates_test.dart: getTime formats hour and minute strings directly
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/dates_test.dart: getTime zero-pads both hour and minute
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/dates_test.dart: getDateTimeSetToZero strips hours, minutes, seconds from a DateTime
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/dates_test.dart: getDushedFormatedDate formats date as YYYY-MM-DD with zero-padding
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/dates_test.dart: getDushedFormatedDate formats two-digit month and day unchanged
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/notification_scheduling_test.dart: NotificationApi.scheduleDailyDateTime returns a DateTime with the requested hour and minute
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/notification_scheduling_test.dart: NotificationApi.scheduleDailyDateTime result is always in the future
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/notification_scheduling_test.dart: NotificationApi.scheduleDailyDateTime target time later today is scheduled for today
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/notification_scheduling_test.dart: NotificationApi.scheduleDailyDateTime past time today is pushed to tomorrow
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/notification_scheduling_test.dart: Reminders.tefilinNextDate advances by 1 day on a regular weekday (Monday)
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/notification_scheduling_test.dart: Reminders.tefilinNextDate advances by 1 day on a Thursday
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/notification_scheduling_test.dart: Reminders.tefilinNextDate advances by 2 days on a Friday, skipping Shabbat
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/notification_scheduling_test.dart: Reminders.tefilinNextDate result is never Saturday
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/notification_scheduling_test.dart: Reminders.tefilinNextDate preserves the time of day
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/events_parser_test.dart: Events.getDateWithoutTime strips timezone offset from ISO 8601 string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/events_parser_test.dart: Events.getDateWithoutTime returns plain date string unchanged
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/events_parser_test.dart: Events.getDateWithoutTime handles UTC Z suffix
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/events_parser_test.dart: Events.getEventsItemsFromMap returns null for null input
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/events_parser_test.dart: Events.getEventsItemsFromMap returns empty list for empty input
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/events_parser_test.dart: Events.getEventsItemsFromMap parses a Shabbat entry (parashat + candles + havdalah)
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/events_parser_test.dart: Events.getEventsItemsFromMap parses a Holiday with candles and havdalah
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/events_parser_test.dart: Events.getEventsItemsFromMap parses Rosh Chodesh entry
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/events_parser_test.dart: Events.getEventsItemsFromMap merges two-day Rosh Chodesh into one entry
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/events_parser_test.dart: Events.getEventsItemsFromMap parses Sefirat HaOmer entry
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/events_parser_test.dart: Events.getEventsItemsFromMap ignores unknown categories
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/events_parser_test.dart: Events.getEventsItemsFromMap parses mixed week with Shabbat and holiday
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/events_parser_test.dart: RoshChodesh.marge earlier date becomes entryDate
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [en] title is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [en] body closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [en] body closure handles null releaseDate
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [en] candlesTitle is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [en] candlesBody closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [en] havdalahTitle is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [en] havdalahBody closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [he] title is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [he] body closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [he] body closure handles null releaseDate
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [he] candlesTitle is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [he] candlesBody closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [he] havdalahTitle is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [he] havdalahBody closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [es] title is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [es] body closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [es] body closure handles null releaseDate
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [es] candlesTitle is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [es] candlesBody closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [es] havdalahTitle is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [es] havdalahBody closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [ru] title is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [ru] body closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [ru] body closure handles null releaseDate
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [ru] candlesTitle is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [ru] candlesBody closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [ru] havdalahTitle is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.shabatReminderTranslated [ru] havdalahBody closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.holidayReminderTranslated [en] body closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.holidayReminderTranslated [en] candlesTitle is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.holidayReminderTranslated [en] candlesBody closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.holidayReminderTranslated [en] chnukahCandlesBody closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.holidayReminderTranslated [en] havdalahTitle is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.holidayReminderTranslated [en] havdalahBody closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.holidayReminderTranslated [he] body closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.holidayReminderTranslated [he] candlesTitle is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.holidayReminderTranslated [he] candlesBody closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.holidayReminderTranslated [he] chnukahCandlesBody closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.holidayReminderTranslated [he] havdalahTitle is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.holidayReminderTranslated [he] havdalahBody closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.holidayReminderTranslated [es] body closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.holidayReminderTranslated [es] candlesTitle is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.holidayReminderTranslated [es] candlesBody closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.holidayReminderTranslated [es] chnukahCandlesBody closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.holidayReminderTranslated [es] havdalahTitle is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.holidayReminderTranslated [es] havdalahBody closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.holidayReminderTranslated [ru] body closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.holidayReminderTranslated [ru] candlesTitle is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.holidayReminderTranslated [ru] candlesBody closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.holidayReminderTranslated [ru] chnukahCandlesBody closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.holidayReminderTranslated [ru] havdalahTitle is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.holidayReminderTranslated [ru] havdalahBody closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.roshHodeshReminderTranslated [en] body closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.roshHodeshReminderTranslated [he] body closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.roshHodeshReminderTranslated [es] body closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.roshHodeshReminderTranslated [ru] body closure returns non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.tefilinReminderTranslated [en] title is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.tefilinReminderTranslated [en] body is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.tefilinReminderTranslated [en] roshHodeshTitle is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.tefilinReminderTranslated [en] roshHodeshBody is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.tefilinReminderTranslated [he] title is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.tefilinReminderTranslated [he] body is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.tefilinReminderTranslated [he] roshHodeshTitle is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.tefilinReminderTranslated [he] roshHodeshBody is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.tefilinReminderTranslated [es] title is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.tefilinReminderTranslated [es] body is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.tefilinReminderTranslated [es] roshHodeshTitle is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.tefilinReminderTranslated [es] roshHodeshBody is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.tefilinReminderTranslated [ru] title is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.tefilinReminderTranslated [ru] body is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.tefilinReminderTranslated [ru] roshHodeshTitle is non-empty string
+✅ /home/runner/work/Kodesh-app----Flutter-app/Kodesh-app----Flutter-app/test/unit/reminders_translates_test.dart: RemindersTranslates.tefilinReminderTranslated [ru] roshHodeshBody is non-empty string
+::endgroup::
+
+🎉 112 tests passed.
