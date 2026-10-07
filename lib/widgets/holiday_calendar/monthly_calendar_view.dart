@@ -2,27 +2,33 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:kodesh_app/api/l10n/app_localizations.dart';
+import 'package:kodesh_app/helpers/app_logger.dart';
 import 'package:kodesh_app/models/hebcal_holiday.dart';
+import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/widgets/holiday_calendar/monthly_calendar_view/calendar_day_cell.dart';
 import 'package:kodesh_app/widgets/holiday_calendar/monthly_calendar_view/calendar_month_header.dart';
 import 'package:kodesh_app/widgets/holiday_calendar/monthly_calendar_view/calendar_weekday_row.dart';
 import 'package:kodesh_app/widgets/holiday_calendar/monthly_calendar_view/holiday_day_sheet.dart';
+import 'package:provider/provider.dart';
 
 /// Month grid of holidays. Weeks start on Sunday (Jewish calendar convention)
 /// and all month/weekday names follow the app's locale.
+///
+/// Each month is fetched on its own when it is shown and cached for the life
+/// of the widget, so paging is never blocked by data that hasn't loaded yet.
+/// The neighbouring months are prefetched in the background.
 class MonthlyCalendarView extends StatefulWidget {
   const MonthlyCalendarView({
     super.key,
-    required this.holidays,
     required this.initialMonth,
-    required this.minDate,
-    required this.maxDate,
+    this.searchText = '',
   });
 
-  final List<HebcalHoliday> holidays;
   final DateTime initialMonth;
-  final DateTime minDate;
-  final DateTime maxDate;
+
+  /// Only holidays whose name contains this text are shown (case-insensitive).
+  final String searchText;
 
   /// The grid never grows wider than this, so cells stay compact on desktop.
   static const double maxGridWidth = 720;
@@ -34,6 +40,10 @@ class MonthlyCalendarView extends StatefulWidget {
 class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
   late DateTime _currentMonth;
 
+  final Map<DateTime, List<HebcalHoliday>> _cache = {};
+  final Set<DateTime> _loading = {};
+  final Set<DateTime> _failed = {};
+
   @override
   void initState() {
     super.initState();
@@ -41,58 +51,85 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
       widget.initialMonth.year,
       widget.initialMonth.month,
     );
+    // setState isn't allowed during initState, so start loading after the
+    // first frame.
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _ensureMonthLoaded(_currentMonth, prefetchNeighbours: true),
+    );
   }
 
-  @override
-  void didUpdateWidget(MonthlyCalendarView oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.holidays != widget.holidays) {
-      final newMin = DateTime(widget.minDate.year, widget.minDate.month);
-      if (_currentMonth.isBefore(newMin)) {
-        _currentMonth = newMin;
+  DateTime _monthOffset(DateTime month, int delta) =>
+      DateTime(month.year, month.month + delta);
+
+  Future<void> _ensureMonthLoaded(
+    DateTime month, {
+    bool prefetchNeighbours = false,
+  }) async {
+    if (!mounted) return;
+    if (!_cache.containsKey(month) && !_loading.contains(month)) {
+      setState(() {
+        _loading.add(month);
+        _failed.remove(month);
+      });
+      try {
+        final holidays = await context.read<Events>().fetchHolidaysInRange(
+          month,
+          _monthOffset(month, 1).subtract(const Duration(days: 1)),
+        );
+        if (!mounted) return;
+        setState(() => _cache[month] = holidays);
+      } catch (e, st) {
+        logger.w('Failed to load holidays for $month', error: e, stackTrace: st);
+        if (!mounted) return;
+        setState(() => _failed.add(month));
+      } finally {
+        if (mounted) setState(() => _loading.remove(month));
       }
+    }
+    if (prefetchNeighbours && mounted) {
+      _ensureMonthLoaded(_monthOffset(month, -1));
+      _ensureMonthLoaded(_monthOffset(month, 1));
     }
   }
 
-  bool get _canGoPrev {
-    final prev = DateTime(_currentMonth.year, _currentMonth.month - 1);
-    final minMonth = DateTime(widget.minDate.year, widget.minDate.month);
-    return !prev.isBefore(minMonth);
-  }
-
-  bool get _canGoNext {
-    final next = DateTime(_currentMonth.year, _currentMonth.month + 1);
-    final maxMonth = DateTime(widget.maxDate.year, widget.maxDate.month);
-    return !next.isAfter(maxMonth);
-  }
-
   void _shiftMonth(int delta) {
-    setState(() {
-      _currentMonth = DateTime(_currentMonth.year, _currentMonth.month + delta);
-    });
+    setState(() => _currentMonth = _monthOffset(_currentMonth, delta));
+    _ensureMonthLoaded(_currentMonth, prefetchNeighbours: true);
   }
 
-  Map<int, List<HebcalHoliday>> _buildDayMap() {
+  Map<int, List<HebcalHoliday>> _buildDayMap(List<HebcalHoliday> holidays) {
+    final query = widget.searchText.trim().toLowerCase();
     final map = <int, List<HebcalHoliday>>{};
-    for (final h in widget.holidays) {
-      if (h.date.year == _currentMonth.year &&
-          h.date.month == _currentMonth.month) {
-        map.putIfAbsent(h.date.day, () => []).add(h);
+    for (final h in holidays) {
+      if (h.date.year != _currentMonth.year ||
+          h.date.month != _currentMonth.month) {
+        continue;
       }
+      if (query.isNotEmpty &&
+          !h.title.toLowerCase().contains(query) &&
+          !h.hebrew.contains(query)) {
+        continue;
+      }
+      map.putIfAbsent(h.date.day, () => []).add(h);
     }
     return map;
   }
 
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
     final locale = Localizations.localeOf(context);
     final localeTag = locale.toLanguageTag();
     final languageCode = locale.languageCode;
 
-    final dayMap = _buildDayMap();
+    final isLoading = _loading.contains(_currentMonth);
+    final hasFailed = _failed.contains(_currentMonth);
+    final dayMap = _buildDayMap(_cache[_currentMonth] ?? const []);
+
     final firstDay = DateTime(_currentMonth.year, _currentMonth.month, 1);
-    final daysInMonth =
-        DateTime(_currentMonth.year, _currentMonth.month + 1, 0).day;
+    final daysInMonth = _monthOffset(_currentMonth, 1)
+        .subtract(const Duration(days: 1))
+        .day;
     // DateTime.weekday: 1=Mon..7=Sun; Sunday-first grid needs Sun=0.
     final startOffset = firstDay.weekday % 7;
     final now = DateTime.now();
@@ -121,9 +158,14 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
                 children: [
                   CalendarMonthHeader(
                     title: DateFormat.yMMMM(localeTag).format(_currentMonth),
-                    onPrev: _canGoPrev ? () => _shiftMonth(-1) : null,
-                    onNext: _canGoNext ? () => _shiftMonth(1) : null,
+                    onPrev: () => _shiftMonth(-1),
+                    onNext: () => _shiftMonth(1),
                   ),
+                  SizedBox(
+                    height: 3,
+                    child: isLoading ? const LinearProgressIndicator() : null,
+                  ),
+                  const SizedBox(height: 4),
                   CalendarWeekdayRow(localeTag: localeTag),
                   const SizedBox(height: 4),
                   GridView.builder(
@@ -169,6 +211,20 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
                       );
                     },
                   ),
+                  if (hasFailed)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 12),
+                      child: Column(
+                        children: [
+                          Text(appLocalizations.apiErrorMessage),
+                          const SizedBox(height: 8),
+                          OutlinedButton(
+                            onPressed: () => _ensureMonthLoaded(_currentMonth),
+                            child: Text(appLocalizations.retry),
+                          ),
+                        ],
+                      ),
+                    ),
                   const SizedBox(height: 12),
                 ],
               ),
