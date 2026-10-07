@@ -1,7 +1,15 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kodesh_app/models/hebcal_holiday.dart';
+import 'package:kodesh_app/widgets/holiday_calendar/monthly_calendar_view/calendar_day_cell.dart';
+import 'package:kodesh_app/widgets/holiday_calendar/monthly_calendar_view/calendar_month_header.dart';
+import 'package:kodesh_app/widgets/holiday_calendar/monthly_calendar_view/calendar_weekday_row.dart';
+import 'package:kodesh_app/widgets/holiday_calendar/monthly_calendar_view/holiday_day_sheet.dart';
 
+/// Month grid of holidays. Weeks start on Sunday (Jewish calendar convention)
+/// and all month/weekday names follow the app's locale.
 class MonthlyCalendarView extends StatefulWidget {
   const MonthlyCalendarView({
     super.key,
@@ -15,6 +23,9 @@ class MonthlyCalendarView extends StatefulWidget {
   final DateTime initialMonth;
   final DateTime minDate;
   final DateTime maxDate;
+
+  /// The grid never grows wider than this, so cells stay compact on desktop.
+  static const double maxGridWidth = 720;
 
   @override
   State<MonthlyCalendarView> createState() => _MonthlyCalendarViewState();
@@ -55,6 +66,12 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
     return !next.isAfter(maxMonth);
   }
 
+  void _shiftMonth(int delta) {
+    setState(() {
+      _currentMonth = DateTime(_currentMonth.year, _currentMonth.month + delta);
+    });
+  }
+
   Map<int, List<HebcalHoliday>> _buildDayMap() {
     final map = <int, List<HebcalHoliday>>{};
     for (final h in widget.holidays) {
@@ -68,212 +85,97 @@ class _MonthlyCalendarViewState extends State<MonthlyCalendarView> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context);
+    final localeTag = locale.toLanguageTag();
+    final languageCode = locale.languageCode;
+
     final dayMap = _buildDayMap();
     final firstDay = DateTime(_currentMonth.year, _currentMonth.month, 1);
     final daysInMonth =
         DateTime(_currentMonth.year, _currentMonth.month + 1, 0).day;
-    // weekday: 1=Mon..7=Sun, we want Sun=0
-    final startOffset = (firstDay.weekday % 7);
+    // DateTime.weekday: 1=Mon..7=Sun; Sunday-first grid needs Sun=0.
+    final startOffset = firstDay.weekday % 7;
+    final now = DateTime.now();
 
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return Column(
-      children: [
-        // Month navigation header
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                icon: const Icon(Icons.chevron_left),
-                onPressed:
-                    _canGoPrev
-                        ? () => setState(() {
-                          _currentMonth = DateTime(
-                            _currentMonth.year,
-                            _currentMonth.month - 1,
-                          );
-                        })
-                        : null,
-              ),
-              Text(
-                DateFormat('MMMM yyyy').format(_currentMonth),
-                style: Theme.of(
-                  context,
-                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-              ),
-              IconButton(
-                icon: const Icon(Icons.chevron_right),
-                onPressed:
-                    _canGoNext
-                        ? () => setState(() {
-                          _currentMonth = DateTime(
-                            _currentMonth.year,
-                            _currentMonth.month + 1,
-                          );
-                        })
-                        : null,
-              ),
-            ],
-          ),
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          maxWidth: MonthlyCalendarView.maxGridWidth,
         ),
-        // Day-of-week headers (Sun..Sat)
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4),
-          child: Row(
-            children:
-                ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-                    .map(
-                      (d) => Expanded(
-                        child: Center(
-                          child: Text(
-                            d,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 11,
-                              color: colorScheme.onSurface.withAlpha(153),
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                    .toList(),
-          ),
-        ),
-        const SizedBox(height: 4),
-        // Calendar grid
-        GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 7,
-            childAspectRatio: 0.75,
-          ),
-          itemCount: startOffset + daysInMonth,
-          itemBuilder: (context, index) {
-            if (index < startOffset) return const SizedBox.shrink();
-            final day = index - startOffset + 1;
-            final dayHolidays = dayMap[day] ?? [];
-            final isToday =
-                DateTime.now().year == _currentMonth.year &&
-                DateTime.now().month == _currentMonth.month &&
-                DateTime.now().day == day;
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            const horizontalPadding = 8.0;
+            final cellWidth =
+                (constraints.maxWidth - horizontalPadding * 2) / 7;
+            // Cells are a bit taller than wide on phones (room for two
+            // holiday labels) and shorter than wide on desktop.
+            final cellHeight = math.max(64.0, math.min(cellWidth * 1.2, 96.0));
+            final labelFontSize = (cellWidth / 7).clamp(10.0, 12.5);
+            final dayFontSize = (cellWidth / 4.5).clamp(13.0, 16.0);
 
-            return GestureDetector(
-              onTap:
-                  dayHolidays.isEmpty
-                      ? null
-                      : () => _showHolidayDetails(context, day, dayHolidays),
-              child: Container(
-                margin: const EdgeInsets.all(1),
-                decoration:
-                    isToday
-                        ? BoxDecoration(
-                          color: colorScheme.primaryContainer,
-                          borderRadius: BorderRadius.circular(6),
-                        )
-                        : null,
-                child: Column(
-                  children: [
-                    const SizedBox(height: 2),
-                    Text(
-                      '$day',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight:
-                            isToday ? FontWeight.bold : FontWeight.normal,
-                        color: isToday ? colorScheme.onPrimaryContainer : null,
-                      ),
+            return Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: horizontalPadding,
+              ),
+              child: Column(
+                children: [
+                  CalendarMonthHeader(
+                    title: DateFormat.yMMMM(localeTag).format(_currentMonth),
+                    onPrev: _canGoPrev ? () => _shiftMonth(-1) : null,
+                    onNext: _canGoNext ? () => _shiftMonth(1) : null,
+                  ),
+                  CalendarWeekdayRow(localeTag: localeTag),
+                  const SizedBox(height: 4),
+                  GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.zero,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 7,
+                      mainAxisExtent: cellHeight,
                     ),
-                    ...dayHolidays
-                        .take(2)
-                        .map(
-                          (h) => Container(
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 1,
-                              vertical: 1,
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 2,
-                              vertical: 1,
-                            ),
-                            decoration: BoxDecoration(
-                              color:
-                                  h.isMajor
-                                      ? colorScheme.primary.withAlpha(204)
-                                      : colorScheme.secondary.withAlpha(153),
-                              borderRadius: BorderRadius.circular(3),
-                            ),
-                            child: Text(
-                              h.hebrew,
-                              style: TextStyle(
-                                fontSize: 7,
-                                color:
-                                    h.isMajor
-                                        ? colorScheme.onPrimary
-                                        : colorScheme.onSecondary,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ),
-                    if (dayHolidays.length > 2)
-                      Text(
-                        '+${dayHolidays.length - 2}',
-                        style: TextStyle(
-                          fontSize: 7,
-                          color: colorScheme.onSurface.withAlpha(153),
-                        ),
-                      ),
-                  ],
-                ),
+                    itemCount: startOffset + daysInMonth,
+                    itemBuilder: (context, index) {
+                      if (index < startOffset) return const SizedBox.shrink();
+                      final day = index - startOffset + 1;
+                      final dayHolidays = dayMap[day] ?? const [];
+                      final date = DateTime(
+                        _currentMonth.year,
+                        _currentMonth.month,
+                        day,
+                      );
+                      return CalendarDayCell(
+                        day: day,
+                        holidays: dayHolidays,
+                        languageCode: languageCode,
+                        isToday:
+                            now.year == date.year &&
+                            now.month == date.month &&
+                            now.day == date.day,
+                        dayFontSize: dayFontSize,
+                        labelFontSize: labelFontSize,
+                        onTap:
+                            dayHolidays.isEmpty
+                                ? null
+                                : () => showModalBottomSheet(
+                                  context: context,
+                                  showDragHandle: true,
+                                  builder:
+                                      (_) => HolidayDaySheet(
+                                        date: date,
+                                        holidays: dayHolidays,
+                                      ),
+                                ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                ],
               ),
             );
           },
         ),
-      ],
-    );
-  }
-
-  void _showHolidayDetails(
-    BuildContext context,
-    int day,
-    List<HebcalHoliday> holidays,
-  ) {
-    showModalBottomSheet(
-      context: context,
-      builder:
-          (ctx) => Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  DateFormat('d MMMM yyyy').format(
-                    DateTime(_currentMonth.year, _currentMonth.month, day),
-                  ),
-                  style: Theme.of(ctx).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                ...holidays.map(
-                  (h) => ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: Icon(
-                      Icons.star,
-                      color: h.isMajor ? Colors.blue : Colors.grey,
-                    ),
-                    title: Text(h.hebrew, textAlign: TextAlign.right),
-                    subtitle: Text(h.title),
-                  ),
-                ),
-              ],
-            ),
-          ),
+      ),
     );
   }
 }
