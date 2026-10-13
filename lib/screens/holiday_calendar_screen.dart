@@ -82,13 +82,16 @@ class _HolidayCalendarScreenState extends State<HolidayCalendarScreen> {
       appBar: CustomAppBar(title: appLocalizations.holidayCalendarMenu),
       body: Column(
         children: [
-          _DateRangeRow(
-            dateFrom: _dateFrom,
-            dateTo: _dateTo,
-            onTap: _pickDateRange,
-            fromLabel: appLocalizations.dateRangeFrom,
-            toLabel: appLocalizations.dateRangeTo,
-          ),
+          // The monthly view pages month by month, so the date range only
+          // applies to the list view.
+          if (_viewMode == _ViewMode.list)
+            _DateRangeRow(
+              dateFrom: _dateFrom,
+              dateTo: _dateTo,
+              onTap: _pickDateRange,
+              fromLabel: appLocalizations.dateRangeFrom,
+              toLabel: appLocalizations.dateRangeTo,
+            ),
           SearchFilterBar(
             controller: _searchController,
             hintText: appLocalizations.search,
@@ -107,6 +110,16 @@ class _HolidayCalendarScreenState extends State<HolidayCalendarScreen> {
   }
 
   Widget _buildBody(AppLocalizations appLocalizations, Events events) {
+    // The monthly view loads its own data one month at a time.
+    if (_viewMode == _ViewMode.monthly) {
+      return SingleChildScrollView(
+        child: MonthlyCalendarView(
+          initialMonth: DateTime.now(),
+          searchText: _searchText,
+        ),
+      );
+    }
+
     if (_isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -143,18 +156,9 @@ class _HolidayCalendarScreenState extends State<HolidayCalendarScreen> {
       return Center(child: Text(appLocalizations.noSearchResults));
     }
 
-    if (_viewMode == _ViewMode.monthly) {
-      return SingleChildScrollView(
-        child: MonthlyCalendarView(
-          holidays: filtered,
-          initialMonth: _dateFrom,
-          minDate: _dateFrom,
-          maxDate: _dateTo,
-        ),
-      );
-    }
-
-    final dateFormat = DateFormat('d MMMM yyyy');
+    final locale = Localizations.localeOf(context);
+    final dateFormat = DateFormat.yMMMMEEEEd(locale.toLanguageTag());
+    final colorScheme = Theme.of(context).colorScheme;
     return ListView.builder(
       itemCount: filtered.length,
       itemBuilder: (context, index) {
@@ -162,12 +166,10 @@ class _HolidayCalendarScreenState extends State<HolidayCalendarScreen> {
         return ListTile(
           leading: Icon(
             Icons.calendar_today,
-            color: holiday.isMajor ? Colors.blue : Colors.grey,
+            color: holiday.isMajor ? colorScheme.primary : colorScheme.outline,
           ),
-          title: Text(holiday.hebrew, textAlign: TextAlign.right),
-          subtitle: Text(
-            '${holiday.title} · ${dateFormat.format(holiday.date)}',
-          ),
+          title: Text(holiday.displayName(locale.languageCode)),
+          subtitle: Text(dateFormat.format(holiday.date)),
         );
       },
     );
@@ -191,7 +193,7 @@ class _DateRangeRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fmt = DateFormat('dd/MM/yyyy');
+    final fmt = DateFormat.yMd(Localizations.localeOf(context).toLanguageTag());
     final colorScheme = Theme.of(context).colorScheme;
     return InkWell(
       onTap: onTap,
