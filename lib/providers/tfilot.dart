@@ -60,13 +60,15 @@ class Tfilot with ChangeNotifier {
     for (Nosah i in bracha.keys) {
       widgets.add(
         Expanded(
-          child: ElevatedButton(
-            onPressed:
-                i == _nosah
-                    ? null
-                    : () {
-                      updateNosah(i);
-                    },
+          // Selected nusach stays enabled (a disabled button reads as
+          // "unavailable" to screen readers) and is announced as selected.
+          child: Semantics(
+            selected: i == _nosah,
+            inMutuallyExclusiveGroup: true,
+            child: ElevatedButton(
+            onPressed: () {
+              if (i != _nosah) updateNosah(i);
+            },
             style: ButtonStyle(
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 const RoundedRectangleBorder(),
@@ -85,6 +87,7 @@ class Tfilot with ChangeNotifier {
                 fontWeight: _nosah == i ? FontWeight.bold : FontWeight.normal,
               ),
             ),
+          ),
           ),
         ),
       );
