@@ -66,28 +66,28 @@ class Tfilot with ChangeNotifier {
             selected: i == _nosah,
             inMutuallyExclusiveGroup: true,
             child: ElevatedButton(
-            onPressed: () {
-              if (i != _nosah) updateNosah(i);
-            },
-            style: ButtonStyle(
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                const RoundedRectangleBorder(),
+              onPressed: () {
+                if (i != _nosah) updateNosah(i);
+              },
+              style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  const RoundedRectangleBorder(),
+                ),
+                backgroundColor:
+                    i == _nosah
+                        ? MaterialStatePropertyAll<Color>(
+                          Theme.of(context).primaryColor,
+                        )
+                        : MaterialStatePropertyAll<Color>(Colors.blue.shade800),
               ),
-              backgroundColor:
-                  i == _nosah
-                      ? MaterialStatePropertyAll<Color>(
-                        Theme.of(context).primaryColor,
-                      )
-                      : MaterialStatePropertyAll<Color>(Colors.blue.shade800),
-            ),
-            child: Text(
-              nosahTranslate(context)[i],
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: _nosah == i ? FontWeight.bold : FontWeight.normal,
+              child: Text(
+                nosahTranslate(context)[i],
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: _nosah == i ? FontWeight.bold : FontWeight.normal,
+                ),
               ),
             ),
-          ),
           ),
         ),
       );
