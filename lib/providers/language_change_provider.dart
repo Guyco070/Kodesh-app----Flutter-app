@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kodesh_app/api/l10n/l10n.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -45,6 +46,12 @@ class LanguageChangeProvider with ChangeNotifier {
 
     if (prefsKeys.contains('language')) {
       _currentLocale = Locale(prefs.getString('language')!);
+    } else {
+      // First visit: follow the device/browser language and persist it so
+      // the other providers (which read the same key) agree on it.
+      final initial = L10n.initialLanguageCode();
+      _currentLocale = Locale(initial);
+      await prefs.setString('language', initial);
     }
 
     if (prefsKeys.contains('themeMode')) {
