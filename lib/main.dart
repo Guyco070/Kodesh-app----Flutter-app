@@ -27,6 +27,14 @@ import 'package:kodesh_app/api/l10n/app_localizations.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Flutter web renders to a canvas and only builds the accessibility tree
+  // after the user finds a hidden "Enable accessibility" button. Build it up
+  // front so screen readers and keyboard users get a usable page immediately
+  // (required for IS 5568 / WCAG 2.0 AA compliance).
+  if (kIsWeb) {
+    SemanticsBinding.instance.ensureSemantics();
+  }
+
   FlutterError.onError = (FlutterErrorDetails details) {
     logger.e(
       'Flutter error',
