@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' show DateFormat;
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
