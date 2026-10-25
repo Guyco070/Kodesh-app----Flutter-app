@@ -132,6 +132,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       locale: langProvider.currentLocale,
       title: 'Kodesh',
+      // Localized browser tab title on web.
+      onGenerateTitle: (context) => AppLocalizations.of(context)!.siteTitle,
       theme: _lightTheme,
       darkTheme: _darkTheme,
       themeMode: langProvider.themeMode,

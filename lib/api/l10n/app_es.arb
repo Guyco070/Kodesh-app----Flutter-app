@@ -210,5 +210,7 @@
     "privacyMenu": "Política de privacidad",
     "webRemindersUnavailable": "Los recordatorios están disponibles en la app Kodesh para Android y iPhone. El sitio web no puede enviar notificaciones.",
     "compassMobileOnly": "La brújula necesita un teléfono o tableta con sensor de orientación.",
-    "openInSefaria": "Estudiar en Sefaria"
+    "openInSefaria": "Estudiar en Sefaria",
+
+    "siteTitle": "Kodesh – Horarios de Shabat, festividades y del día"
 }

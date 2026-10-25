@@ -210,5 +210,7 @@
     "privacyMenu": "Политика конфиденциальности",
     "webRemindersUnavailable": "Напоминания доступны в приложении Kodesh для Android и iPhone. Сайт не может отправлять уведомления.",
     "compassMobileOnly": "Для компаса нужен телефон или планшет с датчиком направления.",
-    "openInSefaria": "Учить на Sefaria"
+    "openInSefaria": "Учить на Sefaria",
+
+    "siteTitle": "Kodesh – время Шабата, праздников и дня"
 }

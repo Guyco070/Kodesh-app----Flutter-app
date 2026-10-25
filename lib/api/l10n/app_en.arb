@@ -481,5 +481,8 @@
     "compassMobileOnly": "The compass needs a phone or tablet with a direction sensor.",
     "@compassMobileOnly": { "description": "compassMobileOnly" },
     "openInSefaria": "Learn on Sefaria",
-    "@openInSefaria": { "description": "openInSefaria" }
+    "@openInSefaria": { "description": "openInSefaria" },
+
+    "siteTitle": "Kodesh – Shabbat, holiday and daily times",
+    "@siteTitle": { "description": "Browser tab title on web" }
 }
