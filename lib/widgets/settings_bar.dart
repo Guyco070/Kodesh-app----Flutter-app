@@ -4,6 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart' as df;
 import 'package:kodesh_app/data/cities.dart';
 import 'package:kodesh_app/helpers/city_display.dart';
+import 'package:kodesh_app/widgets/settings_bar/settings_filter_chip.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/screens/event_screen.dart';
@@ -124,8 +125,12 @@ class _SettingsBarState extends State<SettingsBar> {
                                     borderRadius: BorderRadius.circular(10),
                                     color: Theme.of(context).primaryColor,
                                   ),
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.3,
+                                  // Leave room for the location button and
+                                  // the date picker so the row never runs off
+                                  // narrow screens.
+                                  width: (MediaQuery.of(context).size.width -
+                                          240)
+                                      .clamp(110.0, 360.0),
                                   child: InkWell(
                                     borderRadius: BorderRadius.circular(10),
                                     onTap: () async {
@@ -316,50 +321,26 @@ class _SettingsBarState extends State<SettingsBar> {
                     ),
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.only(top: 0),
-                  height: 30,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    spacing: 8,
+                    runSpacing: 4,
                     children: [
-                      const SizedBox(width: 30),
-                      Expanded(
-                        child: TextButton(
-                          onPressed: () => widget.updateIsOnlyShabat(),
-                          child: Text(
+                      SettingsFilterChip(
+                        label:
                             widget.viewState == ViewState.events
-                                ? widget.isOnlyShabat
-                                    ? appLocalizations.onlyShabat
-                                    : appLocalizations.viewAllEvents
+                                ? appLocalizations.onlyShabat
                                 : appLocalizations.fromNowOn,
-                            style: TextStyle(
-                              color:
-                                  widget.isOnlyShabat
-                                      ? Colors.blue
-                                      : Colors.grey,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
+                        selected: widget.isOnlyShabat,
+                        onToggle: () => widget.updateIsOnlyShabat(),
                       ),
-                      Expanded(
-                        child: TextButton(
-                          onPressed: () => widget.updateIsHebrewDate(),
-                          child: Text(
-                            widget.isHebrewDate
-                                ? appLocalizations.viewForeignDates
-                                : appLocalizations.viewHebrewDates,
-                            style: TextStyle(
-                              color:
-                                  widget.isHebrewDate
-                                      ? Colors.blue
-                                      : Colors.grey,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
+                      SettingsFilterChip(
+                        label: appLocalizations.viewHebrewDates,
+                        selected: widget.isHebrewDate,
+                        onToggle: () => widget.updateIsHebrewDate(),
                       ),
-                      const SizedBox(width: 30),
                     ],
                   ),
                 ),
