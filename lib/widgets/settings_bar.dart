@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart' as df;
 import 'package:kodesh_app/data/cities.dart';
+import 'package:kodesh_app/helpers/city_display.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/screens/event_screen.dart';
@@ -157,15 +158,18 @@ class _SettingsBarState extends State<SettingsBar> {
                                         children: [
                                           Expanded(
                                             child: Text(
-                                              cities.firstWhere(
-                                                    (c) =>
-                                                        c['eNameAndCode'] ==
-                                                        events.city,
-                                                    orElse: () => cities.first,
-                                                  )[lang
-                                                      .currentLocale
-                                                      .languageCode] ??
-                                                  events.city,
+                                              cityDisplayName(
+                                                cities.firstWhere(
+                                                      (c) =>
+                                                          c['eNameAndCode'] ==
+                                                          events.city,
+                                                      orElse:
+                                                          () => cities.first,
+                                                    )[lang
+                                                        .currentLocale
+                                                        .languageCode] ??
+                                                    events.city,
+                                              ),
                                               style: const TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.w500,
