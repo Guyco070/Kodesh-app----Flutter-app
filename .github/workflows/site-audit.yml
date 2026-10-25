@@ -1,0 +1,56 @@
+name: Verify and audit (temporary)
+
+on:
+  push:
+    branches: [chore/format-and-verify]
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Generate, format, analyze, test, build
+        run: |
+          set +e
+          mkdir -p ci-audit-out
+          flutter pub get > ci-audit-out/pubget.txt 2>&1
+          flutter gen-l10n > ci-audit-out/genl10n.txt 2>&1
+          dart format lib/ test/ > /dev/null 2>&1
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A lib test pubspec.lock
+          git commit -m "style: gen-l10n, dart format, lockfile" > /dev/null 2>&1 && git push > /dev/null 2>&1
+          flutter analyze > ci-audit-out/analyze.txt 2>&1; echo "analyze exit $?" >> ci-audit-out/analyze.txt
+          flutter test test/unit/ > ci-audit-out/test.txt 2>&1; echo "test exit $?" >> ci-audit-out/test.txt
+          flutter build web --release --base-href / > ci-audit-out/build.txt 2>&1; echo "build exit $?" >> ci-audit-out/build.txt
+          exit 0
+      - name: Audit
+        run: |
+          set +e
+          if ! grep -q "build exit 0" ci-audit-out/build.txt; then echo "build failed, skipping audit"; exit 0; fi
+          cd ci-audit
+          npm install > ../ci-audit-out/install.txt 2>&1
+          npx playwright install --with-deps chromium >> ../ci-audit-out/install.txt 2>&1
+          (cd ../build/web && python3 -m http.server 8080 > /dev/null 2>&1 &)
+          sleep 2
+          node audit.mjs > ../ci-audit-out/run-log.txt 2>&1; echo "audit exit $?" >> ../ci-audit-out/run-log.txt
+          cp -r audit-out/. ../ci-audit-out/ 2>/dev/null
+          exit 0
+      - name: Push results
+        if: always()
+        run: |
+          git checkout -B audit-results
+          git add -f ci-audit-out
+          git commit -m "ci: verify and audit results" > /dev/null || true
+          git push -f origin audit-results

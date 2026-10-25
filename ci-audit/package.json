@@ -1,0 +1,9 @@
+{
+  "name": "kodesh-site-audit",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "playwright": "^1.48.2",
+    "@axe-core/playwright": "^4.10.0"
+  }
+}
