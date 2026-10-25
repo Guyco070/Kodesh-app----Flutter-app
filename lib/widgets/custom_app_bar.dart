@@ -43,6 +43,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   (!noBackBotton
                       ? IconButton(
                         onPressed: () => Navigator.maybePop(context),
+                        tooltip:
+                            MaterialLocalizations.of(context).backButtonTooltip,
                         icon: const Icon(Icons.chevron_left_outlined),
                       )
                       : null),

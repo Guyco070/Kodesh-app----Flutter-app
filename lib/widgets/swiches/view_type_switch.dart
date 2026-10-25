@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/screens/event_screen.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
+import 'package:kodesh_app/widgets/swiches/view_type_switch/view_type_tab.dart';
 
 class ViewTypeSwitch extends StatelessWidget {
   const ViewTypeSwitch({
@@ -21,85 +21,19 @@ class ViewTypeSwitch extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: ElevatedButton(
-              style: ButtonStyle(
-                elevation: MaterialStateProperty.all(0),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius:
-                        !LanguageChangeProvider.isDirectionRTL(null)
-                            ? const BorderRadius.only(
-                              topLeft: Radius.circular(50),
-                            )
-                            : const BorderRadius.only(
-                              topRight: Radius.circular(50),
-                            ),
-                  ),
-                ),
-                backgroundColor:
-                    viewState == ViewState.events
-                        ? const MaterialStatePropertyAll<Color>(
-                          Color(0xFF003080),
-                        )
-                        : MaterialStatePropertyAll<Color>(Colors.blue.shade700),
-              ),
-              onPressed:
-                  viewState != ViewState.events
-                      ? () => setViewState(ViewState.events)
-                      : null,
-              child: FittedBox(
-                child: Text(
-                  appLocalizations.weekEvents,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight:
-                        viewState == ViewState.events
-                            ? FontWeight.bold
-                            : FontWeight.normal,
-                  ),
-                ),
-              ),
+            child: ViewTypeTab(
+              label: appLocalizations.weekEvents,
+              selected: viewState == ViewState.events,
+              roundedStart: true,
+              onSelected: () => setViewState(ViewState.events),
             ),
           ),
           Expanded(
-            child: ElevatedButton(
-              style: ButtonStyle(
-                elevation: MaterialStateProperty.all(0),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius:
-                        LanguageChangeProvider.isDirectionRTL(null)
-                            ? const BorderRadius.only(
-                              topLeft: Radius.circular(50),
-                            )
-                            : const BorderRadius.only(
-                              topRight: Radius.circular(50),
-                            ),
-                  ),
-                ),
-                backgroundColor:
-                    viewState == ViewState.zmanim
-                        ? const MaterialStatePropertyAll<Color>(
-                          Color(0xFF003080),
-                        )
-                        : MaterialStatePropertyAll<Color>(Colors.blue.shade700),
-              ),
-              onPressed:
-                  viewState != ViewState.zmanim
-                      ? () => setViewState(ViewState.zmanim)
-                      : () {},
-              child: FittedBox(
-                child: Text(
-                  appLocalizations.todayTimes,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight:
-                        viewState == ViewState.zmanim
-                            ? FontWeight.bold
-                            : FontWeight.normal,
-                  ),
-                ),
-              ),
+            child: ViewTypeTab(
+              label: appLocalizations.todayTimes,
+              selected: viewState == ViewState.zmanim,
+              roundedStart: false,
+              onSelected: () => setViewState(ViewState.zmanim),
             ),
           ),
         ],

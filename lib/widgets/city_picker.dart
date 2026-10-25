@@ -9,12 +9,17 @@ class CitySearchDelegate extends SearchDelegate<Map?> {
   @override
   List<Widget> buildActions(BuildContext context) => [
     if (query.isNotEmpty)
-      IconButton(icon: const Icon(Icons.clear), onPressed: () => query = ''),
+      IconButton(
+        icon: const Icon(Icons.clear),
+        tooltip: MaterialLocalizations.of(context).deleteButtonTooltip,
+        onPressed: () => query = '',
+      ),
   ];
 
   @override
   Widget buildLeading(BuildContext context) => IconButton(
-    icon: const Icon(Icons.arrow_back),
+    icon: const BackButtonIcon(),
+    tooltip: MaterialLocalizations.of(context).backButtonTooltip,
     onPressed: () => close(context, null),
   );
 

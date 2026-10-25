@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kodesh_app/api/l10n/app_localizations.dart';
 import 'package:kodesh_app/providers/tfilot.dart';
 import 'package:provider/provider.dart';
 
@@ -54,7 +55,7 @@ class _TefilaWidgetState extends State<TefilaWidget> {
               ClipPath(
                 // borderRadius: BorderRadius.circular(200),
                 clipper: MyCustomClipper(),
-                child: Image.asset(widget.imagePath!),
+                child: Image.asset(widget.imagePath!, excludeFromSemantics: true),
               ),
             if (widget.imageExtaLine != null)
               Padding(
@@ -78,14 +79,17 @@ class _TefilaWidgetState extends State<TefilaWidget> {
               children: [
                 IconButton(
                   onPressed: resetFontSizeScale,
+                  tooltip: AppLocalizations.of(context)!.textSizeReset,
                   icon: const Icon(Icons.restart_alt, size: 28),
                 ),
                 IconButton(
                   onPressed: increaseFontSizeScale,
+                  tooltip: AppLocalizations.of(context)!.textSizeIncrease,
                   icon: const Icon(Icons.zoom_in, size: 28),
                 ),
                 IconButton(
                   onPressed: decreaseFontSizeScale,
+                  tooltip: AppLocalizations.of(context)!.textSizeDecrease,
                   icon: const Icon(Icons.zoom_out, size: 28),
                 ),
               ],

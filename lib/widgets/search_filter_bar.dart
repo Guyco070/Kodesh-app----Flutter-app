@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
 class SearchFilterBar extends StatelessWidget {
   const SearchFilterBar({
@@ -25,6 +26,7 @@ class SearchFilterBar extends StatelessWidget {
           suffixIcon:
               controller.text.isNotEmpty
                   ? IconButton(
+                    tooltip: AppLocalizations.of(context)!.clearSearch,
                     icon: const Icon(Icons.clear),
                     onPressed: () {
                       controller.clear();

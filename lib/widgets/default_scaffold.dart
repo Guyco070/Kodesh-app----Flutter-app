@@ -143,6 +143,7 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
           builder: (context) {
             return IconButton(
               onPressed: () => Scaffold.of(context).openDrawer(),
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
               icon: const Icon(Icons.drag_indicator_outlined),
             );
           },

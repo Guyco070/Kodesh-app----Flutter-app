@@ -121,6 +121,7 @@ class _ShabatAndHolidaysCheckListState
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showAddTaskDialog(context, reminders, l10n),
+        tooltip: l10n.addCustomTask,
         child: const Icon(Icons.add),
       ),
       body:
@@ -186,6 +187,7 @@ class _ShabatAndHolidaysCheckListState
                             ),
                             title: Text(task),
                             trailing: IconButton(
+                              tooltip: l10n.deleteTask,
                               icon: const Icon(
                                 Icons.delete_outline,
                                 color: Colors.red,

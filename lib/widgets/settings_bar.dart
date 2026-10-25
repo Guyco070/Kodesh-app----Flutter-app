@@ -275,6 +275,10 @@ class _SettingsBarState extends State<SettingsBar> {
                                                 setIsLoadingZmanim:
                                                     widget.setIsLoadingZmanim,
                                               ),
+                                          tooltip:
+                                              AppLocalizations.of(
+                                                context,
+                                              )!.previousDay,
                                           icon: const Icon(
                                             Icons.remove,
                                             size: 20,
@@ -291,6 +295,10 @@ class _SettingsBarState extends State<SettingsBar> {
                                                 setIsLoadingZmanim:
                                                     widget.setIsLoadingZmanim,
                                               ),
+                                          tooltip:
+                                              AppLocalizations.of(
+                                                context,
+                                              )!.nextDay,
                                           icon: const Icon(Icons.add, size: 20),
                                         ),
                                       ],
@@ -357,6 +365,7 @@ class _SettingsBarState extends State<SettingsBar> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       IconButton(
+                        tooltip: AppLocalizations.of(context)!.backToToday,
                         iconSize: _isExpanded ? 22 : 20,
                         onPressed: () {
                           DateTime today = DateTime.now();
