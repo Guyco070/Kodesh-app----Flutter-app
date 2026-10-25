@@ -3,6 +3,8 @@ import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/screens/shabat_and_holidays_check_list.dart';
 import 'package:provider/provider.dart';
 import 'package:kodesh_app/screens/about.dart';
+import 'package:kodesh_app/screens/accessibility_statement_screen.dart';
+import 'package:kodesh_app/screens/privacy_policy_screen.dart';
 import 'package:kodesh_app/screens/compass_screen.dart';
 import 'package:kodesh_app/screens/schedule_notifications.dart';
 import 'package:kodesh_app/screens/tefilot/adlakat_nerot.dart';
@@ -219,10 +221,34 @@ class _AppDrawerState extends State<AppDrawer> {
           const Divider(indent: 18, endIndent: 18),
           SafeArea(
             top: false,
-            child: ListTile(
-              leading: const Icon(Icons.info_outline),
-              title: Text(appLocalizations.aboutMenu),
-              onTap: () => Navigator.pushNamed(context, AboutScreen.routeName),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.info_outline),
+                  title: Text(appLocalizations.aboutMenu),
+                  onTap:
+                      () => Navigator.pushNamed(context, AboutScreen.routeName),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.accessibility_new),
+                  title: Text(appLocalizations.accessibilityMenu),
+                  onTap:
+                      () => Navigator.pushNamed(
+                        context,
+                        AccessibilityStatementScreen.routeName,
+                      ),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.privacy_tip_outlined),
+                  title: Text(appLocalizations.privacyMenu),
+                  onTap:
+                      () => Navigator.pushNamed(
+                        context,
+                        PrivacyPolicyScreen.routeName,
+                      ),
+                ),
+              ],
             ),
           ),
         ],

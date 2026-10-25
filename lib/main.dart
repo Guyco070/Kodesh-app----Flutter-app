@@ -7,6 +7,8 @@ import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/providers/reminders.dart';
 import 'package:kodesh_app/providers/tfilot.dart';
 import 'package:kodesh_app/screens/about.dart';
+import 'package:kodesh_app/screens/accessibility_statement_screen.dart';
+import 'package:kodesh_app/screens/privacy_policy_screen.dart';
 import 'package:kodesh_app/screens/compass_screen.dart';
 import 'package:kodesh_app/screens/shabat_and_holidays_check_list.dart';
 import 'package:kodesh_app/screens/schedule_notifications.dart';
@@ -157,6 +159,9 @@ class MyApp extends StatelessWidget {
         DafYomiScreen.routeName: (_) => const DafYomiScreen(),
         HolidayCalendarScreen.routeName: (_) => const HolidayCalendarScreen(),
         AboutScreen.routeName: (_) => const AboutScreen(),
+        AccessibilityStatementScreen.routeName:
+            (_) => const AccessibilityStatementScreen(),
+        PrivacyPolicyScreen.routeName: (_) => const PrivacyPolicyScreen(),
       },
     );
   }
