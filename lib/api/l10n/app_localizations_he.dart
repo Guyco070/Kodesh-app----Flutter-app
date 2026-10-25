@@ -432,4 +432,50 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get testNotificationSent => 'התראת הבדיקה נשלחה';
+
+  @override
+  String get previousDay => 'היום הקודם';
+
+  @override
+  String get nextDay => 'היום הבא';
+
+  @override
+  String get backToToday => 'חזרה להיום';
+
+  @override
+  String get textSizeIncrease => 'הגדלת טקסט';
+
+  @override
+  String get textSizeDecrease => 'הקטנת טקסט';
+
+  @override
+  String get textSizeReset => 'איפוס גודל טקסט';
+
+  @override
+  String get deleteTask => 'מחיקת משימה';
+
+  @override
+  String get clearSearch => 'ניקוי חיפוש';
+
+  @override
+  String get accessibilityMenu => 'הצהרת נגישות';
+
+  @override
+  String get privacyMenu => 'מדיניות פרטיות';
+
+  @override
+  String get webRemindersUnavailable =>
+      'התזכורות זמינות באפליקציית קודש לאנדרואיד ולאייפון. האתר אינו יכול לשלוח התראות.';
+
+  @override
+  String get compassMobileOnly => 'המצפן דורש טלפון או טאבלט עם חיישן כיוון.';
+
+  @override
+  String get openInSefaria => 'ללימוד בספריא';
+
+  @override
+  String get siteTitle => 'קודש – זמני שבת, חגים וזמני היום';
+
+  @override
+  String get selectLanguage => 'שפה';
 }

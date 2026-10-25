@@ -55,7 +55,10 @@ class _TefilaWidgetState extends State<TefilaWidget> {
               ClipPath(
                 // borderRadius: BorderRadius.circular(200),
                 clipper: MyCustomClipper(),
-                child: Image.asset(widget.imagePath!, excludeFromSemantics: true),
+                child: Image.asset(
+                  widget.imagePath!,
+                  excludeFromSemantics: true,
+                ),
               ),
             if (widget.imageExtaLine != null)
               Padding(

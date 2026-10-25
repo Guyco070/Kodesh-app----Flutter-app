@@ -262,7 +262,6 @@ class _ViewToggle extends StatelessWidget {
         ],
         selected: {viewMode},
         onSelectionChanged: (s) => onChanged(s.first),
-
       ),
     );
   }

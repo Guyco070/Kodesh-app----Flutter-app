@@ -899,6 +899,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Test notification sent'**
   String get testNotificationSent;
+
+  /// previousDay
+  ///
+  /// In en, this message translates to:
+  /// **'Previous day'**
+  String get previousDay;
+
+  /// nextDay
+  ///
+  /// In en, this message translates to:
+  /// **'Next day'**
+  String get nextDay;
+
+  /// backToToday
+  ///
+  /// In en, this message translates to:
+  /// **'Back to today'**
+  String get backToToday;
+
+  /// textSizeIncrease
+  ///
+  /// In en, this message translates to:
+  /// **'Larger text'**
+  String get textSizeIncrease;
+
+  /// textSizeDecrease
+  ///
+  /// In en, this message translates to:
+  /// **'Smaller text'**
+  String get textSizeDecrease;
+
+  /// textSizeReset
+  ///
+  /// In en, this message translates to:
+  /// **'Reset text size'**
+  String get textSizeReset;
+
+  /// deleteTask
+  ///
+  /// In en, this message translates to:
+  /// **'Delete task'**
+  String get deleteTask;
+
+  /// clearSearch
+  ///
+  /// In en, this message translates to:
+  /// **'Clear search'**
+  String get clearSearch;
+
+  /// accessibilityMenu
+  ///
+  /// In en, this message translates to:
+  /// **'Accessibility statement'**
+  String get accessibilityMenu;
+
+  /// privacyMenu
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy policy'**
+  String get privacyMenu;
+
+  /// webRemindersUnavailable
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders are available in the Kodesh app for Android and iPhone. The website can\'t send notifications.'**
+  String get webRemindersUnavailable;
+
+  /// compassMobileOnly
+  ///
+  /// In en, this message translates to:
+  /// **'The compass needs a phone or tablet with a direction sensor.'**
+  String get compassMobileOnly;
+
+  /// openInSefaria
+  ///
+  /// In en, this message translates to:
+  /// **'Learn on Sefaria'**
+  String get openInSefaria;
+
+  /// Browser tab title on web
+  ///
+  /// In en, this message translates to:
+  /// **'Kodesh – Shabbat, holiday and daily times'**
+  String get siteTitle;
+
+  /// Screen reader label for the language picker
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get selectLanguage;
 }
 
 class _AppLocalizationsDelegate

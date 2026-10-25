@@ -325,7 +325,10 @@ class Events with ChangeNotifier {
         'tzid': _webTzid ?? 'UTC',
       });
     } else {
-      url = Uri.https('www.hebcal.com', '/shabbat', {...base, 'geonameid': geoId});
+      url = Uri.https('www.hebcal.com', '/shabbat', {
+        ...base,
+        'geonameid': geoId,
+      });
     }
     var response = await get(url);
     if ((jsonDecode(response.body) as Map<String, dynamic>).keys.contains(
@@ -615,7 +618,10 @@ class Events with ChangeNotifier {
         'tzid': _webTzid ?? 'UTC',
       });
     } else {
-      url = Uri.https('www.hebcal.com', '/zmanim', {...base, 'geonameid': geoId});
+      url = Uri.https('www.hebcal.com', '/zmanim', {
+        ...base,
+        'geonameid': geoId,
+      });
     }
     var response = await get(url);
     if ((jsonDecode(response.body) as Map<String, dynamic>).keys.contains(

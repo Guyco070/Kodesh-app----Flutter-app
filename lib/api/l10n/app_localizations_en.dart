@@ -435,4 +435,51 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get testNotificationSent => 'Test notification sent';
+
+  @override
+  String get previousDay => 'Previous day';
+
+  @override
+  String get nextDay => 'Next day';
+
+  @override
+  String get backToToday => 'Back to today';
+
+  @override
+  String get textSizeIncrease => 'Larger text';
+
+  @override
+  String get textSizeDecrease => 'Smaller text';
+
+  @override
+  String get textSizeReset => 'Reset text size';
+
+  @override
+  String get deleteTask => 'Delete task';
+
+  @override
+  String get clearSearch => 'Clear search';
+
+  @override
+  String get accessibilityMenu => 'Accessibility statement';
+
+  @override
+  String get privacyMenu => 'Privacy policy';
+
+  @override
+  String get webRemindersUnavailable =>
+      'Reminders are available in the Kodesh app for Android and iPhone. The website can\'t send notifications.';
+
+  @override
+  String get compassMobileOnly =>
+      'The compass needs a phone or tablet with a direction sensor.';
+
+  @override
+  String get openInSefaria => 'Learn on Sefaria';
+
+  @override
+  String get siteTitle => 'Kodesh – Shabbat, holiday and daily times';
+
+  @override
+  String get selectLanguage => 'Language';
 }

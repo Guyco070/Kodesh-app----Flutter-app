@@ -257,7 +257,7 @@ class _EventScreenState extends State<EventScreen> {
                     _zmanimSearchQuery.isNotEmpty
                         ? IconButton(
                           tooltip: AppLocalizations.of(context)!.clearSearch,
-                    icon: const Icon(Icons.clear),
+                          icon: const Icon(Icons.clear),
                           onPressed: () {
                             _zmanimSearchController.clear();
                             setState(() => _zmanimSearchQuery = '');

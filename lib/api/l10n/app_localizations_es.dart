@@ -437,4 +437,51 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get testNotificationSent => 'Notificación de prueba enviada';
+
+  @override
+  String get previousDay => 'Día anterior';
+
+  @override
+  String get nextDay => 'Día siguiente';
+
+  @override
+  String get backToToday => 'Volver a hoy';
+
+  @override
+  String get textSizeIncrease => 'Texto más grande';
+
+  @override
+  String get textSizeDecrease => 'Texto más pequeño';
+
+  @override
+  String get textSizeReset => 'Restablecer tamaño del texto';
+
+  @override
+  String get deleteTask => 'Eliminar tarea';
+
+  @override
+  String get clearSearch => 'Borrar búsqueda';
+
+  @override
+  String get accessibilityMenu => 'Declaración de accesibilidad';
+
+  @override
+  String get privacyMenu => 'Política de privacidad';
+
+  @override
+  String get webRemindersUnavailable =>
+      'Los recordatorios están disponibles en la app Kodesh para Android y iPhone. El sitio web no puede enviar notificaciones.';
+
+  @override
+  String get compassMobileOnly =>
+      'La brújula necesita un teléfono o tableta con sensor de orientación.';
+
+  @override
+  String get openInSefaria => 'Estudiar en Sefaria';
+
+  @override
+  String get siteTitle => 'Kodesh – Horarios de Shabat, festividades y del día';
+
+  @override
+  String get selectLanguage => 'Idioma';
 }

@@ -436,4 +436,51 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get testNotificationSent => 'Тестовое уведомление отправлено';
+
+  @override
+  String get previousDay => 'Предыдущий день';
+
+  @override
+  String get nextDay => 'Следующий день';
+
+  @override
+  String get backToToday => 'Вернуться к сегодняшнему дню';
+
+  @override
+  String get textSizeIncrease => 'Увеличить текст';
+
+  @override
+  String get textSizeDecrease => 'Уменьшить текст';
+
+  @override
+  String get textSizeReset => 'Сбросить размер текста';
+
+  @override
+  String get deleteTask => 'Удалить задачу';
+
+  @override
+  String get clearSearch => 'Очистить поиск';
+
+  @override
+  String get accessibilityMenu => 'Заявление о доступности';
+
+  @override
+  String get privacyMenu => 'Политика конфиденциальности';
+
+  @override
+  String get webRemindersUnavailable =>
+      'Напоминания доступны в приложении Kodesh для Android и iPhone. Сайт не может отправлять уведомления.';
+
+  @override
+  String get compassMobileOnly =>
+      'Для компаса нужен телефон или планшет с датчиком направления.';
+
+  @override
+  String get openInSefaria => 'Учить на Sefaria';
+
+  @override
+  String get siteTitle => 'Kodesh – время Шабата, праздников и дня';
+
+  @override
+  String get selectLanguage => 'Язык';
 }

@@ -79,9 +79,7 @@ class _DafYomiScreenState extends State<DafYomiScreen> {
             children: [
               Text(
                 appLocalizations.todaysDaf,
-                style: Theme.of(
-                  context,
-                ).textTheme.labelMedium?.copyWith(
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
               ),
