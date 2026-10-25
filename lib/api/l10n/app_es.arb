@@ -196,5 +196,19 @@
     "sendTestNotification": "Enviar notificación de prueba",
     "testNotificationTitle": "Notificación de prueba",
     "testNotificationBody": "¡Las notificaciones funcionan correctamente!",
-    "testNotificationSent": "Notificación de prueba enviada"
+    "testNotificationSent": "Notificación de prueba enviada",
+
+    "previousDay": "Día anterior",
+    "nextDay": "Día siguiente",
+    "backToToday": "Volver a hoy",
+    "textSizeIncrease": "Texto más grande",
+    "textSizeDecrease": "Texto más pequeño",
+    "textSizeReset": "Restablecer tamaño del texto",
+    "deleteTask": "Eliminar tarea",
+    "clearSearch": "Borrar búsqueda",
+    "accessibilityMenu": "Declaración de accesibilidad",
+    "privacyMenu": "Política de privacidad",
+    "webRemindersUnavailable": "Los recordatorios están disponibles en la app Kodesh para Android y iPhone. El sitio web no puede enviar notificaciones.",
+    "compassMobileOnly": "La brújula necesita un teléfono o tableta con sensor de orientación.",
+    "openInSefaria": "Estudiar en Sefaria"
 }

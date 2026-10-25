@@ -161,5 +161,19 @@
     "sendTestNotification": "שלח התראת בדיקה",
     "testNotificationTitle": "התראת בדיקה",
     "testNotificationBody": "ההתראות עובדות כראוי!",
-    "testNotificationSent": "התראת הבדיקה נשלחה"
+    "testNotificationSent": "התראת הבדיקה נשלחה",
+
+    "previousDay": "היום הקודם",
+    "nextDay": "היום הבא",
+    "backToToday": "חזרה להיום",
+    "textSizeIncrease": "הגדלת טקסט",
+    "textSizeDecrease": "הקטנת טקסט",
+    "textSizeReset": "איפוס גודל טקסט",
+    "deleteTask": "מחיקת משימה",
+    "clearSearch": "ניקוי חיפוש",
+    "accessibilityMenu": "הצהרת נגישות",
+    "privacyMenu": "מדיניות פרטיות",
+    "webRemindersUnavailable": "התזכורות זמינות באפליקציית קודש לאנדרואיד ולאייפון. האתר אינו יכול לשלוח התראות.",
+    "compassMobileOnly": "המצפן דורש טלפון או טאבלט עם חיישן כיוון.",
+    "openInSefaria": "ללימוד בספריא"
 }

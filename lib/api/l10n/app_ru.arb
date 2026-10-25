@@ -196,5 +196,19 @@
     "sendTestNotification": "Отправить тестовое уведомление",
     "testNotificationTitle": "Тестовое уведомление",
     "testNotificationBody": "Уведомления работают правильно!",
-    "testNotificationSent": "Тестовое уведомление отправлено"
+    "testNotificationSent": "Тестовое уведомление отправлено",
+
+    "previousDay": "Предыдущий день",
+    "nextDay": "Следующий день",
+    "backToToday": "Вернуться к сегодняшнему дню",
+    "textSizeIncrease": "Увеличить текст",
+    "textSizeDecrease": "Уменьшить текст",
+    "textSizeReset": "Сбросить размер текста",
+    "deleteTask": "Удалить задачу",
+    "clearSearch": "Очистить поиск",
+    "accessibilityMenu": "Заявление о доступности",
+    "privacyMenu": "Политика конфиденциальности",
+    "webRemindersUnavailable": "Напоминания доступны в приложении Kodesh для Android и iPhone. Сайт не может отправлять уведомления.",
+    "compassMobileOnly": "Для компаса нужен телефон или планшет с датчиком направления.",
+    "openInSefaria": "Учить на Sefaria"
 }
