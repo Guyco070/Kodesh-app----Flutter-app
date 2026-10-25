@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kodesh_app/animations/expanded_section.dart';
 import 'package:kodesh_app/api/notification_api.dart';
@@ -160,6 +161,38 @@ class _ScheduleNotificationsScreenState
           ],
         ),
       ];
+    }
+
+    // Browsers can't receive scheduled local notifications, so on the web the
+    // settings would do nothing; point people to the app instead.
+    if (kIsWeb) {
+      return Scaffold(
+        appBar: CustomAppBar(title: appLocalizations.settingRemindersMenu),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 480),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.notifications_off_outlined,
+                    size: 56,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    appLocalizations.webRemindersUnavailable,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
     }
 
     return Scaffold(

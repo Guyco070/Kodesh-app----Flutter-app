@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'dart:math';
 
@@ -91,6 +92,15 @@ class _CompassWidgetState extends State<CompassWidget> {
               label: Text(appLocalizations.enableCompass),
               onPressed: _requestAndStart,
             ),
+            if (kIsWeb)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
+                child: Text(
+                  appLocalizations.compassMobileOnly,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ),
           ],
         ),
       );
