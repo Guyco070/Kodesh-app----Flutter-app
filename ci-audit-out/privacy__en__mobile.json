@@ -1,0 +1,46 @@
+{
+  "id": "privacy__en__mobile",
+  "name": "privacy",
+  "hash": "#/privacy",
+  "lang": "en",
+  "vp": "mobile",
+  "loadMs": 5232,
+  "html": {
+    "lang": "en",
+    "dir": "",
+    "title": "Kodesh – Shabbat, holiday and daily times",
+    "description": "קודש – זמני כניסת ויציאת שבת, זמני חגים, זמני היום ההלכתיים, לוח חגים, דף יומי ותפילות. Shabbat and holiday times, zmanim, Jewish holiday calendar, Daf Yomi and prayers.",
+    "viewport": "width=device-width, initial-scale=1.0, maximum-scale=5.0",
+    "hasPlaceholder": false
+  },
+  "semanticsNodesBefore": 19,
+  "semanticsNodesAfter": 19,
+  "aria": "- button \"Back\"\n- heading \"Privacy policy\" [level=2]\n- group:\n  - text: Your privacy matters to us. The site works without registration, tracking cookies, analytics or advertising tools, and we have no server that collects information about you.\n  - heading \"What is stored and where\" [level=2]\n  - text: Your preferences, such as language, city, display options and your pre-Shabbat task list, are stored only in your browser (Local Storage). They are not sent to us, and you can delete them at any time by clearing this site's data in your browser.\n  - heading \"Location\" [level=2]\n  - text: \"If you choose to use your location, your browser will ask for permission. Your location is used only to find the nearest city and calculate times: the coordinates are sent to OpenStreetMap Nominatim and Hebcal for that purpose only and are not stored by us. You can pick a city from the list instead of sharing your location.\"\n  - heading \"External services\" [level=2]\n  - text: \"To show its content, your browser contacts the following services directly. Each has its own privacy policy: • Hebcal.com – Shabbat, holiday and daily times. • Sefaria.org – Daf Yomi. • OpenStreetMap Nominatim – finding your city from your location (only if you choose to). • Google (gstatic.com) – display components and fonts the site loads. • The site's hosting provider – may record technical details such as IP address and browser type in server logs.\"\n  - heading \"Contact\" [level=2]\n  - text: Questions about privacy? This policy was last updated on October 25, 2026.",
+  "axe": [
+    {
+      "id": "scrollable-region-focusable",
+      "impact": "serious",
+      "help": "Scrollable region must have keyboard access",
+      "nodes": 1,
+      "sample": [
+        "<flt-semantics id=\"flt-semantic-node-6\" role=\"group\" style=\"position: absolute; scrollbar-width: none; overflow-y: scroll; touch-action: none; pointer-events: none; z-index: 2; width: 390px; height: 7"
+      ]
+    }
+  ],
+  "tabOrder": [
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=null label=",
+    "flt-semantics role=group label=Your privacy matters to us. The site works without registrat",
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=null label=",
+    "flt-semantics role=group label=Your privacy matters to us. The site works without registrat",
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=null label=",
+    "flt-semantics role=group label=Your privacy matters to us. The site works without registrat"
+  ],
+  "console": [],
+  "failedRequests": []
+}

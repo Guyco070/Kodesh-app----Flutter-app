@@ -1,0 +1,36 @@
+{
+  "id": "havdalah__en__mobile",
+  "name": "havdalah",
+  "hash": "#/havdalah",
+  "lang": "en",
+  "vp": "mobile",
+  "loadMs": 5507,
+  "html": {
+    "lang": "en",
+    "dir": "",
+    "title": "Kodesh – Shabbat, holiday and daily times",
+    "description": "קודש – זמני כניסת ויציאת שבת, זמני חגים, זמני היום ההלכתיים, לוח חגים, דף יומי ותפילות. Shabbat and holiday times, zmanim, Jewish holiday calendar, Daf Yomi and prayers.",
+    "viewport": "width=device-width, initial-scale=1.0, maximum-scale=5.0",
+    "hasPlaceholder": false
+  },
+  "semanticsNodesBefore": 14,
+  "semanticsNodesAfter": 14,
+  "aria": "- button \"Back\"\n- heading \"Havdalah\" [level=2]\n- group:\n  - button \"Ashkenaz Virsion\"\n  - button \"Mizrah Virsion\"\n  - button \"Reset text size\"\n  - button \"Larger text\"\n  - button \"Smaller text\"\n  - text: \"רִאשׁוֹן לְצִיּוֹן הִנֵּה הִנָּם, וְלִירוּשָׁלַיִם מְבַשֵּׂר אֶתֵּן. אַל תִּשְׂמְחִי אוֹיַבְתִּי לִי כִּי נָפַלְתִּי קַמְתִּי, כִּי אֵשֵׁב בַּחוֹשֶׁךְ יְהֹוָה אוֹר לִי. לַיּהוּדִים הָיְתָה אוֹרָה וְשִׂמְחָה, וְשָׂשֹׂן וִיקָר. וַיְהִי דָוִד לְכָל דְּרָכָיו מַשְׂכִּיל וַיהֹוָה עִמּוֹ. וְנֹחַ מָצָא חֵן בְּעֵינֵי יְהֹוָה כֵּן נִמְצָא חֵן וְשֵׂכֶל טוֹב בְּעֵינֵי אֱלֹהִים וְאָדָם. קוּמִי אוֹרִי כִּי בָא אוֹרֵךְ, וּכְבוֹד יְהֹוָה עָלַיִךְ זָרַח. כִּי הִנֵּה הַחֹשֶׁךְ יְכַסֶּה אֶרֶץ וַעֲרָפֶל לְאֻמִּים, וְעָלַיִךְ יִזְרַח יְהֹוָה וּכְבוֹדוֹ עָלַיִךְ יֵרָאֶה. ויקח הכוס בידו ויאמר: כּוֹס ישׁוּעוֹת אֶשָּׂא, וּבְשֵׁם יְהֹוָה אֶקְרָא. אָנָּא יְהֹוָה הוֹשִׁיעָה נָּא (שתי פעמים). אָנָּא יְהֹוָה הַצְלִיחָה נָא (שתי פעמים). הַצְלִיחֵנוּ, הַצְלַח דּרָכֵינוּ, הַצְלַח לִמּוּדֵינוּ, וּשְׁלַח בְּרָכָה רְוָחָה וְהַצְלָחָה בְּכָל מַעֲשֵׂה יָדֵינוּ, כְּדִכְתִיב יִשָּׂא בְרָכָה מֵאֵת יְהֹוָה וּצְדָקָה מֵאֱלֹהֵי יִשְׁעוֹ. לַיּהוּדִים הָיְתָה אוֹרָה וְשִׂמְחָה, וְשָׂשֹׂן וִיקָר. וּכְתִיב וַיְהִי דָוִד לְכָל דְּרָכָיו מַשְׂכִּיל, וַיהֹוָה עִמּוֹ. כֵּן יִהְיֶה עִמָּנוּ תָמִיד. סַבְרֵי מָרָנָן. (ועונים:) לחַיִּים. בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, בּוֹרֵא פְּרִי הַגֶּפֶן. (במוצאי יו\\\"ט שאינו מוצ\\\"ש אֵין מברכים על הבשמים ועל הנר) לוקח הבשמים בימינו ומברך: בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, בּוֹרֵא עֲצֵי (עִשְׂבֵּי) (מִינֵי) בְשָׂמִים. ועל הנר מברך: בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, בּוֹרֵא מְאוֹרֵי הָאֵשׁ. בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם, הַמַּבְדִּיל בֵּין קֹדֶשׁ לְחוֹל וּבֵין אוֹר לְחֹשֶׁךְ וּבֵין יִשְׂרָאֵל לָעַמִּים וּבֵין יוֹם הַשְּׁבִיעִי לְשֵׁשֶׁת יְמֵי הַמַּעֲשֶׂה. בָּרוּךְ אַתָּה יְהֹוָה, הַמַּבְדִּיל בֵּין קֹדֶשׁ לְחוֹל.\"",
+  "axe": [],
+  "tabOrder": [
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=button label=Ashkenaz Virsion",
+    "flt-semantics role=button label=Mizrah Virsion",
+    "flt-semantics role=button label=Reset text size",
+    "flt-semantics role=button label=Larger text",
+    "flt-semantics role=button label=Smaller text",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=BackHavdalahAshkenaz VirsionMizrah VirsionReset text sizeLar",
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=button label=Ashkenaz Virsion",
+    "flt-semantics role=button label=Mizrah Virsion",
+    "flt-semantics role=button label=Reset text size"
+  ],
+  "console": [],
+  "failedRequests": []
+}

@@ -1,0 +1,46 @@
+{
+  "id": "accessibility__en__mobile",
+  "name": "accessibility",
+  "hash": "#/accessibility",
+  "lang": "en",
+  "vp": "mobile",
+  "loadMs": 5282,
+  "html": {
+    "lang": "en",
+    "dir": "",
+    "title": "Kodesh – Shabbat, holiday and daily times",
+    "description": "קודש – זמני כניסת ויציאת שבת, זמני חגים, זמני היום ההלכתיים, לוח חגים, דף יומי ותפילות. Shabbat and holiday times, zmanim, Jewish holiday calendar, Daf Yomi and prayers.",
+    "viewport": "width=device-width, initial-scale=1.0, maximum-scale=5.0",
+    "hasPlaceholder": false
+  },
+  "semanticsNodesBefore": 22,
+  "semanticsNodesAfter": 22,
+  "aria": "- button \"Back\"\n- heading \"Accessibility statement\" [level=2]\n- group:\n  - text: We want everyone, including people with disabilities, to be able to use this site. It was made accessible in line with the Israeli Equal Rights for Persons with Disabilities (Service Accessibility Adjustments) Regulations, 2013, and Israeli Standard IS 5568, which is based on WCAG 2.0 level AA.\n  - heading \"What we did\" [level=2]\n  - text: \"• Screen reader support: every button and control has a label, headings are marked as headings, and decorative images are hidden from screen readers. • Full keyboard navigation (Tab, Shift+Tab, Enter and Space). • The page language follows the language you choose, with right-to-left layout in Hebrew. • The site works on phones, tablets and computers, and supports browser zoom up to 200% without losing content. • Prayer pages have buttons to make the text larger or smaller. • Dark mode and adequate color contrast.\"\n  - heading \"Known limitations\" [level=2]\n  - text: • The site is built with Flutter. Some older screen readers may not fully support every component. • Links to external sites (such as Sefaria) lead to content we do not control. • Reminders and the compass are only available in the phone app. If you find something that is not accessible, please let us know and we will work to fix it.\n  - heading \"How we tested\" [level=2]\n  - text: The site was checked with automated accessibility testing (axe-core) and manual checks of keyboard navigation, different screen sizes and 200% zoom, in Chrome.\n  - heading \"Contact us about accessibility\" [level=2]\n  - text: Found an accessibility problem or have a suggestion? We would like to hear from you. Please tell us what the problem is, which page it was on, and which browser and screen reader (if any) you used. This statement was last updated on October 25, 2026.",
+  "axe": [
+    {
+      "id": "scrollable-region-focusable",
+      "impact": "serious",
+      "help": "Scrollable region must have keyboard access",
+      "nodes": 1,
+      "sample": [
+        "<flt-semantics id=\"flt-semantic-node-6\" role=\"group\" style=\"position: absolute; scrollbar-width: none; overflow-y: scroll; touch-action: none; pointer-events: none; z-index: 2; width: 390px; height: 7"
+      ]
+    }
+  ],
+  "tabOrder": [
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=null label=",
+    "flt-semantics role=group label=We want everyone, including people with disabilities, to be ",
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=null label=",
+    "flt-semantics role=group label=We want everyone, including people with disabilities, to be ",
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=null label=",
+    "flt-semantics role=group label=We want everyone, including people with disabilities, to be "
+  ],
+  "console": [],
+  "failedRequests": []
+}

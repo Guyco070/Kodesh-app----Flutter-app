@@ -1,0 +1,36 @@
+{
+  "id": "compass_screen__he__desktop",
+  "name": "compass_screen",
+  "hash": "#/compass_screen",
+  "lang": "he",
+  "vp": "desktop",
+  "loadMs": 5273,
+  "html": {
+    "lang": "he",
+    "dir": "",
+    "title": "קודש – זמני שבת, חגים וזמני היום",
+    "description": "קודש – זמני כניסת ויציאת שבת, זמני חגים, זמני היום ההלכתיים, לוח חגים, דף יומי ותפילות. Shabbat and holiday times, zmanim, Jewish holiday calendar, Daf Yomi and prayers.",
+    "viewport": "width=device-width, initial-scale=1.0, maximum-scale=5.0",
+    "hasPlaceholder": false
+  },
+  "semanticsNodesBefore": 7,
+  "semanticsNodesAfter": 7,
+  "aria": "- button \"הקודם\"\n- heading \"מצפן\" [level=2]\n- button \"הפעל מצפן\"\n- text: המצפן דורש טלפון או טאבלט עם חיישן כיוון.",
+  "axe": [],
+  "tabOrder": [
+    "flt-semantics role=button label=הקודם",
+    "flt-semantics role=button label=הפעל מצפן",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=הקודםמצפןהפעל מצפןהמצפן דורש טלפון או טאבלט עם חיישן כיוון.f",
+    "flt-semantics role=button label=הקודם",
+    "flt-semantics role=button label=הפעל מצפן",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=הקודםמצפןהפעל מצפןהמצפן דורש טלפון או טאבלט עם חיישן כיוון.f",
+    "flt-semantics role=button label=הקודם",
+    "flt-semantics role=button label=הפעל מצפן",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=הקודםמצפןהפעל מצפןהמצפן דורש טלפון או טאבלט עם חיישן כיוון.f"
+  ],
+  "console": [],
+  "failedRequests": []
+}

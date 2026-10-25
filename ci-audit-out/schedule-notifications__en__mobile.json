@@ -1,0 +1,36 @@
+{
+  "id": "schedule-notifications__en__mobile",
+  "name": "schedule-notifications",
+  "hash": "#/schedule-notifications",
+  "lang": "en",
+  "vp": "mobile",
+  "loadMs": 5119,
+  "html": {
+    "lang": "en",
+    "dir": "",
+    "title": "Kodesh – Shabbat, holiday and daily times",
+    "description": "קודש – זמני כניסת ויציאת שבת, זמני חגים, זמני היום ההלכתיים, לוח חגים, דף יומי ותפילות. Shabbat and holiday times, zmanim, Jewish holiday calendar, Daf Yomi and prayers.",
+    "viewport": "width=device-width, initial-scale=1.0, maximum-scale=5.0",
+    "hasPlaceholder": false
+  },
+  "semanticsNodesBefore": 6,
+  "semanticsNodesAfter": 6,
+  "aria": "- button \"Back\"\n- heading \"Setting reminders\" [level=2]\n- text: Reminders are available in the Kodesh app for Android and iPhone. The website can't send notifications.",
+  "axe": [],
+  "tabOrder": [
+    "flt-semantics role=button label=Back",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=BackSetting remindersReminders are available in the Kodesh a",
+    "flt-semantics role=button label=Back",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=BackSetting remindersReminders are available in the Kodesh a",
+    "flt-semantics role=button label=Back",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=BackSetting remindersReminders are available in the Kodesh a",
+    "flt-semantics role=button label=Back",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=BackSetting remindersReminders are available in the Kodesh a"
+  ],
+  "console": [],
+  "failedRequests": []
+}

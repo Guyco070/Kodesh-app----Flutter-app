@@ -1,0 +1,36 @@
+{
+  "id": "about__he__mobile",
+  "name": "about",
+  "hash": "#/about",
+  "lang": "he",
+  "vp": "mobile",
+  "loadMs": 5308,
+  "html": {
+    "lang": "he",
+    "dir": "",
+    "title": "קודש – זמני שבת, חגים וזמני היום",
+    "description": "קודש – זמני כניסת ויציאת שבת, זמני חגים, זמני היום ההלכתיים, לוח חגים, דף יומי ותפילות. Shabbat and holiday times, zmanim, Jewish holiday calendar, Daf Yomi and prayers.",
+    "viewport": "width=device-width, initial-scale=1.0, maximum-scale=5.0",
+    "hasPlaceholder": false
+  },
+  "semanticsNodesBefore": 21,
+  "semanticsNodesAfter": 21,
+  "aria": "- button \"הקודם\"\n- heading \"אודות\" [level=2]\n- group:\n  - text: \"קודש מרכזת במקום אחד את מה שצריך לשבת, לחג וליום יום: זמני כניסת השבת ויציאתה, זמני החגים, זמני היום ההלכתיים, לוח חגים, דף יומי ותפילות.\"\n  - heading \"מה יש כאן\" [level=2]\n  - text: \"• זמני הדלקת נרות והבדלה לכל שבת וחג, לפי העיר שבחרתם או לפי המיקום שלכם. • זמני היום: עלות השחר, הנץ החמה, סוף זמן קריאת שמע, שקיעה, צאת הכוכבים ועוד. • לוח חגים שנתי וחודשי, ראש חודש, ספירת העומר ומולד הלבנה. • סדר הדלקת נרות, הבדלה, הנחת תפילין, ברכת המזון, קריאת שמע על המיטה ועוד, בנוסחים ספרד, אשכנז ועדות המזרח. • באפליקציה לטלפון: תזכורות לשבת, לחגים, לתפילין, לראש חודש ולספירת העומר, ומצפן.\"\n  - heading \"מקורות המידע\" [level=2]\n  - text: זמני השבת, החגים וזמני היום מגיעים מ-Hebcal.com (Hebcal Jewish Calendar), בכפוף לרישיון Creative Commons Attribution 4.0. הדף היומי מגיע מספריא (Sefaria.org). זיהוי העיר לפי מיקום נעשה בעזרת OpenStreetMap Nominatim.\n  - heading \"חשוב לדעת\" [level=2]\n  - text: הזמנים מחושבים אוטומטית ועשויים להשתנות לפי המנהג והמקום המדויק. בשאלות הלכתיות ובמקרה של ספק יש לבדוק מול לוח מקומי או רב. התזכורות באפליקציה תלויות במכשיר ובהגדרותיו ועלולות שלא להגיע בזמן, ולכן אין להסתמך עליהן בלבד.\n  - button \"הצהרת נגישות\"\n  - button \"מדיניות פרטיות\"",
+  "axe": [],
+  "tabOrder": [
+    "flt-semantics role=button label=הקודם",
+    "flt-semantics role=button label=הקודם",
+    "flt-semantics role=null label=",
+    "flt-semantics role=button label=הצהרת נגישות",
+    "flt-semantics role=button label=מדיניות פרטיות",
+    "flt-semantics role=null label=",
+    "flt-semantics role=button label=הצהרת נגישות",
+    "flt-semantics role=button label=מדיניות פרטיות",
+    "flt-semantics role=null label=",
+    "flt-semantics role=button label=הצהרת נגישות",
+    "flt-semantics role=button label=מדיניות פרטיות",
+    "flt-semantics role=null label="
+  ],
+  "console": [],
+  "failedRequests": []
+}

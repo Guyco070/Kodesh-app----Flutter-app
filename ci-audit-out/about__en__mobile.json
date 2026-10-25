@@ -1,0 +1,36 @@
+{
+  "id": "about__en__mobile",
+  "name": "about",
+  "hash": "#/about",
+  "lang": "en",
+  "vp": "mobile",
+  "loadMs": 5294,
+  "html": {
+    "lang": "en",
+    "dir": "",
+    "title": "Kodesh – Shabbat, holiday and daily times",
+    "description": "קודש – זמני כניסת ויציאת שבת, זמני חגים, זמני היום ההלכתיים, לוח חגים, דף יומי ותפילות. Shabbat and holiday times, zmanim, Jewish holiday calendar, Daf Yomi and prayers.",
+    "viewport": "width=device-width, initial-scale=1.0, maximum-scale=5.0",
+    "hasPlaceholder": false
+  },
+  "semanticsNodesBefore": 21,
+  "semanticsNodesAfter": 21,
+  "aria": "- button \"Back\"\n- heading \"About\" [level=2]\n- group:\n  - text: \"Kodesh brings together what you need for Shabbat, holidays and every day: candle lighting and Havdalah times, holiday dates, halachic times of day, a holiday calendar, Daf Yomi and prayers.\"\n  - heading \"What you will find here\" [level=2]\n  - text: \"• Candle lighting and Havdalah times for every Shabbat and holiday, for the city you choose or your current location. • Times of day: dawn, sunrise, latest Shema, sunset, nightfall and more. • Yearly and monthly holiday calendar, Rosh Chodesh, Sefirat HaOmer and the Molad. • Candle lighting, Havdalah, putting on tefillin, Birkat HaMazon, the bedtime Shema and more, in the Sefard, Ashkenaz and Edot HaMizrach traditions. • In the phone app: reminders for Shabbat, holidays, tefillin, Rosh Chodesh and the Omer, and a compass.\"\n  - heading \"Data sources\" [level=2]\n  - text: Shabbat, holiday and daily times come from Hebcal.com (Hebcal Jewish Calendar), licensed under Creative Commons Attribution 4.0. Daf Yomi comes from Sefaria.org. Finding your city from your location uses OpenStreetMap Nominatim.\n  - heading \"Please note\" [level=2]\n  - text: Times are calculated automatically and can vary by custom and exact location. For halachic questions or when in doubt, check a local calendar or ask a rabbi. Reminders in the app depend on your device and its settings and may not arrive on time, so please do not rely on them alone.\n  - button \"Accessibility statement\"\n  - button \"Privacy policy\"",
+  "axe": [],
+  "tabOrder": [
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=null label=",
+    "flt-semantics role=button label=Accessibility statement",
+    "flt-semantics role=button label=Privacy policy",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=BackAboutKodesh brings together what you need for Shabbat, h",
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=null label=",
+    "flt-semantics role=button label=Accessibility statement",
+    "flt-semantics role=button label=Privacy policy"
+  ],
+  "console": [],
+  "failedRequests": []
+}

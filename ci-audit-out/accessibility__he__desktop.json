@@ -1,0 +1,36 @@
+{
+  "id": "accessibility__he__desktop",
+  "name": "accessibility",
+  "hash": "#/accessibility",
+  "lang": "he",
+  "vp": "desktop",
+  "loadMs": 5400,
+  "html": {
+    "lang": "he",
+    "dir": "",
+    "title": "קודש – זמני שבת, חגים וזמני היום",
+    "description": "קודש – זמני כניסת ויציאת שבת, זמני חגים, זמני היום ההלכתיים, לוח חגים, דף יומי ותפילות. Shabbat and holiday times, zmanim, Jewish holiday calendar, Daf Yomi and prayers.",
+    "viewport": "width=device-width, initial-scale=1.0, maximum-scale=5.0",
+    "hasPlaceholder": false
+  },
+  "semanticsNodesBefore": 22,
+  "semanticsNodesAfter": 22,
+  "aria": "- button \"הקודם\"\n- heading \"הצהרת נגישות\" [level=2]\n- group:\n  - text: אנו רואים חשיבות רבה במתן שירות שוויוני לכל המשתמשים, ובכלל זה לאנשים עם מוגבלות. האתר הונגש בהתאם לתקנות שוויון זכויות לאנשים עם מוגבלות (התאמות נגישות לשירות), התשע\"ג-2013, ולתקן הישראלי ת\"י 5568 המבוסס על הנחיות WCAG 2.0 ברמה AA.\n  - heading \"מה עשינו כדי להנגיש את האתר\" [level=2]\n  - text: \"• תמיכה בקוראי מסך: לכל כפתור ופקד יש תיאור, כותרות מסומנות ככותרות, ותמונות דקורטיביות מוסתרות מקוראי מסך. • ניווט מלא באמצעות המקלדת (Tab, Shift+Tab, Enter ורווח). • שפת העמוד מוגדרת לפי השפה שנבחרה, ותצוגה מימין לשמאל בעברית. • האתר מותאם לטלפונים, לטאבלטים ולמחשבים, ותומך בהגדלת התצוגה בדפדפן עד 200% בלי לאבד תוכן. • בעמודי התפילות יש כפתורים להגדלה ולהקטנה של הטקסט. • תמיכה במצב כהה ובניגודיות צבעים מתאימה.\"\n  - heading \"מגבלות ידועות\" [level=2]\n  - text: • האתר בנוי בטכנולוגיית Flutter. ייתכן שחלק מקוראי המסך הישנים לא יתמכו בכל הרכיבים באופן מלא. • קישורים לאתרים חיצוניים (כמו ספריא) מובילים לתוכן שאינו בשליטתנו. • התזכורות והמצפן זמינים רק באפליקציה לטלפון. אם נתקלתם ברכיב שאינו נגיש, נשמח שתעדכנו אותנו ונפעל לתקן אותו.\n  - heading \"איך בדקנו\" [level=2]\n  - text: האתר נבדק בבדיקות נגישות אוטומטיות (axe-core) ובבדיקות ידניות של ניווט במקלדת ושל תצוגה בגדלי מסך שונים ובהגדלה של 200%, בדפדפן Chrome.\n  - heading \"פנייה בנושא נגישות\" [level=2]\n  - text: \"נתקלתם בבעיית נגישות או שיש לכם הצעה לשיפור? נשמח לשמוע. כדי שנוכל לטפל בפנייה, נשמח לקבל תיאור של הבעיה, את העמוד שבו נתקלתם בה, ואת הדפדפן ותוכנת ההקראה (אם יש) שבהם השתמשתם. הצהרת הנגישות עודכנה לאחרונה: 25 באוקטובר 2026.\"",
+  "axe": [],
+  "tabOrder": [
+    "flt-semantics role=button label=הקודם",
+    "flt-semantics role=button label=הקודם",
+    "flt-semantics role=null label=",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=הקודםהצהרת נגישותאנו רואים חשיבות רבה במתן שירות שוויוני לכל",
+    "flt-semantics role=button label=הקודם",
+    "flt-semantics role=button label=הקודם",
+    "flt-semantics role=null label=",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=הקודםהצהרת נגישותאנו רואים חשיבות רבה במתן שירות שוויוני לכל",
+    "flt-semantics role=button label=הקודם",
+    "flt-semantics role=button label=הקודם"
+  ],
+  "console": [],
+  "failedRequests": []
+}

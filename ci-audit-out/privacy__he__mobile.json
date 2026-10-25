@@ -1,0 +1,46 @@
+{
+  "id": "privacy__he__mobile",
+  "name": "privacy",
+  "hash": "#/privacy",
+  "lang": "he",
+  "vp": "mobile",
+  "loadMs": 5364,
+  "html": {
+    "lang": "he",
+    "dir": "",
+    "title": "קודש – זמני שבת, חגים וזמני היום",
+    "description": "קודש – זמני כניסת ויציאת שבת, זמני חגים, זמני היום ההלכתיים, לוח חגים, דף יומי ותפילות. Shabbat and holiday times, zmanim, Jewish holiday calendar, Daf Yomi and prayers.",
+    "viewport": "width=device-width, initial-scale=1.0, maximum-scale=5.0",
+    "hasPlaceholder": false
+  },
+  "semanticsNodesBefore": 19,
+  "semanticsNodesAfter": 19,
+  "aria": "- button \"הקודם\"\n- heading \"מדיניות פרטיות\" [level=2]\n- group:\n  - text: פרטיותכם חשובה לנו. האתר פועל בלי הרשמה, בלי עוגיות מעקב ובלי כלי ניתוח או פרסום, ואין לנו שרת שאוסף עליכם מידע.\n  - heading \"מה נשמר ואיפה\" [level=2]\n  - text: ההעדפות שלכם, כמו שפה, עיר, אפשרויות תצוגה ורשימת המטלות לפני שבת, נשמרות רק בדפדפן שלכם (Local Storage). הן לא נשלחות אלינו, ואפשר למחוק אותן בכל עת על ידי ניקוי נתוני האתר בדפדפן.\n  - heading \"מיקום\" [level=2]\n  - text: \"אם תבחרו להשתמש במיקום שלכם, הדפדפן יבקש את אישורכם. המיקום משמש רק כדי למצוא את העיר הקרובה ולחשב את הזמנים: הקואורדינטות נשלחות ל-OpenStreetMap Nominatim ול-Hebcal לצורך זה בלבד, ואינן נשמרות אצלנו. אפשר לבחור עיר מהרשימה בלי לשתף מיקום.\"\n  - heading \"שירותים חיצוניים\" [level=2]\n  - text: \"כדי להציג את התוכן, הדפדפן שלכם פונה ישירות לשירותים הבאים, שכל אחד מהם פועל לפי מדיניות הפרטיות שלו: • Hebcal.com – זמני שבת, חגים וזמני היום. • Sefaria.org – הדף היומי. • OpenStreetMap Nominatim – זיהוי עיר לפי מיקום (רק אם בחרתם בכך). • Google (gstatic.com) – רכיבי תצוגה וגופנים שהאתר טוען. • ספק האחסון של האתר – עשוי לרשום ביומני השרת פרטים טכניים כמו כתובת IP וסוג הדפדפן.\"\n  - heading \"יצירת קשר\" [level=2]\n  - text: \"שאלות בנושא פרטיות? מדיניות הפרטיות עודכנה לאחרונה: 25 באוקטובר 2026.\"",
+  "axe": [
+    {
+      "id": "scrollable-region-focusable",
+      "impact": "serious",
+      "help": "Scrollable region must have keyboard access",
+      "nodes": 1,
+      "sample": [
+        "<flt-semantics id=\"flt-semantic-node-6\" role=\"group\" style=\"position: absolute; scrollbar-width: none; touch-action: none; pointer-events: none; z-index: 2; width: 390px; height: 794px; transform-orig"
+      ]
+    }
+  ],
+  "tabOrder": [
+    "flt-semantics role=button label=הקודם",
+    "flt-semantics role=button label=הקודם",
+    "flt-semantics role=null label=",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=הקודםמדיניות פרטיותפרטיותכם חשובה לנו. האתר פועל בלי הרשמה, ",
+    "flt-semantics role=button label=הקודם",
+    "flt-semantics role=button label=הקודם",
+    "flt-semantics role=null label=",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=הקודםמדיניות פרטיותפרטיותכם חשובה לנו. האתר פועל בלי הרשמה, ",
+    "flt-semantics role=button label=הקודם",
+    "flt-semantics role=button label=הקודם"
+  ],
+  "console": [],
+  "failedRequests": []
+}

@@ -1,0 +1,36 @@
+{
+  "id": "compass_screen__en__mobile",
+  "name": "compass_screen",
+  "hash": "#/compass_screen",
+  "lang": "en",
+  "vp": "mobile",
+  "loadMs": 5140,
+  "html": {
+    "lang": "en",
+    "dir": "",
+    "title": "Kodesh – Shabbat, holiday and daily times",
+    "description": "קודש – זמני כניסת ויציאת שבת, זמני חגים, זמני היום ההלכתיים, לוח חגים, דף יומי ותפילות. Shabbat and holiday times, zmanim, Jewish holiday calendar, Daf Yomi and prayers.",
+    "viewport": "width=device-width, initial-scale=1.0, maximum-scale=5.0",
+    "hasPlaceholder": false
+  },
+  "semanticsNodesBefore": 7,
+  "semanticsNodesAfter": 7,
+  "aria": "- button \"Back\"\n- heading \"Compass\" [level=2]\n- button \"Enable Compass\"\n- text: The compass needs a phone or tablet with a direction sensor.",
+  "axe": [],
+  "tabOrder": [
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=button label=Enable Compass",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=BackCompassEnable CompassThe compass needs a phone or tablet",
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=button label=Enable Compass",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=BackCompassEnable CompassThe compass needs a phone or tablet",
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=button label=Enable Compass",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=BackCompassEnable CompassThe compass needs a phone or tablet"
+  ],
+  "console": [],
+  "failedRequests": []
+}

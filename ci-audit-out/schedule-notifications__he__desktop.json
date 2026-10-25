@@ -1,0 +1,36 @@
+{
+  "id": "schedule-notifications__he__desktop",
+  "name": "schedule-notifications",
+  "hash": "#/schedule-notifications",
+  "lang": "he",
+  "vp": "desktop",
+  "loadMs": 5201,
+  "html": {
+    "lang": "he",
+    "dir": "",
+    "title": "קודש – זמני שבת, חגים וזמני היום",
+    "description": "קודש – זמני כניסת ויציאת שבת, זמני חגים, זמני היום ההלכתיים, לוח חגים, דף יומי ותפילות. Shabbat and holiday times, zmanim, Jewish holiday calendar, Daf Yomi and prayers.",
+    "viewport": "width=device-width, initial-scale=1.0, maximum-scale=5.0",
+    "hasPlaceholder": false
+  },
+  "semanticsNodesBefore": 6,
+  "semanticsNodesAfter": 6,
+  "aria": "- button \"הקודם\"\n- heading \"קביעת תזכורות\" [level=2]\n- text: התזכורות זמינות באפליקציית קודש לאנדרואיד ולאייפון. האתר אינו יכול לשלוח התראות.",
+  "axe": [],
+  "tabOrder": [
+    "flt-semantics role=button label=הקודם",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=הקודםקביעת תזכורותהתזכורות זמינות באפליקציית קודש לאנדרואיד ",
+    "flt-semantics role=button label=הקודם",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=הקודםקביעת תזכורותהתזכורות זמינות באפליקציית קודש לאנדרואיד ",
+    "flt-semantics role=button label=הקודם",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=הקודםקביעת תזכורותהתזכורות זמינות באפליקציית קודש לאנדרואיד ",
+    "flt-semantics role=button label=הקודם",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=הקודםקביעת תזכורותהתזכורות זמינות באפליקציית קודש לאנדרואיד "
+  ],
+  "console": [],
+  "failedRequests": []
+}

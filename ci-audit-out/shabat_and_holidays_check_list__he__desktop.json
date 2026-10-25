@@ -1,0 +1,36 @@
+{
+  "id": "shabat_and_holidays_check_list__he__desktop",
+  "name": "shabat_and_holidays_check_list",
+  "hash": "#/shabat_and_holidays_check_list",
+  "lang": "he",
+  "vp": "desktop",
+  "loadMs": 5372,
+  "html": {
+    "lang": "he",
+    "dir": "",
+    "title": "קודש – זמני שבת, חגים וזמני היום",
+    "description": "קודש – זמני כניסת ויציאת שבת, זמני חגים, זמני היום ההלכתיים, לוח חגים, דף יומי ותפילות. Shabbat and holiday times, zmanim, Jewish holiday calendar, Daf Yomi and prayers.",
+    "viewport": "width=device-width, initial-scale=1.0, maximum-scale=5.0",
+    "hasPlaceholder": false
+  },
+  "semanticsNodesBefore": 11,
+  "semanticsNodesAfter": 11,
+  "aria": "- button \"הקודם\"\n- heading \"מטלות לפני שבת\" [level=2]\n- button \"שלי\"\n- group:\n  - button \"לחבר פלטה\"\n  - button \"לחבר מיחם\"\n- button \"הוסף מטלה\"",
+  "axe": [],
+  "tabOrder": [
+    "flt-semantics role=button label=הקודם",
+    "flt-semantics role=button label=שלי",
+    "flt-semantics role=button label=הוסף מטלה",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=הקודםמטלות לפני שבתשלילחבר פלטהלחבר מיחםהוסף מטלהflutter-vie",
+    "flt-semantics role=button label=הקודם",
+    "flt-semantics role=button label=שלי",
+    "flt-semantics role=button label=הוסף מטלה",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=הקודםמטלות לפני שבתשלילחבר פלטהלחבר מיחםהוסף מטלהflutter-vie",
+    "flt-semantics role=button label=הקודם",
+    "flt-semantics role=button label=שלי"
+  ],
+  "console": [],
+  "failedRequests": []
+}

@@ -1,0 +1,36 @@
+{
+  "id": "kriyat_shema_al_hamita__en__mobile",
+  "name": "kriyat_shema_al_hamita",
+  "hash": "#/kriyat_shema_al_hamita",
+  "lang": "en",
+  "vp": "mobile",
+  "loadMs": 5249,
+  "html": {
+    "lang": "en",
+    "dir": "",
+    "title": "Kodesh – Shabbat, holiday and daily times",
+    "description": "קודש – זמני כניסת ויציאת שבת, זמני חגים, זמני היום ההלכתיים, לוח חגים, דף יומי ותפילות. Shabbat and holiday times, zmanim, Jewish holiday calendar, Daf Yomi and prayers.",
+    "viewport": "width=device-width, initial-scale=1.0, maximum-scale=5.0",
+    "hasPlaceholder": false
+  },
+  "semanticsNodesBefore": 10,
+  "semanticsNodesAfter": 10,
+  "aria": "- button \"Back\"\n- heading \"Bedtime Shema\" [level=2]\n- group:\n  - button \"Reset text size\"\n  - button \"Larger text\"\n  - button \"Smaller text\"\n  - text: \"The Hamapil Blessing Blessed are You, Lord our God, King of the universe,who brings sleep to my eyes and slumber to my eyelids. May it be Your will, Lord my God and God of my ancestors,that You lay me down in peace and raise me up in peace. Let no bad thoughts, bad dreams or bad reflections disturb me. Blessed are You, Lord, who illuminates the entire world with His glory. Shema Yisrael Hear O Israel, the Lord is our God, the Lord is One. lessed be the name of His glorious Kingdom forever and ever. The Love Commandment (V'ahavta) You shall love the Lord your God with all your heart,with all your soul and with all your might. hese words which I command you today shall be on your heart. The Angels In the name of the Lord God of Israel: o my right is Michael, to my left is Gabriel, before me is Uriel, behind me is Raphael,and above my head is the Divine Presence of God.\"",
+  "axe": [],
+  "tabOrder": [
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=button label=Reset text size",
+    "flt-semantics role=button label=Larger text",
+    "flt-semantics role=button label=Smaller text",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=BackBedtime ShemaReset text sizeLarger textSmaller text\nThe ",
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=button label=Reset text size",
+    "flt-semantics role=button label=Larger text",
+    "flt-semantics role=button label=Smaller text",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=BackBedtime ShemaReset text sizeLarger textSmaller text\nThe "
+  ],
+  "console": [],
+  "failedRequests": []
+}

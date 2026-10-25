@@ -1,0 +1,36 @@
+{
+  "id": "daf_yomi__he__desktop",
+  "name": "daf_yomi",
+  "hash": "#/daf_yomi",
+  "lang": "he",
+  "vp": "desktop",
+  "loadMs": 5393,
+  "html": {
+    "lang": "he",
+    "dir": "",
+    "title": "קודש – זמני שבת, חגים וזמני היום",
+    "description": "קודש – זמני כניסת ויציאת שבת, זמני חגים, זמני היום ההלכתיים, לוח חגים, דף יומי ותפילות. Shabbat and holiday times, zmanim, Jewish holiday calendar, Daf Yomi and prayers.",
+    "viewport": "width=device-width, initial-scale=1.0, maximum-scale=5.0",
+    "hasPlaceholder": false
+  },
+  "semanticsNodesBefore": 7,
+  "semanticsNodesAfter": 7,
+  "aria": "- button \"הקודם\"\n- heading \"דף יומי\" [level=2]\n- group \"הדף היומי בכורות ל״ז Bekhorot 37 יום ראשון, 25 באוקטובר 2026\":\n  - button \"ללימוד בספריא\"",
+  "axe": [],
+  "tabOrder": [
+    "flt-semantics role=button label=הקודם",
+    "flt-semantics role=button label=ללימוד בספריא",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=הקודםדף יומיללימוד בספריאflutter-view flt-scene-host {  font",
+    "flt-semantics role=button label=הקודם",
+    "flt-semantics role=button label=ללימוד בספריא",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=הקודםדף יומיללימוד בספריאflutter-view flt-scene-host {  font",
+    "flt-semantics role=button label=הקודם",
+    "flt-semantics role=button label=ללימוד בספריא",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=הקודםדף יומיללימוד בספריאflutter-view flt-scene-host {  font"
+  ],
+  "console": [],
+  "failedRequests": []
+}

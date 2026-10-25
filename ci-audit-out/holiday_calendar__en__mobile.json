@@ -1,0 +1,46 @@
+{
+  "id": "holiday_calendar__en__mobile",
+  "name": "holiday_calendar",
+  "hash": "#/holiday_calendar",
+  "lang": "en",
+  "vp": "mobile",
+  "loadMs": 5486,
+  "html": {
+    "lang": "en",
+    "dir": "",
+    "title": "Kodesh – Shabbat, holiday and daily times",
+    "description": "קודש – זמני כניסת ויציאת שבת, זמני חגים, זמני היום ההלכתיים, לוח חגים, דף יומי ותפילות. Shabbat and holiday times, zmanim, Jewish holiday calendar, Daf Yomi and prayers.",
+    "viewport": "width=device-width, initial-scale=1.0, maximum-scale=5.0",
+    "hasPlaceholder": false
+  },
+  "semanticsNodesBefore": 26,
+  "semanticsNodesAfter": 26,
+  "aria": "- button \"Back\"\n- heading \"Jewish Holiday Calendar\" [level=2]\n- 'button \"From: 10/25/2026 To: 10/25/2027\"'\n- textbox \"Search...\"\n- button \"List\"\n- button \"Monthly\"\n- group: \"Chanukah: 1 Candle Friday, December 4, 2026 Chanukah: 2 Candles Saturday, December 5, 2026 Chanukah: 3 Candles Sunday, December 6, 2026 Chanukah: 4 Candles Monday, December 7, 2026 Chanukah: 5 Candles Tuesday, December 8, 2026 Chanukah: 6 Candles Wednesday, December 9, 2026 Chag HaBanot Thursday, December 10, 2026 Chanukah: 7 Candles Thursday, December 10, 2026 Chanukah: 8 Candles Friday, December 11, 2026 Chanukah: 8th Day Saturday, December 12, 2026 Tu BiShvat Saturday, January 23, 2027 Purim Katan Sunday, February 21, 2027 Shushan Purim Katan Monday, February 22, 2027 Erev Purim Monday, March 22, 2027 Purim Tuesday, March 23, 2027\"",
+  "axe": [
+    {
+      "id": "scrollable-region-focusable",
+      "impact": "serious",
+      "help": "Scrollable region must have keyboard access",
+      "nodes": 1,
+      "sample": [
+        "<flt-semantics id=\"flt-semantic-node-29\" role=\"group\" style=\"position: absolute; scrollbar-width: none; overflow-y: scroll; touch-action: none; pointer-events: none; width: 390px; height: 666px;\">"
+      ]
+    }
+  ],
+  "tabOrder": [
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=button label=From: 10/25/2026\nTo: 10/25/2027",
+    "input role=null label=Search...",
+    "flt-semantics role=button label=List",
+    "flt-semantics role=button label=Monthly",
+    "flt-semantics role=group label=Chanukah: 1 Candle\nFriday, December 4, 2026Chanukah: 2 Candl",
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=button label=From: 10/25/2026\nTo: 10/25/2027",
+    "input role=null label=Search...",
+    "flt-semantics role=button label=List",
+    "flt-semantics role=button label=Monthly",
+    "flt-semantics role=group label=Chanukah: 1 Candle\nFriday, December 4, 2026Chanukah: 2 Candl"
+  ],
+  "console": [],
+  "failedRequests": []
+}

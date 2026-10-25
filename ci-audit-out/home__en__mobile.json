@@ -1,0 +1,38 @@
+{
+  "id": "home__en__mobile",
+  "name": "home",
+  "hash": "",
+  "lang": "en",
+  "vp": "mobile",
+  "loadMs": 5519,
+  "html": {
+    "lang": "en",
+    "dir": "",
+    "title": "Kodesh – Shabbat, holiday and daily times",
+    "description": "קודש – זמני כניסת ויציאת שבת, זמני חגים, זמני היום ההלכתיים, לוח חגים, דף יומי ותפילות. Shabbat and holiday times, zmanim, Jewish holiday calendar, Daf Yomi and prayers.",
+    "viewport": "width=device-width, initial-scale=1.0, maximum-scale=5.0",
+    "hasPlaceholder": false
+  },
+  "semanticsNodesBefore": 29,
+  "semanticsNodesAfter": 29,
+  "aria": "- button \"Open navigation menu\"\n- heading \"Main\" [level=2]\n- 'button \"Language: English\"'\n- group:\n  - button \"Jerusalem\"\n  - button \"Use my location\"\n  - button \"25/10/2026\"\n  - button \"Previous day\"\n  - button \"Next day\"\n  - checkbox \"View only shabat\"\n  - checkbox \"View hebrew dates\"\n  - button \"Back to today\"\n  - text: \"Current date: 25/10/2026\"\n  - button \"Week's events\"\n  - button \"Today's times\"\n  - group \"Shabat\":\n    - text: 16:11 Entry and lighting candles 30/10/2026 Friday In 5 days 17:28 Departure and havdalah 31/10/2026 Saturday In 6 days Parashat Vayera Weekly Torah Portion\n    - button \"Torah Reading\"",
+  "axe": [],
+  "tabOrder": [
+    "flt-semantics role=button label=Open navigation menu",
+    "flt-semantics role=button label=Language: English",
+    "flt-semantics role=button label=Jerusalem",
+    "flt-semantics role=button label=Use my location",
+    "flt-semantics role=button label=25/10/2026",
+    "flt-semantics role=button label=Previous day",
+    "flt-semantics role=button label=Next day",
+    "flt-semantics role=checkbox label=View only shabat",
+    "flt-semantics role=checkbox label=View hebrew dates",
+    "flt-semantics role=button label=Back to today",
+    "flt-semantics role=button label=Week's events",
+    "flt-semantics role=button label=Today's times"
+  ],
+  "ariaZmanim": "- button \"Open navigation menu\"\n- heading \"Main\" [level=2]\n- 'button \"Language: English\"'\n- group:\n  - button \"Jerusalem\"\n  - button \"Use my location\"\n  - button \"25/10/2026\"\n  - button \"Previous day\"\n  - button \"Next day\"\n  - checkbox \"From now on\"\n  - checkbox \"View hebrew dates\"\n  - button \"Back to today\"\n  - text: \"Current date: 25/10/2026\"\n  - button \"Week's events\"\n  - button \"Today's times\"\n  - textbox \"Search...\"\n  - button \"Display options\"\n  - button \"Midnight Sunset plus 6 halachic hours 00:23 Today\"\n  - button \"Dawn (Baal HaTanya) Sun is 16° below the horizon in the morning, according to Baal HaTanya 04:33 Today\"\n  - button \"Dawn Sun is 16.1° below the horizon in the morning 04:37 Today\"\n  - button \"Earliest talis & tefillin Sun is 11.5° below the horizon in the morning 04:59 Today\"\n  - button \"Earliest talis & tefillin - stringent Sun is 10.2° below the horizon in the morning 05:05 Today\"\n  - button \"Civil dawn Sun is 6° below the horizon in the morning 05:25 Today\"\n  - button \"Sunrise Upper edge of the Sun appears over the eastern horizon in the morning (0.833° above horizon) 05:50 Today\"\n  - button \"Latest Shema (MGA 19.8°) Sunrise plus 3 halachic hours, according to Magen Avraham (19.8°) 07:51 Today\"\n  - button \"Latest Shema (MGA 16.1°) Sunrise plus 3 halachic hours, according to Magen Avraham (16.1°) 08:00 Today\"\n  - button \"Latest Shema (MGA) Sunrise plus 3 halachic hours, according to Magen Avraham 08:00 Today\"\n  - button \"Latest Shema (Baal HaTanya) Sunrise plus 3 halachic hours, according to Baal HaTanya 08:34 Today\"\n  - button \"Latest Shema (Gra) Sunrise plus 3 halachic hours, according to the Gra 08:36 Today\"\n  - button \"Latest Shacharit (MGA 19.8°) Sunrise plus 4 halachic hours, according to Magen Avraham (19.8°) 09:02 Today\"\n  - button \"Latest Shacharit (MGA 16.1°) Sunrise plus 4 halachic hours, according to Magen Avraham (16.1°) 09:08 Today\"\n  - button \"Latest Shacharit (MGA) Sunrise plus 4 halachic hours, according to Magen Avraham 09:08 Today\"\n  - button \"Latest Shacharit (Baal HaTanya) Sunrise plus 4 halachic hours, according to Baal HaTanya 09:31 Today\"\n  - button \"Latest Shacharit (Gra) Sunrise plus 4 halachic hours, according to the Gra 09:32 Today\"\n  - button \"Midday Sunrise plus 6 halachic hours 11:23 Today\"\n  - button \"Earliest Mincha – Mincha Gedola Sunrise plus 6.5 halachic hours 11:51 Today\"\n  - button \"Earliest Mincha – Mincha Gedola (Baal HaTanya) Sunrise plus 6.5 halachic hours, according to Baal HaTanya 11:51 Today\"\n  - button \"Earliest Mincha – Mincha Gedola (MGA) Sunrise plus 6.5 halachic hours, according to Magen Avraham 11:57 Today\"\n  - button \"Preferable earliest time to recite Minchah – Mincha Ketana Sunrise plus 9.5 halachic hours 14:37 Today\"\n  - button \"Mincha Ketana (Baal HaTanya) Sunrise plus 9.5 halachic hours, according to Baal HaTanya 14:40 Today\"\n  - button \"Mincha Ketana (MGA) Sunrise plus 9.5 halachic hours, according to Magen Avraham 15:19 Today\"\n  - button \"Plag haMincha Sunrise plus 10.75 halachic hours 15:47 Today\"\n  - button \"Plag haMincha (Baal HaTanya) Sunrise plus 10.75 halachic hours, according to Baal HaTanya 15:50 Today\"\n  - button \"Sunset When the upper edge of the Sun disappears below the horizon (0.833° below horizon) 16:56 Today\"\n  - button \"Twilight (Bein HaShmashos) Twilight period between sunset and nightfall 17:13 Today\"\n  - button \"Civil dusk Sun is 6° below the horizon in the evening 17:21 Today\"\n  - button \"Nightfall (Baal HaTanya) Stars appear according to Baal HaTanya 17:21 Today\"\n  - button \"Nightfall (3 medium stars) – Tzeit 7.083° When 3 medium stars are observable in the night sky with the naked eye (sun 7.083° below the horizon) 17:26 Today\"\n  - button \"Nightfall (3 small stars) – Tzeit 8.5° When 3 small stars are observable in the night sky with the naked eye (sun 8.5° below the horizon) 17:33 Today\"\n  - button \"Nightfall (Rabbeinu Tam) – Tzeit 42 minutes When 3 medium stars are observable in the night sky with the naked eye (fixed 42 minutes after sunset) 17:38 Today\"\n  - button \"Nightfall (3 small stars) – Tzeit 50 minutes When 3 small stars are observable in the night sky with the naked eye (fixed 50 minutes after sunset) 17:46 Today\"\n  - button \"Nightfall (Rabbeinu Tam) – Tzeit 72 minutes When 3 small stars are observable in the night sky with the naked eye (fixed 72 minutes after sunset) 18:08 Today\"",
+  "ariaDrawer": "- button \"Back Back\"\n- heading \"Menu\" [level=2]\n- group:\n  - button \"Prayers and Blessings\"\n  - button \"Aids\"\n  - button \"Settings\"\n- button \"About\"\n- button \"Accessibility statement\"\n- button \"Privacy policy\"\n- button \"Dismiss\"",
+  "console": [],
+  "failedRequests": []
+}

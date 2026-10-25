@@ -1,0 +1,36 @@
+{
+  "id": "home__fresh__mobile",
+  "name": "home",
+  "hash": "",
+  "lang": null,
+  "vp": "mobile",
+  "loadMs": 5509,
+  "html": {
+    "lang": "he",
+    "dir": "",
+    "title": "קודש – זמני שבת, חגים וזמני היום",
+    "description": "קודש – זמני כניסת ויציאת שבת, זמני חגים, זמני היום ההלכתיים, לוח חגים, דף יומי ותפילות. Shabbat and holiday times, zmanim, Jewish holiday calendar, Daf Yomi and prayers.",
+    "viewport": "width=device-width, initial-scale=1.0, maximum-scale=5.0",
+    "hasPlaceholder": false
+  },
+  "semanticsNodesBefore": 29,
+  "semanticsNodesAfter": 29,
+  "aria": "- button \"פתיחה של תפריט הניווט\"\n- heading \"ראשי\" [level=2]\n- 'button \"שפה: עברית\"'\n- group:\n  - button \"ירושלים\"\n  - button \"השתמש במיקום שלי\"\n  - button \"25/10/2026\"\n  - button \"היום הקודם\"\n  - button \"היום הבא\"\n  - checkbox \"הצג רק שבת\"\n  - checkbox \"הצג תאריכים עבריים\"\n  - button \"חזרה להיום\"\n  - text: \"תאריך נוכחי: 25/10/2026\"\n  - button \"אירועי השבוע\"\n  - button \"זמני היום\"\n  - group \"שבת\":\n    - text: 16:11 כניסה והדלקת נרות 30/10/2026 שישי בעוד 5 ימים 17:28 יציאה והבדלה 31/10/2026 שבת בעוד 6 ימים פרשת וירא פרשת שבוע\n    - button \"קריאת התורה\"",
+  "axe": [],
+  "tabOrder": [
+    "flt-semantics role=button label=פתיחה של תפריט הניווט",
+    "flt-semantics role=button label=שפה: עברית",
+    "flt-semantics role=button label=ירושלים",
+    "flt-semantics role=button label=השתמש במיקום שלי",
+    "flt-semantics role=button label=25/10/2026",
+    "flt-semantics role=button label=היום הקודם",
+    "flt-semantics role=button label=היום הבא",
+    "flt-semantics role=checkbox label=הצג רק שבת",
+    "flt-semantics role=checkbox label=הצג תאריכים עבריים",
+    "flt-semantics role=button label=חזרה להיום",
+    "flt-semantics role=button label=אירועי השבוע",
+    "flt-semantics role=button label=זמני היום"
+  ],
+  "console": [],
+  "failedRequests": []
+}

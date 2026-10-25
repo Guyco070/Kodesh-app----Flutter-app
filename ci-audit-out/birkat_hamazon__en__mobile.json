@@ -1,0 +1,36 @@
+{
+  "id": "birkat_hamazon__en__mobile",
+  "name": "birkat_hamazon",
+  "hash": "#/birkat_hamazon",
+  "lang": "en",
+  "vp": "mobile",
+  "loadMs": 5393,
+  "html": {
+    "lang": "en",
+    "dir": "",
+    "title": "Kodesh – Shabbat, holiday and daily times",
+    "description": "קודש – זמני כניסת ויציאת שבת, זמני חגים, זמני היום ההלכתיים, לוח חגים, דף יומי ותפילות. Shabbat and holiday times, zmanim, Jewish holiday calendar, Daf Yomi and prayers.",
+    "viewport": "width=device-width, initial-scale=1.0, maximum-scale=5.0",
+    "hasPlaceholder": false
+  },
+  "semanticsNodesBefore": 12,
+  "semanticsNodesAfter": 12,
+  "aria": "- button \"Back\"\n- heading \"Birkat Hamazon\" [level=2]\n- group:\n  - button \"Mizrah Virsion\"\n  - button \"Reset text size\"\n  - button \"Larger text\"\n  - button \"Smaller text\"\n  - text: שיר המעלות — A Song of Ascents When the Lord returned the captivity of Zion, we were like dreamers. בָּרוּךְ אַתָּה יְיָ, הַזָּן אֶת הַכֹּל — Blessed are You, Lord our God, King of the universe, who nourishes the entire world with His goodness, with grace, with kindness and with mercy. נוֹדֶה לְּךָ — We thank You, Lord our God, for having given our ancestors as heritage a precious, good and spacious land. רַחֵם נָא — Have mercy, Lord our God, on Israel Your people, on Jerusalem Your city. בָּרוּךְ אַתָּה יְיָ, בּוֹנֵה בְרַחֲמָיו יְרוּשָׁלָיִם, אָמֵן. הָרַחֲמָן הוּא יִמְלוֹךְ עָלֵינוּ לְעוֹלָם וָעֶד — May the Merciful One reign over us forever and ever. עֹשֶׂה שָׁלוֹם בִּמְרוֹמָיו — May He who makes peace in His heights, make peace for us and for all Israel, and say Amen.",
+  "axe": [],
+  "tabOrder": [
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=button label=Mizrah Virsion",
+    "flt-semantics role=button label=Reset text size",
+    "flt-semantics role=button label=Larger text",
+    "flt-semantics role=button label=Smaller text",
+    "body role=null label=<p dir=\"rtl\" lang=\"he\">כדי להשתמש באתר קודש יש להפעיל JavaSc",
+    "flutter-view role=null label=BackBirkat HamazonMizrah VirsionReset text sizeLarger textSm",
+    "flt-semantics role=button label=Back",
+    "flt-semantics role=button label=Mizrah Virsion",
+    "flt-semantics role=button label=Reset text size",
+    "flt-semantics role=button label=Larger text",
+    "flt-semantics role=button label=Smaller text"
+  ],
+  "console": [],
+  "failedRequests": []
+}
