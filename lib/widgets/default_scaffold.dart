@@ -86,7 +86,14 @@ class _DefaultScaffoldState extends State<DefaultScaffold> {
             ).changeLocale(value, setIsLoading: widget.setIsLoading);
           }
         },
-        customButton: langIcon(lang),
+        customButton: Semantics(
+          button: true,
+          excludeSemantics: true,
+          label:
+              '${AppLocalizations.of(context)!.selectLanguage}: '
+              '${L10n.names[lang.currentLocale.languageCode]!['locale']}',
+          child: langIcon(lang),
+        ),
         buttonStyleData: ButtonStyleData(
           padding: const EdgeInsets.only(left: 14, right: 14),
           elevation: 0,

@@ -212,5 +212,7 @@
     "compassMobileOnly": "La brújula necesita un teléfono o tableta con sensor de orientación.",
     "openInSefaria": "Estudiar en Sefaria",
 
-    "siteTitle": "Kodesh – Horarios de Shabat, festividades y del día"
+    "siteTitle": "Kodesh – Horarios de Shabat, festividades y del día",
+
+    "selectLanguage": "Idioma"
 }

@@ -212,5 +212,7 @@
     "compassMobileOnly": "Для компаса нужен телефон или планшет с датчиком направления.",
     "openInSefaria": "Учить на Sefaria",
 
-    "siteTitle": "Kodesh – время Шабата, праздников и дня"
+    "siteTitle": "Kodesh – время Шабата, праздников и дня",
+
+    "selectLanguage": "Язык"
 }
