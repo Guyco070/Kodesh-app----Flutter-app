@@ -36,8 +36,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           bottom: false,
           child: SizedBox(
             height: preferredSize.height,
-            child: ListTile(
-              horizontalTitleGap: 2,
+            // NavigationToolbar instead of ListTile: ListTile merges all of
+            // its children into one accessibility node, which glued the page
+            // title to the language/back buttons for screen readers.
+            child: NavigationToolbar(
+              middleSpacing: 8,
               leading:
                   leading ??
                   (!noBackBotton
@@ -48,25 +51,29 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                         icon: const Icon(Icons.chevron_left_outlined),
                       )
                       : null),
-              title: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FittedBox(
-                    child: Center(
-                      child:
-                          titleWidget ??
-                          Text(
-                            title,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
-                    ),
-                  ),
-                ],
+              middle: Semantics(
+                header: true,
+                child: FittedBox(
+                  child:
+                      titleWidget ??
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                ),
               ),
-              trailing: trailing ?? const LimitedBox(),
+              // Cap the side widgets so an expanding child (the language
+              // dropdown) can't take over the whole toolbar.
+              trailing:
+                  trailing == null
+                      ? null
+                      : ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 160),
+                        child: trailing,
+                      ),
             ),
           ),
         ),
