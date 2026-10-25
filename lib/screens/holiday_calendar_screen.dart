@@ -244,7 +244,10 @@ class _ViewToggle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      // Full width so labels like "לוח חודשי" never wrap and get clipped.
       child: SegmentedButton<_ViewMode>(
+        expandedInsets: EdgeInsets.zero,
+        showSelectedIcon: false,
         segments: [
           ButtonSegment(
             value: _ViewMode.list,
@@ -259,10 +262,7 @@ class _ViewToggle extends StatelessWidget {
         ],
         selected: {viewMode},
         onSelectionChanged: (s) => onChanged(s.first),
-        style: const ButtonStyle(
-          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          visualDensity: VisualDensity.compact,
-        ),
+
       ),
     );
   }
