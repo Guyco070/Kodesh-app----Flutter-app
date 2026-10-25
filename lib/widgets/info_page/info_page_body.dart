@@ -19,6 +19,9 @@ class InfoPageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return SelectionArea(
       child: SingleChildScrollView(
+        // Primary so arrow keys / Page Down scroll the page on desktop
+        // browsers even when nothing inside it has keyboard focus.
+        primary: true,
         padding: const EdgeInsets.fromLTRB(20, 12, 20, 32),
         child: Center(
           child: ConstrainedBox(

@@ -113,6 +113,7 @@ class _HolidayCalendarScreenState extends State<HolidayCalendarScreen> {
     // The monthly view loads its own data one month at a time.
     if (_viewMode == _ViewMode.monthly) {
       return SingleChildScrollView(
+        primary: true,
         child: MonthlyCalendarView(
           initialMonth: DateTime.now(),
           searchText: _searchText,
@@ -160,6 +161,8 @@ class _HolidayCalendarScreenState extends State<HolidayCalendarScreen> {
     final dateFormat = DateFormat.yMMMMEEEEd(locale.toLanguageTag());
     final colorScheme = Theme.of(context).colorScheme;
     return ListView.builder(
+      // Primary so the list scrolls with the keyboard on desktop browsers.
+      primary: true,
       itemCount: filtered.length,
       itemBuilder: (context, index) {
         final holiday = filtered[index];
