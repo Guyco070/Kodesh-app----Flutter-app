@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DafYomiScreen extends StatefulWidget {
   const DafYomiScreen({super.key});
@@ -79,7 +81,9 @@ class _DafYomiScreenState extends State<DafYomiScreen> {
                 appLocalizations.todaysDaf,
                 style: Theme.of(
                   context,
-                ).textTheme.labelMedium?.copyWith(color: Colors.grey[600]),
+                ).textTheme.labelMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
               ),
               const SizedBox(height: 12),
               Align(
@@ -96,19 +100,25 @@ class _DafYomiScreenState extends State<DafYomiScreen> {
               Text(daf.title, style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 8),
               Text(
-                daf.date,
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
+                _formatDate(context, daf.date),
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
               ),
               if (daf.link != null) ...[
                 const SizedBox(height: 12),
                 const Divider(),
                 const SizedBox(height: 4),
-                SelectableText(
-                  daf.link!,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: TextButton.icon(
+                    icon: const Icon(Icons.open_in_new, size: 18),
+                    label: Text(appLocalizations.openInSefaria),
+                    onPressed:
+                        () => launchUrl(
+                          Uri.parse(daf.link!),
+                          mode: LaunchMode.externalApplication,
+                        ),
                   ),
                 ),
               ],
@@ -118,4 +128,13 @@ class _DafYomiScreenState extends State<DafYomiScreen> {
       ),
     );
   }
+}
+
+/// Formats Sefaria's ISO date ("2026-10-25") in the UI language.
+String _formatDate(BuildContext context, String isoDate) {
+  final date = DateTime.tryParse(isoDate);
+  if (date == null) return isoDate;
+  return DateFormat.yMMMMEEEEd(
+    Localizations.localeOf(context).toLanguageTag(),
+  ).format(date);
 }
