@@ -59,8 +59,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           echo "${GITHUB_REF_NAME} @ ${GITHUB_SHA}" > ci-audit-out/SOURCE.txt
-          git checkout --orphan audit-results-tmp
-          git rm -rq --cached .
+          git checkout -B audit-results
           git add -f ci-audit-out
-          git commit -qm "Site audit of ${GITHUB_REF_NAME} @ ${GITHUB_SHA::7}"
-          git push -f origin HEAD:audit-results
+          git commit -m "Site audit of ${GITHUB_REF_NAME} @ ${GITHUB_SHA}" > /dev/null
+          git push -f origin audit-results
