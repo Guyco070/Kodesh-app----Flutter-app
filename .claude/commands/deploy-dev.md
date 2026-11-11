@@ -3,6 +3,7 @@ Merge the current branch into the `dev-deployed` branch.
 Steps to follow:
 1. Run `git branch --show-current` to get the name of the current branch. Save it.
 2. Run `git status --short` — if there are any uncommitted changes, stop and tell the user to commit or stash them first.
+2b. Run `tool/verify.sh` (see the `verify` skill). If any step fails, stop and report it — if the build breaks on `dev-deployed`, the deploy fails and the site silently stays on the old version.
 3. Run `git fetch origin dev-deployed` to make sure the remote branch is up to date.
 4. If `dev-deployed` does not exist locally, create it by running `git checkout -b dev-deployed origin/dev-deployed`. Otherwise switch to it with `git checkout dev-deployed`.
 5. Run `git pull origin dev-deployed` to sync local with remote.

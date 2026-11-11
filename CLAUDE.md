@@ -19,7 +19,10 @@ flutter build apk        # Build Android APK
 flutter build ios        # Build iOS
 ```
 
-Generated localization files live in `.dart_tool/flutter_gen/gen_l10n/` and must be regenerated after editing any `.arb` file in `lib/api/l10n/`.
+Generated localization files (`lib/api/l10n/app_localizations*.dart`) are committed and must be regenerated with `flutter gen-l10n` after editing any `.arb` file in `lib/api/l10n/`.
+
+Full pre-push check (gen-l10n, format, analyze, tests, web build): `tool/verify.sh`.
+Run in debug on an emulator: `tool/run_debug_emulator.sh [android|ios]`.
 
 ## Architecture
 
@@ -63,7 +66,7 @@ All three APIs are called from `Events` provider (`lib/providers/events.dart`). 
 
 Two parallel systems:
 
-1. **ARB / `flutter_gen`** — UI strings. ARB files are at `lib/api/l10n/app_[en|he|es|ru].arb`. Config is in `l10n.yaml`. Only `en` and `he` are currently enabled in `L10n.all`; `es` and `ru` ARB files exist but the locales are commented out.
+1. **ARB / `flutter_gen`** — UI strings. ARB files are at `lib/api/l10n/app_[en|he|es|ru].arb`. Config is in `l10n.yaml`. All four locales are enabled in `L10n.all`; every key must exist in all four ARB files. Locales are language-only (`Locale('he')`) because on web they become `<html lang>`. A first-time visitor gets the device/browser language (`L10n.initialLanguageCode()`).
 
 2. **`RemindersTranslates`** (`lib/api/l10n/reminders_translates.dart`) — Notification text. Static maps keyed by language code (`en`, `he`, `es`, `ru`). Some values are closures (e.g., `body` takes `DateTime` args). This is separate from ARB because notifications are scheduled in the background and cannot use `BuildContext`.
 
@@ -73,7 +76,7 @@ RTL layout is handled via `LanguageChangeProvider.isDirectionRTL()`.
 
 ### Notifications
 
-`NotificationApi` (`lib/api/notification_api.dart`) wraps `flutter_local_notifications`. It uses `timezone` + `flutter_native_timezone` for accurate scheduling. Notification tap payloads are route names (e.g., `/adlakat_nerot`); `EventScreen` listens on `NotificationApi.onNotifications` stream and navigates accordingly.
+`NotificationApi` (`lib/api/notification_api.dart`) wraps `flutter_local_notifications`. It uses `timezone` + `flutter_timezone` for accurate scheduling. On web it is a no-op (browsers can't schedule local notifications); the reminders screen says so. Notification tap payloads are route names (e.g., `/adlakat_nerot`); `EventScreen` listens on `NotificationApi.onNotifications` stream and navigates accordingly.
 
 `Reminders.setReminders()` is the single entry point that cancels all existing notifications and reschedules everything from scratch. It fetches today's events fresh to determine dates, then removes tefillin reminders that fall on holidays/Chol HaMoed.
 
@@ -98,13 +101,34 @@ Cities are stored as `"CC-CityName|geonamesId"` strings. The `lib/data/cities.da
 
 ## Known Code Quirks
 
-These are existing patterns in the codebase to be aware of — do not replicate them in new code:
+Older patterns still in the codebase — do not replicate them in new code:
 
-- **Providers instantiated in `build()`** (`main.dart:48-51`): `Reminders` and `Events` are created inside `MyApp.build()`, which is an anti-pattern since `build()` can be called multiple times. This also means `lang.getData()` is called as a side effect during widget construction.
-- **`Reminders` constructor takes `BuildContext`**: `Reminders(BuildContext context)` violates the principle that providers should be independent of the widget tree.
-- **Static methods without return types**: `getEventsItemsFromMap()` and `getZmanimItemsFromMap()` return `dynamic`. Treat their return values as `List<Event>` and `List<Zman>` respectively.
-- **`print()` in production code**: `lib/providers/events.dart` and `lib/providers/reminders.dart` contain `print()` calls left over from debugging.
-- **Inconsistent file casing**: Most files use `snake_case` but `lib/screens/Shabat_and_holidays_check_list.dart` uses non-standard capitalization. Use `snake_case` for all new files.
+- **Three slide-in list animations** (`AnimatedEventsListView`, `AnimatedOnlyShabatListView`, `AnimatedZmanimList`). Use `AnimatedZmanimList` for new lists.
+- **Deprecated `MaterialState*`** is still used in older widgets; new code uses `WidgetState*`.
+- **Hardcoded colours** (`Colors.blue`, `Colors.grey[600]`) in older widgets; new code uses `Theme.of(context).colorScheme`.
+- **`static` mutable state** in `LanguageChangeProvider` and `NotificationApi` (read without context from background code).
+- The folder `lib/widgets/swiches/` and the class `CuperinoTextCheckSwitch` are misspelled; keep the names, don't add new ones like them.
+
+## Skills
+
+Project skills live in `.claude/skills/`. Use them:
+
+| Skill | When |
+|---|---|
+| `code-standards` | Before writing or reviewing any Dart code |
+| `widget-reuse` | Before creating any widget or helper (with `CATALOG.md`) |
+| `add-string` | Any new user-facing text |
+| `verify` | Before every push, merge or deploy |
+| `run-emulator` | Run/debug the app on a device |
+| `site-audit` | Before deploying the website, after UI changes |
+| `release-check` | Before a store release or moving the site to its domain |
+| `branch-status` | What's merged, deployed or pending |
+
+## Branches and deployment
+
+- `dev-deployed` is what the website shows: every push runs `.github/workflows/deploy.yml` (GitHub Pages). A failed build leaves the previous version live.
+- Work on a branch opened from `dev-deployed` (`fix/*`, `feature/*`), verify it, then merge with `/deploy-dev`.
+- `master` is the stable line; CI (`ci.yml`) runs format, analyze and tests on it.
 
 ## Common Developer Tasks
 
@@ -119,7 +143,7 @@ These are existing patterns in the codebase to be aware of — do not replicate 
 1. Add a boolean toggle and optional time string to `Reminders` provider
 2. Add `SharedPreferences` load/save in `getData()` and `updateAll()`
 3. Add scheduling logic inside `Reminders.setReminders()`
-4. Add the UI controls in `lib/screens/schedual_notifications.dart`
+4. Add the UI controls in `lib/screens/schedule_notifications.dart`
 5. Add any new notification text to `RemindersTranslates` (all four language keys: `en`, `he`, `es`, `ru`)
 
 ### Adding a New Screen
@@ -127,6 +151,7 @@ These are existing patterns in the codebase to be aware of — do not replicate 
 2. Define `static const String routeName = '/your-route'`
 3. Register the route in `main.dart`
 4. Add navigation to it from `lib/widgets/app_drawer.dart` or via a notification payload
+5. Add the route to `routes` in `tool/site_audit/audit.mjs` so the site audit covers it
 
 ## Coding Conventions (for all new code)
 
