@@ -1,0 +1,66 @@
+name: Site audit
+
+# Builds the web app, opens every page in a real browser (Playwright) and
+# checks layout, accessibility (axe-core) and network errors.
+# Run it from the Actions tab / `gh workflow run site-audit.yml --ref <branch>`
+# (only once this file is on the default branch), or push any branch named
+# audit/<something>, e.g. `git push -f origin HEAD:audit/my-change`.
+# Results: the "site-audit" artifact, and the `audit-results` branch
+# (folder ci-audit-out/) so they can be read without downloading artifacts.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['audit/**']
+
+permissions:
+  contents: write
+
+concurrency:
+  group: site-audit
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build web
+        run: |
+          mkdir -p ci-audit-out
+          flutter pub get
+          flutter build web --release --base-href / > ci-audit-out/build.txt 2>&1
+      - name: Audit
+        run: |
+          cd tool/site_audit
+          npm install
+          npx playwright install --with-deps chromium
+          (cd ../../build/web && python3 -m http.server 8080 > /dev/null 2>&1 &)
+          sleep 2
+          node audit.mjs | tee ../../ci-audit-out/run-log.txt
+          cp -r audit-out/. ../../ci-audit-out/
+      - name: Upload artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-audit
+          path: ci-audit-out
+      - name: Publish results branch
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          echo "${GITHUB_REF_NAME} @ ${GITHUB_SHA}" > ci-audit-out/SOURCE.txt
+          git checkout --orphan audit-results-tmp
+          git rm -rq --cached .
+          git add -f ci-audit-out
+          git commit -qm "Site audit of ${GITHUB_REF_NAME} @ ${GITHUB_SHA::7}"
+          git push -f origin HEAD:audit-results
