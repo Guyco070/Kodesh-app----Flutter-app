@@ -119,6 +119,7 @@ Project skills live in `.claude/skills/`. Use them:
 | `widget-reuse` | Before creating any widget or helper (with `CATALOG.md`) |
 | `add-string` | Any new user-facing text |
 | `verify` | Before every push, merge or deploy |
+| `pr-review` | Reviewing a PR or branch before merging |
 | `run-emulator` | Run/debug the app on a device |
 | `site-audit` | Before deploying the website, after UI changes |
 | `release-check` | Before a store release or moving the site to its domain |
