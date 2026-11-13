@@ -100,6 +100,12 @@
     "departureAndHavdalah": "Departure and havdalah",
     "@departureAndHavdalah": { "description": "departureAndHavdalah" },
 
+    "fastBegins": "Fast begins",
+    "@fastBegins": { "description": "Label for the time a fast begins" },
+
+    "fastEnds": "Fast ends",
+    "@fastEnds": { "description": "Label for the time a fast ends" },
+
     "startDate": "Start date",
     "@startDate": { "description": "startDate" },
 
@@ -439,5 +445,16 @@
     },
 
     "molad": "New Moon (Molad)",
-    "@molad": { "description": "Molad label" }
+    "@molad": { "description": "Molad label" },
+
+    "sendTestNotification": "Send test notification",
+    "@sendTestNotification": { "description": "Button label to fire a test notification immediately" },
+    "testNotificationTitle": "Test notification",
+    "@testNotificationTitle": { "description": "Title of the test notification" },
+    "testNotificationBody": "Notifications are working correctly!",
+    "@testNotificationBody": { "description": "Body of the test notification" },
+    "testNotificationSent": "Test notification sent",
+    "@testNotificationSent": { "description": "Snackbar message after sending a test notification" },
+    "notificationsNotAvailableOnWeb": "Reminders aren't available in the browser. Open the app on your phone to receive notifications.",
+    "@notificationsNotAvailableOnWeb": { "description": "Banner shown on the reminders screen when running on the web, where local notifications are not supported" }
 }

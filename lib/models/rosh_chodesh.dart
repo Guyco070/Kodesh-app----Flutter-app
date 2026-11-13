@@ -31,8 +31,7 @@ class RoshChodesh extends Event {
       title: parashat['title'] as String,
       entryDate: date,
       titleOrig:
-          parashat['hebrew'] as String? ??
-          parashat['title_orig'] as String?,
+          parashat['hebrew'] as String? ?? parashat['title_orig'] as String?,
     );
   }
 

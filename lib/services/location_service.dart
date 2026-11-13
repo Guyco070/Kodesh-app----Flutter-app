@@ -52,7 +52,7 @@ class LocationService {
     double minDist = double.infinity;
 
     for (final city in cities) {
-      final eCode = city['eNameAndCode'] as String?;
+      final eCode = city['eNameAndCode'];
       if (eCode == null) continue;
 
       final parts = eCode.split('|');

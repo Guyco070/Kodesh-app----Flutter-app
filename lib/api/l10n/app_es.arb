@@ -38,6 +38,8 @@
     "currentDate": "Fecha actual",
     "entryAndLightingCandles": "Entrada y encendido de velas",
     "departureAndHavdalah": "Salida y Havdalá",
+    "fastBegins": "Comienzo del ayuno",
+    "fastEnds": "Fin del ayuno",
     "eventDay": "Día del evento",
     "startDate": "Fecha de inicio",
     "endDate": "Fecha final",
@@ -189,5 +191,11 @@
             "months": { "type": "String" }
         }
     },
-    "molad": "Luna Nueva (Molad)"
+    "molad": "Luna Nueva (Molad)",
+
+    "sendTestNotification": "Enviar notificación de prueba",
+    "testNotificationTitle": "Notificación de prueba",
+    "testNotificationBody": "¡Las notificaciones funcionan correctamente!",
+    "testNotificationSent": "Notificación de prueba enviada",
+    "notificationsNotAvailableOnWeb": "Los recordatorios no están disponibles en el navegador. Abra la aplicación en su teléfono para recibir notificaciones."
 }

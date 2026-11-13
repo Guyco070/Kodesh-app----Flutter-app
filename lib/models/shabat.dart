@@ -33,8 +33,7 @@ class Shabat extends Event {
     List<String>? mevarchimMonths,
   }) {
     final rawLeyning = parashat['leyning'] as Map<String, dynamic>?;
-    final leyning =
-        rawLeyning?.map((k, v) => MapEntry(k, v.toString()));
+    final leyning = rawLeyning?.map((k, v) => MapEntry(k, v.toString()));
     return Shabat(
       title: title ?? 'Shabat',
       parasha: parashat['title'],
@@ -43,8 +42,7 @@ class Shabat extends Event {
         Events.getDateWithoutTime(havdalah['date']),
       ),
       titleOrig:
-          parashat['hebrew'] as String? ??
-          parashat['title_orig'] as String?,
+          parashat['hebrew'] as String? ?? parashat['title_orig'] as String?,
       leyning: leyning,
       isMevarchim: isMevarchim,
       mevarchimMonths: mevarchimMonths,

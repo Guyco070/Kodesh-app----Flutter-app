@@ -46,11 +46,16 @@ bool isToday(DateTime date) {
 }
 
 bool isYesterdayTodayOrTomorrow(DateTime date) {
-  int timeLeft =
-      DateTime.now()
-          .difference(DateTime(date.year, date.month, date.day))
-          .inDays;
-  return timeLeft == 0 || timeLeft == 1;
+  // Compare calendar days in UTC so time-of-day and DST shifts don't skew the
+  // result (Duration.inDays truncates toward zero).
+  final now = DateTime.now();
+  final diff =
+      DateTime.utc(
+        date.year,
+        date.month,
+        date.day,
+      ).difference(DateTime.utc(now.year, now.month, now.day)).inDays;
+  return diff >= -1 && diff <= 1;
 }
 
 DateTime getDateTimeSetToZero(DateTime date) {

@@ -106,6 +106,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get departureAndHavdalah => 'Отъезд и авдала';
 
   @override
+  String get fastBegins => 'Начало поста';
+
+  @override
+  String get fastEnds => 'Окончание поста';
+
+  @override
   String get startDate => 'Дата начала';
 
   @override
@@ -418,4 +424,20 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get molad => 'Новолуние (Молад)';
+
+  @override
+  String get sendTestNotification => 'Отправить тестовое уведомление';
+
+  @override
+  String get testNotificationTitle => 'Тестовое уведомление';
+
+  @override
+  String get testNotificationBody => 'Уведомления работают правильно!';
+
+  @override
+  String get testNotificationSent => 'Тестовое уведомление отправлено';
+
+  @override
+  String get notificationsNotAvailableOnWeb =>
+      'Напоминания недоступны в браузере. Откройте приложение на телефоне, чтобы получать уведомления.';
 }

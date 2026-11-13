@@ -325,7 +325,10 @@ class Events with ChangeNotifier {
         'tzid': _webTzid ?? 'UTC',
       });
     } else {
-      url = Uri.https('www.hebcal.com', '/shabbat', {...base, 'zip': geoId});
+      url = Uri.https('www.hebcal.com', '/shabbat', {
+        ...base,
+        'geonameid': geoId,
+      });
     }
     var response = await get(url);
     if ((jsonDecode(response.body) as Map<String, dynamic>).keys.contains(
@@ -370,6 +373,7 @@ class Events with ChangeNotifier {
         _cacheEventsItems(items, lang: lang);
         notifyListeners();
         fetchAndSetHebrewDatesProducts();
+        _populateFastTimes(_eventsItems!);
         return _eventsItems;
       } catch (error, st) {
         logger.e('Failed to fetch events', error: error, stackTrace: st);
@@ -413,21 +417,22 @@ class Events with ChangeNotifier {
       if (cached == null) return null;
       final items = jsonDecode(cached) as List;
       logger.i('Loaded ${items.length} events from cache');
-      return getEventsItemsFromMap(items) as List<Event>?;
+      return getEventsItemsFromMap(items);
     } catch (e) {
       logger.w('Failed to load cached events', error: e);
       return null;
     }
   }
 
-  static getEventsItemsFromMap(List? items) {
-    dynamic searchHavdalah(List items, int index) {
+  static List<Event>? getEventsItemsFromMap(List? items) {
+    Map<String, dynamic>? searchHavdalah(List items, int index) {
       while (index < items.length) {
         if (items[index]['category'] == 'havdalah') {
-          return items[index];
+          return items[index] as Map<String, dynamic>;
         }
         index++;
       }
+      return null;
     }
 
     if (items == null) return null;
@@ -440,6 +445,13 @@ class Events with ChangeNotifier {
           // go back and search for shaabat candles lightning time
           tempI--;
         }
+        final havdalah = searchHavdalah(items, i);
+        // A Shabbat without a havdalah entry can't be built; skip it rather
+        // than crash the whole parse (previously an implicit null deref).
+        if (havdalah == null) {
+          logger.w('No havdalah found for parashat at index $i, skipping');
+          continue;
+        }
         Shabat newS = Shabat.createShabat(
           title:
               items[tempI + 1]['title'] != items[i]['title']
@@ -447,7 +459,7 @@ class Events with ChangeNotifier {
                   : null,
           candles: items[tempI],
           parashat: items[i],
-          havdalah: searchHavdalah(items, i),
+          havdalah: havdalah,
         );
 
         tempItems.add(newS);
@@ -522,9 +534,7 @@ class Events with ChangeNotifier {
 
     // Apply mevarchim data to matching Shabat events
     final mevarchimItems =
-        items
-            .where((item) => item['category'] == 'mevarchim')
-            .toList();
+        items.where((item) => item['category'] == 'mevarchim').toList();
     if (mevarchimItems.isNotEmpty) {
       for (int idx = 0; idx < tempItems.length; idx++) {
         final event = tempItems[idx];
@@ -539,9 +549,7 @@ class Events with ChangeNotifier {
               mvDate.month == event.entryDate!.month &&
               mvDate.day == event.entryDate!.day) {
             final months =
-                (mv['months'] as List?)
-                    ?.map((m) => m.toString())
-                    .toList() ??
+                (mv['months'] as List?)?.map((m) => m.toString()).toList() ??
                 (mv['hebrew'] != null ? [mv['hebrew'] as String] : <String>[]);
             tempItems[idx] = Shabat(
               title: event.title,
@@ -582,10 +590,11 @@ class Events with ChangeNotifier {
     return aftetrFiltering;
   }
 
-  tryFetchZmanim({
+  Future<Map<String, dynamic>> tryFetchZmanim({
     String? cityToTake,
     String? lang,
     bool isToday = false,
+    DateTime? date,
   }) async {
     cityToTake ??= city;
     final parts = cityToTake.split('|');
@@ -594,7 +603,11 @@ class Events with ChangeNotifier {
     final lg = lang ?? LanguageChangeProvider.getCurrentLocale.languageCode;
 
     Map<String, String> base = {'cfg': 'json', 'lg': lg};
-    if (!isToday) base['date'] = getDushedFormatedDate(startDate);
+    if (date != null) {
+      base['date'] = getDushedFormatedDate(date);
+    } else if (!isToday) {
+      base['date'] = getDushedFormatedDate(startDate);
+    }
 
     Uri url;
     if (_webLat != null && _webLng != null) {
@@ -605,7 +618,10 @@ class Events with ChangeNotifier {
         'tzid': _webTzid ?? 'UTC',
       });
     } else {
-      url = Uri.https('www.hebcal.com', '/zmanim', {...base, 'zip': geoId});
+      url = Uri.https('www.hebcal.com', '/zmanim', {
+        ...base,
+        'geonameid': geoId,
+      });
     }
     var response = await get(url);
     if ((jsonDecode(response.body) as Map<String, dynamic>).keys.contains(
@@ -650,13 +666,85 @@ class Events with ChangeNotifier {
     }
   }
 
-  static getZmanimItemsFromMap(Map<String, dynamic> items) {
+  static List<Zman>? getZmanimItemsFromMap(Map<String, dynamic> items) {
     List<Zman> tempItems = [];
     for (var i in items.keys) {
       DateTime? date = DateTime.tryParse(getDateWithoutTime(items[i]));
       if (date != null) tempItems.add(Zman(i, date));
     }
     return tempItems.isEmpty ? null : tempItems;
+  }
+
+  // Candidate zmanim keys for fast times, ordered by preference. The first key
+  // present in the Hebcal response is used, so less-common keys act as
+  // fallbacks.
+  static const List<String> _fastEndKeys = [
+    'tzeit7083deg',
+    'tzeit85deg',
+    'tzeit50min',
+    'tzeit42min',
+    'tzeit72min',
+    'tzaisBaalHatanya',
+    'dusk',
+  ];
+  static const List<String> _fastStartSunsetKeys = ['sunset', 'dusk'];
+  static const List<String> _fastStartDawnKeys = [
+    'alotHaShachar',
+    'alosBaalHatanya',
+    'dawn',
+    'misheyakir',
+  ];
+
+  DateTime? _pickZman(Map<String, dynamic>? times, List<String> keys) {
+    if (times == null) return null;
+    for (final key in keys) {
+      final raw = times[key];
+      if (raw is String) {
+        final parsed = DateTime.tryParse(getDateWithoutTime(raw));
+        if (parsed != null) return parsed;
+      }
+    }
+    return null;
+  }
+
+  Future<Map<String, dynamic>?> _fetchZmanimTimesForDate(DateTime date) async {
+    final extractData = await tryFetchZmanim(date: date);
+    return extractData['times'] as Map<String, dynamic>?;
+  }
+
+  /// Populates fast begin/end times for any fast day in [events] by fetching
+  /// zmanim for the relevant dates. The fast ends at nightfall on the fast day;
+  /// it begins at the previous evening's sunset for Tisha B'Av, or at dawn on
+  /// the fast day for the minor fasts.
+  Future<void> _populateFastTimes(List<Event> events) async {
+    final fasts = events.whereType<Holiday>().where((h) => h.isFast).toList();
+    if (fasts.isEmpty) return;
+
+    bool changed = false;
+    for (final fast in fasts) {
+      final fastDay = fast.entryDate;
+      if (fastDay == null) continue;
+      try {
+        final dayTimes = await _fetchZmanimTimesForDate(fastDay);
+        final end = _pickZman(dayTimes, _fastEndKeys);
+        DateTime? start;
+        if (fast.fastStartsAtNightfall) {
+          final prevTimes = await _fetchZmanimTimesForDate(
+            fastDay.subtract(const Duration(days: 1)),
+          );
+          start = _pickZman(prevTimes, _fastStartSunsetKeys);
+        } else {
+          start = _pickZman(dayTimes, _fastStartDawnKeys);
+        }
+        if (start != null || end != null) {
+          fast.setFastTimes(start, end);
+          changed = true;
+        }
+      } catch (error, st) {
+        logger.w('Failed to populate fast times', error: error, stackTrace: st);
+      }
+    }
+    if (changed) notifyListeners();
   }
 
   Future<dynamic> tryFetchHebrewDates({
@@ -814,47 +902,59 @@ class Events with ChangeNotifier {
     notifyListeners();
   }
 
+  static String _hebcalLanguage(String languageCode) =>
+      const {'he': 'he', 'es': 'es', 'ru': 'ru'}[languageCode] ?? 's';
+
+  /// Fetches holidays between [from] and [to] (inclusive) in the current UI
+  /// language. Returns the parsed list without touching provider state, so
+  /// callers such as the monthly calendar can cache per-month results.
+  /// Throws on network or HTTP errors.
+  Future<List<HebcalHoliday>> fetchHolidaysInRange(
+    DateTime from,
+    DateTime to,
+  ) async {
+    final url = Uri.https('www.hebcal.com', '/hebcal', {
+      'cfg': 'json',
+      'v': '1',
+      'maj': 'on',
+      'min': 'on',
+      'start': getDushedFormatedDate(from),
+      'end': getDushedFormatedDate(to),
+      // Localized titles for the current UI language ('s' = Hebcal's default
+      // English transliteration).
+      'lg': _hebcalLanguage(
+        LanguageChangeProvider.getCurrentLocale.languageCode,
+      ),
+    });
+    final response = await get(url);
+    if (response.statusCode != 200) {
+      throw ClientException('HTTP ${response.statusCode}', url);
+    }
+    final data = jsonDecode(response.body) as Map<String, dynamic>;
+    final items = data['items'] as List<dynamic>? ?? [];
+    return items
+        .where((item) => item['category'] == 'holiday')
+        .map(
+          (item) => HebcalHoliday(
+            title: item['title'] as String? ?? '',
+            hebrew: item['hebrew'] as String? ?? '',
+            date:
+                DateTime.tryParse(item['date'] as String? ?? '') ??
+                DateTime.now(),
+            isMajor: (item['subcat'] as String?) == 'major',
+          ),
+        )
+        .toList();
+  }
+
   Future<void> fetchAnnualHolidays({
     DateTime? startDate,
     DateTime? endDate,
   }) async {
     final from = startDate ?? DateTime.now();
     final to = endDate ?? DateTime(from.year + 1, from.month, from.day);
-    final startStr =
-        '${from.year}-${from.month.toString().padLeft(2, '0')}-${from.day.toString().padLeft(2, '0')}';
-    final endStr =
-        '${to.year}-${to.month.toString().padLeft(2, '0')}-${to.day.toString().padLeft(2, '0')}';
-    final url = Uri.https('www.hebcal.com', '/hebcal', {
-      'cfg': 'json',
-      'v': '1',
-      'maj': 'on',
-      'min': 'on',
-      'start': startStr,
-      'end': endStr,
-    });
     try {
-      final response = await get(url);
-      if (response.statusCode != 200) {
-        _annualHolidaysError = 'HTTP ${response.statusCode}';
-        notifyListeners();
-        return;
-      }
-      final data = jsonDecode(response.body) as Map<String, dynamic>;
-      final items = data['items'] as List<dynamic>? ?? [];
-      _annualHolidays =
-          items
-              .where((item) => item['category'] == 'holiday')
-              .map(
-                (item) => HebcalHoliday(
-                  title: item['title'] as String? ?? '',
-                  hebrew: item['hebrew'] as String? ?? '',
-                  date:
-                      DateTime.tryParse(item['date'] as String? ?? '') ??
-                      DateTime.now(),
-                  isMajor: (item['subcat'] as String?) == 'major',
-                ),
-              )
-              .toList();
+      _annualHolidays = await fetchHolidaysInRange(from, to);
       _annualHolidaysError = null;
     } catch (e) {
       _annualHolidaysError = e.toString();

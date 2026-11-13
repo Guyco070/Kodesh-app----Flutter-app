@@ -106,6 +106,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get departureAndHavdalah => 'Salida y Havdalá';
 
   @override
+  String get fastBegins => 'Comienzo del ayuno';
+
+  @override
+  String get fastEnds => 'Fin del ayuno';
+
+  @override
   String get startDate => 'Fecha de inicio';
 
   @override
@@ -418,4 +424,21 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get molad => 'Luna Nueva (Molad)';
+
+  @override
+  String get sendTestNotification => 'Enviar notificación de prueba';
+
+  @override
+  String get testNotificationTitle => 'Notificación de prueba';
+
+  @override
+  String get testNotificationBody =>
+      '¡Las notificaciones funcionan correctamente!';
+
+  @override
+  String get testNotificationSent => 'Notificación de prueba enviada';
+
+  @override
+  String get notificationsNotAvailableOnWeb =>
+      'Los recordatorios no están disponibles en el navegador. Abra la aplicación en su teléfono para recibir notificaciones.';
 }

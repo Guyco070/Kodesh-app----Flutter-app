@@ -38,6 +38,8 @@
     "currentDate": "Текущая дата",
     "entryAndLightingCandles": "Вход и зажигание свечей",
     "departureAndHavdalah": "Отъезд и авдала",
+    "fastBegins": "Начало поста",
+    "fastEnds": "Окончание поста",
     "eventDay": "День события",
     "startDate": "Дата начала",
     "endDate": "Дата окончания",
@@ -189,5 +191,11 @@
             "months": { "type": "String" }
         }
     },
-    "molad": "Новолуние (Молад)"
+    "molad": "Новолуние (Молад)",
+
+    "sendTestNotification": "Отправить тестовое уведомление",
+    "testNotificationTitle": "Тестовое уведомление",
+    "testNotificationBody": "Уведомления работают правильно!",
+    "testNotificationSent": "Тестовое уведомление отправлено",
+    "notificationsNotAvailableOnWeb": "Напоминания недоступны в браузере. Откройте приложение на телефоне, чтобы получать уведомления."
 }

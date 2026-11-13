@@ -105,6 +105,12 @@ class AppLocalizationsHe extends AppLocalizations {
   String get departureAndHavdalah => 'יציאה והבדלה';
 
   @override
+  String get fastBegins => 'תחילת הצום';
+
+  @override
+  String get fastEnds => 'צאת הצום';
+
+  @override
   String get startDate => 'תאריך התחלה';
 
   @override
@@ -414,4 +420,20 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get molad => 'מולד הלבנה';
+
+  @override
+  String get sendTestNotification => 'שלח התראת בדיקה';
+
+  @override
+  String get testNotificationTitle => 'התראת בדיקה';
+
+  @override
+  String get testNotificationBody => 'ההתראות עובדות כראוי!';
+
+  @override
+  String get testNotificationSent => 'התראת הבדיקה נשלחה';
+
+  @override
+  String get notificationsNotAvailableOnWeb =>
+      'תזכורות אינן זמינות בדפדפן. פתחו את האפליקציה בטלפון כדי לקבל התראות.';
 }

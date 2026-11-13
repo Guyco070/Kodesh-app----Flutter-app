@@ -106,6 +106,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get departureAndHavdalah => 'Departure and havdalah';
 
   @override
+  String get fastBegins => 'Fast begins';
+
+  @override
+  String get fastEnds => 'Fast ends';
+
+  @override
   String get startDate => 'Start date';
 
   @override
@@ -417,4 +423,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get molad => 'New Moon (Molad)';
+
+  @override
+  String get sendTestNotification => 'Send test notification';
+
+  @override
+  String get testNotificationTitle => 'Test notification';
+
+  @override
+  String get testNotificationBody => 'Notifications are working correctly!';
+
+  @override
+  String get testNotificationSent => 'Test notification sent';
+
+  @override
+  String get notificationsNotAvailableOnWeb =>
+      'Reminders aren\'t available in the browser. Open the app on your phone to receive notifications.';
 }

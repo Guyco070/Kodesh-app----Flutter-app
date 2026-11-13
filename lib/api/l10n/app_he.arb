@@ -39,6 +39,8 @@
     "currentDate": "תאריך נוכחי",
     "entryAndLightingCandles": "כניסה והדלקת נרות",
     "departureAndHavdalah": "יציאה והבדלה",
+    "fastBegins": "תחילת הצום",
+    "fastEnds": "צאת הצום",
     "eventDay": "תאריך האירוע",
     "startDate": "תאריך התחלה",
     "endDate": "תאריך סיום",
@@ -154,5 +156,11 @@
             "months": { "type": "String" }
         }
     },
-    "molad": "מולד הלבנה"
+    "molad": "מולד הלבנה",
+
+    "sendTestNotification": "שלח התראת בדיקה",
+    "testNotificationTitle": "התראת בדיקה",
+    "testNotificationBody": "ההתראות עובדות כראוי!",
+    "testNotificationSent": "התראת הבדיקה נשלחה",
+    "notificationsNotAvailableOnWeb": "תזכורות אינן זמינות בדפדפן. פתחו את האפליקציה בטלפון כדי לקבל התראות."
 }

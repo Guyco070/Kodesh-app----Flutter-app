@@ -24,7 +24,6 @@ class _CompassWidgetState extends State<CompassWidget> {
   StreamSubscription<double?>? _stream;
   double? heading = 0;
   bool _permissionGranted = false;
-  bool _permissionChecked = false;
 
   @override
   void initState() {
@@ -34,11 +33,11 @@ class _CompassWidgetState extends State<CompassWidget> {
 
   Future<void> _init() async {
     if (!isCompassAvailable) {
-      setState(() => _permissionChecked = true);
+      setState(() {});
       return;
     }
     if (needsPermissionRequest) {
-      setState(() => _permissionChecked = true);
+      setState(() {});
       return;
     }
     await _startListening();
@@ -48,7 +47,10 @@ class _CompassWidgetState extends State<CompassWidget> {
     _stream = getCompassStream().listen((h) {
       if (mounted) setState(() => heading = h);
     });
-    if (mounted) setState(() { _permissionGranted = true; _permissionChecked = true; });
+    if (mounted)
+      setState(() {
+        _permissionGranted = true;
+      });
   }
 
   Future<void> _requestAndStart() async {

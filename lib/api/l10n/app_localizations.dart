@@ -294,6 +294,18 @@ abstract class AppLocalizations {
   /// **'Departure and havdalah'**
   String get departureAndHavdalah;
 
+  /// Label for the time a fast begins
+  ///
+  /// In en, this message translates to:
+  /// **'Fast begins'**
+  String get fastBegins;
+
+  /// Label for the time a fast ends
+  ///
+  /// In en, this message translates to:
+  /// **'Fast ends'**
+  String get fastEnds;
+
   /// startDate
   ///
   /// In en, this message translates to:
@@ -863,6 +875,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'New Moon (Molad)'**
   String get molad;
+
+  /// Button label to fire a test notification immediately
+  ///
+  /// In en, this message translates to:
+  /// **'Send test notification'**
+  String get sendTestNotification;
+
+  /// Title of the test notification
+  ///
+  /// In en, this message translates to:
+  /// **'Test notification'**
+  String get testNotificationTitle;
+
+  /// Body of the test notification
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are working correctly!'**
+  String get testNotificationBody;
+
+  /// Snackbar message after sending a test notification
+  ///
+  /// In en, this message translates to:
+  /// **'Test notification sent'**
+  String get testNotificationSent;
+
+  /// Banner shown on the reminders screen when running on the web, where local notifications are not supported
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders aren\'t available in the browser. Open the app on your phone to receive notifications.'**
+  String get notificationsNotAvailableOnWeb;
 }
 
 class _AppLocalizationsDelegate

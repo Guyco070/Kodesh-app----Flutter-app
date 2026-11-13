@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kodesh_app/models/event.dart';
+import 'package:kodesh_app/models/holiday.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/widgets/date_with_time_left.dart';
+import 'package:kodesh_app/widgets/events_widgets/holiday_widget/fast_times_section.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +16,7 @@ class HolidayWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     bool isHebrewDate = Provider.of<Events>(context).isHebrewDate;
+    final holiday = data;
 
     return Column(
       children: [
@@ -27,18 +30,22 @@ class HolidayWidget extends StatelessWidget {
           ),
           SizedBox(height: 15),
         },
-        if (data.entryDate != null)
-          entryDateFix(appLocalizations, isHebrewDate),
-        if (data.releaseDate != null)
-          ListTile(
-            title: Text(DateFormat('HH:mm').format(data.releaseDate!)),
-            subtitle: Text(appLocalizations.departureAndHavdalah),
-            trailing: DateWithTimeLeft(
-              date: data.releaseDate!,
-              hebrewDate: isHebrewDate ? data.releaseHebrewDate : null,
+        if (holiday is Holiday && holiday.isFast)
+          FastTimesSection(data: holiday, isHebrewDate: isHebrewDate)
+        else ...[
+          if (data.entryDate != null)
+            entryDateFix(appLocalizations, isHebrewDate),
+          if (data.releaseDate != null)
+            ListTile(
+              title: Text(DateFormat('HH:mm').format(data.releaseDate!)),
+              subtitle: Text(appLocalizations.departureAndHavdalah),
+              trailing: DateWithTimeLeft(
+                date: data.releaseDate!,
+                hebrewDate: isHebrewDate ? data.releaseHebrewDate : null,
+              ),
+              leading: const Icon(Icons.wine_bar),
             ),
-            leading: const Icon(Icons.wine_bar),
-          ),
+        ],
       ],
     );
   }
