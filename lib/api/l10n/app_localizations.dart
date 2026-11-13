@@ -899,6 +899,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Test notification sent'**
   String get testNotificationSent;
+
+  /// Banner shown on the reminders screen when running on the web, where local notifications are not supported
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders aren\'t available in the browser. Open the app on your phone to receive notifications.'**
+  String get notificationsNotAvailableOnWeb;
 }
 
 class _AppLocalizationsDelegate

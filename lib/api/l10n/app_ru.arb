@@ -196,5 +196,6 @@
     "sendTestNotification": "Отправить тестовое уведомление",
     "testNotificationTitle": "Тестовое уведомление",
     "testNotificationBody": "Уведомления работают правильно!",
-    "testNotificationSent": "Тестовое уведомление отправлено"
+    "testNotificationSent": "Тестовое уведомление отправлено",
+    "notificationsNotAvailableOnWeb": "Напоминания недоступны в браузере. Откройте приложение на телефоне, чтобы получать уведомления."
 }

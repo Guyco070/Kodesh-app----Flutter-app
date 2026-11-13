@@ -435,4 +435,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get testNotificationSent => 'Test notification sent';
+
+  @override
+  String get notificationsNotAvailableOnWeb =>
+      'Reminders aren\'t available in the browser. Open the app on your phone to receive notifications.';
 }

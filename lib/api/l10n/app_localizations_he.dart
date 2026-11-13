@@ -432,4 +432,8 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get testNotificationSent => 'התראת הבדיקה נשלחה';
+
+  @override
+  String get notificationsNotAvailableOnWeb =>
+      'תזכורות אינן זמינות בדפדפן. פתחו את האפליקציה בטלפון כדי לקבל התראות.';
 }

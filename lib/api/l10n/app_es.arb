@@ -196,5 +196,6 @@
     "sendTestNotification": "Enviar notificación de prueba",
     "testNotificationTitle": "Notificación de prueba",
     "testNotificationBody": "¡Las notificaciones funcionan correctamente!",
-    "testNotificationSent": "Notificación de prueba enviada"
+    "testNotificationSent": "Notificación de prueba enviada",
+    "notificationsNotAvailableOnWeb": "Los recordatorios no están disponibles en el navegador. Abra la aplicación en su teléfono para recibir notificaciones."
 }
