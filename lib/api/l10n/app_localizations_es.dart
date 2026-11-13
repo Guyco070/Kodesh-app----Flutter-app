@@ -437,4 +437,8 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get testNotificationSent => 'Notificación de prueba enviada';
+
+  @override
+  String get notificationsNotAvailableOnWeb =>
+      'Los recordatorios no están disponibles en el navegador. Abra la aplicación en su teléfono para recibir notificaciones.';
 }

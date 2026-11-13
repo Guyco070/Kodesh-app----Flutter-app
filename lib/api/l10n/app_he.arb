@@ -161,5 +161,6 @@
     "sendTestNotification": "שלח התראת בדיקה",
     "testNotificationTitle": "התראת בדיקה",
     "testNotificationBody": "ההתראות עובדות כראוי!",
-    "testNotificationSent": "התראת הבדיקה נשלחה"
+    "testNotificationSent": "התראת הבדיקה נשלחה",
+    "notificationsNotAvailableOnWeb": "תזכורות אינן זמינות בדפדפן. פתחו את האפליקציה בטלפון כדי לקבל התראות."
 }

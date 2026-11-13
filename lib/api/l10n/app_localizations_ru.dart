@@ -436,4 +436,8 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get testNotificationSent => 'Тестовое уведомление отправлено';
+
+  @override
+  String get notificationsNotAvailableOnWeb =>
+      'Напоминания недоступны в браузере. Откройте приложение на телефоне, чтобы получать уведомления.';
 }

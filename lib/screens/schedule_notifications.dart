@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:kodesh_app/animations/expanded_section.dart';
 import 'package:kodesh_app/api/notification_api.dart';
@@ -172,6 +173,12 @@ class _ScheduleNotificationsScreenState
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                if (kIsWeb) ...[
+                  _WebNotificationsNotice(
+                    text: appLocalizations.notificationsNotAvailableOnWeb,
+                  ),
+                  const SizedBox(height: 16),
+                ],
                 _SectionHeader(
                   title: appLocalizations.beforeShabatAndHolidaysSettengs,
                 ),
@@ -252,20 +259,52 @@ class _TestNotificationButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context)!;
     return OutlinedButton.icon(
-      onPressed: () async {
-        await NotificationApi.showNotification(
-          id: NotificationApi.testNotificationId,
-          title: l.testNotificationTitle,
-          body: l.testNotificationBody,
-        );
-        if (context.mounted) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(l.testNotificationSent)));
-        }
-      },
+      onPressed:
+          kIsWeb
+              ? null
+              : () async {
+                await NotificationApi.showNotification(
+                  id: NotificationApi.testNotificationId,
+                  title: l.testNotificationTitle,
+                  body: l.testNotificationBody,
+                );
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(l.testNotificationSent)),
+                  );
+                }
+              },
       icon: const Icon(Icons.notifications_active_outlined),
       label: Text(l.sendTestNotification),
+    );
+  }
+}
+
+class _WebNotificationsNotice extends StatelessWidget {
+  const _WebNotificationsNotice({required this.text});
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: colorScheme.secondaryContainer,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.info_outline, color: colorScheme.onSecondaryContainer),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              text,
+              style: TextStyle(color: colorScheme.onSecondaryContainer),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

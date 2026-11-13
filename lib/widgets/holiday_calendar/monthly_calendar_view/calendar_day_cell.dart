@@ -59,23 +59,36 @@ class CalendarDayCell extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 2),
-                ...holidays
-                    .take(maxVisibleLabels)
-                    .map(
-                      (h) => CalendarHolidayLabel(
-                        text: h.displayName(languageCode),
-                        isMajor: h.isMajor,
-                        fontSize: labelFontSize,
-                      ),
-                    ),
-                if (holidays.length > maxVisibleLabels)
-                  Text(
-                    '+${holidays.length - maxVisibleLabels}',
-                    style: TextStyle(
-                      fontSize: labelFontSize,
-                      color: colorScheme.onSurface.withAlpha(160),
+                // Labels take whatever height is left and clip if a day has
+                // more holiday pills than the cell can show, so the cell never
+                // overflows its fixed grid height.
+                Expanded(
+                  child: SingleChildScrollView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ...holidays
+                            .take(maxVisibleLabels)
+                            .map(
+                              (h) => CalendarHolidayLabel(
+                                text: h.displayName(languageCode),
+                                isMajor: h.isMajor,
+                                fontSize: labelFontSize,
+                              ),
+                            ),
+                        if (holidays.length > maxVisibleLabels)
+                          Text(
+                            '+${holidays.length - maxVisibleLabels}',
+                            style: TextStyle(
+                              fontSize: labelFontSize,
+                              color: colorScheme.onSurface.withAlpha(160),
+                            ),
+                          ),
+                      ],
                     ),
                   ),
+                ),
               ],
             ),
           ),
