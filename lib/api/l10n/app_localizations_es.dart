@@ -441,4 +441,20 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get notificationsNotAvailableOnWeb =>
       'Los recordatorios no están disponibles en el navegador. Abra la aplicación en su teléfono para recibir notificaciones.';
+
+  @override
+  String get dataSourcesTitle =>
+      'Fuentes de datos';
+
+  @override
+  String get dataSourcesHebcal =>
+      'Los horarios de Shabat y festividades, los zmanim, las fechas hebreas y el calendario de festividades son proporcionados por Hebcal.com, bajo licencia Creative Commons Atribución 4.0 (CC BY 4.0) – creativecommons.org/licenses/by/4.0';
+
+  @override
+  String get dataSourcesOsm =>
+      'Detección de ciudad por ubicación: © colaboradores de OpenStreetMap, datos disponibles bajo la Open Database License (ODbL) – openstreetmap.org/copyright';
+
+  @override
+  String get dataSourcesSefaria =>
+      'Calendario del Daf Yomi proporcionado por Sefaria (sefaria.org)';
 }

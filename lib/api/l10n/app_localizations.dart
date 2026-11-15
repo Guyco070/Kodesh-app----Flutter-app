@@ -905,6 +905,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reminders aren\'t available in the browser. Open the app on your phone to receive notifications.'**
   String get notificationsNotAvailableOnWeb;
+
+  /// Title of the data-sources attribution section on the About screen
+  ///
+  /// In en, this message translates to:
+  /// **'Data sources'**
+  String get dataSourcesTitle;
+
+  /// Attribution for Hebcal data (required by CC BY 4.0)
+  ///
+  /// In en, this message translates to:
+  /// **'Shabbat and holiday times, zmanim, Hebrew dates and the holiday calendar are provided by Hebcal.com, licensed under Creative Commons Attribution 4.0 (CC BY 4.0) – creativecommons.org/licenses/by/4.0'**
+  String get dataSourcesHebcal;
+
+  /// Attribution for OpenStreetMap Nominatim reverse geocoding (required by ODbL)
+  ///
+  /// In en, this message translates to:
+  /// **'City detection by location: © OpenStreetMap contributors, data available under the Open Database License (ODbL) – openstreetmap.org/copyright'**
+  String get dataSourcesOsm;
+
+  /// Attribution for the Sefaria Daf Yomi schedule
+  ///
+  /// In en, this message translates to:
+  /// **'Daf Yomi schedule provided by Sefaria (sefaria.org)'**
+  String get dataSourcesSefaria;
 }
 
 class _AppLocalizationsDelegate

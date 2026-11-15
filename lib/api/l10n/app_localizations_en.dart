@@ -439,4 +439,20 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get notificationsNotAvailableOnWeb =>
       'Reminders aren\'t available in the browser. Open the app on your phone to receive notifications.';
+
+  @override
+  String get dataSourcesTitle =>
+      'Data sources';
+
+  @override
+  String get dataSourcesHebcal =>
+      'Shabbat and holiday times, zmanim, Hebrew dates and the holiday calendar are provided by Hebcal.com, licensed under Creative Commons Attribution 4.0 (CC BY 4.0) – creativecommons.org/licenses/by/4.0';
+
+  @override
+  String get dataSourcesOsm =>
+      'City detection by location: © OpenStreetMap contributors, data available under the Open Database License (ODbL) – openstreetmap.org/copyright';
+
+  @override
+  String get dataSourcesSefaria =>
+      'Daf Yomi schedule provided by Sefaria (sefaria.org)';
 }
