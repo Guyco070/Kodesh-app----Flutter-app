@@ -436,4 +436,20 @@ class AppLocalizationsHe extends AppLocalizations {
   @override
   String get notificationsNotAvailableOnWeb =>
       'תזכורות אינן זמינות בדפדפן. פתחו את האפליקציה בטלפון כדי לקבל התראות.';
+
+  @override
+  String get dataSourcesTitle =>
+      'מקורות מידע';
+
+  @override
+  String get dataSourcesHebcal =>
+      'זמני שבתות וחגים, זמני היום, התאריכים העבריים ולוח החגים מסופקים על ידי Hebcal.com, ברישיון Creative Commons ייחוס 4.0 (CC BY 4.0) – creativecommons.org/licenses/by/4.0';
+
+  @override
+  String get dataSourcesOsm =>
+      'זיהוי עיר לפי מיקום: © OpenStreetMap contributors, הנתונים זמינים תחת רישיון Open Database License (ODbL) – openstreetmap.org/copyright';
+
+  @override
+  String get dataSourcesSefaria =>
+      'לוח הדף היומי מסופק על ידי ספריא (sefaria.org)';
 }

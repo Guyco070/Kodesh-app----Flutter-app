@@ -440,4 +440,20 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get notificationsNotAvailableOnWeb =>
       'Напоминания недоступны в браузере. Откройте приложение на телефоне, чтобы получать уведомления.';
+
+  @override
+  String get dataSourcesTitle =>
+      'Источники данных';
+
+  @override
+  String get dataSourcesHebcal =>
+      'Время наступления и исхода субботы и праздников, зманим, еврейские даты и календарь праздников предоставлены Hebcal.com по лицензии Creative Commons Attribution 4.0 (CC BY 4.0) – creativecommons.org/licenses/by/4.0';
+
+  @override
+  String get dataSourcesOsm =>
+      'Определение города по местоположению: © участники OpenStreetMap, данные доступны по лицензии Open Database License (ODbL) – openstreetmap.org/copyright';
+
+  @override
+  String get dataSourcesSefaria =>
+      'Расписание Даф Йоми предоставлено Sefaria (sefaria.org)';
 }

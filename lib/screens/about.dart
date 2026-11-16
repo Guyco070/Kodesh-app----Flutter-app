@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kodesh_app/providers/tfilot.dart';
+import 'package:kodesh_app/widgets/about/data_sources_attribution.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
@@ -15,14 +16,22 @@ class AboutScreen extends StatelessWidget {
       appBar: CustomAppBar(title: AppLocalizations.of(context)!.aboutMenu),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text.rich(
-          textDirection: TextDirection.rtl,
-          textAlign: TextAlign.center,
-          TextSpan(
-            children: Provider.of<Tfilot>(
-              context,
-              listen: false,
-            ).getSederWidgets(textList: aboutText),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Text.rich(
+                textDirection: TextDirection.rtl,
+                textAlign: TextAlign.center,
+                TextSpan(
+                  children: Provider.of<Tfilot>(
+                    context,
+                    listen: false,
+                  ).getSederWidgets(textList: aboutText),
+                ),
+              ),
+              const SizedBox(height: 16),
+              const DataSourcesAttribution(),
+            ],
           ),
         ),
       ),

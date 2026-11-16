@@ -456,5 +456,13 @@
     "testNotificationSent": "Test notification sent",
     "@testNotificationSent": { "description": "Snackbar message after sending a test notification" },
     "notificationsNotAvailableOnWeb": "Reminders aren't available in the browser. Open the app on your phone to receive notifications.",
-    "@notificationsNotAvailableOnWeb": { "description": "Banner shown on the reminders screen when running on the web, where local notifications are not supported" }
+    "@notificationsNotAvailableOnWeb": { "description": "Banner shown on the reminders screen when running on the web, where local notifications are not supported" },
+    "dataSourcesTitle": "Data sources",
+    "@dataSourcesTitle": { "description": "Title of the data-sources attribution section on the About screen" },
+    "dataSourcesHebcal": "Shabbat and holiday times, zmanim, Hebrew dates and the holiday calendar are provided by Hebcal.com, licensed under Creative Commons Attribution 4.0 (CC BY 4.0) – creativecommons.org/licenses/by/4.0",
+    "@dataSourcesHebcal": { "description": "Attribution for Hebcal data (required by CC BY 4.0)" },
+    "dataSourcesOsm": "City detection by location: © OpenStreetMap contributors, data available under the Open Database License (ODbL) – openstreetmap.org/copyright",
+    "@dataSourcesOsm": { "description": "Attribution for OpenStreetMap Nominatim reverse geocoding (required by ODbL)" },
+    "dataSourcesSefaria": "Daf Yomi schedule provided by Sefaria (sefaria.org)",
+    "@dataSourcesSefaria": { "description": "Attribution for the Sefaria Daf Yomi schedule" }
 }
