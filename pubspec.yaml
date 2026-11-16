@@ -62,18 +62,29 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
+  remove_alpha_ios: true
+  image_path: "assets/brand/app_icon.png"
+  adaptive_icon_background: "#16397D"
+  adaptive_icon_foreground: "assets/brand/app_icon_foreground.png"
   web:
     generate: true
-    image_path: "assets/logo.jpg"
-  image_path: "assets/logo.jpg"
+    image_path: "assets/brand/app_icon.png"
+    background_color: "#0B2C70"
+    theme_color: "#0B2C70"
 
 flutter_native_splash:
   android: true
   ios: true
   web: true
-  color: "#294C85"
-  image: "assets/logo.jpg"
-  android_gravity: fill
+  color: "#16397D"
+  background_image: "assets/brand/splash_background.png"
+  image: "assets/brand/splash_logo.png"
+  android_gravity: center
+  ios_content_mode: center
+  web_image_mode: center
+  android_12:
+    color: "#16397D"
+    image: "assets/brand/splash_android12.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -89,6 +100,39 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - assets/brand/emblem_body.png
+
+  fonts:
+    - family: Heebo
+      fonts:
+        - asset: assets/fonts/Heebo-300.ttf
+          weight: 300
+        - asset: assets/fonts/Heebo-400.ttf
+          weight: 400
+        - asset: assets/fonts/Heebo-500.ttf
+          weight: 500
+        - asset: assets/fonts/Heebo-600.ttf
+          weight: 600
+        - asset: assets/fonts/Heebo-700.ttf
+          weight: 700
+        - asset: assets/fonts/Heebo-800.ttf
+          weight: 800
+    - family: FrankRuhlLibre
+      fonts:
+        - asset: assets/fonts/FrankRuhlLibre-400.ttf
+          weight: 400
+        - asset: assets/fonts/FrankRuhlLibre-500.ttf
+          weight: 500
+        - asset: assets/fonts/FrankRuhlLibre-700.ttf
+          weight: 700
+    - family: CormorantGaramond
+      fonts:
+        - asset: assets/fonts/CormorantGaramond-600.ttf
+          weight: 600
+    - family: Jost
+      fonts:
+        - asset: assets/fonts/Jost-300.ttf
+          weight: 300
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
