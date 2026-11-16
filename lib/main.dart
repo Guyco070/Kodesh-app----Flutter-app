@@ -7,10 +7,12 @@ import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/providers/reminders.dart';
 import 'package:kodesh_app/providers/tfilot.dart';
 import 'package:kodesh_app/screens/about.dart';
+import 'package:kodesh_app/screens/settings_screen.dart';
 import 'package:kodesh_app/screens/compass_screen.dart';
 import 'package:kodesh_app/screens/shabat_and_holidays_check_list.dart';
 import 'package:kodesh_app/screens/schedule_notifications.dart';
-import 'package:kodesh_app/screens/event_screen.dart';
+import 'package:kodesh_app/screens/app_start.dart';
+import 'package:kodesh_app/providers/home_tab_controller.dart';
 import 'package:kodesh_app/screens/tefilot/adlakat_nerot.dart';
 import 'package:kodesh_app/screens/tefilot/adlakat_nerot_chanukah.dart';
 import 'package:kodesh_app/screens/tefilot/havdalah.dart';
@@ -20,6 +22,7 @@ import 'package:kodesh_app/screens/tefilot/birkat_hamazon.dart';
 import 'package:kodesh_app/screens/tefilot/kriyat_shema_al_hamita.dart';
 import 'package:kodesh_app/screens/daf_yomi_screen.dart';
 import 'package:kodesh_app/screens/holiday_calendar_screen.dart';
+import 'package:kodesh_app/theme/kodesh_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
@@ -54,6 +57,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => Reminders()),
         ChangeNotifierProvider.value(value: languageProvider),
         ChangeNotifierProvider(create: (_) => Tfilot()),
+        ChangeNotifierProvider(create: (_) => HomeTabController()),
       ],
       child: const MyApp(),
     ),
@@ -63,58 +67,8 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  static const Color _seed = Color(0xFF0047AE);
-
-  static final ThemeData _lightTheme = ThemeData(
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: _seed,
-      primary: _seed,
-      brightness: Brightness.light,
-    ).copyWith(
-      surface: Colors.white,
-      surfaceContainerLowest: Colors.white,
-      surfaceContainerLow: const Color(0xFFF5F5F5),
-      surfaceContainer: const Color(0xFFEEEEEE),
-      surfaceContainerHigh: const Color(0xFFE8E8E8),
-      surfaceContainerHighest: const Color(0xFFE0E0E0),
-      secondary: const Color(0xFF1565C0),
-      secondaryContainer: const Color(0xFFD6E4FF),
-      onSecondary: Colors.white,
-      onSecondaryContainer: const Color(0xFF001E6C),
-      tertiary: const Color(0xFF0D47A1),
-      tertiaryContainer: const Color(0xFFBBDEFB),
-      onTertiary: Colors.white,
-      onTertiaryContainer: const Color(0xFF001E6C),
-    ),
-    scaffoldBackgroundColor: Colors.white,
-    drawerTheme: const DrawerThemeData(backgroundColor: Colors.white),
-    useMaterial3: true,
-  );
-
-  static final ThemeData _darkTheme = ThemeData(
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: _seed,
-      primary: _seed,
-      brightness: Brightness.dark,
-    ).copyWith(
-      surface: const Color(0xFF1A1A2E),
-      secondary: const Color(0xFF90CAF9),
-      secondaryContainer: const Color(0xFF0D47A1),
-      onSecondary: const Color(0xFF003065),
-      onSecondaryContainer: const Color(0xFFD6E4FF),
-      tertiary: const Color(0xFFBBDEFB),
-      tertiaryContainer: const Color(0xFF1565C0),
-      onTertiary: const Color(0xFF003065),
-      onTertiaryContainer: const Color(0xFFD6E4FF),
-    ),
-    useMaterial3: true,
-    scaffoldBackgroundColor: const Color(0xFF1A1A2E),
-    appBarTheme: const AppBarTheme(
-      backgroundColor: Color(0xFF0F3460),
-      foregroundColor: Colors.white,
-    ),
-    drawerTheme: const DrawerThemeData(backgroundColor: Color(0xFF16213E)),
-  );
+  static final ThemeData _lightTheme = KodeshTheme.build(isDark: false);
+  static final ThemeData _darkTheme = KodeshTheme.build(isDark: true);
 
   @override
   Widget build(BuildContext context) {
@@ -132,8 +86,9 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: L10n.all,
-      home: const EventScreen(),
+      home: const AppStart(),
       routes: {
+        SettingsScreen.routeName: (_) => const SettingsScreen(),
         ScheduleNotificationsScreen.routeName:
             (_) => const ScheduleNotificationsScreen(),
         SederAnahatTefilin.routeName: (_) => SederAnahatTefilin(),

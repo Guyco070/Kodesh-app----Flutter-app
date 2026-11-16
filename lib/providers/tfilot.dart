@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kodesh_app/theme/kodesh_palette.dart';
+import 'package:kodesh_app/widgets/glass_segmented_choice.dart';
 import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
@@ -50,54 +52,18 @@ class Tfilot with ChangeNotifier {
   }
 
   Widget getNosahim(BuildContext context, Map getBracha) {
-    List<Widget> widgets = [];
-
     final langCode = LanguageChangeProvider.getCurrentLocale.languageCode;
     Map<Nosah, List<String>> bracha =
         (getBracha[langCode] ?? getBracha['en'] ?? getBracha.values.first)
             as Map<Nosah, List<String>>;
+    final labels = nosahTranslate(context);
 
-    for (Nosah i in bracha.keys) {
-      widgets.add(
-        Expanded(
-          child: ElevatedButton(
-            onPressed:
-                i == _nosah
-                    ? null
-                    : () {
-                      updateNosah(i);
-                    },
-            style: ButtonStyle(
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                const RoundedRectangleBorder(),
-              ),
-              backgroundColor:
-                  i == _nosah
-                      ? MaterialStatePropertyAll<Color>(
-                        Theme.of(context).primaryColor,
-                      )
-                      : MaterialStatePropertyAll<Color>(Colors.blue.shade800),
-            ),
-            child: Text(
-              nosahTranslate(context)[i],
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: _nosah == i ? FontWeight.bold : FontWeight.normal,
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(50)),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: widgets,
-        ),
-      ),
+    // No outer padding: it spans the same width as the text panel below.
+    return GlassSegmentedChoice<Nosah>(
+      semanticLabel: AppLocalizations.of(context)!.prayerVersion,
+      options: {for (final n in bracha.keys) n: labels[n] as String},
+      selected: bracha.containsKey(_nosah) ? _nosah : bracha.keys.first,
+      onSelected: updateNosah,
     );
   }
 
@@ -119,18 +85,19 @@ class Tfilot with ChangeNotifier {
                 : Nosah.mizrah]!;
     TextStyle font;
     List<TextSpan> widgets = [];
-    final double titleFontSize = 15 + fontSizeScale;
-    final double bodyFontSize = 14 + fontSizeScale;
+    // Sized for the serif prayer font; each text-size step is 2 px.
+    final double titleFontSize = 22 + 2 * fontSizeScale;
+    final double bodyFontSize = 20 + 2 * fontSizeScale;
 
     for (int i = 1; i < seder.length; i++) {
       String? text;
       if (seder[i][0] == 'B') {
         // B = First line of the prey
-        font = TextStyle(fontWeight: FontWeight.w600, fontSize: titleFontSize);
+        font = TextStyle(fontWeight: FontWeight.w700, fontSize: titleFontSize);
         text = '${seder[i].substring(1, seder[i].length)}\n';
       } else if (seder[i][0] == 'T') {
         // T = title
-        font = TextStyle(fontWeight: FontWeight.w600, fontSize: titleFontSize);
+        font = TextStyle(fontWeight: FontWeight.w700, fontSize: titleFontSize);
         text = '\n${seder[i].substring(1, seder[i].length)}\n';
       } else if (seder[i][0] == 'S') {
         // S = Start of a sentens
@@ -139,25 +106,36 @@ class Tfilot with ChangeNotifier {
             seder[i][seder[i].length - 1] == ':')
           text += '\n\n';
         font = TextStyle(
-          fontWeight: FontWeight.w400,
+          fontWeight: FontWeight.w500,
           fontSize: titleFontSize,
-          color: Colors.blueAccent,
+          color: KodeshPalette.sentenceBlue,
         );
       } else if (seder[i][seder[i].length - 1] == '.') {
         // end of line
         text = '${seder[i]}\n';
-        font = TextStyle(fontWeight: FontWeight.w300, fontSize: bodyFontSize);
+        font = TextStyle(fontWeight: FontWeight.w400, fontSize: bodyFontSize);
       } else if (seder[i][seder[i].length - 1] == ':') {
         // end of line
         text = '${seder[i]}\n\n';
-        font = TextStyle(fontWeight: FontWeight.w300, fontSize: bodyFontSize);
+        font = TextStyle(fontWeight: FontWeight.w400, fontSize: bodyFontSize);
       } else {
-        font = TextStyle(fontWeight: FontWeight.w300, fontSize: bodyFontSize);
+        font = TextStyle(fontWeight: FontWeight.w400, fontSize: bodyFontSize);
       }
 
       widgets.add(TextSpan(text: text ?? seder[i], style: font));
     }
 
+    // Line breaks after the last line would only add empty space at the
+    // bottom of the text panel.
+    if (widgets.isNotEmpty) {
+      final last = widgets.removeLast();
+      widgets.add(
+        TextSpan(
+          text: last.text?.replaceFirst(RegExp(r'\s+$'), ''),
+          style: last.style,
+        ),
+      );
+    }
     return widgets;
   }
 }

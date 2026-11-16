@@ -1,9 +1,14 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:kodesh_app/widgets/tab_header.dart';
+import 'package:kodesh_app/widgets/default_scaffold.dart';
+import 'package:kodesh_app/theme/kodesh_palette.dart';
+import 'package:kodesh_app/widgets/glass/glass_scaffold.dart';
 import 'package:kodesh_app/animations/expanded_section.dart';
 import 'package:kodesh_app/api/notification_api.dart';
 import 'package:kodesh_app/providers/reminders.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
+import 'package:kodesh_app/widgets/glass_bottom_nav.dart';
 import 'package:kodesh_app/widgets/group_card.dart';
 import 'package:kodesh_app/widgets/schedule_notifications_widgets/choose_time_before_widget.dart';
 import 'package:kodesh_app/widgets/schedule_notifications_widgets/choose_time_in_day_widget.dart';
@@ -12,7 +17,11 @@ import 'package:provider/provider.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
 class ScheduleNotificationsScreen extends StatefulWidget {
-  const ScheduleNotificationsScreen({super.key});
+  const ScheduleNotificationsScreen({super.key, this.isTab = false});
+
+  /// Shown as a tab of the home shell: no back button, and room at the
+  /// bottom for the floating navigation bar.
+  final bool isTab;
   static String routeName = '/schedule-notifications';
 
   @override
@@ -53,9 +62,7 @@ class _ScheduleNotificationsScreenState
 
     nerotHanukkahElements() {
       return [
-        const SizedBox(height: 7),
-        const Divider(height: 15, thickness: 1.5, indent: 60, endIndent: 60),
-        const SizedBox(height: 7),
+        const Divider(height: 16),
         ChooseTimeBeforeWidget(
           hoursValue: reminders.beforeNerotHanukkahHours,
           minutesValue: reminders.beforeNerotHanukkahMinutes,
@@ -69,6 +76,7 @@ class _ScheduleNotificationsScreenState
 
     shabatAndHolidaysElements() {
       return [
+        const SizedBox(height: 4),
         GroupCard(
           children: [
             ChooseTimeBeforeWidget(
@@ -80,13 +88,11 @@ class _ScheduleNotificationsScreenState
                   appLocalizations
                       .remindMeXhoursAndYMinutesBeforeShbatAndHolidays,
             ),
-            const Divider(
-              height: 32,
-              thickness: 1.5,
-              indent: 60,
-              endIndent: 60,
+            const Divider(height: 24),
+            Text(
+              appLocalizations.whatToRemindSettings,
+              style: const TextStyle(fontWeight: FontWeight.w600),
             ),
-            Text(appLocalizations.whatToRemindSettings),
             ...shabatAndHolidaysThingsToRemindList(),
           ],
         ),
@@ -151,9 +157,6 @@ class _ScheduleNotificationsScreenState
               onChanged: () => reminders.setNerotHanukkah(),
               text: appLocalizations.hanukkahCandleLighting,
             ),
-            if (!reminders.nerotHanukkah) ...{
-              const Divider(height: 32, thickness: 1.5),
-            },
             ExpandedSection(
               expand: reminders.nerotHanukkah,
               child: Column(children: nerotHanukkahElements()),
@@ -163,93 +166,109 @@ class _ScheduleNotificationsScreenState
       ];
     }
 
-    return Scaffold(
-      appBar: CustomAppBar(title: appLocalizations.settingRemindersMenu),
-      body: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 600),
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                if (kIsWeb) ...[
-                  _WebNotificationsNotice(
-                    text: appLocalizations.notificationsNotAvailableOnWeb,
-                  ),
-                  const SizedBox(height: 16),
-                ],
-                _SectionHeader(
-                  title: appLocalizations.beforeShabatAndHolidaysSettengs,
+    final body = Align(
+      alignment: Alignment.topCenter,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: TabHeader.maxContentWidth),
+        child: SingleChildScrollView(
+          padding: EdgeInsets.fromLTRB(
+            16,
+            16,
+            16,
+            widget.isTab ? glassBottomNavClearance(context) : 16,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (kIsWeb) ...[
+                _WebNotificationsNotice(
+                  text: appLocalizations.notificationsNotAvailableOnWeb,
                 ),
-                const SizedBox(height: 8),
-                GroupCard(
-                  children: [
-                    CuperinoTextCheckSwitch(
-                      value: reminders.shabatAndHolidays,
-                      onChanged: () => reminders.setShabatAndHolidays(),
-                      text: appLocalizations.beforeShabatAndHolidaysSettengs,
-                    ),
-                    ExpandedSection(
-                      expand: reminders.shabatAndHolidays,
-                      child: Column(children: shabatAndHolidaysElements()),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 24),
-
-                _SectionHeader(title: appLocalizations.tefillin),
-                const SizedBox(height: 8),
-                ChooseTimeInDayWidget(
-                  title: appLocalizations.tefillin,
-                  subtitle: appLocalizations.remindTeffilinSettingsAt,
-                  isExpanded: reminders.tefilin,
-                  setIsExpanded: reminders.setTefilin,
-                  timeObject: reminders.getTefilinTimeObject,
-                  setTime: reminders.setTefilinTime,
-                  timeString: reminders.tefilinTime,
-                ),
-
-                const SizedBox(height: 24),
-
-                _SectionHeader(title: appLocalizations.roshHodesh),
-                const SizedBox(height: 8),
-                ChooseTimeInDayWidget(
-                  title: appLocalizations.roshHodesh,
-                  subtitle: appLocalizations.remindRoshHodeshSettingsAt,
-                  isExpanded: reminders.roshChodesh,
-                  setIsExpanded: reminders.setRoshChodesh,
-                  timeObject: reminders.getRoshChodeshTimeObject,
-                  setTime: reminders.setRoshChodeshTime,
-                  timeString: reminders.roshChodeshTime,
-                  noteText: appLocalizations.roshHodeshReminderWillBeAdvanced,
-                ),
-
-                const SizedBox(height: 24),
-
-                _SectionHeader(title: appLocalizations.sfiratOmer),
-                const SizedBox(height: 8),
-                ChooseTimeInDayWidget(
-                  title: appLocalizations.sfiratOmer,
-                  subtitle: appLocalizations.remindSfiratOmerSettingsAt,
-                  isExpanded: reminders.sfiratOmer,
-                  setIsExpanded: reminders.setSfiratOmer,
-                  timeObject: reminders.getSfiratOmerTimeObject,
-                  setTime: reminders.setSfiratOmerTime,
-                  timeString: reminders.sfiratOmerTime,
-                ),
-
-                const SizedBox(height: 24),
-
-                _TestNotificationButton(),
-
-                const SizedBox(height: 24),
+                const SizedBox(height: 16),
               ],
-            ),
+              GroupCard(
+                children: [
+                  CuperinoTextCheckSwitch(
+                    value: reminders.shabatAndHolidays,
+                    onChanged: () => reminders.setShabatAndHolidays(),
+                    text: appLocalizations.beforeShabatAndHolidaysSettengs,
+                    icon: Icons.local_fire_department_outlined,
+                    iconColor: const Color(0xFFFFB86B),
+                    subtitle:
+                        reminders.shabatAndHolidays
+                            ? appLocalizations.reminderBeforeEntry(
+                              '${reminders.beforeShabatHours}:${reminders.beforeShabatMinutes.toString().padLeft(2, '0')}',
+                            )
+                            : null,
+                  ),
+                  ExpandedSection(
+                    expand: reminders.shabatAndHolidays,
+                    child: Column(children: shabatAndHolidaysElements()),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 12),
+              ChooseTimeInDayWidget(
+                title: appLocalizations.tefillin,
+                icon: Icons.front_hand_outlined,
+                iconColor: const Color(0xFF9EC5FF),
+                subtitle: appLocalizations.remindTeffilinSettingsAt,
+                isExpanded: reminders.tefilin,
+                setIsExpanded: reminders.setTefilin,
+                timeObject: reminders.getTefilinTimeObject,
+                setTime: reminders.setTefilinTime,
+                timeString: reminders.tefilinTime,
+              ),
+
+              const SizedBox(height: 12),
+              ChooseTimeInDayWidget(
+                title: appLocalizations.roshHodesh,
+                icon: Icons.nightlight_outlined,
+                iconColor: const Color(0xFFC3B5FF),
+                subtitle: appLocalizations.remindRoshHodeshSettingsAt,
+                isExpanded: reminders.roshChodesh,
+                setIsExpanded: reminders.setRoshChodesh,
+                timeObject: reminders.getRoshChodeshTimeObject,
+                setTime: reminders.setRoshChodeshTime,
+                timeString: reminders.roshChodeshTime,
+                noteText: appLocalizations.roshHodeshReminderWillBeAdvanced,
+              ),
+
+              const SizedBox(height: 12),
+              ChooseTimeInDayWidget(
+                title: appLocalizations.sfiratOmer,
+                icon: Icons.grass_outlined,
+                iconColor: const Color(0xFFFF9FB8),
+                subtitle: appLocalizations.remindSfiratOmerSettingsAt,
+                isExpanded: reminders.sfiratOmer,
+                setIsExpanded: reminders.setSfiratOmer,
+                timeObject: reminders.getSfiratOmerTimeObject,
+                setTime: reminders.setSfiratOmerTime,
+                timeString: reminders.sfiratOmerTime,
+              ),
+
+              const SizedBox(height: 20),
+              _TestNotificationButton(),
+              const SizedBox(height: 8),
+            ],
           ),
         ),
       ),
+    );
+
+    if (widget.isTab) {
+      return DefaultScaffold(
+        backdrop: KodeshBackdrop.reminders,
+        title: appLocalizations.navReminders,
+        subtitle: appLocalizations.remindersSubtitle,
+        body: body,
+      );
+    }
+    return GlassScaffold(
+      backdrop: KodeshBackdrop.reminders,
+      appBar: CustomAppBar(title: appLocalizations.settingRemindersMenu),
+      body: body,
     );
   }
 }
@@ -309,26 +328,6 @@ class _WebNotificationsNotice extends StatelessWidget {
   }
 }
 
-class _SectionHeader extends StatelessWidget {
-  const _SectionHeader({required this.title});
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4),
-      child: Text(
-        title,
-        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-          color: Theme.of(context).colorScheme.primary,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 0.5,
-        ),
-      ),
-    );
-  }
-}
-
 class TextCheckBox extends StatelessWidget {
   const TextCheckBox({
     Key? key,
@@ -345,15 +344,13 @@ class TextCheckBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        title: Text(text),
-        subtitle: subText != null ? Text(subText!) : null,
-        leading: Checkbox(
-          value: value,
-          onChanged: (newValue) => onChanged(newValue),
-        ),
-      ),
+    return CheckboxListTile(
+      value: value,
+      onChanged: (newValue) => onChanged(newValue),
+      controlAffinity: ListTileControlAffinity.leading,
+      contentPadding: EdgeInsets.zero,
+      title: Text(text),
+      subtitle: subText != null ? Text(subText!) : null,
     );
   }
 }

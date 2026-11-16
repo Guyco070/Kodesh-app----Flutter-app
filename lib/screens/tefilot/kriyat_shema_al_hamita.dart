@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kodesh_app/theme/kodesh_palette.dart';
+import 'package:kodesh_app/widgets/glass/glass_scaffold.dart';
 import 'package:kodesh_app/providers/tfilot.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
@@ -10,7 +12,8 @@ class KriyatShemaAlHamita extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GlassScaffold(
+      backdrop: KodeshBackdrop.prayerText,
       appBar: CustomAppBar(
         title: AppLocalizations.of(context)!.kriyatShemaAlHamitaMenu,
       ),

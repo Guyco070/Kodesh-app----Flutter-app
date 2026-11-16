@@ -17,6 +17,7 @@ class AnimatedZmanimList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         for (int i = 0; i < widgets.length; i++)
           _SlideInItem(

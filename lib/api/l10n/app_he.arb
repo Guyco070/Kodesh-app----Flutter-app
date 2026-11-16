@@ -100,7 +100,7 @@
     "remindRoshHodeshSettingsAt": "הזכר לי יום לפני ראש חודש בשעה",
     "sfiratOmer": "ספירת העומר",
     "remindSfiratOmerSettingsAt": "הזכר לי לספור בעומר בשעה",
-    "roshHodeshReminderWillBeAdvanced": "תזכורת זו תוקדם לימי חול עד השעה שתיים בצהריים בשישי",
+    "roshHodeshReminderWillBeAdvanced": "תזכורת זו תוקדם לימי חול עד השעה שתיים בצהריים בשישי.",
     "updateRemindersTitle": "עדכן תזכורות",
 
     "all": "הכל",
@@ -162,5 +162,102 @@
     "testNotificationTitle": "התראת בדיקה",
     "testNotificationBody": "ההתראות עובדות כראוי!",
     "testNotificationSent": "התראת הבדיקה נשלחה",
-    "notificationsNotAvailableOnWeb": "תזכורות אינן זמינות בדפדפן. פתחו את האפליקציה בטלפון כדי לקבל התראות."
+    "notificationsNotAvailableOnWeb": "תזכורות אינן זמינות בדפדפן. פתחו את האפליקציה בטלפון כדי לקבל התראות.",
+
+    "navHome": "בית",
+    "navTimes": "זמנים",
+    "navPrayers": "תפילות",
+    "navReminders": "תזכורות",
+    "mainNavigation": "ניווט ראשי",
+    "candleLightingIn": "הדלקת נרות בעוד",
+    "shabbatEndsIn": "צאת שבת בעוד",
+    "shabbatBegins": "כניסת שבת",
+    "shabbatEnds": "צאת שבת",
+    "hoursColonMinutes": "שעות : דקות",
+    "shabbatShalom": "שבת שלום",
+    "prayerBook": "ספר תפילות",
+    "prayerVersion": "נוסח התפילה",
+    "countdownSemantics": "{label} {hours} שעות ו-{minutes} דקות",
+
+    "previousDay": "היום הקודם",
+
+    "nextDay": "היום הבא",
+
+    "chooseDate": "בחירת תאריך",
+
+    "chooseCity": "בחירת עיר",
+
+    "backToToday": "חזרה להיום",
+
+    "increaseTextSize": "הגדלת הטקסט",
+
+    "decreaseTextSize": "הקטנת הטקסט",
+
+    "resetTextSize": "גודל טקסט רגיל",
+
+    "splashTagline": "SHABBAT · ZMANIM · TEFILOT",
+
+    "splashLoading": "טוענים את זמני השבת",
+
+    "kodeshEmblemLabel": "סמל קודש",
+
+    "prayersSubtitle": "ספר תפילות",
+
+    "remindersSubtitle": "התראות מקומיות",
+
+    "greetingShabbat": "שבת שלום",
+
+    "greetingWeek": "שבוע טוב",
+
+    "appearance": "מראה",
+
+    "location": "מיקום",
+
+    "display": "תצוגה",
+
+    "sunsetToday": "שקיעה היום",
+
+    "nextRoshChodesh": "ראש חודש",
+
+    "todayWord": "היום",
+
+    "tomorrowWord": "מחר",
+
+    "inDaysCount": "בעוד {count} ימים",
+
+    "openReminders": "לתזכורות",
+
+    "remindersActive": "תזכורות פעילות",
+
+    "remindersActiveCount": "{count} מתוך {total} פעילות",
+
+    "omerTonight": "הלילה סופרים",
+
+    "omerDaysOfCounting": "49 ימי ספירה",
+
+    "omerNotNow": "ספירת העומר נספרת בין פסח לשבועות.",
+
+    "direction": "כיוון",
+
+    "compassNorth": "צ",
+
+    "compassSouth": "ד",
+
+    "compassEast": "מ",
+
+    "compassWest": "מע",
+
+    "languageTitle": "שפה",
+
+    "home": "ראשי",
+
+    "reminderBeforeEntry": "{time} לפני הכניסה",
+
+    "reminderAtTime": "בשעה {time}",
+
+    "notificationSound": "צליל התראה",
+
+    "notificationSoundSubtitle": "השמעת צליל עם התזכורות",
+
+    "notifications": "התראות"
 }

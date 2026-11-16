@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kodesh_app/api/l10n/app_localizations.dart';
 import 'package:kodesh_app/animations/expanded_section.dart';
 import 'package:kodesh_app/helpers/dates.dart';
 import 'package:kodesh_app/providers/reminders.dart';
@@ -16,7 +17,13 @@ class ChooseTimeInDayWidget extends StatelessWidget {
     this.noteText,
     required this.title,
     required this.subtitle,
+    this.icon,
+    this.iconColor = const Color(0xFF9EC5FF),
   }) : super(key: key);
+
+  /// Badge of the row, as in the design.
+  final IconData? icon;
+  final Color iconColor;
 
   final String title;
   final String subtitle;
@@ -30,68 +37,78 @@ class ChooseTimeInDayWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return GroupCard(
       children: [
-        GroupCard(
-          children: [
-            CuperinoTextCheckSwitch(
-              text: title,
-              value: isExpanded,
-              onChanged: () => setIsExpanded(),
-            ),
-            ExpandedSection(
-              expand: isExpanded,
-              child: FittedBox(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(subtitle),
-                    TextButton(
-                      onPressed: () async {
-                        TimeOfDay? time = await showTimePicker(
-                          context: context,
-                          initialTime: TimeOfDay(
-                            hour: timeObject.hour,
-                            minute: timeObject.minute,
-                          ),
-                          builder: (context, childWidget) {
-                            return MediaQuery(
-                              data: MediaQuery.of(
-                                context,
-                              ).copyWith(alwaysUse24HourFormat: true),
-                              child: childWidget!,
-                            );
-                          },
-                        );
-                        if (time != null) {
-                          setTime(
-                            getTime(
-                              null,
-                              time.minute.toString(),
-                              time.hour.toString(),
-                            ),
-                          );
-                        }
-                      },
-                      child: Text(timeString),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            if (noteText != null)
-              FittedBox(
-                child: Text(
-                  "*$noteText.",
-                  style: TextStyle(color: Colors.grey[700], fontSize: 12),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-          ],
+        CuperinoTextCheckSwitch(
+          text: title,
+          icon: icon,
+          iconColor: iconColor,
+          subtitle:
+              isExpanded
+                  ? AppLocalizations.of(context)!.reminderAtTime(timeString)
+                  : null,
+          value: isExpanded,
+          onChanged: () => setIsExpanded(),
         ),
-        const SizedBox(height: 7),
-        const Divider(height: 15, thickness: 1.5),
-        const SizedBox(height: 7),
+        ExpandedSection(
+          expand: isExpanded,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 4),
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                Text(subtitle),
+                TextButton(
+                  onPressed: () async {
+                    TimeOfDay? time = await showTimePicker(
+                      context: context,
+                      initialTime: TimeOfDay(
+                        hour: timeObject.hour,
+                        minute: timeObject.minute,
+                      ),
+                      builder: (context, childWidget) {
+                        return MediaQuery(
+                          data: MediaQuery.of(
+                            context,
+                          ).copyWith(alwaysUse24HourFormat: true),
+                          child: childWidget!,
+                        );
+                      },
+                    );
+                    if (time != null) {
+                      setTime(
+                        getTime(
+                          null,
+                          time.minute.toString(),
+                          time.hour.toString(),
+                        ),
+                      );
+                    }
+                  },
+                  child: Text(
+                    timeString,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        if (noteText != null)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Text(
+              "*$noteText",
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                fontSize: 12,
+              ),
+            ),
+          ),
       ],
     );
   }

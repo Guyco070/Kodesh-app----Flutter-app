@@ -34,7 +34,10 @@ class TimeLeft extends StatelessWidget {
     }
     return Text(
       text,
-      style: TextStyle(color: Colors.grey.shade600, fontSize: fontSize ?? 12),
+      style: TextStyle(
+        color: Theme.of(context).colorScheme.onSurfaceVariant,
+        fontSize: fontSize ?? 12,
+      ),
     );
   }
 }

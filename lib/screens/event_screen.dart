@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kodesh_app/widgets/tab_header.dart';
 import 'package:kodesh_app/animations/animated_events_list_view.dart';
 import 'package:kodesh_app/animations/animated_only_shabat.dart';
 import 'package:kodesh_app/animations/animated_zmanim_list.dart';
@@ -11,7 +12,10 @@ import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/widgets/default_scaffold.dart';
 import 'package:kodesh_app/widgets/events_widgets/event_factory_widget.dart';
 import 'package:kodesh_app/widgets/settings_bar.dart';
-import 'package:kodesh_app/widgets/swiches/view_type_switch.dart';
+import 'package:kodesh_app/providers/home_tab_controller.dart';
+import 'package:kodesh_app/theme/kodesh_palette.dart';
+import 'package:kodesh_app/widgets/glass_bottom_nav.dart';
+import 'package:kodesh_app/widgets/shabbat_hero_card.dart';
 import 'package:kodesh_app/widgets/zman_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/data/latest.dart';
@@ -19,6 +23,14 @@ import 'package:flutter/foundation.dart';
 import '../api/notification_api.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
 import 'package:kodesh_app/helpers/geolocation_helper.dart';
+import 'package:intl/intl.dart' show DateFormat;
+import 'package:kodesh_app/data/cities.dart';
+import 'package:kodesh_app/helpers/city_display.dart';
+import 'package:kodesh_app/helpers/dates.dart';
+import 'package:kodesh_app/helpers/home_summary.dart';
+import 'package:kodesh_app/widgets/event_screen/home_stat_tile.dart';
+import 'package:kodesh_app/widgets/glass/glass_panel.dart';
+import 'package:kodesh_app/widgets/event_screen/reminders_summary_card.dart';
 
 const Set<String> _kValidNotificationRoutes = {
   '/schedule-notifications',
@@ -58,7 +70,12 @@ class _EventScreenState extends State<EventScreen> {
 
   String? title;
 
-  ViewState _viewState = ViewState.events;
+  /// Home and Times are two tabs of the bottom navigation bar that both
+  /// show this screen.
+  ViewState get _viewState =>
+      context.read<HomeTabController>().tab == HomeTab.times
+          ? ViewState.zmanim
+          : ViewState.events;
 
   @override
   void dispose() {
@@ -243,7 +260,7 @@ class _EventScreenState extends State<EventScreen> {
   Widget _buildZmanimSearchField(ZmanimDisplayMode mode) {
     final appLocalizations = AppLocalizations.of(context)!;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
       child: Row(
         children: [
           Expanded(
@@ -263,17 +280,19 @@ class _EventScreenState extends State<EventScreen> {
                           },
                         )
                         : null,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                contentPadding: const EdgeInsets.symmetric(vertical: 14),
                 isDense: true,
               ),
             ),
           ),
-          const SizedBox(width: 4),
+          const SizedBox(width: 8),
           PopupMenuButton<ZmanimDisplayMode>(
             icon: const Icon(Icons.tune),
+            style: IconButton.styleFrom(
+              fixedSize: const Size(48, 48),
+              backgroundColor: KodeshPalette.glassFill,
+              side: const BorderSide(color: KodeshPalette.glassBorder),
+            ),
             tooltip: appLocalizations.zmanimDisplayModeTooltip,
             initialValue: mode,
             onSelected: (selected) {
@@ -347,6 +366,7 @@ class _EventScreenState extends State<EventScreen> {
             data: z,
             isExpanded: _isZmanExpanded(key, mode),
             onToggle: () => _toggleZman(key, mode),
+            showDivider: widgets.isNotEmpty,
           ),
         );
       }
@@ -364,17 +384,15 @@ class _EventScreenState extends State<EventScreen> {
         ),
       );
     }
-    widgets.add(
-      const SizedBox(key: ValueKey('zmanim-bottom-spacer'), height: 10),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: GlassPanel(
+        elevated: true,
+        radius: 32,
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 4),
+        child: AnimatedZmanimList(widgets: widgets),
+      ),
     );
-
-    return AnimatedZmanimList(widgets: widgets);
-  }
-
-  setViewState(ViewState newViewState) {
-    setState(() {
-      _viewState = newViewState;
-    });
   }
 
   setIsOnlyShabat() {
@@ -399,9 +417,9 @@ class _EventScreenState extends State<EventScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
-          const Icon(
+          Icon(
             Icons.signal_cellular_nodata_rounded,
-            color: Colors.red,
+            color: Theme.of(context).colorScheme.error,
             size: 25,
           ),
           const SizedBox(height: 20),
@@ -423,14 +441,154 @@ class _EventScreenState extends State<EventScreen> {
     );
   }
 
+  /// "City · date" under the tab title: today's Hebrew date on Home, the
+  /// shown day on Times.
+  String _headerSubtitle(Events events, bool isTimesTab) {
+    final langCode =
+        context.read<LanguageChangeProvider>().currentLocale.languageCode;
+    final locale = Localizations.localeOf(context).toLanguageTag();
+    final city = cityLabel(events.city, langCode, cities);
+    final String date;
+    if (isTimesTab) {
+      date = DateFormat.MMMMEEEEd(locale).format(events.startDate);
+    } else {
+      final today = DateTime.now();
+      date =
+          events.hebrewDates?[getDateTimeSetToZero(today)] ??
+          DateFormat.MMMMd(locale).format(today);
+    }
+    return '$city · $date';
+  }
+
+  Widget _dayControls(Events events) {
+    return SettingsBar(
+      isOnlyShabat:
+          _viewState == ViewState.events ? _isOnlyShabat : _isTodayTimesFromNow,
+      updateIsOnlyShabat:
+          _viewState == ViewState.events
+              ? setIsOnlyShabat
+              : setIsTodayTimesFromNow,
+      setIsLoading: setIsLoading,
+      setIsLoadingZmanim: setIsLoadingZmanim,
+      viewState: _viewState,
+      isHebrewDate: events.isHebrewDate,
+      updateIsHebrewDate: events.updateIsHebrewDate,
+    );
+  }
+
+  /// Sunset today and the next holiday / Rosh Chodesh, side by side.
+  Widget _statTiles(Events events, AppLocalizations l) {
+    final locale = Localizations.localeOf(context).toLanguageTag();
+    final now = DateTime.now();
+    final sunset = findZman(events.zmanimItems, 'sunset');
+    final special = nextSpecialEvent(events.eventsItems ?? const [], now);
+
+    final Widget second;
+    if (special != null) {
+      final days = calendarDaysBetween(now, special.entryDate!);
+      second = HomeStatTile(
+        icon: Icons.nightlight_outlined,
+        iconColor: const Color(0xFFE3E9F2),
+        label: special.title,
+        value: switch (days) {
+          0 => l.todayWord,
+          1 => l.tomorrowWord,
+          _ => l.inDaysCount(days),
+        },
+      );
+    } else {
+      second = HomeStatTile(
+        icon: Icons.calendar_today_outlined,
+        iconColor: const Color(0xFFE3E9F2),
+        label: l.currentDate,
+        value:
+            events.hebrewDates?[getDateTimeSetToZero(now)] ??
+            DateFormat.MMMMd(locale).format(now),
+      );
+    }
+
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: HomeStatTile(
+              icon: Icons.wb_twilight_outlined,
+              iconColor: const Color(0xFFFFE3AD),
+              label: l.sunsetToday,
+              value:
+                  sunset != null && DateUtils.isSameDay(sunset.date, now)
+                      ? DateFormat.Hm(locale).format(sunset.date)
+                      : '—',
+              onTap:
+                  () => context.read<HomeTabController>().select(HomeTab.times),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(child: second),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Events events = Provider.of<Events>(context);
-    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+    AppLocalizations l = AppLocalizations.of(context)!;
+    final isTimesTab = context.watch<HomeTabController>().tab == HomeTab.times;
+    final isLoading =
+        isTimesTab
+            ? (_isLoadingZmanim || _isLoadingLang)
+            : (_isLoading || _isLoadingLang);
+
+    Widget section(Widget child) => Padding(
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+      child: child,
+    );
+
+    final List<Widget> children;
+    if (!isTimesTab && events.eventsItems != null) {
+      children = [
+        if (isLoading)
+          renderLoading(context)
+        else ...[
+          section(ShabbatHeroCard(events: events.eventsItems!)),
+          section(_statTiles(events, l)),
+          if (!kIsWeb) section(const RemindersSummaryCard()),
+          section(_dayControls(events)),
+          _getEventwidgets(events.eventsItems!, events.isOnlyShabat),
+        ],
+      ];
+    } else if (isTimesTab && events.zmanimItems != null) {
+      children = [
+        section(_dayControls(events)),
+        if (isLoading)
+          renderLoading(context)
+        else ...[
+          _buildZmanimSearchField(events.zmanimDisplayMode),
+          _getZmanimWidgets(events.zmanimItems, events.zmanimDisplayMode),
+        ],
+      ];
+    } else {
+      children = [
+        if (isLoading)
+          renderLoading(context)
+        else
+          renderNoInternetConnection(
+            events.eventsError != null ? l.apiErrorMessage : l.noIntrnetMessage,
+          ),
+      ];
+    }
 
     return DefaultScaffold(
-      setIsLoading: setIsLoadingLang,
-      title: AppLocalizations.of(context)!.main,
+      backdrop: isTimesTab ? KodeshBackdrop.zmanim : KodeshBackdrop.home,
+      title:
+          isTimesTab
+              ? l.todayTimes
+              : (isShabbatGreetingDay(DateTime.now())
+                  ? l.greetingShabbat
+                  : l.greetingWeek),
+      subtitle: _headerSubtitle(events, isTimesTab),
       body: RefreshIndicator(
         onRefresh: () async {
           String lang =
@@ -449,58 +607,20 @@ class _EventScreenState extends State<EventScreen> {
         },
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
-          child: Column(
-            children: [
-              SettingsBar(
-                isOnlyShabat:
-                    _viewState == ViewState.events
-                        ? _isOnlyShabat
-                        : _isTodayTimesFromNow,
-                updateIsOnlyShabat:
-                    _viewState == ViewState.events
-                        ? setIsOnlyShabat
-                        : setIsTodayTimesFromNow,
-                setIsLoading: setIsLoading,
-                setIsLoadingZmanim: setIsLoadingZmanim,
-                viewState: _viewState,
-                isHebrewDate: events.isHebrewDate,
-                updateIsHebrewDate: events.updateIsHebrewDate,
+          padding: EdgeInsets.only(
+            top: 8,
+            bottom: glassBottomNavClearance(context),
+          ),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxWidth: TabHeader.maxContentWidth,
               ),
-              if (LanguageChangeProvider.isInitialized && !_isLoadingLang)
-                ViewTypeSwitch(
-                  appLocalizations: appLocalizations,
-                  viewState: _viewState,
-                  setViewState: setViewState,
-                ),
-              if (events.eventsItems != null &&
-                  _viewState == ViewState.events) ...{
-                if (_isLoading || _isLoadingLang)
-                  renderLoading(context)
-                else ...{
-                  _getEventwidgets(events.eventsItems!, events.isOnlyShabat),
-                },
-              } else if (events.zmanimItems != null &&
-                  _viewState == ViewState.zmanim) ...{
-                if (_isLoadingZmanim || _isLoadingLang)
-                  renderLoading(context)
-                else ...{
-                  _buildZmanimSearchField(events.zmanimDisplayMode),
-                  _getZmanimWidgets(
-                    events.zmanimItems,
-                    events.zmanimDisplayMode,
-                  ),
-                },
-              } else ...{
-                if (_isLoading || _isLoadingLang)
-                  renderLoading(context)
-                else
-                  renderNoInternetConnection(
-                    events.eventsError != null
-                        ? AppLocalizations.of(context)!.apiErrorMessage
-                        : AppLocalizations.of(context)!.noIntrnetMessage,
-                  ),
-              },
-            ],
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: children,
+              ),
+            ),
           ),
         ),
       ),

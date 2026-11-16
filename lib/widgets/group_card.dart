@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:kodesh_app/widgets/glass/glass_panel.dart';
 
+/// A glass card grouping the rows of one settings section. Spacing between
+/// cards is left to the parent.
 class GroupCard extends StatelessWidget {
-  const GroupCard({super.key, required this.children, this.elevation = 3});
+  const GroupCard({super.key, required this.children});
   final List<Widget> children;
-  final double elevation;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: elevation,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-        child: Column(children: children),
+    return GlassPanel(
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: children,
       ),
     );
   }

@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:kodesh_app/theme/kodesh_palette.dart';
+import 'package:kodesh_app/widgets/glass/glass_scaffold.dart';
 import 'package:kodesh_app/providers/tfilot.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
+import 'package:kodesh_app/widgets/brand/kodesh_emblem.dart';
+import 'package:kodesh_app/widgets/brand/kodesh_wordmark.dart';
+import 'package:kodesh_app/widgets/glass/glass_panel.dart';
 import 'package:provider/provider.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
@@ -11,20 +16,44 @@ class AboutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GlassScaffold(
+      backdrop: KodeshBackdrop.settings,
       appBar: CustomAppBar(title: AppLocalizations.of(context)!.aboutMenu),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text.rich(
-          textDirection: TextDirection.rtl,
-          textAlign: TextAlign.center,
-          TextSpan(
-            children: Provider.of<Tfilot>(
-              context,
-              listen: false,
-            ).getSederWidgets(textList: aboutText),
-          ),
+      body: ListView(
+        primary: true,
+        padding: EdgeInsets.fromLTRB(
+          16,
+          16,
+          16,
+          24 + MediaQuery.of(context).viewPadding.bottom,
         ),
+        children: [
+          const Center(child: KodeshEmblem(width: 140)),
+          const SizedBox(height: 10),
+          const Center(child: KodeshWordmark(fontSize: 40)),
+          const SizedBox(height: 24),
+          Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 640),
+              child: GlassPanel(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 22,
+                ),
+                child: Text.rich(
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(height: 1.6),
+                  TextSpan(
+                    children: Provider.of<Tfilot>(
+                      context,
+                      listen: false,
+                    ).getSederWidgets(textList: aboutText, fontSizeScale: -3),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

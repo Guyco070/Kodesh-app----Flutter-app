@@ -25,7 +25,9 @@ class HolidayWidget extends StatelessWidget {
           // Chole Mohed - no need for tefilin
           Text(
             appLocalizations.noTefilin,
-            style: TextStyle(color: Colors.grey[700]),
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 15),

@@ -197,5 +197,102 @@
     "testNotificationTitle": "Тестовое уведомление",
     "testNotificationBody": "Уведомления работают правильно!",
     "testNotificationSent": "Тестовое уведомление отправлено",
-    "notificationsNotAvailableOnWeb": "Напоминания недоступны в браузере. Откройте приложение на телефоне, чтобы получать уведомления."
+    "notificationsNotAvailableOnWeb": "Напоминания недоступны в браузере. Откройте приложение на телефоне, чтобы получать уведомления.",
+
+    "navHome": "Главная",
+    "navTimes": "Время",
+    "navPrayers": "Молитвы",
+    "navReminders": "Напоминания",
+    "mainNavigation": "Основная навигация",
+    "candleLightingIn": "Зажигание свечей через",
+    "shabbatEndsIn": "Шаббат закончится через",
+    "shabbatBegins": "Начало Шаббата",
+    "shabbatEnds": "Окончание Шаббата",
+    "hoursColonMinutes": "часы : минуты",
+    "shabbatShalom": "Шабат шалом",
+    "prayerBook": "Молитвенник",
+    "prayerVersion": "Нусах молитвы",
+    "countdownSemantics": "{label} {hours} ч {minutes} мин",
+
+    "previousDay": "Предыдущий день",
+
+    "nextDay": "Следующий день",
+
+    "chooseDate": "Выбрать дату",
+
+    "chooseCity": "Выбрать город",
+
+    "backToToday": "Вернуться к сегодняшнему дню",
+
+    "increaseTextSize": "Крупнее текст",
+
+    "decreaseTextSize": "Мельче текст",
+
+    "resetTextSize": "Обычный размер текста",
+
+    "splashTagline": "SHABBAT · ZMANIM · TEFILOT",
+
+    "splashLoading": "Загружаем время Шаббата",
+
+    "kodeshEmblemLabel": "Логотип Kodesh",
+
+    "prayersSubtitle": "Молитвенник",
+
+    "remindersSubtitle": "Локальные уведомления",
+
+    "greetingShabbat": "Шабат шалом",
+
+    "greetingWeek": "Шавуа тов",
+
+    "appearance": "Оформление",
+
+    "location": "Местоположение",
+
+    "display": "Отображение",
+
+    "sunsetToday": "Закат сегодня",
+
+    "nextRoshChodesh": "Рош ходеш",
+
+    "todayWord": "Сегодня",
+
+    "tomorrowWord": "Завтра",
+
+    "inDaysCount": "Через {count} дн.",
+
+    "openReminders": "Открыть напоминания",
+
+    "remindersActive": "Активные напоминания",
+
+    "remindersActiveCount": "Включено {count} из {total}",
+
+    "omerTonight": "Сегодня вечером считаем",
+
+    "omerDaysOfCounting": "49 дней счёта",
+
+    "omerNotNow": "Омер считают между Песахом и Шавуотом.",
+
+    "direction": "Направление",
+
+    "compassNorth": "С",
+
+    "compassSouth": "Ю",
+
+    "compassEast": "В",
+
+    "compassWest": "З",
+
+    "languageTitle": "Язык",
+
+    "home": "Главная",
+
+    "reminderBeforeEntry": "За {time} до начала",
+
+    "reminderAtTime": "В {time}",
+
+    "notificationSound": "Звук уведомлений",
+
+    "notificationSoundSubtitle": "Воспроизводить звук с напоминаниями",
+
+    "notifications": "Уведомления"
 }

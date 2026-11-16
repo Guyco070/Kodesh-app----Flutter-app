@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' show DateFormat;
+import 'package:kodesh_app/theme/kodesh_palette.dart';
 import 'package:kodesh_app/helpers/dates.dart';
 import 'package:kodesh_app/models/zman.dart';
 import 'package:kodesh_app/providers/events.dart';
@@ -9,85 +9,130 @@ import 'package:kodesh_app/animations/animated_long_text.dart';
 import 'package:kodesh_app/widgets/time_left.dart';
 import 'package:provider/provider.dart';
 
+/// One row of the day's times, as in the design: a dot (gold for the
+/// day's landmarks), the zman's name with its explanation (expandable) and
+/// the time with how long until it. Rows sit together in one glass panel;
+/// [showDivider] draws the hairline above every row but the first.
 class ZmanWidget extends StatelessWidget {
   const ZmanWidget({
     super.key,
     required this.data,
     required this.isExpanded,
     required this.onToggle,
+    this.showDivider = false,
   });
   final Zman data;
   final bool isExpanded;
   final VoidCallback onToggle;
+  final bool showDivider;
+
+  /// Zmanim drawn with a gold dot and bold name.
+  static const Set<String> landmarks = {
+    'sunrise',
+    'chatzot',
+    'sunset',
+    'tzeit7083deg',
+  };
 
   @override
   Widget build(BuildContext context) {
-    bool isNotYTT = !isYesterdayTodayOrTomorrow(data.date);
-    Events events = Provider.of<Events>(context);
+    final isNotYTT = !isYesterdayTodayOrTomorrow(data.date);
+    final events = Provider.of<Events>(context);
     final langCode =
         Provider.of<LanguageChangeProvider>(context).currentLocale.languageCode;
     final langMap = types[langCode] ?? types['en']!;
     final labels = langMap[data.title] ?? {data.title, ''};
-    return Card(
-      child: ListTile(
-        onTap: onToggle,
-        title: Text(labels.elementAt(0)),
-        subtitle: AnimatedLongText(labels.elementAt(1), expanded: isExpanded),
-        trailing: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Text(
-              getTime(data.date, null, null),
-              style: TextStyle(fontSize: isNotYTT ? 12 : 14),
+    final isLandmark = landmarks.contains(data.title);
+
+    String? dateText;
+    if (isNotYTT) {
+      dateText =
+          events.isHebrewDate
+              ? (events.hebrewDates?[data.date])
+              : DateFormat('dd/MM/yy').format(data.date);
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (showDivider) const Divider(height: 1),
+        InkWell(
+          onTap: onToggle,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ExcludeSemantics(
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 6),
+                    width: 12,
+                    height: 12,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color:
+                          isLandmark
+                              ? KodeshPalette.flame
+                              : const Color(0x8CFFFFFF),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        labels.elementAt(0),
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight:
+                              isLandmark ? FontWeight.w700 : FontWeight.w500,
+                        ),
+                      ),
+                      if (labels.length > 1 &&
+                          labels.elementAt(1).trim().isNotEmpty)
+                        DefaultTextStyle.merge(
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: KodeshPalette.textMuted,
+                          ),
+                          child: AnimatedLongText(
+                            labels.elementAt(1).trim(),
+                            expanded: isExpanded,
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      getTime(data.date, null, null),
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                        fontFeatures: [FontFeature.tabularFigures()],
+                      ),
+                    ),
+                    if (dateText != null)
+                      Text(
+                        dateText,
+                        style: const TextStyle(
+                          fontSize: 11,
+                          color: KodeshPalette.textMuted,
+                        ),
+                      ),
+                    TimeLeft(date: data.date, fontSize: 11),
+                  ],
+                ),
+              ],
             ),
-            SizedBox(
-              width: 110,
-              child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 400),
-                transitionBuilder:
-                    ((child, animation) =>
-                        ScaleTransition(scale: animation, child: child)),
-                child:
-                    isNotYTT
-                        ? events.isHebrewDate
-                            ? (events.hebrewDates != null &&
-                                    events.hebrewDates!.isNotEmpty &&
-                                    events.hebrewDates!.containsKey(data.date)
-                                ? Text(
-                                  key: ValueKey<bool>(events.isHebrewDate),
-                                  events.hebrewDates![data.date]!,
-                                  style: TextStyle(
-                                    color: Colors.grey.shade600,
-                                    fontSize:
-                                        events
-                                                    .hebrewDates![data.date]!
-                                                    .length <=
-                                                17
-                                            ? 11
-                                            : 10,
-                                  ),
-                                )
-                                : const CupertinoActivityIndicator(
-                                  key: ValueKey<String>(
-                                    'CupertinoActivityIndicator',
-                                  ),
-                                  radius: 9,
-                                ))
-                            : Text(
-                              key: ValueKey<bool>(events.isHebrewDate),
-                              DateFormat('dd/MM/yy').format(data.date),
-                              style: TextStyle(
-                                color: Colors.grey.shade600,
-                                fontSize: 12,
-                              ),
-                            )
-                        : Container(),
-              ),
-            ),
-            TimeLeft(date: data.date, fontSize: isNotYTT ? 11 : null),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
@@ -315,23 +360,23 @@ const Map<String, Map<String, Set<String>>> types = {
       ' כאשר הכוכבים מופיעים ע"פ בעל התניא',
     },
     'tzeit7083deg': {
-      'לילה (3 כוכבים בינוניים) – Tzeit 7.083°',
+      'צאת הכוכבים (3 כוכבים בינוניים, 7.083°)',
       ' כאשר 3 כוכבים בינוניים נראים בשמי הלילה בעין בלתי מזוינת (שמש 7.083° מתחת לאופק)',
     },
     'tzeit85deg': {
-      'לילה (3 כוכבים קטנים) – Tzeit 8.5°',
+      'צאת הכוכבים (3 כוכבים קטנים, 8.5°)',
       ' כאשר 3 כוכבים קטנים נראים בשמי הלילה בעין בלתי מזוינת (שמש 8.5° מתחת לאופק)',
     },
     'tzeit42min': {
-      'רדדת הלילה (רבינו תם) – צייט 42 דקות',
+      'צאת הכוכבים (רבנו תם, 42 דקות)',
       ' כאשר 3 כוכבים בינוניים נראים בשמי הלילה בעין בלתי מזוינת (קבוע 42 דקות לאחר השקיעה)',
     },
     'tzeit50min': {
-      'לילה (3 כוכבים קטנים) – Tzeit 50 דקות',
+      'צאת הכוכבים (3 כוכבים קטנים, 50 דקות)',
       ' כאשר 3 כוכבים קטנים נראים בשמי הלילה בעין בלתי מזוינת (קבוע 50 דקות לאחר השקיעה)',
     },
     'tzeit72min': {
-      'רדת הלילה (רבינו תם) – צייט 72 דקות',
+      'צאת הכוכבים (רבנו תם, 72 דקות)',
       ' כאשר 3 כוכבים קטנים נראים בשמי הלילה בעין בלתי מזוינת (קבוע 72 דקות לאחר השקיעה)',
     },
   },

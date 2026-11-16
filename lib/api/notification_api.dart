@@ -82,18 +82,23 @@ class NotificationApi {
     }
   }
 
+  /// Whether notifications play a sound. Set from the user's setting.
+  static bool soundEnabled = true;
+
   static NotificationDetails _notificationDetails() {
-    return const NotificationDetails(
+    // An Android channel's sound cannot change after it is created, so the
+    // silent variant uses a channel of its own.
+    return NotificationDetails(
       android: AndroidNotificationDetails(
-        'channel_id',
-        'channel_name',
+        soundEnabled ? 'channel_id' : 'channel_id_silent',
+        soundEnabled ? 'channel_name' : 'channel_name_silent',
         channelDescription: 'channel_description',
-        importance: Importance.max,
-        // priority: Priority.max,
-        playSound: true,
-        styleInformation: BigTextStyleInformation(''),
+        importance:
+            soundEnabled ? Importance.max : Importance.defaultImportance,
+        playSound: soundEnabled,
+        styleInformation: const BigTextStyleInformation(''),
       ),
-      iOS: DarwinNotificationDetails(),
+      iOS: DarwinNotificationDetails(presentSound: soundEnabled),
     );
   }
 

@@ -197,5 +197,102 @@
     "testNotificationTitle": "Notificación de prueba",
     "testNotificationBody": "¡Las notificaciones funcionan correctamente!",
     "testNotificationSent": "Notificación de prueba enviada",
-    "notificationsNotAvailableOnWeb": "Los recordatorios no están disponibles en el navegador. Abra la aplicación en su teléfono para recibir notificaciones."
+    "notificationsNotAvailableOnWeb": "Los recordatorios no están disponibles en el navegador. Abra la aplicación en su teléfono para recibir notificaciones.",
+
+    "navHome": "Inicio",
+    "navTimes": "Horarios",
+    "navPrayers": "Oraciones",
+    "navReminders": "Recordatorios",
+    "mainNavigation": "Navegación principal",
+    "candleLightingIn": "Encendido de velas en",
+    "shabbatEndsIn": "El Shabat termina en",
+    "shabbatBegins": "Comienzo del Shabat",
+    "shabbatEnds": "Fin del Shabat",
+    "hoursColonMinutes": "horas : minutos",
+    "shabbatShalom": "Shabat Shalom",
+    "prayerBook": "Libro de oraciones",
+    "prayerVersion": "Versión de la oración",
+    "countdownSemantics": "{label} {hours} horas y {minutes} minutos",
+
+    "previousDay": "Día anterior",
+
+    "nextDay": "Día siguiente",
+
+    "chooseDate": "Elegir fecha",
+
+    "chooseCity": "Elegir ciudad",
+
+    "backToToday": "Volver a hoy",
+
+    "increaseTextSize": "Texto más grande",
+
+    "decreaseTextSize": "Texto más pequeño",
+
+    "resetTextSize": "Tamaño de texto predeterminado",
+
+    "splashTagline": "SHABBAT · ZMANIM · TEFILOT",
+
+    "splashLoading": "Cargando los horarios de Shabat",
+
+    "kodeshEmblemLabel": "Logotipo de Kodesh",
+
+    "prayersSubtitle": "Libro de oraciones",
+
+    "remindersSubtitle": "Notificaciones locales",
+
+    "greetingShabbat": "Shabat Shalom",
+
+    "greetingWeek": "Shavua Tov",
+
+    "appearance": "Apariencia",
+
+    "location": "Ubicación",
+
+    "display": "Visualización",
+
+    "sunsetToday": "Puesta del sol hoy",
+
+    "nextRoshChodesh": "Rosh Jodesh",
+
+    "todayWord": "Hoy",
+
+    "tomorrowWord": "Mañana",
+
+    "inDaysCount": "En {count} días",
+
+    "openReminders": "Abrir recordatorios",
+
+    "remindersActive": "Recordatorios activos",
+
+    "remindersActiveCount": "{count} de {total} activos",
+
+    "omerTonight": "Esta noche contamos",
+
+    "omerDaysOfCounting": "49 días de cuenta",
+
+    "omerNotNow": "El Omer se cuenta entre Pésaj y Shavuot.",
+
+    "direction": "Dirección",
+
+    "compassNorth": "N",
+
+    "compassSouth": "S",
+
+    "compassEast": "E",
+
+    "compassWest": "O",
+
+    "languageTitle": "Idioma",
+
+    "home": "Inicio",
+
+    "reminderBeforeEntry": "{time} antes del inicio",
+
+    "reminderAtTime": "A las {time}",
+
+    "notificationSound": "Sonido de notificación",
+
+    "notificationSoundSubtitle": "Reproducir un sonido con los recordatorios",
+
+    "notifications": "Notificaciones"
 }

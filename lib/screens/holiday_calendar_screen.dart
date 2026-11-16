@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:kodesh_app/widgets/tab_header.dart';
+import 'package:kodesh_app/widgets/glass_segmented_choice.dart';
+import 'package:kodesh_app/widgets/glass/glass_panel.dart';
+import 'package:kodesh_app/theme/kodesh_palette.dart';
+import 'package:kodesh_app/widgets/glass/glass_scaffold.dart';
 import 'package:intl/intl.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
 import 'package:kodesh_app/providers/events.dart';
@@ -78,33 +83,41 @@ class _HolidayCalendarScreenState extends State<HolidayCalendarScreen> {
     final appLocalizations = AppLocalizations.of(context)!;
     final events = Provider.of<Events>(context);
 
-    return Scaffold(
+    return GlassScaffold(
+      backdrop: KodeshBackdrop.sunset,
       appBar: CustomAppBar(title: appLocalizations.holidayCalendarMenu),
-      body: Column(
-        children: [
-          // The monthly view pages month by month, so the date range only
-          // applies to the list view.
-          if (_viewMode == _ViewMode.list)
-            _DateRangeRow(
-              dateFrom: _dateFrom,
-              dateTo: _dateTo,
-              onTap: _pickDateRange,
-              fromLabel: appLocalizations.dateRangeFrom,
-              toLabel: appLocalizations.dateRangeTo,
-            ),
-          SearchFilterBar(
-            controller: _searchController,
-            hintText: appLocalizations.search,
-            onChanged: (val) => setState(() => _searchText = val),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth: TabHeader.maxContentWidth,
           ),
-          _ViewToggle(
-            viewMode: _viewMode,
-            listLabel: appLocalizations.listView,
-            monthlyLabel: appLocalizations.monthlyView,
-            onChanged: (mode) => setState(() => _viewMode = mode),
+          child: Column(
+            children: [
+              // The monthly view pages month by month, so the date range only
+              // applies to the list view.
+              if (_viewMode == _ViewMode.list)
+                _DateRangeRow(
+                  dateFrom: _dateFrom,
+                  dateTo: _dateTo,
+                  onTap: _pickDateRange,
+                  fromLabel: appLocalizations.dateRangeFrom,
+                  toLabel: appLocalizations.dateRangeTo,
+                ),
+              SearchFilterBar(
+                controller: _searchController,
+                hintText: appLocalizations.search,
+                onChanged: (val) => setState(() => _searchText = val),
+              ),
+              _ViewToggle(
+                viewMode: _viewMode,
+                listLabel: appLocalizations.listView,
+                monthlyLabel: appLocalizations.monthlyView,
+                onChanged: (mode) => setState(() => _viewMode = mode),
+              ),
+              Expanded(child: _buildBody(appLocalizations, events)),
+            ],
           ),
-          Expanded(child: _buildBody(appLocalizations, events)),
-        ],
+        ),
       ),
     );
   }
@@ -113,9 +126,18 @@ class _HolidayCalendarScreenState extends State<HolidayCalendarScreen> {
     // The monthly view loads its own data one month at a time.
     if (_viewMode == _ViewMode.monthly) {
       return SingleChildScrollView(
-        child: MonthlyCalendarView(
-          initialMonth: DateTime.now(),
-          searchText: _searchText,
+        padding: EdgeInsets.fromLTRB(
+          16,
+          4,
+          16,
+          24 + MediaQuery.of(context).viewPadding.bottom,
+        ),
+        child: GlassPanel(
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+          child: MonthlyCalendarView(
+            initialMonth: DateTime.now(),
+            searchText: _searchText,
+          ),
         ),
       );
     }
@@ -160,16 +182,31 @@ class _HolidayCalendarScreenState extends State<HolidayCalendarScreen> {
     final dateFormat = DateFormat.yMMMMEEEEd(locale.toLanguageTag());
     final colorScheme = Theme.of(context).colorScheme;
     return ListView.builder(
+      padding: EdgeInsets.fromLTRB(
+        16,
+        4,
+        16,
+        24 + MediaQuery.of(context).viewPadding.bottom,
+      ),
       itemCount: filtered.length,
       itemBuilder: (context, index) {
         final holiday = filtered[index];
-        return ListTile(
-          leading: Icon(
-            Icons.calendar_today,
-            color: holiday.isMajor ? colorScheme.primary : colorScheme.outline,
+        return Card(
+          margin: const EdgeInsets.symmetric(vertical: 5),
+          child: ListTile(
+            leading: Icon(
+              Icons.calendar_today,
+              color:
+                  holiday.isMajor
+                      ? colorScheme.primary
+                      : colorScheme.onSurfaceVariant,
+            ),
+            title: Text(
+              holiday.displayName(locale.languageCode),
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
+            subtitle: Text(dateFormat.format(holiday.date)),
           ),
-          title: Text(holiday.displayName(locale.languageCode)),
-          subtitle: Text(dateFormat.format(holiday.date)),
         );
       },
     );
@@ -198,7 +235,8 @@ class _DateRangeRow extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        // Lines up with the icons inside the cards below.
+        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
         child: Row(
           children: [
             Icon(Icons.date_range, size: 18, color: colorScheme.primary),
@@ -243,26 +281,11 @@ class _ViewToggle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      child: SegmentedButton<_ViewMode>(
-        segments: [
-          ButtonSegment(
-            value: _ViewMode.list,
-            label: Text(listLabel),
-            icon: const Icon(Icons.list),
-          ),
-          ButtonSegment(
-            value: _ViewMode.monthly,
-            label: Text(monthlyLabel),
-            icon: const Icon(Icons.calendar_month),
-          ),
-        ],
-        selected: {viewMode},
-        onSelectionChanged: (s) => onChanged(s.first),
-        style: const ButtonStyle(
-          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          visualDensity: VisualDensity.compact,
-        ),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      child: GlassSegmentedChoice<_ViewMode>(
+        options: {_ViewMode.list: listLabel, _ViewMode.monthly: monthlyLabel},
+        selected: viewMode,
+        onSelected: onChanged,
       ),
     );
   }

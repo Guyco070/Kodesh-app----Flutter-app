@@ -46,13 +46,13 @@
     "@havdalah": { "description": "havdalah" },
 
     
-    "ashkenazVirsion": "Ashkenaz Virsion",
+    "ashkenazVirsion": "Ashkenaz Version",
     "@ashkenazVirsion": { "description": "ashkenazVirsion" },
 
-    "mizrahVirsion": "Mizrah Virsion",
+    "mizrahVirsion": "Mizrah Version",
     "@mizrahVirsion": { "description": "mizrahVirsion" },
 
-    "sfaradVirsion": "Sfarad Virsion",
+    "sfaradVirsion": "Sfarad Version",
     "@sfaradVirsion": { "description": "sfaradVirsion" },
 
 
@@ -81,7 +81,7 @@
     "viewForeignDates": "View foreign dates",
     "@viewForeignDates": { "description": "viewForeignDates" },
     
-    "viewHebrewDates": "View hebrew dates",
+    "viewHebrewDates": "View Hebrew dates",
     "@viewHebrewDates": { "description": "viewHebrewDates" },
 
 
@@ -189,7 +189,7 @@
     "beforeShabatAndHolidaysSettengs": "Before shabat and holidays",
     "@beforeShabatAndHolidaysSettengs": { "description": "beforeShabatAndHolidaysSettengs" },
 
-    "city": "city",
+    "city": "City",
     "@city": { "description": "city" },
    
     "minutes": "minutes",
@@ -307,7 +307,7 @@
     "remindRoshHodeshSettingsAt": "Remind me the day before Rosh Chodesh at",
     "@remindRoshHodeshSettingsAt": { "description": "remindRoshHodeshSettingsAt" },
 
-    "roshHodeshReminderWillBeAdvanced": "This reminder will be advanced to weekdays until two o'clock in the afternoon",
+    "roshHodeshReminderWillBeAdvanced": "This reminder will be advanced to weekdays until two o'clock in the afternoon.",
     "@roshHodeshReminderWillBeAdvanced": { "description": "roshHodeshReminderWillBeAdvanced" },
 
     "sfiratOmer": "Counting of the Omer",
@@ -456,5 +456,134 @@
     "testNotificationSent": "Test notification sent",
     "@testNotificationSent": { "description": "Snackbar message after sending a test notification" },
     "notificationsNotAvailableOnWeb": "Reminders aren't available in the browser. Open the app on your phone to receive notifications.",
-    "@notificationsNotAvailableOnWeb": { "description": "Banner shown on the reminders screen when running on the web, where local notifications are not supported" }
+    "@notificationsNotAvailableOnWeb": { "description": "Banner shown on the reminders screen when running on the web, where local notifications are not supported" },
+
+    "navHome": "Home",
+    "@navHome": { "description": "Bottom navigation tab: main screen" },
+    "navTimes": "Times",
+    "@navTimes": { "description": "Bottom navigation tab: halachic times of the day" },
+    "navPrayers": "Prayers",
+    "@navPrayers": { "description": "Bottom navigation tab: prayers and aids" },
+    "navReminders": "Reminders",
+    "@navReminders": { "description": "Bottom navigation tab: reminder settings" },
+    "mainNavigation": "Main navigation",
+    "@mainNavigation": { "description": "Screen-reader label of the bottom navigation bar" },
+    "candleLightingIn": "Candle lighting in",
+    "@candleLightingIn": { "description": "Home card: countdown label before candle lighting" },
+    "shabbatEndsIn": "Shabbat ends in",
+    "@shabbatEndsIn": { "description": "Home card: countdown label while Shabbat is in progress" },
+    "shabbatBegins": "Shabbat begins",
+    "@shabbatBegins": { "description": "Home card: candle lighting time label" },
+    "shabbatEnds": "Shabbat ends",
+    "@shabbatEnds": { "description": "Home card: havdalah time label" },
+    "hoursColonMinutes": "hours : minutes",
+    "@hoursColonMinutes": { "description": "Home card: unit caption under the hh:mm countdown" },
+    "shabbatShalom": "Shabbat Shalom",
+    "@shabbatShalom": { "description": "Home screen greeting" },
+    "prayerBook": "Prayer book",
+    "@prayerBook": { "description": "Prayers screen subtitle" },
+    "prayerVersion": "Prayer version",
+    "@prayerVersion": { "description": "Screen-reader label of the nusach (prayer version) selector" },
+    "countdownSemantics": "{label} {hours} hours and {minutes} minutes",
+    "@countdownSemantics": { "description": "Screen-reader text of the home countdown ring", "placeholders": { "label": { "type": "String" }, "hours": { "type": "int" }, "minutes": { "type": "int" }}},
+
+    "previousDay": "Previous day",
+    "@previousDay": { "description": "Tooltip of the button that moves the selected start date one day back" },
+
+    "nextDay": "Next day",
+    "@nextDay": { "description": "Tooltip of the button that moves the selected start date one day forward" },
+
+    "chooseDate": "Choose date",
+    "@chooseDate": { "description": "Screen-reader label of the start date button on the main screen" },
+
+    "chooseCity": "Choose city",
+    "@chooseCity": { "description": "Screen-reader label of the city button on the main screen" },
+
+    "backToToday": "Back to today",
+    "@backToToday": { "description": "Tooltip of the button that resets the start date to today" },
+
+    "increaseTextSize": "Larger text",
+    "@increaseTextSize": { "description": "Tooltip of the button that enlarges prayer text" },
+
+    "decreaseTextSize": "Smaller text",
+    "@decreaseTextSize": { "description": "Tooltip of the button that shrinks prayer text" },
+
+    "resetTextSize": "Default text size",
+    "@resetTextSize": { "description": "Tooltip of the button that resets prayer text size" },
+
+    "splashTagline": "SHABBAT · ZMANIM · TEFILOT",
+    "@splashTagline": {"description": "Brand tagline under the KODESH wordmark; kept in Latin letters in every language"},
+
+    "splashLoading": "Loading Shabbat times",
+
+    "kodeshEmblemLabel": "Kodesh logo",
+
+    "prayersSubtitle": "Prayer book",
+
+    "remindersSubtitle": "Local notifications",
+
+    "greetingShabbat": "Shabbat Shalom",
+    "@greetingShabbat": {"description": "Home screen title on Friday and Shabbat"},
+
+    "greetingWeek": "Shavua Tov",
+    "@greetingWeek": {"description": "Home screen title Sunday to Thursday"},
+
+    "appearance": "Appearance",
+
+    "location": "Location",
+
+    "display": "Display",
+
+    "sunsetToday": "Sunset today",
+
+    "nextRoshChodesh": "Rosh Chodesh",
+
+    "todayWord": "Today",
+
+    "tomorrowWord": "Tomorrow",
+
+    "inDaysCount": "In {count} days",
+    "@inDaysCount": {"description": "How many days until an event", "placeholders": {"count": {"type": "int"}}},
+
+    "openReminders": "Open reminders",
+
+    "remindersActive": "Active reminders",
+
+    "remindersActiveCount": "{count} of {total} on",
+    "@remindersActiveCount": {"placeholders": {"count": {"type": "int"}, "total": {"type": "int"}}},
+
+    "omerTonight": "Tonight we count",
+
+    "omerDaysOfCounting": "49 days of counting",
+
+    "omerNotNow": "The Omer is counted between Passover and Shavuot.",
+
+    "direction": "Direction",
+
+    "compassNorth": "N",
+
+    "compassSouth": "S",
+
+    "compassEast": "E",
+
+    "compassWest": "W",
+
+    "languageTitle": "Language",
+
+    "home": "Home",
+
+    "reminderBeforeEntry": "{time} before it begins",
+    "@reminderBeforeEntry": {"description": "Reminder subtitle; time is hours:minutes", "placeholders": {"time": {"type": "String"}}},
+
+    "reminderAtTime": "At {time}",
+    "@reminderAtTime": {"placeholders": {"time": {"type": "String"}}},
+
+    "notificationSound": "Notification sound",
+    "@notificationSound": {"description": "Settings switch: reminders play a sound"},
+
+    "notificationSoundSubtitle": "Play a sound with reminders",
+    "@notificationSoundSubtitle": {"description": "Subtitle of the notification sound switch"},
+
+    "notifications": "Notifications",
+    "@notifications": {"description": "Settings section title"}
 }

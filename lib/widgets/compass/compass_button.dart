@@ -1,9 +1,9 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:kodesh_app/api/l10n/app_localizations.dart';
 import 'package:kodesh_app/screens/compass_screen.dart';
 import 'package:kodesh_app/animations/hero_dialog_route.dart';
 import 'package:kodesh_app/widgets/compass/compass_widget.dart';
+import 'package:kodesh_app/widgets/compass/compass_dial.dart';
 import 'package:kodesh_app/widgets/compass/custom_rect_tween.dart';
 
 class CompassButton extends StatelessWidget {
@@ -13,36 +13,24 @@ class CompassButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 4 + 40 + 4 = the 48 px of the back button at the other end.
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(4),
       child: Hero(
         tag: CompassScreen.routeName,
         createRectTween: (begin, end) {
           return CustomRectTween(begin: begin!, end: end!);
         },
-        child: GestureDetector(
-          onTap: () {
-            Navigator.of(
-              context,
-            ).push(HeroDialogRoute(builder: ((context) => CompassWidget())));
-          },
-          child: Container(
-            padding: const EdgeInsets.all(5.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(200),
-              color: Colors.black,
-              border: Border.all(color: Colors.grey),
-            ),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Image.asset('assets/cadrant.png'),
-                Transform.rotate(
-                  angle: ((heading ?? 0) - 50) * (pi / 180) * -1,
-                  child: Image.asset('assets/compass.png', scale: 1.1),
-                ),
-              ],
-            ),
+        child: Semantics(
+          button: true,
+          label: AppLocalizations.of(context)!.compass,
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(
+                context,
+              ).push(HeroDialogRoute(builder: ((context) => CompassWidget())));
+            },
+            child: CompassDial(size: 40, heading: heading ?? 0),
           ),
         ),
       ),

@@ -23,7 +23,9 @@ class SfiratOmerWidget extends StatelessWidget {
       children: [
         Text(
           (data as SfiratOmer).sefira['sefira'][langCode == 'he' ? 'he' : 'en'],
-          style: TextStyle(color: Colors.grey[700]),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
           textAlign: TextAlign.center,
         ),
         Padding(
@@ -31,7 +33,9 @@ class SfiratOmerWidget extends StatelessWidget {
           child: FittedBox(
             child: Text(
               '${(data as SfiratOmer).sefira['count'][langCode == 'he' ? 'he' : 'en']}.',
-              style: TextStyle(color: Colors.grey[700]),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
               textAlign: TextAlign.center,
             ),
           ),

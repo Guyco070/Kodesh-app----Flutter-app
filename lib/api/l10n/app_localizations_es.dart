@@ -441,4 +441,180 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get notificationsNotAvailableOnWeb =>
       'Los recordatorios no están disponibles en el navegador. Abra la aplicación en su teléfono para recibir notificaciones.';
+
+  @override
+  String get navHome => 'Inicio';
+
+  @override
+  String get navTimes => 'Horarios';
+
+  @override
+  String get navPrayers => 'Oraciones';
+
+  @override
+  String get navReminders => 'Recordatorios';
+
+  @override
+  String get mainNavigation => 'Navegación principal';
+
+  @override
+  String get candleLightingIn => 'Encendido de velas en';
+
+  @override
+  String get shabbatEndsIn => 'El Shabat termina en';
+
+  @override
+  String get shabbatBegins => 'Comienzo del Shabat';
+
+  @override
+  String get shabbatEnds => 'Fin del Shabat';
+
+  @override
+  String get hoursColonMinutes => 'horas : minutos';
+
+  @override
+  String get shabbatShalom => 'Shabat Shalom';
+
+  @override
+  String get prayerBook => 'Libro de oraciones';
+
+  @override
+  String get prayerVersion => 'Versión de la oración';
+
+  @override
+  String countdownSemantics(String label, int hours, int minutes) {
+    return '$label $hours horas y $minutes minutos';
+  }
+
+  @override
+  String get previousDay => 'Día anterior';
+
+  @override
+  String get nextDay => 'Día siguiente';
+
+  @override
+  String get chooseDate => 'Elegir fecha';
+
+  @override
+  String get chooseCity => 'Elegir ciudad';
+
+  @override
+  String get backToToday => 'Volver a hoy';
+
+  @override
+  String get increaseTextSize => 'Texto más grande';
+
+  @override
+  String get decreaseTextSize => 'Texto más pequeño';
+
+  @override
+  String get resetTextSize => 'Tamaño de texto predeterminado';
+
+  @override
+  String get splashTagline => 'SHABBAT · ZMANIM · TEFILOT';
+
+  @override
+  String get splashLoading => 'Cargando los horarios de Shabat';
+
+  @override
+  String get kodeshEmblemLabel => 'Logotipo de Kodesh';
+
+  @override
+  String get prayersSubtitle => 'Libro de oraciones';
+
+  @override
+  String get remindersSubtitle => 'Notificaciones locales';
+
+  @override
+  String get greetingShabbat => 'Shabat Shalom';
+
+  @override
+  String get greetingWeek => 'Shavua Tov';
+
+  @override
+  String get appearance => 'Apariencia';
+
+  @override
+  String get location => 'Ubicación';
+
+  @override
+  String get display => 'Visualización';
+
+  @override
+  String get sunsetToday => 'Puesta del sol hoy';
+
+  @override
+  String get nextRoshChodesh => 'Rosh Jodesh';
+
+  @override
+  String get todayWord => 'Hoy';
+
+  @override
+  String get tomorrowWord => 'Mañana';
+
+  @override
+  String inDaysCount(int count) {
+    return 'En $count días';
+  }
+
+  @override
+  String get openReminders => 'Abrir recordatorios';
+
+  @override
+  String get remindersActive => 'Recordatorios activos';
+
+  @override
+  String remindersActiveCount(int count, int total) {
+    return '$count de $total activos';
+  }
+
+  @override
+  String get omerTonight => 'Esta noche contamos';
+
+  @override
+  String get omerDaysOfCounting => '49 días de cuenta';
+
+  @override
+  String get omerNotNow => 'El Omer se cuenta entre Pésaj y Shavuot.';
+
+  @override
+  String get direction => 'Dirección';
+
+  @override
+  String get compassNorth => 'N';
+
+  @override
+  String get compassSouth => 'S';
+
+  @override
+  String get compassEast => 'E';
+
+  @override
+  String get compassWest => 'O';
+
+  @override
+  String get languageTitle => 'Idioma';
+
+  @override
+  String get home => 'Inicio';
+
+  @override
+  String reminderBeforeEntry(String time) {
+    return '$time antes del inicio';
+  }
+
+  @override
+  String reminderAtTime(String time) {
+    return 'A las $time';
+  }
+
+  @override
+  String get notificationSound => 'Sonido de notificación';
+
+  @override
+  String get notificationSoundSubtitle =>
+      'Reproducir un sonido con los recordatorios';
+
+  @override
+  String get notifications => 'Notificaciones';
 }

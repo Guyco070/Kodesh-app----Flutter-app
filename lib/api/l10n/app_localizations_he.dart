@@ -283,7 +283,7 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get roshHodeshReminderWillBeAdvanced =>
-      'תזכורת זו תוקדם לימי חול עד השעה שתיים בצהריים בשישי';
+      'תזכורת זו תוקדם לימי חול עד השעה שתיים בצהריים בשישי.';
 
   @override
   String get sfiratOmer => 'ספירת העומר';
@@ -436,4 +436,179 @@ class AppLocalizationsHe extends AppLocalizations {
   @override
   String get notificationsNotAvailableOnWeb =>
       'תזכורות אינן זמינות בדפדפן. פתחו את האפליקציה בטלפון כדי לקבל התראות.';
+
+  @override
+  String get navHome => 'בית';
+
+  @override
+  String get navTimes => 'זמנים';
+
+  @override
+  String get navPrayers => 'תפילות';
+
+  @override
+  String get navReminders => 'תזכורות';
+
+  @override
+  String get mainNavigation => 'ניווט ראשי';
+
+  @override
+  String get candleLightingIn => 'הדלקת נרות בעוד';
+
+  @override
+  String get shabbatEndsIn => 'צאת שבת בעוד';
+
+  @override
+  String get shabbatBegins => 'כניסת שבת';
+
+  @override
+  String get shabbatEnds => 'צאת שבת';
+
+  @override
+  String get hoursColonMinutes => 'שעות : דקות';
+
+  @override
+  String get shabbatShalom => 'שבת שלום';
+
+  @override
+  String get prayerBook => 'ספר תפילות';
+
+  @override
+  String get prayerVersion => 'נוסח התפילה';
+
+  @override
+  String countdownSemantics(String label, int hours, int minutes) {
+    return '$label $hours שעות ו-$minutes דקות';
+  }
+
+  @override
+  String get previousDay => 'היום הקודם';
+
+  @override
+  String get nextDay => 'היום הבא';
+
+  @override
+  String get chooseDate => 'בחירת תאריך';
+
+  @override
+  String get chooseCity => 'בחירת עיר';
+
+  @override
+  String get backToToday => 'חזרה להיום';
+
+  @override
+  String get increaseTextSize => 'הגדלת הטקסט';
+
+  @override
+  String get decreaseTextSize => 'הקטנת הטקסט';
+
+  @override
+  String get resetTextSize => 'גודל טקסט רגיל';
+
+  @override
+  String get splashTagline => 'SHABBAT · ZMANIM · TEFILOT';
+
+  @override
+  String get splashLoading => 'טוענים את זמני השבת';
+
+  @override
+  String get kodeshEmblemLabel => 'סמל קודש';
+
+  @override
+  String get prayersSubtitle => 'ספר תפילות';
+
+  @override
+  String get remindersSubtitle => 'התראות מקומיות';
+
+  @override
+  String get greetingShabbat => 'שבת שלום';
+
+  @override
+  String get greetingWeek => 'שבוע טוב';
+
+  @override
+  String get appearance => 'מראה';
+
+  @override
+  String get location => 'מיקום';
+
+  @override
+  String get display => 'תצוגה';
+
+  @override
+  String get sunsetToday => 'שקיעה היום';
+
+  @override
+  String get nextRoshChodesh => 'ראש חודש';
+
+  @override
+  String get todayWord => 'היום';
+
+  @override
+  String get tomorrowWord => 'מחר';
+
+  @override
+  String inDaysCount(int count) {
+    return 'בעוד $count ימים';
+  }
+
+  @override
+  String get openReminders => 'לתזכורות';
+
+  @override
+  String get remindersActive => 'תזכורות פעילות';
+
+  @override
+  String remindersActiveCount(int count, int total) {
+    return '$count מתוך $total פעילות';
+  }
+
+  @override
+  String get omerTonight => 'הלילה סופרים';
+
+  @override
+  String get omerDaysOfCounting => '49 ימי ספירה';
+
+  @override
+  String get omerNotNow => 'ספירת העומר נספרת בין פסח לשבועות.';
+
+  @override
+  String get direction => 'כיוון';
+
+  @override
+  String get compassNorth => 'צ';
+
+  @override
+  String get compassSouth => 'ד';
+
+  @override
+  String get compassEast => 'מ';
+
+  @override
+  String get compassWest => 'מע';
+
+  @override
+  String get languageTitle => 'שפה';
+
+  @override
+  String get home => 'ראשי';
+
+  @override
+  String reminderBeforeEntry(String time) {
+    return '$time לפני הכניסה';
+  }
+
+  @override
+  String reminderAtTime(String time) {
+    return 'בשעה $time';
+  }
+
+  @override
+  String get notificationSound => 'צליל התראה';
+
+  @override
+  String get notificationSoundSubtitle => 'השמעת צליל עם התזכורות';
+
+  @override
+  String get notifications => 'התראות';
 }

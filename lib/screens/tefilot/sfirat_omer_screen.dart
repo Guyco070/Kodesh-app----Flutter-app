@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:kodesh_app/helpers/home_summary.dart';
+import 'package:kodesh_app/providers/events.dart';
+import 'package:kodesh_app/widgets/sfirat_omer_screen/omer_count_card.dart';
+import 'package:provider/provider.dart';
+import 'package:kodesh_app/theme/kodesh_palette.dart';
+import 'package:kodesh_app/widgets/glass/glass_scaffold.dart';
 import 'package:kodesh_app/providers/tfilot.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
@@ -10,11 +16,21 @@ class SfiratOmerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final now = DateTime.now();
+    final omer = currentOmer(
+      context.watch<Events>().eventsItems ?? const [],
+      now,
+    );
+    return GlassScaffold(
+      backdrop: KodeshBackdrop.omer,
       appBar: CustomAppBar(
         title: AppLocalizations.of(context)!.sederSfiratOmer,
       ),
       body: TefilaWidget(
+        header:
+            omer == null
+                ? null
+                : OmerCountCard(omer: omer, isTonight: now.hour >= 12),
         getBracha: getBracha,
         // isWithNosah: false,
         // imagePath: 'assets/nerot_shabat.jpg',

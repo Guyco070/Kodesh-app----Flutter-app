@@ -1,18 +1,20 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kodesh_app/helpers/app_logger.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:intl/intl.dart' as df;
-import 'package:kodesh_app/data/cities.dart';
+import 'package:intl/intl.dart' show DateFormat;
+import 'package:kodesh_app/api/l10n/app_localizations.dart';
+import 'package:kodesh_app/helpers/home_summary.dart';
 import 'package:kodesh_app/providers/events.dart';
-import 'package:kodesh_app/providers/language_change_provider.dart';
 import 'package:kodesh_app/screens/event_screen.dart';
 import 'package:kodesh_app/services/location_service.dart';
-import 'package:kodesh_app/widgets/city_picker.dart';
+import 'package:kodesh_app/widgets/glass/glass_panel.dart';
+import 'package:kodesh_app/widgets/settings_bar/glass_pill_button.dart';
 import 'package:provider/provider.dart';
-import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
-import '../helpers/dates.dart';
-
+/// The glass card over the week's events and the day's times: the shown
+/// date with previous/next day, a "back to today" chip when another day is
+/// shown, and the display filters. City and the other settings live in
+/// `SettingsScreen`; this widget still picks up the device location once.
 class SettingsBar extends StatefulWidget {
   const SettingsBar({
     super.key,
@@ -38,9 +40,6 @@ class SettingsBar extends StatefulWidget {
 }
 
 class _SettingsBarState extends State<SettingsBar> {
-  bool _isExpanded = true;
-  bool _isDetectingLocation = false;
-
   @override
   void initState() {
     super.initState();
@@ -58,7 +57,6 @@ class _SettingsBarState extends State<SettingsBar> {
   }
 
   Future<void> _detectAndSetLocation({bool showErrorSnackBar = true}) async {
-    setState(() => _isDetectingLocation = true);
     try {
       final cityCode = await LocationService.detectNearestCity();
       if (!mounted) return;
@@ -78,378 +76,111 @@ class _SettingsBarState extends State<SettingsBar> {
           ),
         );
       }
-    } finally {
-      if (mounted) setState(() => _isDetectingLocation = false);
+    } catch (e, st) {
+      logger.w('Location detection failed', error: e, stackTrace: st);
     }
+  }
+
+  Future<void> _pickDate(Events events) async {
+    final newDate = await showDatePicker(
+      context: context,
+      initialDate: events.startDate,
+      firstDate: DateTime.now().subtract(const Duration(days: 365)),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
+    );
+    if (newDate != null) _setStartDate(events, newDate);
+  }
+
+  void _setStartDate(Events events, DateTime date) {
+    events.setStartDate(
+      date,
+      setIsLoading: widget.setIsLoading,
+      setIsLoadingZmanim: widget.setIsLoadingZmanim,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    Events events = Provider.of<Events>(context, listen: false);
-    var lang = Provider.of<LanguageChangeProvider>(context);
-    AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+    final events = Provider.of<Events>(context, listen: false);
+    final l = AppLocalizations.of(context)!;
+    final locale = Localizations.localeOf(context).toLanguageTag();
 
-    return TweenAnimationBuilder(
-      duration: const Duration(seconds: 3),
-      tween: Tween<double>(begin: 0, end: 1),
-      builder: (context, val, child) {
-        return Opacity(
-          opacity: val,
-          child: Container(
-            padding: EdgeInsets.all((val - 1) * -20),
-            margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
-            decoration: BoxDecoration(
-              border: Border.all(width: 2, color: Colors.blueGrey),
-              borderRadius: BorderRadius.circular(20),
-              color: Theme.of(context).colorScheme.surfaceContainerHigh,
-            ),
-            child: Column(
-              children: [
-                if (!_isExpanded) const SizedBox(height: 15),
-                IntrinsicHeight(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
-                    child: Wrap(
-                      direction: Axis.vertical,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.3,
-                                  child: InkWell(
-                                    borderRadius: BorderRadius.circular(10),
-                                    onTap: () async {
-                                      final langCode =
-                                          lang.currentLocale.languageCode;
-                                      final selected = await showSearch<Map?>(
-                                        context: context,
-                                        delegate: CitySearchDelegate(
-                                          cities: cities,
-                                          lang: langCode,
-                                        ),
-                                      );
-                                      if (selected != null &&
-                                          selected['eNameAndCode'] !=
-                                              events.city) {
-                                        events.setCity(
-                                          selected['eNameAndCode'] as String,
-                                          setIsLoading: widget.setIsLoading,
-                                          setIsLoadingZmanim:
-                                              widget.setIsLoadingZmanim,
-                                        );
-                                      }
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 12,
-                                        vertical: 8,
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              cities.firstWhere(
-                                                    (c) =>
-                                                        c['eNameAndCode'] ==
-                                                        events.city,
-                                                    orElse: () => cities.first,
-                                                  )[lang
-                                                      .currentLocale
-                                                      .languageCode] ??
-                                                  events.city,
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ),
-                                          const Icon(
-                                            Icons.keyboard_arrow_down_outlined,
-                                            size: 21,
-                                            color: Colors.white,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 12),
-                                _isDetectingLocation
-                                    ? const SizedBox(
-                                      width: 24,
-                                      height: 24,
-                                      child: CupertinoActivityIndicator(),
-                                    )
-                                    : IconButton(
-                                      icon: Icon(
-                                        Icons.my_location,
-                                        size: 20,
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                      constraints: const BoxConstraints(
-                                        minWidth: 32,
-                                        minHeight: 32,
-                                      ),
-                                      padding: EdgeInsets.zero,
-                                      onPressed: _detectAndSetLocation,
-                                      tooltip:
-                                          AppLocalizations.of(
-                                            context,
-                                          )!.useMyLocation,
-                                    ),
-                              ],
-                            ),
-                            const SizedBox(width: 12),
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                ElevatedButton.icon(
-                                  onPressed: () async {
-                                    DateTime? newDate = await showDatePicker(
-                                      context: context,
-                                      initialDate: events.startDate,
-                                      firstDate: DateTime.now().subtract(
-                                        const Duration(days: 365),
-                                      ),
-                                      lastDate: DateTime.now().add(
-                                        const Duration(days: 365),
-                                      ),
-                                    );
-                                    if (newDate != null) {
-                                      events.setStartDate(
-                                        newDate,
-                                        setIsLoading: widget.setIsLoading,
-                                        setIsLoadingZmanim:
-                                            widget.setIsLoadingZmanim,
-                                      );
-                                    }
-                                  },
-                                  icon: const Icon(
-                                    Icons.calendar_month_outlined,
-                                  ),
-                                  label: AnimatedSwitcher(
-                                    duration: const Duration(milliseconds: 500),
-                                    transitionBuilder:
-                                        (child, animation) => ScaleTransition(
-                                          scale: animation,
-                                          child: child,
-                                        ),
-                                    child: Text(
-                                      key: ValueKey<String>(
-                                        df.DateFormat(
-                                          'dd/MM/yyyy',
-                                        ).format(events.startDate),
-                                      ),
-                                      df.DateFormat(
-                                        'dd/MM/yyyy',
-                                      ).format(events.startDate),
-                                    ),
-                                  ),
-                                ),
-                                if (_isExpanded)
-                                  SizedBox(
-                                    height: 30,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        IconButton(
-                                          onPressed:
-                                              () => events.setStartDate(
-                                                events.startDate.subtract(
-                                                  const Duration(days: 1),
-                                                ),
-                                                setIsLoading:
-                                                    widget.setIsLoading,
-                                                setIsLoadingZmanim:
-                                                    widget.setIsLoadingZmanim,
-                                              ),
-                                          icon: const Icon(
-                                            Icons.remove,
-                                            size: 20,
-                                          ),
-                                        ),
-                                        IconButton(
-                                          onPressed:
-                                              () => events.setStartDate(
-                                                events.startDate.add(
-                                                  const Duration(days: 1),
-                                                ),
-                                                setIsLoading:
-                                                    widget.setIsLoading,
-                                                setIsLoadingZmanim:
-                                                    widget.setIsLoadingZmanim,
-                                              ),
-                                          icon: const Icon(Icons.add, size: 20),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
+    final today = DateTime.now();
+    final dayOffset = calendarDaysBetween(today, events.startDate);
+    final dateLabel = switch (dayOffset) {
+      0 =>
+        '${l.todayWord} · ${DateFormat.MMMd(locale).format(events.startDate)}',
+      1 =>
+        '${l.tomorrowWord} · ${DateFormat.MMMd(locale).format(events.startDate)}',
+      _ => DateFormat.yMMMEd(locale).format(events.startDate),
+    };
+
+    return GlassPanel(
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              IconButton(
+                onPressed:
+                    () => _setStartDate(
+                      events,
+                      events.startDate.subtract(const Duration(days: 1)),
                     ),
-                  ),
+                tooltip: l.previousDay,
+                icon: const Icon(Icons.chevron_left_rounded),
+              ),
+              Expanded(
+                child: GlassPillButton(
+                  icon: Icons.calendar_month_outlined,
+                  label: dateLabel,
+                  semanticLabel: l.chooseDate,
+                  onTap: () => _pickDate(events),
                 ),
-                Container(
-                  padding: const EdgeInsets.only(top: 0),
-                  height: 30,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SizedBox(width: 30),
-                      Expanded(
-                        child: TextButton(
-                          onPressed: () => widget.updateIsOnlyShabat(),
-                          child: Text(
-                            widget.viewState == ViewState.events
-                                ? widget.isOnlyShabat
-                                    ? appLocalizations.onlyShabat
-                                    : appLocalizations.viewAllEvents
-                                : appLocalizations.fromNowOn,
-                            style: TextStyle(
-                              color:
-                                  widget.isOnlyShabat
-                                      ? Colors.blue
-                                      : Colors.grey,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: TextButton(
-                          onPressed: () => widget.updateIsHebrewDate(),
-                          child: Text(
-                            widget.isHebrewDate
-                                ? appLocalizations.viewForeignDates
-                                : appLocalizations.viewHebrewDates,
-                            style: TextStyle(
-                              color:
-                                  widget.isHebrewDate
-                                      ? Colors.blue
-                                      : Colors.grey,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 30),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 38,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        iconSize: _isExpanded ? 22 : 20,
-                        onPressed: () {
-                          DateTime today = DateTime.now();
-                          if (events.eventsItems == null ||
-                              df.DateFormat('dd/MM/yy').format(today) !=
-                                  df.DateFormat(
-                                    'dd/MM/yy',
-                                  ).format(events.startDate)) {
-                            events.setStartDate(
-                              DateTime.now(),
-                              setIsLoading: widget.setIsLoading,
-                              setIsLoadingZmanim: widget.setIsLoadingZmanim,
-                            );
-                          }
-                        },
-                        icon: Icon(
-                          Icons.refresh,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      Text(
-                        '${appLocalizations.currentDate}: ',
-                        style: const TextStyle(fontSize: 12),
-                      ),
-                      SizedBox(
-                        width: 130,
-                        child: AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 400),
-                          transitionBuilder:
-                              ((child, animation) => ScaleTransition(
-                                scale: animation,
-                                child: child,
-                              )),
-                          child: Row(
-                            key: ValueKey<String>(
-                              events.isHebrewDate
-                                  ? events.hebrewDates == null ||
-                                          events.hebrewDates!.isEmpty
-                                      ? '  '
-                                      : events
-                                          .hebrewDates![getDateTimeSetToZero(
-                                        DateTime.now(),
-                                      )]!
-                                  : df.DateFormat(
-                                    'dd/MM/yyyy',
-                                  ).format(DateTime.now()),
-                            ),
-                            children: [
-                              if (events.isHebrewDate &&
-                                  (events.hebrewDates == null ||
-                                      events.hebrewDates!.isEmpty)) ...{
-                                Text(
-                                  events.isHebrewDate
-                                      ? events.hebrewDates == null ||
-                                              events.hebrewDates!.isEmpty
-                                          ? '  '
-                                          : events
-                                              .hebrewDates![getDateTimeSetToZero(
-                                            DateTime.now(),
-                                          )]!
-                                      : df.DateFormat(
-                                        'dd/MM/yyyy',
-                                      ).format(DateTime.now()),
-                                  style: const TextStyle(fontSize: 12),
-                                ),
-                                const CupertinoActivityIndicator(),
-                              } else ...{
-                                Text(
-                                  events.isHebrewDate &&
-                                          events.hebrewDates != null &&
-                                          events.hebrewDates!.isNotEmpty
-                                      ? events
-                                          .hebrewDates![getDateTimeSetToZero(
-                                        DateTime.now(),
-                                      )]!
-                                      : df.DateFormat(
-                                        'dd/MM/yyyy',
-                                      ).format(DateTime.now()),
-                                  style: const TextStyle(fontSize: 12),
-                                ),
-                              },
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+              IconButton(
+                onPressed:
+                    () => _setStartDate(
+                      events,
+                      events.startDate.add(const Duration(days: 1)),
+                    ),
+                tooltip: l.nextDay,
+                icon: const Icon(Icons.chevron_right_rounded),
+              ),
+            ],
           ),
-        );
-      },
+          const SizedBox(height: 8),
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              if (dayOffset != 0)
+                ActionChip(
+                  avatar: const Icon(Icons.today_outlined, size: 18),
+                  label: Text(l.backToToday),
+                  onPressed: () => _setStartDate(events, DateTime.now()),
+                ),
+              FilterChip(
+                label: Text(
+                  widget.viewState == ViewState.events
+                      ? l.onlyShabat
+                      : l.fromNowOn,
+                ),
+                selected: widget.isOnlyShabat,
+                onSelected: (_) => widget.updateIsOnlyShabat(),
+              ),
+              FilterChip(
+                label: Text(l.viewHebrewDates),
+                selected: widget.isHebrewDate,
+                onSelected: (_) => widget.updateIsHebrewDate(),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+        ],
+      ),
     );
   }
 }

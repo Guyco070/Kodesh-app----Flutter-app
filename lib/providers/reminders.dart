@@ -54,6 +54,9 @@ class Reminders with ChangeNotifier {
   bool preys = false;
   bool roshChodesh = false;
 
+  /// Whether reminders play a sound. Off makes them arrive silently.
+  bool notificationSound = true;
+
   bool havdalah = false;
   int afterShabatHavdalahMinutes = 5;
   int afterShabatHavdalahHours = 0;
@@ -323,6 +326,9 @@ class Reminders with ChangeNotifier {
       havdalah = prefs.getBool('havdalah')!;
     }
 
+    notificationSound = prefs.getBool('notificationSound') ?? true;
+    NotificationApi.soundEnabled = notificationSound;
+
     if (prefsKeys.contains('city')) {
       city = prefs.getString('city')!;
     }
@@ -405,6 +411,18 @@ class Reminders with ChangeNotifier {
     notifyListeners();
 
     setReminders();
+  }
+
+  /// Turns the reminder sound on or off and reschedules, since the sound is
+  /// fixed when a notification is scheduled.
+  Future<void> setNotificationSound(bool value) async {
+    if (value == notificationSound) return;
+    notificationSound = value;
+    NotificationApi.soundEnabled = value;
+    notifyListeners();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('notificationSound', value);
+    _scheduleSetReminders();
   }
 
   updateAll() async {

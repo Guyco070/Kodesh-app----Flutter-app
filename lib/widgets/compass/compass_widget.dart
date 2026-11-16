@@ -1,10 +1,17 @@
 import 'dart:async';
-import 'dart:math';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:kodesh_app/screens/compass_screen.dart';
 import 'package:kodesh_app/services/compass_service.dart';
+import 'package:kodesh_app/theme/kodesh_palette.dart';
 import 'package:kodesh_app/widgets/compass/custom_rect_tween.dart';
+import 'package:kodesh_app/widgets/compass/compass_dial.dart';
+import 'package:kodesh_app/widgets/compass/pulsing_ring.dart';
+import 'package:kodesh_app/widgets/glass/glass_panel.dart';
+import 'package:kodesh_app/helpers/western_wall_bearing.dart';
+import 'package:kodesh_app/providers/events.dart';
+import 'package:provider/provider.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
 enum CompassIndicatorIcon { none, top, center }
@@ -84,7 +91,11 @@ class _CompassWidgetState extends State<CompassWidget> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.explore_outlined, size: 64, color: Colors.grey),
+            const Icon(
+              Icons.explore_outlined,
+              size: 64,
+              color: KodeshPalette.textMuted,
+            ),
             const SizedBox(height: 16),
             ElevatedButton.icon(
               icon: const Icon(Icons.sensors),
@@ -96,78 +107,112 @@ class _CompassWidgetState extends State<CompassWidget> {
       );
     }
 
-    Icon indicatorIcon() {
-      if (heading != null && heading! <= 55.0 && heading! >= 45.0) {
-        return const Icon(
-          Icons.check_circle_outline_outlined,
-          color: Colors.green,
-          size: 60,
-        );
-      } else {
-        return const Icon(
-          Icons.unpublished_outlined,
-          color: Colors.red,
-          size: 60,
-        );
-      }
-    }
+    final target = bearingFromCity(context.watch<Events>().city) ?? 50;
+    final h = heading ?? 0;
+    // Smallest angle between where the device points and the target.
+    final off = ((target - h + 540) % 360) - 180;
+    final isAligned = off.abs() <= 5;
 
     return Hero(
       createRectTween: (begin, end) {
         return CustomRectTween(begin: begin!, end: end!);
       },
       tag: CompassScreen.routeName,
-      child: Center(
-        child: OrientationBuilder(
-          builder:
-              (context, orientation) => Container(
-                width:
-                    orientation == Orientation.portrait
-                        ? MediaQuery.of(context).size.width / 1.3
-                        : MediaQuery.of(context).size.height / 1.3,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(200),
-                  color: Colors.black,
-                  border: Border.all(color: Colors.grey),
-                ),
-                child: SingleChildScrollView(
+      child: Material(
+        type: MaterialType.transparency,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final dialSize = (math.min(
+                      constraints.maxWidth,
+                      constraints.maxHeight.isFinite
+                          ? constraints.maxHeight - 160
+                          : constraints.maxWidth,
+                    ) -
+                    48)
+                .clamp(200.0, 420.0);
+            return SingleChildScrollView(
+              padding: EdgeInsets.fromLTRB(
+                16,
+                24,
+                16,
+                24 + MediaQuery.of(context).viewPadding.bottom,
+              ),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 460),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      if (widget.indicatorType == CompassIndicatorIcon.top &&
-                          orientation == Orientation.portrait) ...{
-                        Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: indicatorIcon(),
-                        ),
-                        const SizedBox(height: 20.0),
-                      },
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Image.asset('assets/cadrant.png'),
-                            Transform.rotate(
-                              angle: ((heading ?? 0) - 50) * (pi / 180) * -1,
-                              child: Image.asset(
-                                'assets/compass.png',
-                                scale: 1.1,
-                              ),
-                            ),
-                            if (widget.indicatorType ==
-                                    CompassIndicatorIcon.center ||
-                                orientation != Orientation.portrait)
-                              indicatorIcon(),
-                          ],
+                      Center(
+                        child: PulsingRing(
+                          size: dialSize,
+                          color:
+                              isAligned
+                                  ? KodeshPalette.switchOn
+                                  : const Color(0xFF2EE6D0),
+                          child: CompassDial(
+                            size: dialSize,
+                            heading: h,
+                            target: target,
+                          ),
                         ),
                       ),
+                      if (widget.indicatorType !=
+                          CompassIndicatorIcon.none) ...[
+                        const SizedBox(height: 28),
+                        GlassPanel(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 16,
+                          ),
+                          child: MergeSemantics(
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        appLocalizations.direction,
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          color: KodeshPalette.textMuted,
+                                        ),
+                                      ),
+                                      Text(
+                                        '${target.round()}°',
+                                        textDirection: TextDirection.ltr,
+                                        style: const TextStyle(
+                                          fontSize: 32,
+                                          fontWeight: FontWeight.w800,
+                                          letterSpacing: -1,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Icon(
+                                  isAligned
+                                      ? Icons.check_circle_rounded
+                                      : Icons.explore_outlined,
+                                  size: 36,
+                                  color:
+                                      isAligned
+                                          ? KodeshPalette.switchOn
+                                          : KodeshPalette.textMuted,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),
               ),
+            );
+          },
         ),
       ),
     );

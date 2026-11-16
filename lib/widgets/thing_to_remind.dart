@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kodesh_app/theme/kodesh_palette.dart';
 
 class ThingToRemind extends StatefulWidget {
   final String title;
@@ -21,59 +22,61 @@ class _ThingToRemindState extends State<ThingToRemind> {
         final iconSize = size * 0.32;
         final fontSize = (size * 0.11).clamp(11.0, 16.0);
 
-        return GestureDetector(
-          onTap: () => setState(() => isChecked = !isChecked),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            margin: EdgeInsets.all(size * 0.04),
-            decoration: BoxDecoration(
-              color:
-                  isChecked
-                      ? Theme.of(context).colorScheme.primary
-                      : Theme.of(context).colorScheme.surfaceContainerLow,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(
+        return Semantics(
+          button: true,
+          checked: isChecked,
+          child: GestureDetector(
+            onTap: () => setState(() => isChecked = !isChecked),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              decoration: BoxDecoration(
                 color:
                     isChecked
                         ? Theme.of(context).colorScheme.primary
-                        : Colors.grey.shade300,
-                width: 1.5,
-              ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 200),
-                  child: Icon(
-                    isChecked ? Icons.check_circle_rounded : widget.icon,
-                    key: ValueKey(isChecked),
-                    size: iconSize,
-                    color:
-                        isChecked
-                            ? Colors.white
-                            : Theme.of(context).colorScheme.onSurface,
-                  ),
+                        : Theme.of(context).cardTheme.color,
+                borderRadius: BorderRadius.circular(24),
+                border: Border.all(
+                  color:
+                      isChecked
+                          ? Theme.of(context).colorScheme.primary
+                          : KodeshPalette.glassBorder,
                 ),
-                SizedBox(height: size * 0.06),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: size * 0.06),
-                  child: Text(
-                    widget.title,
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: fontSize,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 200),
+                    child: Icon(
+                      isChecked ? Icons.check_circle_rounded : widget.icon,
+                      key: ValueKey(isChecked),
+                      size: iconSize,
                       color:
                           isChecked
-                              ? Colors.white
+                              ? Theme.of(context).colorScheme.onPrimary
                               : Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
-                ),
-              ],
+                  SizedBox(height: size * 0.06),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: size * 0.06),
+                    child: Text(
+                      widget.title,
+                      textAlign: TextAlign.center,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: fontSize,
+                        color:
+                            isChecked
+                                ? Theme.of(context).colorScheme.onPrimary
+                                : Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         );

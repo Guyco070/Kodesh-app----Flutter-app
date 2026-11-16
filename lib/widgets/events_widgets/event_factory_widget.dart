@@ -4,6 +4,7 @@ import 'package:kodesh_app/models/molad.dart';
 import 'package:kodesh_app/models/shabat.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
+import 'package:kodesh_app/widgets/glass/glass_panel.dart';
 
 class EventFactoryWidget extends StatelessWidget {
   const EventFactoryWidget({
@@ -37,27 +38,33 @@ class EventFactoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hasHeading = _hasHeading(data);
-    return Column(
-      children: [
-        if (!isFirst) ...{
-          Divider(
-            thickness: hasHeading ? 2 : 0.5,
-            indent: hasHeading ? 10 : 35,
-            endIndent: hasHeading ? 10 : 35,
-            height: hasHeading ? 40 : 24,
+    return Padding(
+      padding: EdgeInsets.fromLTRB(16, isFirst ? 4 : 6, 16, 6),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 640),
+        child: GlassPanel(
+          padding: EdgeInsets.fromLTRB(4, hasHeading ? 16 : 6, 4, 6),
+          child: Column(
+            children: [
+              if (hasHeading) ...[
+                Semantics(
+                  header: true,
+                  child: Text(
+                    _resolveTitle(context, data),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
+                const Divider(indent: 20, endIndent: 20, height: 24),
+              ],
+              Events.eventsFactoryMethod(data)!,
+            ],
           ),
-        } else ...{
-          const SizedBox(height: 15),
-        },
-        if (hasHeading) ...[
-          Text(
-            _resolveTitle(context, data),
-            style: const TextStyle(fontWeight: FontWeight.w600),
-          ),
-          const Divider(thickness: 0.5, indent: 35, endIndent: 35, height: 40),
-        ],
-        Events.eventsFactoryMethod(data)!,
-      ],
+        ),
+      ),
     );
   }
 }

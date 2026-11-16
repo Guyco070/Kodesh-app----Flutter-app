@@ -440,4 +440,179 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get notificationsNotAvailableOnWeb =>
       'Напоминания недоступны в браузере. Откройте приложение на телефоне, чтобы получать уведомления.';
+
+  @override
+  String get navHome => 'Главная';
+
+  @override
+  String get navTimes => 'Время';
+
+  @override
+  String get navPrayers => 'Молитвы';
+
+  @override
+  String get navReminders => 'Напоминания';
+
+  @override
+  String get mainNavigation => 'Основная навигация';
+
+  @override
+  String get candleLightingIn => 'Зажигание свечей через';
+
+  @override
+  String get shabbatEndsIn => 'Шаббат закончится через';
+
+  @override
+  String get shabbatBegins => 'Начало Шаббата';
+
+  @override
+  String get shabbatEnds => 'Окончание Шаббата';
+
+  @override
+  String get hoursColonMinutes => 'часы : минуты';
+
+  @override
+  String get shabbatShalom => 'Шабат шалом';
+
+  @override
+  String get prayerBook => 'Молитвенник';
+
+  @override
+  String get prayerVersion => 'Нусах молитвы';
+
+  @override
+  String countdownSemantics(String label, int hours, int minutes) {
+    return '$label $hours ч $minutes мин';
+  }
+
+  @override
+  String get previousDay => 'Предыдущий день';
+
+  @override
+  String get nextDay => 'Следующий день';
+
+  @override
+  String get chooseDate => 'Выбрать дату';
+
+  @override
+  String get chooseCity => 'Выбрать город';
+
+  @override
+  String get backToToday => 'Вернуться к сегодняшнему дню';
+
+  @override
+  String get increaseTextSize => 'Крупнее текст';
+
+  @override
+  String get decreaseTextSize => 'Мельче текст';
+
+  @override
+  String get resetTextSize => 'Обычный размер текста';
+
+  @override
+  String get splashTagline => 'SHABBAT · ZMANIM · TEFILOT';
+
+  @override
+  String get splashLoading => 'Загружаем время Шаббата';
+
+  @override
+  String get kodeshEmblemLabel => 'Логотип Kodesh';
+
+  @override
+  String get prayersSubtitle => 'Молитвенник';
+
+  @override
+  String get remindersSubtitle => 'Локальные уведомления';
+
+  @override
+  String get greetingShabbat => 'Шабат шалом';
+
+  @override
+  String get greetingWeek => 'Шавуа тов';
+
+  @override
+  String get appearance => 'Оформление';
+
+  @override
+  String get location => 'Местоположение';
+
+  @override
+  String get display => 'Отображение';
+
+  @override
+  String get sunsetToday => 'Закат сегодня';
+
+  @override
+  String get nextRoshChodesh => 'Рош ходеш';
+
+  @override
+  String get todayWord => 'Сегодня';
+
+  @override
+  String get tomorrowWord => 'Завтра';
+
+  @override
+  String inDaysCount(int count) {
+    return 'Через $count дн.';
+  }
+
+  @override
+  String get openReminders => 'Открыть напоминания';
+
+  @override
+  String get remindersActive => 'Активные напоминания';
+
+  @override
+  String remindersActiveCount(int count, int total) {
+    return 'Включено $count из $total';
+  }
+
+  @override
+  String get omerTonight => 'Сегодня вечером считаем';
+
+  @override
+  String get omerDaysOfCounting => '49 дней счёта';
+
+  @override
+  String get omerNotNow => 'Омер считают между Песахом и Шавуотом.';
+
+  @override
+  String get direction => 'Направление';
+
+  @override
+  String get compassNorth => 'С';
+
+  @override
+  String get compassSouth => 'Ю';
+
+  @override
+  String get compassEast => 'В';
+
+  @override
+  String get compassWest => 'З';
+
+  @override
+  String get languageTitle => 'Язык';
+
+  @override
+  String get home => 'Главная';
+
+  @override
+  String reminderBeforeEntry(String time) {
+    return 'За $time до начала';
+  }
+
+  @override
+  String reminderAtTime(String time) {
+    return 'В $time';
+  }
+
+  @override
+  String get notificationSound => 'Звук уведомлений';
+
+  @override
+  String get notificationSoundSubtitle => 'Воспроизводить звук с напоминаниями';
+
+  @override
+  String get notifications => 'Уведомления';
 }

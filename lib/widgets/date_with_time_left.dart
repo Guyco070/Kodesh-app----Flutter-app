@@ -19,12 +19,15 @@ class DateWithTimeLeft extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Shrinks to fit a narrow trailing slot, but never grows past its
+    // natural size.
     return FittedBox(
+      fit: BoxFit.scaleDown,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           SizedBox(
-            width: 150,
+            width: 120,
             height: 20,
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 400),

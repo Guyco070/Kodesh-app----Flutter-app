@@ -12,6 +12,14 @@ class SfiratOmer extends Event {
   });
   Map sefira;
 
+  /// The day of the Omer (1–49), read from Hebcal's untranslated title
+  /// ("Omer 12"), or null when it is missing.
+  int? get dayNumber {
+    final match = RegExp(r'\d+').firstMatch(titleOrig ?? '');
+    final day = match == null ? null : int.tryParse(match.group(0)!);
+    return day != null && day >= 1 && day <= 49 ? day : null;
+  }
+
   @override
   String toString() {
     return '${super.toString()} - title: $title, entryDate: $entryDate, titleOrig: $titleOrig.\n';
@@ -28,7 +36,8 @@ class SfiratOmer extends Event {
       title: parashat['title'],
       entryDate: date,
       sefira: parashat['omer'],
-      titleOrig: parashat['titleOrig'],
+      // Hebcal sends the untranslated title as 'title_orig' ("Omer 12").
+      titleOrig: parashat['title_orig'] ?? parashat['titleOrig'],
     );
   }
 

@@ -195,19 +195,19 @@ abstract class AppLocalizations {
   /// ashkenazVirsion
   ///
   /// In en, this message translates to:
-  /// **'Ashkenaz Virsion'**
+  /// **'Ashkenaz Version'**
   String get ashkenazVirsion;
 
   /// mizrahVirsion
   ///
   /// In en, this message translates to:
-  /// **'Mizrah Virsion'**
+  /// **'Mizrah Version'**
   String get mizrahVirsion;
 
   /// sfaradVirsion
   ///
   /// In en, this message translates to:
-  /// **'Sfarad Virsion'**
+  /// **'Sfarad Version'**
   String get sfaradVirsion;
 
   /// nextWeekEvants
@@ -261,7 +261,7 @@ abstract class AppLocalizations {
   /// viewHebrewDates
   ///
   /// In en, this message translates to:
-  /// **'View hebrew dates'**
+  /// **'View Hebrew dates'**
   String get viewHebrewDates;
 
   /// noLaterTimesToShow
@@ -441,7 +441,7 @@ abstract class AppLocalizations {
   /// city
   ///
   /// In en, this message translates to:
-  /// **'city'**
+  /// **'City'**
   String get city;
 
   /// minutes
@@ -609,7 +609,7 @@ abstract class AppLocalizations {
   /// roshHodeshReminderWillBeAdvanced
   ///
   /// In en, this message translates to:
-  /// **'This reminder will be advanced to weekdays until two o\'clock in the afternoon'**
+  /// **'This reminder will be advanced to weekdays until two o\'clock in the afternoon.'**
   String get roshHodeshReminderWillBeAdvanced;
 
   /// sfiratOmer
@@ -905,6 +905,336 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reminders aren\'t available in the browser. Open the app on your phone to receive notifications.'**
   String get notificationsNotAvailableOnWeb;
+
+  /// Bottom navigation tab: main screen
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get navHome;
+
+  /// Bottom navigation tab: halachic times of the day
+  ///
+  /// In en, this message translates to:
+  /// **'Times'**
+  String get navTimes;
+
+  /// Bottom navigation tab: prayers and aids
+  ///
+  /// In en, this message translates to:
+  /// **'Prayers'**
+  String get navPrayers;
+
+  /// Bottom navigation tab: reminder settings
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders'**
+  String get navReminders;
+
+  /// Screen-reader label of the bottom navigation bar
+  ///
+  /// In en, this message translates to:
+  /// **'Main navigation'**
+  String get mainNavigation;
+
+  /// Home card: countdown label before candle lighting
+  ///
+  /// In en, this message translates to:
+  /// **'Candle lighting in'**
+  String get candleLightingIn;
+
+  /// Home card: countdown label while Shabbat is in progress
+  ///
+  /// In en, this message translates to:
+  /// **'Shabbat ends in'**
+  String get shabbatEndsIn;
+
+  /// Home card: candle lighting time label
+  ///
+  /// In en, this message translates to:
+  /// **'Shabbat begins'**
+  String get shabbatBegins;
+
+  /// Home card: havdalah time label
+  ///
+  /// In en, this message translates to:
+  /// **'Shabbat ends'**
+  String get shabbatEnds;
+
+  /// Home card: unit caption under the hh:mm countdown
+  ///
+  /// In en, this message translates to:
+  /// **'hours : minutes'**
+  String get hoursColonMinutes;
+
+  /// Home screen greeting
+  ///
+  /// In en, this message translates to:
+  /// **'Shabbat Shalom'**
+  String get shabbatShalom;
+
+  /// Prayers screen subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer book'**
+  String get prayerBook;
+
+  /// Screen-reader label of the nusach (prayer version) selector
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer version'**
+  String get prayerVersion;
+
+  /// Screen-reader text of the home countdown ring
+  ///
+  /// In en, this message translates to:
+  /// **'{label} {hours} hours and {minutes} minutes'**
+  String countdownSemantics(String label, int hours, int minutes);
+
+  /// Tooltip of the button that moves the selected start date one day back
+  ///
+  /// In en, this message translates to:
+  /// **'Previous day'**
+  String get previousDay;
+
+  /// Tooltip of the button that moves the selected start date one day forward
+  ///
+  /// In en, this message translates to:
+  /// **'Next day'**
+  String get nextDay;
+
+  /// Screen-reader label of the start date button on the main screen
+  ///
+  /// In en, this message translates to:
+  /// **'Choose date'**
+  String get chooseDate;
+
+  /// Screen-reader label of the city button on the main screen
+  ///
+  /// In en, this message translates to:
+  /// **'Choose city'**
+  String get chooseCity;
+
+  /// Tooltip of the button that resets the start date to today
+  ///
+  /// In en, this message translates to:
+  /// **'Back to today'**
+  String get backToToday;
+
+  /// Tooltip of the button that enlarges prayer text
+  ///
+  /// In en, this message translates to:
+  /// **'Larger text'**
+  String get increaseTextSize;
+
+  /// Tooltip of the button that shrinks prayer text
+  ///
+  /// In en, this message translates to:
+  /// **'Smaller text'**
+  String get decreaseTextSize;
+
+  /// Tooltip of the button that resets prayer text size
+  ///
+  /// In en, this message translates to:
+  /// **'Default text size'**
+  String get resetTextSize;
+
+  /// Brand tagline under the KODESH wordmark; kept in Latin letters in every language
+  ///
+  /// In en, this message translates to:
+  /// **'SHABBAT · ZMANIM · TEFILOT'**
+  String get splashTagline;
+
+  /// No description provided for @splashLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading Shabbat times'**
+  String get splashLoading;
+
+  /// No description provided for @kodeshEmblemLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Kodesh logo'**
+  String get kodeshEmblemLabel;
+
+  /// No description provided for @prayersSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer book'**
+  String get prayersSubtitle;
+
+  /// No description provided for @remindersSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Local notifications'**
+  String get remindersSubtitle;
+
+  /// Home screen title on Friday and Shabbat
+  ///
+  /// In en, this message translates to:
+  /// **'Shabbat Shalom'**
+  String get greetingShabbat;
+
+  /// Home screen title Sunday to Thursday
+  ///
+  /// In en, this message translates to:
+  /// **'Shavua Tov'**
+  String get greetingWeek;
+
+  /// No description provided for @appearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get appearance;
+
+  /// No description provided for @location.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get location;
+
+  /// No description provided for @display.
+  ///
+  /// In en, this message translates to:
+  /// **'Display'**
+  String get display;
+
+  /// No description provided for @sunsetToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunset today'**
+  String get sunsetToday;
+
+  /// No description provided for @nextRoshChodesh.
+  ///
+  /// In en, this message translates to:
+  /// **'Rosh Chodesh'**
+  String get nextRoshChodesh;
+
+  /// No description provided for @todayWord.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get todayWord;
+
+  /// No description provided for @tomorrowWord.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get tomorrowWord;
+
+  /// How many days until an event
+  ///
+  /// In en, this message translates to:
+  /// **'In {count} days'**
+  String inDaysCount(int count);
+
+  /// No description provided for @openReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Open reminders'**
+  String get openReminders;
+
+  /// No description provided for @remindersActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active reminders'**
+  String get remindersActive;
+
+  /// No description provided for @remindersActiveCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} of {total} on'**
+  String remindersActiveCount(int count, int total);
+
+  /// No description provided for @omerTonight.
+  ///
+  /// In en, this message translates to:
+  /// **'Tonight we count'**
+  String get omerTonight;
+
+  /// No description provided for @omerDaysOfCounting.
+  ///
+  /// In en, this message translates to:
+  /// **'49 days of counting'**
+  String get omerDaysOfCounting;
+
+  /// No description provided for @omerNotNow.
+  ///
+  /// In en, this message translates to:
+  /// **'The Omer is counted between Passover and Shavuot.'**
+  String get omerNotNow;
+
+  /// No description provided for @direction.
+  ///
+  /// In en, this message translates to:
+  /// **'Direction'**
+  String get direction;
+
+  /// No description provided for @compassNorth.
+  ///
+  /// In en, this message translates to:
+  /// **'N'**
+  String get compassNorth;
+
+  /// No description provided for @compassSouth.
+  ///
+  /// In en, this message translates to:
+  /// **'S'**
+  String get compassSouth;
+
+  /// No description provided for @compassEast.
+  ///
+  /// In en, this message translates to:
+  /// **'E'**
+  String get compassEast;
+
+  /// No description provided for @compassWest.
+  ///
+  /// In en, this message translates to:
+  /// **'W'**
+  String get compassWest;
+
+  /// No description provided for @languageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get languageTitle;
+
+  /// No description provided for @home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
+
+  /// Reminder subtitle; time is hours:minutes
+  ///
+  /// In en, this message translates to:
+  /// **'{time} before it begins'**
+  String reminderBeforeEntry(String time);
+
+  /// No description provided for @reminderAtTime.
+  ///
+  /// In en, this message translates to:
+  /// **'At {time}'**
+  String reminderAtTime(String time);
+
+  /// Settings switch: reminders play a sound
+  ///
+  /// In en, this message translates to:
+  /// **'Notification sound'**
+  String get notificationSound;
+
+  /// Subtitle of the notification sound switch
+  ///
+  /// In en, this message translates to:
+  /// **'Play a sound with reminders'**
+  String get notificationSoundSubtitle;
+
+  /// Settings section title
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifications;
 }
 
 class _AppLocalizationsDelegate
