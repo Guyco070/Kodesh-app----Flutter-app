@@ -25,10 +25,16 @@ import 'package:kodesh_app/screens/holiday_calendar_screen.dart';
 import 'package:kodesh_app/theme/kodesh_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/semantics.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // On the web, Flutter builds the accessibility tree only after a hidden
+  // "Enable accessibility" button is pressed, so screen readers start out
+  // seeing an empty page. Build it from the start.
+  if (kIsWeb) SemanticsBinding.instance.ensureSemantics();
 
   FlutterError.onError = (FlutterErrorDetails details) {
     logger.e(

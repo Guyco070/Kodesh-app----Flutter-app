@@ -136,6 +136,7 @@ class _ShabatAndHolidaysCheckListState
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showAddTaskDialog(context, reminders, l10n),
+        tooltip: l10n.addCustomTask,
         child: const Icon(Icons.add),
       ),
       body:

@@ -124,6 +124,8 @@ class _DafYomiScreenState extends State<DafYomiScreen> {
                   const SizedBox(height: 4),
                   SelectableText(
                     daf.link!,
+                    // Names the read-only text field the web renders it as.
+                    semanticsLabel: daf.link!,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Theme.of(context).colorScheme.primary,
                     ),
