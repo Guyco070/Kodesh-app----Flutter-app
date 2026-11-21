@@ -53,7 +53,7 @@ class EventScreen extends StatefulWidget {
   State<EventScreen> createState() => _EventScreenState();
 }
 
-class _EventScreenState extends State<EventScreen> {
+class _EventScreenState extends State<EventScreen> with WidgetsBindingObserver {
   bool _isInit = true;
   bool _isLoading = false;
   bool _isLoadingZmanim = true;
@@ -77,15 +77,39 @@ class _EventScreenState extends State<EventScreen> {
           ? ViewState.zmanim
           : ViewState.events;
 
+  /// The day the app was last in the foreground. When it comes back on a
+  /// later day while showing that day, it moves on to the new today;
+  /// otherwise an app left open in the background keeps showing old times.
+  DateTime _lastActiveDay = DateTime.now();
+
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _zmanimSearchController.dispose();
     super.dispose();
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state != AppLifecycleState.resumed) return;
+    final now = DateTime.now();
+    final lastActiveDay = _lastActiveDay;
+    _lastActiveDay = now;
+    if (calendarDaysBetween(lastActiveDay, now) == 0) return;
+    final events = context.read<Events>();
+    // Keep a day the user picked on purpose.
+    if (calendarDaysBetween(lastActiveDay, events.startDate) != 0) return;
+    events.setStartDate(
+      now,
+      setIsLoading: setIsLoading,
+      setIsLoadingZmanim: setIsLoadingZmanim,
+    );
+  }
+
+  @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     if (!kIsWeb) {
       initializeTimeZones();
       if (NotificationApi.isFirstInit) {
