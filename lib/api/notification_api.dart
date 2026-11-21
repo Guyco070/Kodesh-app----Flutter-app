@@ -31,7 +31,8 @@ class NotificationApi {
     }
 
     const AndroidInitializationSettings androidInitializationSettings =
-        AndroidInitializationSettings('mipmap/ic_launcher');
+    // A white silhouette: Android draws the status-bar icon from alpha only.
+    AndroidInitializationSettings('drawable/ic_stat_kodesh');
     const DarwinInitializationSettings iosinitializationSetting =
         DarwinInitializationSettings(
           requestAlertPermission: true,
