@@ -126,6 +126,8 @@ class _HolidayCalendarScreenState extends State<HolidayCalendarScreen> {
     // The monthly view loads its own data one month at a time.
     if (_viewMode == _ViewMode.monthly) {
       return SingleChildScrollView(
+        // Primary so the page scrolls with the keyboard on desktop browsers.
+        primary: true,
         padding: EdgeInsets.fromLTRB(
           16,
           4,
@@ -188,6 +190,8 @@ class _HolidayCalendarScreenState extends State<HolidayCalendarScreen> {
         16,
         24 + MediaQuery.of(context).viewPadding.bottom,
       ),
+      // Primary so the list scrolls with the keyboard on desktop browsers.
+      primary: true,
       itemCount: filtered.length,
       itemBuilder: (context, index) {
         final holiday = filtered[index];

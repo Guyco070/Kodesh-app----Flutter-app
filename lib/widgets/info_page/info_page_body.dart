@@ -1,0 +1,65 @@
+import 'package:flutter/material.dart';
+import 'package:kodesh_app/models/info_page_section.dart';
+import 'package:kodesh_app/widgets/glass/glass_panel.dart';
+import 'package:kodesh_app/widgets/info_page/info_page_section_view.dart';
+
+/// Scrollable, readable-width column of [InfoPageSection]s on a glass panel.
+/// Text is selectable so people can copy contact details.
+class InfoPageBody extends StatelessWidget {
+  const InfoPageBody({
+    super.key,
+    required this.sections,
+    this.header,
+    this.footer,
+  });
+
+  final List<InfoPageSection> sections;
+
+  /// Optional widget shown above the panel (e.g. the app's logo).
+  final Widget? header;
+
+  /// Optional widget shown after the sections (e.g. links to other pages).
+  final Widget? footer;
+
+  /// Lines longer than this are hard to read on wide screens.
+  static const double maxReadableWidth = 760;
+
+  @override
+  Widget build(BuildContext context) {
+    return SelectionArea(
+      child: SingleChildScrollView(
+        // Primary so arrow keys / Page Down scroll the page on desktop
+        // browsers even when nothing inside it has keyboard focus.
+        primary: true,
+        padding: EdgeInsets.fromLTRB(
+          16,
+          12,
+          16,
+          32 + MediaQuery.of(context).viewPadding.bottom,
+        ),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: maxReadableWidth),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (header != null) header!,
+                GlassPanel(
+                  padding: const EdgeInsets.fromLTRB(20, 22, 20, 4),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      for (final section in sections)
+                        InfoPageSectionView(section: section),
+                    ],
+                  ),
+                ),
+                if (footer != null) ...[const SizedBox(height: 12), footer!],
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

@@ -614,4 +614,26 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notifications => 'Notifications';
+
+  @override
+  String get deleteTask => 'Delete task';
+
+  @override
+  String get clearSearch => 'Clear search';
+
+  @override
+  String get accessibilityMenu => 'Accessibility statement';
+
+  @override
+  String get privacyMenu => 'Privacy policy';
+
+  @override
+  String get compassMobileOnly =>
+      'The compass needs a phone or tablet with a direction sensor.';
+
+  @override
+  String get openInSefaria => 'Learn on Sefaria';
+
+  @override
+  String get siteTitle => 'Kodesh – Shabbat, holiday and daily times';
 }

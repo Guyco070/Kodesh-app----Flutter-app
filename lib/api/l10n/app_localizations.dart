@@ -1235,6 +1235,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Notifications'**
   String get notifications;
+
+  /// deleteTask
+  ///
+  /// In en, this message translates to:
+  /// **'Delete task'**
+  String get deleteTask;
+
+  /// clearSearch
+  ///
+  /// In en, this message translates to:
+  /// **'Clear search'**
+  String get clearSearch;
+
+  /// accessibilityMenu
+  ///
+  /// In en, this message translates to:
+  /// **'Accessibility statement'**
+  String get accessibilityMenu;
+
+  /// privacyMenu
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy policy'**
+  String get privacyMenu;
+
+  /// compassMobileOnly
+  ///
+  /// In en, this message translates to:
+  /// **'The compass needs a phone or tablet with a direction sensor.'**
+  String get compassMobileOnly;
+
+  /// openInSefaria
+  ///
+  /// In en, this message translates to:
+  /// **'Learn on Sefaria'**
+  String get openInSefaria;
+
+  /// Browser tab title on web
+  ///
+  /// In en, this message translates to:
+  /// **'Kodesh – Shabbat, holiday and daily times'**
+  String get siteTitle;
 }
 
 class _AppLocalizationsDelegate

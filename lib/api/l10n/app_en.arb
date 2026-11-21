@@ -585,5 +585,18 @@
     "@notificationSoundSubtitle": {"description": "Subtitle of the notification sound switch"},
 
     "notifications": "Notifications",
-    "@notifications": {"description": "Settings section title"}
-}
+    "@notifications": {"description": "Settings section title"},
+    "deleteTask": "Delete task",
+    "@deleteTask": { "description": "deleteTask" },
+    "clearSearch": "Clear search",
+    "@clearSearch": { "description": "clearSearch" },
+    "accessibilityMenu": "Accessibility statement",
+    "@accessibilityMenu": { "description": "accessibilityMenu" },
+    "privacyMenu": "Privacy policy",
+    "@privacyMenu": { "description": "privacyMenu" },
+    "compassMobileOnly": "The compass needs a phone or tablet with a direction sensor.",
+    "@compassMobileOnly": { "description": "compassMobileOnly" },
+    "openInSefaria": "Learn on Sefaria",
+    "@openInSefaria": { "description": "openInSefaria" },
+    "siteTitle": "Kodesh – Shabbat, holiday and daily times",
+    "@siteTitle": { "description": "Browser tab title on web" }}

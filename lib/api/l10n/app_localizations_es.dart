@@ -617,4 +617,26 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get notifications => 'Notificaciones';
+
+  @override
+  String get deleteTask => 'Eliminar tarea';
+
+  @override
+  String get clearSearch => 'Borrar búsqueda';
+
+  @override
+  String get accessibilityMenu => 'Declaración de accesibilidad';
+
+  @override
+  String get privacyMenu => 'Política de privacidad';
+
+  @override
+  String get compassMobileOnly =>
+      'La brújula necesita un teléfono o tableta con sensor de orientación.';
+
+  @override
+  String get openInSefaria => 'Estudiar en Sefaria';
+
+  @override
+  String get siteTitle => 'Kodesh – Horarios de Shabat, festividades y del día';
 }

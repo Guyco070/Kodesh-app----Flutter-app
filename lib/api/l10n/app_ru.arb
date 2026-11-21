@@ -294,5 +294,11 @@
 
     "notificationSoundSubtitle": "Воспроизводить звук с напоминаниями",
 
-    "notifications": "Уведомления"
-}
+    "notifications": "Уведомления",
+    "deleteTask": "Удалить задачу",
+    "clearSearch": "Очистить поиск",
+    "accessibilityMenu": "Заявление о доступности",
+    "privacyMenu": "Политика конфиденциальности",
+    "compassMobileOnly": "Для компаса нужен телефон или планшет с датчиком направления.",
+    "openInSefaria": "Учить на Sefaria",
+    "siteTitle": "Kodesh – время Шабата, праздников и дня"}

@@ -615,4 +615,26 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get notifications => 'Уведомления';
+
+  @override
+  String get deleteTask => 'Удалить задачу';
+
+  @override
+  String get clearSearch => 'Очистить поиск';
+
+  @override
+  String get accessibilityMenu => 'Заявление о доступности';
+
+  @override
+  String get privacyMenu => 'Политика конфиденциальности';
+
+  @override
+  String get compassMobileOnly =>
+      'Для компаса нужен телефон или планшет с датчиком направления.';
+
+  @override
+  String get openInSefaria => 'Учить на Sefaria';
+
+  @override
+  String get siteTitle => 'Kodesh – время Шабата, праздников и дня';
 }

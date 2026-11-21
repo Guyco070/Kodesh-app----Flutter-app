@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kodesh_app/api/l10n/l10n.dart';
 import 'package:kodesh_app/helpers/app_logger.dart';
@@ -8,6 +9,8 @@ import 'package:kodesh_app/providers/reminders.dart';
 import 'package:kodesh_app/providers/tfilot.dart';
 import 'package:kodesh_app/screens/about.dart';
 import 'package:kodesh_app/screens/settings_screen.dart';
+import 'package:kodesh_app/screens/accessibility_statement_screen.dart';
+import 'package:kodesh_app/screens/privacy_policy_screen.dart';
 import 'package:kodesh_app/screens/compass_screen.dart';
 import 'package:kodesh_app/screens/shabat_and_holidays_check_list.dart';
 import 'package:kodesh_app/screens/schedule_notifications.dart';
@@ -25,7 +28,6 @@ import 'package:kodesh_app/screens/holiday_calendar_screen.dart';
 import 'package:kodesh_app/theme/kodesh_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/semantics.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
 
 Future<void> main() async {
@@ -82,6 +84,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       locale: langProvider.currentLocale,
       title: 'Kodesh',
+      // Localized browser tab title on web.
+      onGenerateTitle: (context) => AppLocalizations.of(context)!.siteTitle,
       theme: _lightTheme,
       darkTheme: _darkTheme,
       themeMode: langProvider.themeMode,
@@ -110,6 +114,9 @@ class MyApp extends StatelessWidget {
         DafYomiScreen.routeName: (_) => const DafYomiScreen(),
         HolidayCalendarScreen.routeName: (_) => const HolidayCalendarScreen(),
         AboutScreen.routeName: (_) => const AboutScreen(),
+        AccessibilityStatementScreen.routeName:
+            (_) => const AccessibilityStatementScreen(),
+        PrivacyPolicyScreen.routeName: (_) => const PrivacyPolicyScreen(),
       },
     );
   }

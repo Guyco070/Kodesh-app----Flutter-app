@@ -217,6 +217,7 @@ class _ShabatAndHolidaysCheckListState
                                 ),
                                 title: Text(task),
                                 trailing: IconButton(
+                                  tooltip: l10n.deleteTask,
                                   icon: Icon(
                                     Icons.delete_outline,
                                     color: Theme.of(context).colorScheme.error,

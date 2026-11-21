@@ -8,6 +8,7 @@ import 'package:kodesh_app/api/l10n/app_localizations.dart';
 import 'package:kodesh_app/providers/events.dart';
 import 'package:kodesh_app/widgets/custom_app_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DafYomiScreen extends StatefulWidget {
   const DafYomiScreen({super.key});
@@ -122,12 +123,16 @@ class _DafYomiScreenState extends State<DafYomiScreen> {
                   const SizedBox(height: 12),
                   const Divider(),
                   const SizedBox(height: 4),
-                  SelectableText(
-                    daf.link!,
-                    // Names the read-only text field the web renders it as.
-                    semanticsLabel: daf.link!,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
+                  Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: TextButton.icon(
+                      icon: const Icon(Icons.open_in_new, size: 18),
+                      label: Text(appLocalizations.openInSefaria),
+                      onPressed:
+                          () => launchUrl(
+                            Uri.parse(daf.link!),
+                            mode: LaunchMode.externalApplication,
+                          ),
                     ),
                   ),
                 ],

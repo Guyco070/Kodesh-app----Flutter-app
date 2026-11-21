@@ -24,16 +24,20 @@ class CompassButton extends StatelessWidget {
         child: Semantics(
           button: true,
           label: AppLocalizations.of(context)!.compass,
+          excludeSemantics: true,
+          onTap: () => _open(context),
           child: GestureDetector(
-            onTap: () {
-              Navigator.of(
-                context,
-              ).push(HeroDialogRoute(builder: ((context) => CompassWidget())));
-            },
+            onTap: () => _open(context),
             child: CompassDial(size: 40, heading: heading ?? 0),
           ),
         ),
       ),
     );
+  }
+
+  void _open(BuildContext context) {
+    Navigator.of(
+      context,
+    ).push(HeroDialogRoute(builder: ((context) => CompassWidget())));
   }
 }

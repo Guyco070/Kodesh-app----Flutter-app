@@ -259,5 +259,11 @@
 
     "notificationSoundSubtitle": "השמעת צליל עם התזכורות",
 
-    "notifications": "התראות"
-}
+    "notifications": "התראות",
+    "deleteTask": "מחיקת משימה",
+    "clearSearch": "ניקוי חיפוש",
+    "accessibilityMenu": "הצהרת נגישות",
+    "privacyMenu": "מדיניות פרטיות",
+    "compassMobileOnly": "המצפן דורש טלפון או טאבלט עם חיישן כיוון.",
+    "openInSefaria": "ללימוד בספריא",
+    "siteTitle": "קודש – זמני שבת, חגים וזמני היום"}

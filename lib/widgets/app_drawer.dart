@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kodesh_app/api/l10n/app_localizations.dart';
 import 'package:kodesh_app/screens/about.dart';
+import 'package:kodesh_app/screens/accessibility_statement_screen.dart';
+import 'package:kodesh_app/screens/privacy_policy_screen.dart';
 import 'package:kodesh_app/screens/compass_screen.dart';
 import 'package:kodesh_app/screens/daf_yomi_screen.dart';
 import 'package:kodesh_app/screens/holiday_calendar_screen.dart';
@@ -154,6 +156,16 @@ class AppDrawer extends StatelessWidget {
               icon: Icons.info_outline_rounded,
               label: l.aboutMenu,
               onTap: () => go(AboutScreen.routeName),
+            ),
+            DrawerItem(
+              icon: Icons.accessibility_new_rounded,
+              label: l.accessibilityMenu,
+              onTap: () => go(AccessibilityStatementScreen.routeName),
+            ),
+            DrawerItem(
+              icon: Icons.privacy_tip_outlined,
+              label: l.privacyMenu,
+              onTap: () => go(PrivacyPolicyScreen.routeName),
             ),
           ],
         ),
